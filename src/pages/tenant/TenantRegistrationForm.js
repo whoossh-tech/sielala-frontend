@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import '../static/css/TenantRegistrationForm.css';
-import '../static/css/Button.css';
+import { useNavigate } from 'react-router-dom';
+
+import '../../static/css/TenantRegistrationForm.css';
+import '../../static/css/Button.css';
 
 const TenantRegistrationForm = () => {
     const[brandName, setBrandName] = useState('');
@@ -18,6 +20,8 @@ const TenantRegistrationForm = () => {
     const[boothPreference, setBoothPreference] = useState('');
     const[errors, setErrors] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -111,9 +115,11 @@ const TenantRegistrationForm = () => {
             })
 
             console.log('Tenant registered successfully:', response.data);
+            navigate('/tenant-registration/success');
         } catch (error) {
             console.error('Error registering tenant:', error.response || error.message);
             setErrors('Error registering tenant.');
+            navigate('/tenant-registration/fail');
         }
     };
 
@@ -159,7 +165,7 @@ const TenantRegistrationForm = () => {
                 <input
                 id="brand_email"
                 className="px-4 py-3 w-full focus:outline-none"
-                placeholder="jane.doe@gmail.com"
+                placeholder="ex. jane.doe@gmail.com"
                 value={brandEmail}
                 onChange={(e) => setBrandEmail(e.target.value)}
                 />
@@ -186,7 +192,7 @@ const TenantRegistrationForm = () => {
                 id="brand_number"
                 type="tel"
                 className="px-4 py-3 w-full focus:outline-none"
-                placeholder="812xxxx..."
+                placeholder="ex. 812xxxx..."
                 value={brandNumber}
                 onChange={(e) => setBrandNumber(e.target.value)}
                 />
@@ -413,12 +419,13 @@ const TenantRegistrationForm = () => {
         <Modal
             isOpen={isModalOpen}
             onRequestClose={closeModal}
-            className="modal-confirmation"
+            id="modal-confirmation"
         >
-            <h2>Confirm Registration</h2>
-            <p>Are you sure you want to register?</p>
-            <button className="button-green" onClick={confirmRegistration}>Confirm</button>
-            <button className="button-pink" onClick={closeModal}>Cancel</button>
+            <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Registration</h2>
+            <p className="text-center text-gray-700">Are you sure you want to register?</p>
+            <br></br>
+            <button className="button-green text-center" onClick={confirmRegistration}>Confirm</button>
+            <button className="button-pink text-center" onClick={closeModal}>Cancel</button>
         </Modal>
 
         <br></br>
@@ -427,5 +434,4 @@ const TenantRegistrationForm = () => {
     );
 };
 
-// RegisterForm.displayName = "RegisterForm";
 export { TenantRegistrationForm };
