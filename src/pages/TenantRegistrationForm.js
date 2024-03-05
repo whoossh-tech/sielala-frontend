@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
 import '../static/css/TenantRegistrationForm.css';
 import '../static/css/Button.css';
 
@@ -16,6 +17,15 @@ const TenantRegistrationForm = () => {
     const[brandPromo, setBrandPromo] = useState('');
     const[boothPreference, setBoothPreference] = useState('');
     const[errors, setErrors] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     const validateForm = () => {
         const newErrors = {};
@@ -72,42 +82,45 @@ const TenantRegistrationForm = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const onSubmit = async (e) => {
+    const onRegister = async (e) => {
         e.preventDefault();
 
         if (validateForm()) {
-            console.log('Form submitted');
-
-            try {
-                const response = await axios.post('localhost:8000/api/tenant/register', {
-                    picName,
-                    address: brandAddress,
-                    brandName,
-                    brandEmail,
-                    brandInstagram,
-                    brandTelephone: brandNumber,
-                    brandDescription,
-                    electricityAmount: parseInt(electricityAmount),
-                    brandPromo,
-                    category: brandCategory,
-                    boothPreference,
-                })
-
-                console.log('Tenant registered successfully:', response.data);
-            } catch (error) {
-                console.error('Error registering tenant:', error);
-                setErrors('Error registering tenant.');
-            }
-            
+            openModal(); // Open the modal if the form is valid
         } else {
             console.log('Form validation failed');
+        }
+    };
+
+    const confirmRegistration = async (e) => {
+        closeModal();
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/tenant/register', {
+                picName,
+                address: brandAddress,
+                brandName,
+                brandEmail,
+                brandInstagram,
+                brandTelephone: brandNumber,
+                brandDescription,
+                electricityAmount: parseInt(electricityAmount),
+                brandPromo,
+                category: brandCategory,
+                boothPreference,
+            })
+
+            console.log('Tenant registered successfully:', response.data);
+        } catch (error) {
+            console.error('Error registering tenant:', error.response || error.message);
+            setErrors('Error registering tenant.');
         }
     };
 
     return (
         <form
             className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
-             onSubmit={(e) => onSubmit(e)}
+            onSubmit={(e) => onRegister(e)}
         >
 
         <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Tenant Registration</h1>
@@ -125,7 +138,7 @@ const TenantRegistrationForm = () => {
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="ex. Lala Market"
                 value={brandName}
-                onChange={(e) => setBrandName(e.target.value)} required
+                onChange={(e) => setBrandName(e.target.value)}
                 />
             </div>
 
@@ -145,11 +158,10 @@ const TenantRegistrationForm = () => {
             <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_email && "border-danger"}`}>
                 <input
                 id="brand_email"
-                type="email"
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="jane.doe@gmail.com"
                 value={brandEmail}
-                onChange={(e) => setBrandEmail(e.target.value)} required
+                onChange={(e) => setBrandEmail(e.target.value)}
                 />
             </div>
 
@@ -176,7 +188,7 @@ const TenantRegistrationForm = () => {
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="812xxxx..."
                 value={brandNumber}
-                onChange={(e) => setBrandNumber(e.target.value)} required
+                onChange={(e) => setBrandNumber(e.target.value)}
                 />
             </div>
 
@@ -199,7 +211,7 @@ const TenantRegistrationForm = () => {
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="ex. @LalaMarketOfficial"
                 value={brandInstagram}
-                onChange={(e) => setBrandInstagram(e.target.value)} required
+                onChange={(e) => setBrandInstagram(e.target.value)}
                 />
             </div>
 
@@ -222,7 +234,7 @@ const TenantRegistrationForm = () => {
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="ex. Margonda, Kukusan Depok"
                 value={brandAddress}
-                onChange={(e) => setBrandAddress(e.target.value)} required
+                onChange={(e) => setBrandAddress(e.target.value)}
                 />
             </div>
 
@@ -245,7 +257,7 @@ const TenantRegistrationForm = () => {
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="ex. Jane Doe"
                 value={picName}
-                onChange={(e) => setPicName(e.target.value)} required
+                onChange={(e) => setPicName(e.target.value)}
                 />
             </div>
 
@@ -268,7 +280,7 @@ const TenantRegistrationForm = () => {
                 className="appearance-none px-4 py-3 w-full focus:outline-none"
                 placeholder="Choose category"
                 value={brandCategory}
-                onChange={(e) => setBrandCategory(e.target.value)} required
+                onChange={(e) => setBrandCategory(e.target.value)}
                 >
                 <option>Choose category</option>
                 <option value="Apparel">Apparel</option>
@@ -301,7 +313,7 @@ const TenantRegistrationForm = () => {
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="ex. Our brand is about..."
                 value={brandDescription}
-                onChange={(e) => setBrandDescription(e.target.value)} required
+                onChange={(e) => setBrandDescription(e.target.value)} 
                 />
             </div>
 
@@ -325,7 +337,7 @@ const TenantRegistrationForm = () => {
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="20"
                 value={electricityAmount}
-                onChange={(e) => setElectricityAmount(e.target.value)} required
+                onChange={(e) => setElectricityAmount(e.target.value)} 
                 />
             </div>
 
@@ -348,7 +360,7 @@ const TenantRegistrationForm = () => {
                 className="px-4 py-3 w-full focus:outline-none"
                 placeholder="ex. Offering a Buy 1 Get 1 for every 50k minimum purchase..."
                 value={brandPromo}
-                onChange={(e) => setBrandPromo(e.target.value)} required
+                onChange={(e) => setBrandPromo(e.target.value)} 
                 />
             </div>
 
@@ -371,7 +383,7 @@ const TenantRegistrationForm = () => {
                 className="appearance-none px-4 py-3 w-full focus:outline-none"
                 placeholder="Choose booth preference"
                 value={boothPreference}
-                onChange={(e) => setBoothPreference(e.target.value)} required
+                onChange={(e) => setBoothPreference(e.target.value)} 
                 >
                 <option>Choose booth preference</option>
                 <option value="Big">Big Size</option>
@@ -397,6 +409,17 @@ const TenantRegistrationForm = () => {
         >
             Apply for Tenant
         </button>
+
+        <Modal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            className="modal-confirmation"
+        >
+            <h2>Confirm Registration</h2>
+            <p>Are you sure you want to register?</p>
+            <button className="button-green" onClick={confirmRegistration}>Confirm</button>
+            <button className="button-pink" onClick={closeModal}>Cancel</button>
+        </Modal>
 
         <br></br>
 
