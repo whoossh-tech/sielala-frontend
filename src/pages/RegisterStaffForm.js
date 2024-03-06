@@ -59,6 +59,9 @@ const RegisterStaffForm = () => {
         closeModal();
 
         try {
+            const token = localStorage.getItem('token');
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
             const response = await axios.post('http://localhost:8080/admin/register', {
                 email, name, username, password
             })
@@ -202,4 +205,4 @@ const RegisterStaffForm = () => {
 };
 
 // RegisterForm.displayName = "RegisterForm";
-export { RegisterStaffForm };
+export default RegisterStaffForm;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../static/css/RegisterStaffForm.css';
 import '../static/css/Button.css';
@@ -9,6 +10,7 @@ const Login = () => {
     const[password, setPassword] = useState('');
     const[errors, setErrors] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate(); 
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -52,11 +54,24 @@ const Login = () => {
                 password
             })
 
-            console.log('Staff registered successfully:', response.data);
-        } catch (error) {
-            console.error('Error registering staff:', error.response || error.message);
-            setErrors('Error registering staff.');
-        }
+            const { jwt, user } = response.data;
+            localStorage.setItem('token', jwt);
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+
+            console.log('Logged in successfully:', user);
+
+            // Redirect admin to register page
+            if (user.authorities.some(authority => authority.authority === 'ADMIN')) {
+                navigate('/staff-registration');
+            } else {
+                // Handle redirection for other roles or perform other actions
+            }
+            
+            } catch (error) {
+            console.error('Error logging in:', error.response || error.message);
+            setErrors('Error logging in.');
+            }
     };
 
     return (
@@ -143,4 +158,4 @@ const Login = () => {
 };
 
 // RegisterForm.displayName = "RegisterForm";
-export default Login;
+    export default Login;
