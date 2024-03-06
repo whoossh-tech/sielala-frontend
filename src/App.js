@@ -9,6 +9,7 @@ function App() {
       <Router>
         <Routes>
             <Route path="/reward-inventory" element={<RewardInventory />}></Route>
+            {/* <Route path="reward-inventory/detail/:id" element={<DetailReward/>}></Route> */}
         </Routes>
       </Router>    
     </div>
