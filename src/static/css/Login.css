@@ -1,0 +1,22 @@
+.Login {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+
+.input-form {
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.font-reynaldo {
+    font-family: 'Reynaldo', serif;
+}
+
+#page-title {
+    font-size: xx-large;
+}
+
+.input-label {
+    font-size: large;
+}
