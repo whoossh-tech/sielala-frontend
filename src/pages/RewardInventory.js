@@ -5,6 +5,7 @@ import '../static/css/RewardInventory.css';
 import '../static/css/Button.css';
 import axios from 'axios';
 import {toast, Toaster} from 'react-hot-toast';
+import { Link } from "react-router-dom";
 
 const RewardInventory = () => {
 
@@ -103,7 +104,7 @@ const RewardInventory = () => {
                 <thead>
                     {/* Column headers */}
                     <tr>
-                        <th>Reward</th>
+                        <th> Reward</th>
                         <th>Brand</th>
                         <th>Category</th>
                         {dayRangeCount.map((day, index) => (
@@ -119,7 +120,8 @@ const RewardInventory = () => {
                     {sortedRewardData && sortedRewardData.length > 0 ? (
                         sortedRewardData.map((reward, i) => (
                             <tr key={i}>
-                                <td>{reward.productName}</td>
+                                <td>
+                                    <Link to={`/reward-inventory/detail/${reward.idProduct}`}>{reward.productName}</Link></td>
                                 <td>{reward.brandName}</td>
                                 <td>{reward.category}</td>
                                 {reward.listDayReward.map((dayReward, j) => (
