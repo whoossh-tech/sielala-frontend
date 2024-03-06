@@ -3,14 +3,15 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import '../static/css/RegisterStaffForm.css';
 import '../static/css/Button.css';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterStaffForm = () => {
     const[email, setEmail] = useState('');
     const[name, setName] = useState('');
-    const[username, setUsername] = useState('');
-    const[password, setPassword] = useState('');
+    const [role, setRole] = useState('');
     const[errors, setErrors] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -33,13 +34,17 @@ const RegisterStaffForm = () => {
             newErrors.name = 'Name cannot be empty';
         }
 
-        if (!username.trim()) {
-            newErrors.username = 'Username cannot be empty';
+        if (!role) {
+            newErrors.role = 'Role cannot be empty';
         }
 
-        if (!password.trim()) {
-            newErrors.password = 'Password cannot be empty';
-        }
+        // if (!username.trim()) {
+        //     newErrors.username = 'Username cannot be empty';
+        // }
+
+        // if (!password.trim()) {
+        //     newErrors.password = 'Password cannot be empty';
+        // }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -63,10 +68,14 @@ const RegisterStaffForm = () => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
             const response = await axios.post('http://localhost:8080/admin/register', {
-                email, name, username, password
+                email, 
+                name, 
+                role: role,
             })
 
             console.log('Staff registered successfully:', response.data);
+
+            navigate('/user-list');
         } catch (error) {
             console.error('Error registering staff:', error.response || error.message);
             setErrors('Error registering staff.');
@@ -128,52 +137,34 @@ const RegisterStaffForm = () => {
             )}
             </div>
 
-            {/* username */}
-            <div className="input-form flex flex-col space-y-1">
-            <label className="input-label font-reynaldo text-left" htmlFor="username">
-                Username<span className="text-danger">*</span>
+            {/* role dropdown */}
+        <div className="input-form flex flex-col space-y-1">
+            <label className="input-label font-reynaldo text-left" htmlFor="role">
+                Role<span className="text-danger">*</span>
             </label>
 
-            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.username && "border-danger"}`}>
-                <input
-                id="brand_instagram"
-                className="px-4 py-3 w-full focus:outline-none"
-                placeholder="ex. @LalaMarketOfficial"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                />
+            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg`}>
+                <select
+                    id="role"
+                    className="px-4 py-3 w-full focus:outline-none"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                >
+                    <option value="" disabled>Select a role</option>
+                    <option value="ADMIN">Admin</option>
+                    <option value="BISDEV">Business Development</option>
+                    <option value="PARTNERSHIP">Partnership</option>
+                    <option value="FINANCE">Finance</option>
+                    <option value="OPERATION">Operation</option>
+                </select>
             </div>
 
-            {errors.username && (
+            {errors.role && (
                 <span className="mt-0.5 text-danger text-xs">
-                {errors.username}
+                {errors.role}
                 </span>
             )}
-            </div>
-
-            {/* password */}
-            <div className="input-form flex flex-col space-y-1">
-            <label className="input-label font-reynaldo text-left" htmlFor="password">
-                Password<span className="text-danger">*</span>
-            </label>
-
-            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.password && "border-danger"}`}>
-                <input
-                id="password"
-                className="px-4 py-3 w-full focus:outline-none"
-                placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-
-            {errors.password && (
-                <span className="mt-0.5 text-danger text-xs">
-                {errors.password}
-                </span>
-            )}
-            </div>
-
+        </div>
     
         </div>
 

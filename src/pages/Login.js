@@ -8,6 +8,7 @@ import '../static/css/Button.css';
 const Login = () => {
     const[username, setUsername] = useState('');
     const[password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const[errors, setErrors] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate(); 
@@ -61,9 +62,9 @@ const Login = () => {
 
             console.log('Logged in successfully:', user);
 
-            // Redirect admin to register page
+            // Redirect admin to user list page
             if (user.authorities.some(authority => authority.authority === 'ADMIN')) {
-                navigate('/staff-registration');
+                navigate('/user-list');
             } else {
                 // Handle redirection for other roles or perform other actions
             }
@@ -108,25 +109,33 @@ const Login = () => {
 
             {/* password */}
             <div className="input-form flex flex-col space-y-1">
-            <label className="input-label font-reynaldo text-left" htmlFor="password">
-                Password<span className="text-danger">*</span>
-            </label>
+                <label className="input-label font-reynaldo text-left" htmlFor="password">
+                    Password<span className="text-danger">*</span>
+                </label>
 
-            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.password && "border-danger"}`}>
-                <input
-                id="password"
-                className="px-4 py-3 w-full focus:outline-none"
-                placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
+                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.password && "border-danger"}`}>
+                    <input
+                        id="password"
+                        className="px-4 py-3 w-full focus:outline-none"
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        className="toggle-password"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? 'Hide' : 'Show'}
+                    </button>
+                </div>
 
-            {errors.password && (
-                <span className="mt-0.5 text-danger text-xs">
-                {errors.password}
-                </span>
-            )}
+                {errors.password && (
+                    <span className="mt-0.5 text-danger text-xs">
+                        {errors.password}
+                    </span>
+                )}
             </div>
         </div>
 
