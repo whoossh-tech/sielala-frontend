@@ -30,6 +30,7 @@ const RewardInventory = () => {
         .then(res => {
             setEventData(res.data.data)
         })
+        
 
    }, [selectedEvent])
 
@@ -41,12 +42,22 @@ const RewardInventory = () => {
     return (  
         <div className="RewardInventory">
             <h2>Reward Inventory</h2>
-            <select name="filter-event" onChange={handleChange}>
+            {/* <select name="filter-event" onChange={handleChange}>
                 {eventData.map((event, index) => (
                     <option key={index} value={event.idEvent}>{event.eventName}</option>
                 ))}
-            </select>
+            </select> */}
 
+
+            <select name="filter-event" onChange={handleChange}>
+                {eventData && eventData.length > 0 ? (
+                    eventData.map((event, index) => (
+                        <option key={index} value={event.idEvent}>{event.eventName}</option>
+                    ))
+                ) : (
+                    <option value="">No events available</option>
+                )}
+            </select>
 
             <div className="button-field">
                 <button className="button-pink">+ Add Reward</button>
@@ -82,20 +93,26 @@ const RewardInventory = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {rewardData.map((reward, i) => (
-                        <tr key={i}>
-                            <td>{reward.productName}</td>
-                            <td>{reward.brandName}</td>
-                            <td>{reward.category}</td>
-                            {reward.listDayReward.map((dayReward, j) => (
-                                <React.Fragment key={j}>
-                                    <td>{dayReward.stokAwal}</td>
-                                    <td>{dayReward.stokRedeemed}</td>
-                                    <td>{dayReward.stokSisa}</td>
-                                </React.Fragment>
-                            ))}
+                    {rewardData && rewardData.length > 0 ? (
+                        rewardData.map((reward, i) => (
+                            <tr key={i}>
+                                <td>{reward.productName}</td>
+                                <td>{reward.brandName}</td>
+                                <td>{reward.category}</td>
+                                {reward.listDayReward.map((dayReward, j) => (
+                                    <React.Fragment key={j}>
+                                        <td>{dayReward.stokAwal}</td>
+                                        <td>{dayReward.stokRedeemed}</td>
+                                        <td>{dayReward.stokSisa}</td>
+                                    </React.Fragment>
+                                ))}
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={3 + dayRangeCount.length * 3}>No rewards available</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>
