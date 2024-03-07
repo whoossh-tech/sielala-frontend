@@ -22,7 +22,9 @@ const TenantRegistrationForm = () => {
     const[brandPromo, setBrandPromo] = useState('');
     const[boothPreference, setBoothPreference] = useState('');
     const[errors, setErrors] = useState({});
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -100,6 +102,8 @@ const TenantRegistrationForm = () => {
     };
 
     const confirmRegistration = async (e) => {
+        closeModal();
+        setIsLoading(true);
 
         try {
             const response = await axios.post('http://localhost:8080/api/tenant/register', {
@@ -122,6 +126,8 @@ const TenantRegistrationForm = () => {
             console.error('Error registering tenant:', error.response || error.message);
             setErrors('Error registering tenant.');
             navigate('/tenant-registration/fail');
+        } finally {
+            setIsLoading(false); // Reset loading state
         }
     };
 
@@ -420,9 +426,10 @@ const TenantRegistrationForm = () => {
             <button
                 className="button-pink montserrat"
                 type="submit"
+                disabled={isLoading}
                 // disabled={isRegisterLoading}
             >
-                Apply for Tenant
+                {isLoading ? 'Loading...' : 'Apply for Tenant'}
             </button>
 
             <Modal
