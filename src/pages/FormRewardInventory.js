@@ -6,10 +6,12 @@ import Modal from 'react-modal';
 
 import '../static/css/Button.css';
 import '../static/css/FormRewardInventory.css';
+import '../static/css/Modal.css';
 
 const FormRewardInventory = () => {
     const { idEvent } = useParams();
     const url = 'http://localhost:8080';
+    const navigate = useNavigate();
 
     const [productName, setProductName] = useState('');
     const [brandName, setBrandName] = useState('');
@@ -18,8 +20,6 @@ const FormRewardInventory = () => {
     const [countDays, setCountDays] = useState(1);
     const [errors, setErrors] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const navigate = useNavigate();
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -63,7 +63,7 @@ const FormRewardInventory = () => {
         
         const allStocksEmpty = listDayReward.every(reward => reward.stokAwal === 0 || reward.stokAwal === null || reward.stokAwal === undefined);
         if (allStocksEmpty) {
-            newErrors.listDayReward = 'Fill at least one initial stock';
+            newErrors.listDayReward = 'Fill at least one Initial Stock';
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -206,6 +206,9 @@ const FormRewardInventory = () => {
 
             {/* initial stock */}
             <div className="input-form flex flex-col">
+            <label className="input-label font-reynaldo text-left" htmlFor="category">
+                Stock<span className="text-danger">*</span>
+            </label>
             <table>
                 <thead>
                     <tr>
@@ -214,11 +217,17 @@ const FormRewardInventory = () => {
                     </tr>
                 </thead>
                 <tbody>{renderDayRewardRows()}</tbody>
-                {errors.listDayReward && (
-                        <span className="mt-0.5 text-danger text-xs">
-                            {errors.listDayReward}
-                        </span>
-            )}
+                <tfoot>
+                    <tr>
+                        <td colSpan="2">
+                            {errors.listDayReward && (
+                                <span className="mt-0.5 text-danger text-xs">
+                                    {errors.listDayReward}
+                                </span>
+                            )}
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
             </div>
 
@@ -235,11 +244,17 @@ const FormRewardInventory = () => {
             onRequestClose={closeModal}
             id="modal-confirmation"
         >
-            <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm</h2>
-            <p className="text-center text-gray-700">Are you sure you want to add reward?</p>
-            <br></br>
-            <button className="button-green text-center" onClick={confirmSubmit}>Confirm</button>
-            <button className="button-pink text-center" onClick={closeModal}>Cancel</button>
+        {/* <div className='modalBackground'>
+            <div className="modalContainer"> */}
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                <p className="text-center text-gray-700">Are you sure you want to add reward?</p>
+                <br></br>
+                <div>
+                    <button className="button-green text-center" onClick={closeModal}>Cancel</button>
+                    <button className="button-pink text-center" onClick={confirmSubmit}>Confirm</button>
+                </div>
+            {/* </div>
+        </div> */}
         </Modal>
 
         <br></br>
