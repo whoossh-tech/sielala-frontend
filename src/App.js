@@ -5,12 +5,18 @@ import RewardInventory from './pages/RewardInventory';
 import { TenantRegistrationForm } from './pages/tenant/TenantRegistrationForm';
 import { TenantRegistrationSuccessPage } from './pages/tenant/TenantRegistrationSuccessPage';
 import { TenantRegistrationFailPage } from './pages/tenant/TenantRegistrationFailPage';
+import { DashboardGuest } from './pages/DashboardGuest';
+import { DashboardStaff } from './pages/DashboardStaff';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
+            {/* please review & correct it */}
+            <Route path="/" element={<DashboardGuest />}></Route>
+            <Route path="/staff" element={<DashboardStaff />}></Route>
+
             <Route path="/reward-inventory" element={<RewardInventory />}></Route>
 
             {/* tenant routes */}
