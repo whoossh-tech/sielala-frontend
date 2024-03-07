@@ -8,8 +8,8 @@ import '../static/css/Button.css';
 import '../static/css/FormRewardInventory.css';
 import '../static/css/Modal.css';
 
-const FormRewardInventory = () => {
-    const { idEvent } = useParams();
+const EditRewardInventory = () => {
+    const { idReward } = useParams();
     const url = 'http://localhost:8080';
     const navigate = useNavigate();
 
@@ -31,22 +31,25 @@ const FormRewardInventory = () => {
     };
 
     useEffect(() => {
-        const fetchEventInfo = async () => {
+        const fetchRewardData = async () => {
             try {
-                const response = await axios.get(`${url}/api/reward/${idEvent}`);
-                const eventData = response.data.eventData;
-                setEventName(eventData.eventName);
-                const countDays = response.data.daysRange;
-                setCountDays(countDays);
+                const response = await axios.get(`${url}/api/reward/detail/${idReward}`);
+                const rewardData = response.data.rewardData;
+
+                setProductName(rewardData.productName);
+                setBrandName(rewardData.brandName);
+                setCategory(rewardData.category);
+                setListDayReward(rewardData.listDayReward);
+                setEventName(rewardData.event.eventName);
+                setCountDays(response.data.daysRange);
           
-                setListDayReward(Array.from({length: countDays}, (_, index) => ({ stokAwal: 0, day: index + 1 })));
             } catch (error) {
-                console.error('Error fetching event information:', error);
+                console.error('Error fetching reward data:', error);
             }
         };
 
-        fetchEventInfo();
-    }, []);
+        fetchRewardData();
+    }, [idReward]);
 
     const validateForm = () => {
         const newErrors = {};
@@ -63,7 +66,7 @@ const FormRewardInventory = () => {
             newErrors.category = 'Category cannot be empty';
         }
         
-        const allStocksEmpty = listDayReward.every(day => day.stokAwal === 0 || day.stokAwal === null || day.stokAwal === undefined);
+        const allStocksEmpty = listDayReward.every(day => day.stokAwal === 0 || day.stokAwal === null || day.stokAwal === undefined || Number.isNaN(day.stokAwal));
         if (allStocksEmpty) {
             newErrors.listDayReward = 'Fill at least one Initial Stock';
         }
@@ -85,13 +88,13 @@ const FormRewardInventory = () => {
         closeModal();
 
         try {
-            const response = await axios.post(`${url}/api/reward/add/${idEvent}`, {
+            const response = await axios.put(`${url}/api/reward/edit/${idReward}`, {
                 productName,
                 brandName,
                 category,
                 listDayReward
             });
-            console.log('Reward added successfully:', response.data);
+            console.log('Reward edited successfully:', response.data);
             navigate('/reward-inventory');
         } catch (error) {
             console.error('Error:', error);
@@ -99,17 +102,20 @@ const FormRewardInventory = () => {
     };
 
     const renderDayRewardRows = () => {
-        return Array.from({ length: countDays }, (_, index) => (
-            <tr key={index}>
-                <td>{`Day ${index + 1}`}</td>
+        // sort array by the day
+        const sortedDayRewards = [...listDayReward].sort((a, b) => a.day - b.day);
+    
+        return sortedDayRewards.map(dayReward => (
+            <tr key={dayReward.id}>
+                <td>{`Day ${dayReward.day}`}</td>
                 <td>
                     <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listDayReward && "border-danger"}`}>
                         <input
                             className="px-4 py-3 w-full focus:outline-none"
                             type="number"
-                            value={listDayReward[index]?.stokAwal || ''}  
+                            value={dayReward.stokAwal || ''}  
                             min="0"
-                            onChange={(e) => handleDayStockChange(index, parseInt(e.target.value))}
+                            onChange={(e) => handleDayStockChange(dayReward.day, parseInt(e.target.value))}
                         />
                     </div>
                 </td>
@@ -117,10 +123,14 @@ const FormRewardInventory = () => {
         ));
     };
 
-    const handleDayStockChange = (index, value) => {
-        const updatedDayRewards = [...listDayReward];
-        updatedDayRewards[index] = { ...updatedDayRewards[index], stokAwal: value };
-        setListDayReward(updatedDayRewards);
+    const handleDayStockChange = (day, value) => {
+        const index = listDayReward.findIndex(dayReward => dayReward.day === day);
+        if (index !== -1) {
+            // Copy the array and update the stokAwal 
+            const updatedListDayReward = [...listDayReward];
+            updatedListDayReward[index] = { ...updatedListDayReward[index], stokAwal: value };
+            setListDayReward(updatedListDayReward);
+        }
     };
 
     return (
@@ -129,7 +139,7 @@ const FormRewardInventory = () => {
              onSubmit={(e) => onSubmit(e)}
         >
 
-        <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Add New Reward</h1>
+        <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Edit Reward</h1>
         <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
 
             {/* brand name */}
@@ -253,7 +263,7 @@ const FormRewardInventory = () => {
         <br></br>
         <div>
             <button className="button-green">Cancel</button>
-            <button className="button-pink" type="submit">Add Reward</button>
+            <button className="button-pink" type="submit">Save Reward</button>
         </div>
 
         <Modal
@@ -264,7 +274,7 @@ const FormRewardInventory = () => {
         {/* <div className='modalBackground'>
             <div className="modalContainer"> */}
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-                <p className="text-center text-gray-700">Are you sure you want to add reward?</p>
+                <p className="text-center text-gray-700">Are you sure you want to edit reward?</p>
                 <br></br>
                 <div>
                     <button className="button-green text-center" onClick={closeModal}>Cancel</button>
@@ -279,4 +289,4 @@ const FormRewardInventory = () => {
         </form>
     );
 };
-export default FormRewardInventory;
+export default EditRewardInventory;
