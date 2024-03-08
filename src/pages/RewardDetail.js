@@ -13,11 +13,7 @@ const RewardDetail = () => {
 
     const [rewardData, setRewardData] = useState();
     const [countdays, setCountDays] = useState(0);
-    // const [eventData, setEventData] = useState([]);
-    // const [selectedEvent, setSelectedEvent] = useState('');
     const dayRangeCount = Array.from({ length: countdays });
-    // const header1 = 3 + (countdays*3)
-    // const header2 = 1 + countdays
 
    useEffect(() => {
 
@@ -30,39 +26,11 @@ const RewardDetail = () => {
    })
 
 
-    // const handleChange = (e) => {
-    //     setSelectedEvent(e.target.value);
-    // };
-
-    // function carryOutStock() {
-    //     if (selectedEvent) {
-    //         axios.post(`http://localhost:8080/api/reward/carry-out-stock/${selectedEvent}`)
-    //         .then(res => {
-    //             setRewardData(res.data.data)
-    //             setCountDays(res.data.dayRange)
-    //             toast.success("Reward Carry Out Successfully")
-    //         }).catch(function(error) {
-    //             if (error.response.status === 400) {
-    //                 console.log(error)
-    //                 toast.error("Cannot Carry out because this is the last day of event")
-    //             } else if (error.response.status === 404) {
-    //                 console.log(error)
-    //                 toast.error("Cannot Carry out. Reward Inventory is still empty.")
-    //             }
-    //         })
-    //     }
-    // }
-
-    // const sortedRewardData = rewardData.map(reward => {
-    //     const sortedListDayReward = reward.listDayReward.sort((a, b) => a.day - b.day);
-    //     return { ...reward, listDayReward: sortedListDayReward };
-    // });
-
-
     return (  
         <div className="RewardInventory">
-            <div className="mini-card col col-lg-5 reward-detail">
-                    <h2>Reward Detail</h2>
+
+            <div class="text-center pt-3">
+                <h2>Reward Detail</h2>
             </div>
 
             <Toaster
@@ -72,23 +40,30 @@ const RewardDetail = () => {
 
             {rewardData ? (
                 <>
-                
 
-                <div className="mini-card col col-lg-5 reward-detail">
-                    <h2>Reward Detail</h2>
-                </div>
+            <div className="mb-3">
+                <strong>Reward</strong> : <span>{rewardData.productName}</span>
+            </div>
 
-                    <div className="mini-card col col-lg-5">
-                        <h3 className="attribute">Reward Name:</h3>
-                        <p>{rewardData.productName}</p>
-                    </div>
+            <br></br>
 
-                    <div className="col-md-auto"></div>
-                    <div className="mini-card col col-lg-5">
-                        <h3 className="attribute">Brand:</h3>
-                        <p>{rewardData.brandName}</p>
-                    </div>            
-    
+            <div className="mb-3">
+                <strong>Brand</strong> : <span>{rewardData.brandName}</span>
+            </div>
+
+            <br></br>
+
+            <div className="mb-3">
+                <strong>Category</strong> : <span> CAT {rewardData.category}</span>
+            </div>
+
+            <br></br>
+
+            <div className="mb-3">
+                <strong>Event</strong> : <span>{rewardData.event.eventName}</span>
+            </div>          
+
+            <br></br>
 
                 <table>
                     <thead>
@@ -134,6 +109,7 @@ const RewardDetail = () => {
                 ) : (
                     <p>Loading...</p>
                 )}
+
         </div>
     );
 }

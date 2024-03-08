@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: center; 
     align-items: center;
+    margin-top: 40px;
 }
 
 .button-field {
@@ -26,4 +27,22 @@ tr:nth-child(even){background-color: #f2f2f2}
 th {
     background-color: #F59FC3; ;
     color: white;
+}
+
+#modal-confirmation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* transform: translate(-50%, -50%); */
+    width: 80%;
+    height: 60%;
+    max-width: 400px;
+    max-height: 200px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }

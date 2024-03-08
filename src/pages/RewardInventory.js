@@ -6,6 +6,7 @@ import '../static/css/Button.css';
 import axios from 'axios';
 import {toast, Toaster} from 'react-hot-toast';
 import { Link } from "react-router-dom";
+import Modal from 'react-modal';
 
 const RewardInventory = () => {
 
@@ -17,24 +18,33 @@ const RewardInventory = () => {
     // const header1 = 3 + (countdays*3)
     // const header2 = 1 + countdays
 
-   useEffect(() => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    if (selectedEvent) {
-        axios.get(`http://localhost:8080/api/reward/view-all/${selectedEvent}`)
-        .then(res => {
-            setRewardData(res.data.data)
-            setCountDays(res.data.dayRange)
-        }).catch(err => 
-            console.log(err)
-            
-            )
-    }
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
 
-    axios.get('http://localhost:8080/api/reward/view-event-all')
-        .then(res => {
-            setEventData(res.data.data)
-        })
-   }, [selectedEvent])
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    useEffect(() => {
+        if (selectedEvent) {
+            axios.get(`http://localhost:8080/api/reward/view-all/${selectedEvent}`)
+            .then(res => {
+                setRewardData(res.data.data)
+                setCountDays(res.data.dayRange)
+            }).catch(err => 
+                console.log(err)
+                
+                )
+        }
+
+        axios.get('http://localhost:8080/api/reward/view-event-all')
+            .then(res => {
+                setEventData(res.data.data)
+            })
+    }, [selectedEvent])
 
 
     const handleChange = (e) => {
@@ -42,6 +52,8 @@ const RewardInventory = () => {
     };
 
     function carryOutStock() {
+        closeModal();
+
         if (selectedEvent) {
             axios.post(`http://localhost:8080/api/reward/carry-out-stock/${selectedEvent}`)
             .then(res => {
@@ -58,6 +70,10 @@ const RewardInventory = () => {
                 }
             })
         }
+    }
+
+    function carryOutStockModal() {
+        openModal();
     }
 
     const sortedRewardData = rewardData.map(reward => {
@@ -86,7 +102,20 @@ const RewardInventory = () => {
 
             <div className="button-field">
                 <button className="button-pink">+ Add Reward</button>
-                <button className="button-green" onClick={carryOutStock}>Carry Out Stock</button>
+                <button className="button-green" onClick={carryOutStockModal}>Carry Out Stock</button>
+
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                id="modal-confirmation"
+            >
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Carry Out Stock</h2>
+                <p className="text-center text-gray-700">Are you sure you want to move remaining stock to the next day of event?</p>
+                <br></br>
+                <button className="button-pink text-center" onClick={closeModal}>Cancel</button>
+                <button className="button-green text-center" onClick={carryOutStock}>Confirm</button>
+            </Modal>
+
             </div>
 
             <table>
@@ -121,7 +150,7 @@ const RewardInventory = () => {
                         sortedRewardData.map((reward, i) => (
                             <tr key={i}>
                                 <td>
-                                    <Link to={`/reward-inventory/detail/${reward.idProduct}`}>{reward.productName}</Link></td>
+                                    <Link to={`/reward-inventory/detail/${reward.idProduct}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{reward.productName}</Link></td>
                                 <td>{reward.brandName}</td>
                                 <td>{reward.category}</td>
                                 {reward.listDayReward.map((dayReward, j) => (
@@ -140,6 +169,7 @@ const RewardInventory = () => {
                     )}
                 </tbody>
             </table>
+
         </div>
     );
 }
