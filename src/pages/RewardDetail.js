@@ -25,18 +25,12 @@ const RewardDetail = () => {
         setIsModalOpen(false);
     };
 
-    // const deleteReward = (e) => {
-    //     e.preventDefault();
-
-    //         openModal();
-    // };
-
    useEffect(() => {
 
     axios.get(`http://localhost:8080/api/reward/detail/${id}`)
     .then(res => {
         setRewardData(res.data.rewardData)
-        setCountDays(res.data.dayRange)
+        setCountDays(res.data.daysRange)
     }).catch(err => 
         console.log(err))
    })
@@ -128,12 +122,22 @@ const RewardDetail = () => {
                     </tbody>
                 </table>
     
-                <div className="button-field">
-                    <Link to={`/edit-reward/${id}`}>
-                        <button className="button-pink">Edit Reward</button>
-                    </Link>
-                    <button className="button-green" onClick={openModal}>Delete Reward</button>
+                <div>
+                    {rewardData.rewardRedeemed.length === 0 ? (
+                    <div className="button-field">
+                        <Link to={`/edit-reward/${id}`}>
+                            <button className="button-pink">Edit Reward</button>
+                        </Link>
+                        <button className="button-green" onClick={openModal}>Delete Reward</button>
+                    </div>
+                     ) : (
+                    <div className="button-field">
+                        <button className="button-pink" disabled>Edit Reward</button>
+                        <button className="button-green" disabled>Delete Reward</button>
+                    </div>
+                )}
                 </div>
+                
             </>
                 ) : (
                     <p>Loading...</p>

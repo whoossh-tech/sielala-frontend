@@ -33,3 +33,13 @@
     background-color: #D3DA80;
     color: white;
 }
+
+.button-pink:disabled {
+    background-color: #c19dac; 
+    cursor: not-allowed; 
+}
+
+.button-green:disabled {
+    background-color: #b5b98a; 
+    cursor: not-allowed; 
+}
