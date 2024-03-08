@@ -1,15 +1,17 @@
 import React from 'react';
 import { useState, useEffect} from "react";
-// import './App.css';
+import '../App.css';
 import '../static/css/RewardInventory.css';
 import '../static/css/Button.css';
 import axios from 'axios';
 import {toast, Toaster} from 'react-hot-toast';
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate} from "react-router-dom";
+import backgroundPhoto from '../assets/bg-cover.png';
 
 const RewardDetail = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate(); 
 
     const [rewardData, setRewardData] = useState();
     const [countdays, setCountDays] = useState(0);
@@ -23,14 +25,23 @@ const RewardDetail = () => {
         setCountDays(res.data.dayRange)
     }).catch(err => 
         console.log(err))
-   })
+    })
 
+
+    const handleBack = () => {
+        navigate(-1); // Redirect back to the previous page
+    };
 
     return (  
-        <div className="RewardInventory">
+        <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
 
-            <div class="text-center pt-3">
-                <h2>Reward Detail</h2>
+            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
+                <div className="text-wrapper">
+                    <h1 className="title">Reward Detail</h1>
+                    <div className="subtitle-wrapper">
+                        <p className="subtitle">Manage and view reward’s data here.</p>
+                    </div>
+                </div>
             </div>
 
             <Toaster
@@ -38,33 +49,36 @@ const RewardDetail = () => {
                     reverseOrder={false}
             />
 
+            <br></br>
+
             {rewardData ? (
                 <>
 
-            <div className="mb-3">
-                <strong>Reward</strong> : <span>{rewardData.productName}</span>
+            <br></br>
+
+            <div className="detail-reward">
+                <div className="each-reward">
+                        <p className="reward-text-title">Reward:</p>
+                        <p className="reward-text">{rewardData.productName}</p>
+                </div>
+                <div className="each-reward">
+                        <p className="reward-text-title">Brand:</p>
+                        <p className="reward-text">{rewardData.brandName}</p>
+                </div>
+                <div className="each-reward">
+                        <p className="reward-text-title">Category:</p>
+                        <p className="reward-text">{rewardData.category}</p>
+                </div>
+                <div className="each-reward">
+                        <p className="reward-text-title">Event:</p>
+                        <p className="reward-text">{rewardData.event.eventName}</p>
+                </div>
             </div>
 
             <br></br>
-
-            <div className="mb-3">
-                <strong>Brand</strong> : <span>{rewardData.brandName}</span>
-            </div>
-
             <br></br>
 
-            <div className="mb-3">
-                <strong>Category</strong> : <span> CAT {rewardData.category}</span>
-            </div>
-
-            <br></br>
-
-            <div className="mb-3">
-                <strong>Event</strong> : <span>{rewardData.event.eventName}</span>
-            </div>          
-
-            <br></br>
-
+            <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
                 <table>
                     <thead>
                         {/* Row headers */}
@@ -100,15 +114,20 @@ const RewardDetail = () => {
                         </tr>
                     </tbody>
                 </table>
+            </div>
+                
     
-                <div className="button-field">
-                    <button className="button-pink">Edit Reward</button>
-                    <button className="button-green">Delete Reward</button>
-                </div>
+            <br></br>
+
+            <div className="button-field">
+                <button className="button-green" onClick={handleBack}>Back</button>
+                <button className="button-pink">Edit Reward</button>
+                <button className="button-red">Delete Reward</button>
+            </div>
             </>
-                ) : (
-                    <p>Loading...</p>
-                )}
+            ) : (
+                <p>Loading...</p>
+            )}
 
         </div>
     );
