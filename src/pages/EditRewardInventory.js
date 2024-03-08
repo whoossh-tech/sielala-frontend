@@ -35,6 +35,7 @@ const EditRewardInventory = () => {
             try {
                 const response = await axios.get(`${url}/api/reward/detail/${idReward}`);
                 const rewardData = response.data.rewardData;
+                // console.log(rewardData);
 
                 setProductName(rewardData.productName);
                 setBrandName(rewardData.brandName);
@@ -262,7 +263,7 @@ const EditRewardInventory = () => {
 
         <br></br>
         <div>
-            <button className="button-green">Cancel</button>
+            <button className="button-green" onClick={() => navigate(-1)}>Cancel</button>
             <button className="button-pink" type="submit">Save Reward</button>
         </div>
 

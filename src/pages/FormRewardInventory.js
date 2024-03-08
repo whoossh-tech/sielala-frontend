@@ -63,7 +63,7 @@ const FormRewardInventory = () => {
             newErrors.category = 'Category cannot be empty';
         }
         
-        const allStocksEmpty = listDayReward.every(day => day.stokAwal === 0 || day.stokAwal === null || day.stokAwal === undefined);
+        const allStocksEmpty = listDayReward.every(day => day.stokAwal === 0 || day.stokAwal === null || day.stokAwal === undefined || Number.isNaN(day.stokAwal));
         if (allStocksEmpty) {
             newErrors.listDayReward = 'Fill at least one Initial Stock';
         }
@@ -252,7 +252,7 @@ const FormRewardInventory = () => {
 
         <br></br>
         <div>
-            <button className="button-green">Cancel</button>
+            <button className="button-green" onClick={() => navigate(-1)}>Cancel</button>
             <button className="button-pink" type="submit">Add Reward</button>
         </div>
 
