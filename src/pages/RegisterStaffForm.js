@@ -179,14 +179,16 @@ const RegisterStaffForm = () => {
         </button>
 
         <Modal
-            isOpen={isModalOpen}
-            onRequestClose={closeModal}
-            className="modal-confirmation"
-        >
-            <h2>Confirm Registration</h2>
-            <p>Are you sure you want to register?</p>
-            <button className="button-green" onClick={confirmRegistration}>Confirm</button>
-            <button className="button-pink" onClick={closeModal}>Cancel</button>
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                id="modal-confirmation"
+                
+            >
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Create Account</h2>
+                <p className="text-center text-gray-700">Are you sure you want to create this staff account?</p>
+                <br></br>
+                <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+                <button className="button-green text-center" onClick={confirmRegistration}>Confirm</button>
         </Modal>
 
         <br></br>
@@ -195,5 +197,4 @@ const RegisterStaffForm = () => {
     );
 };
 
-// RegisterForm.displayName = "RegisterForm";
 export default RegisterStaffForm;
