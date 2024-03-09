@@ -3,6 +3,7 @@ import axios from 'axios';
 import backgroundPhoto from '../assets/bg-cover.png';
 import { toast, Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import '../static/css/UserList.css';
 
 const UserList = () => {
     const [users, setUserList] = useState([]);
@@ -128,7 +129,7 @@ return (
         </Modal> */}
 
         </div>
-
+{/* 
         <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
     <div>
         <h1>User List</h1>
@@ -159,7 +160,37 @@ return (
             </tbody>
         </table>
     </div>
-</div>
+</div> */}
+
+<div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
+                <table>
+                    <thead>
+                        {/* Column headers */}
+                        <tr>
+                            <th>Role</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {users.map((user) => (
+                    <tr key={user.userId}>
+                        <td>{user.authorities.length > 0 ? user.authorities[0].authority : ''}</td>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>{user.username}</td>
+                        <td>
+                            <button onClick={() => handleEditClick(user.userId)}>
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                    </tbody>
+                </table>
+            </div>
 
 
     </div>

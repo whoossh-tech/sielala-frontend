@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import '../static/css/RegisterStaffForm.css';
 import '../static/css/Button.css';
 import { useNavigate } from 'react-router-dom';
+import {toast, Toaster} from 'react-hot-toast';
+import backgroundPhoto from '../assets/bg-cover.png';
 
 const RegisterStaffForm = () => {
     const[email, setEmail] = useState('');
@@ -37,14 +39,6 @@ const RegisterStaffForm = () => {
         if (!role) {
             newErrors.role = 'Role cannot be empty';
         }
-
-        // if (!username.trim()) {
-        //     newErrors.username = 'Username cannot be empty';
-        // }
-
-        // if (!password.trim()) {
-        //     newErrors.password = 'Password cannot be empty';
-        // }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -82,13 +76,144 @@ const RegisterStaffForm = () => {
         }
     };
 
+    // return (
+    //     <form
+    //         className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
+    //         onSubmit={(e) => onRegister(e)}
+    //     >
+
+    //     <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Staff Registration</h1>
+    //     <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
+
+    //         {/* email */}
+    //         <div className="input-form flex flex-col space-y-1">
+    //         <label className="input-label font-reynaldo text-left" htmlFor="email">
+    //             Email<span className="text-danger">*</span>
+    //         </label>
+
+    //         <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.email && "border-danger"}`}>
+    //             <input
+    //             id="email"
+    //             className="px-4 py-3 w-full focus:outline-none"
+    //             placeholder="ex. lalamarket@gmail.com"
+    //             value={email}
+    //             onChange={(e) => setEmail(e.target.value)}
+    //             />
+    //         </div>
+
+    //         {errors.email && (
+    //             <span className="mt-0.5 text-danger text-xs">
+    //             {errors.email}
+    //             </span>
+    //         )}
+    //         </div>
+
+    //         {/* name */}
+    //         <div className="input-form flex flex-col space-y-1">
+    //         <label className="input-label font-reynaldo text-left" htmlFor="name">
+    //             Name<span className="text-danger">*</span>
+    //         </label>
+
+    //         <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.name && "border-danger"}`}>
+    //             <input
+    //             id="name"
+    //             className="px-4 py-3 w-full focus:outline-none"
+    //             placeholder="Lala"
+    //             value={name}
+    //             onChange={(e) => setName(e.target.value)}
+    //             />
+    //         </div>
+
+    //         {errors.name && (
+    //             <span className="mt-0.5 text-danger text-xs">
+    //             {errors.name}
+    //             </span>
+    //         )}
+    //         </div>
+
+    //         {/* role dropdown */}
+    //     <div className="input-form flex flex-col space-y-1">
+    //         <label className="input-label font-reynaldo text-left" htmlFor="role">
+    //             Role<span className="text-danger">*</span>
+    //         </label>
+
+    //         <div className={`overflow-clip w-full border border-neutral-40 rounded-lg`}>
+    //             <select
+    //                 id="role"
+    //                 className="px-4 py-3 w-full focus:outline-none"
+    //                 value={role}
+    //                 onChange={(e) => setRole(e.target.value)}
+    //             >
+    //                 <option value="" disabled>Select a role</option>
+    //                 <option value="ADMIN">Admin</option>
+    //                 <option value="BISDEV">Business Development</option>
+    //                 <option value="PARTNERSHIP">Partnership</option>
+    //                 <option value="FINANCE">Finance</option>
+    //                 <option value="OPERATION">Operation</option>
+    //             </select>
+    //         </div>
+
+    //         {errors.role && (
+    //             <span className="mt-0.5 text-danger text-xs">
+    //             {errors.role}
+    //             </span>
+    //         )}
+    //     </div>
+    
+    //     </div>
+
+    //     <br></br>
+
+    //     <button
+    //         className="button-pink"
+    //         type="submit"
+    //         // disabled={isRegisterLoading}
+    //     >
+    //         Register Staff
+    //     </button>
+
+    //     <Modal
+    //             isOpen={isModalOpen}
+    //             onRequestClose={closeModal}
+    //             id="modal-confirmation"
+                
+    //         >
+    //             <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Create Account</h2>
+    //             <p className="text-center text-gray-700">Are you sure you want to create this staff account?</p>
+    //             <br></br>
+    //             <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+    //             <button className="button-green text-center" onClick={confirmRegistration}>Confirm</button>
+    //     </Modal>
+
+    //     <br></br>
+
+    //     </form>
+    // );
+
     return (
+
+        <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+
+            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
+                <div className="text-wrapper">
+                    <h1 className="title">Staff Registration</h1>
+                    <div className="subtitle-wrapper">
+                        <p className="subtitle">Manage and view SieLala accounts here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <Toaster
+                    position="top-center"
+                    reverseOrder={false}
+            />
+            
         <form
             className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
-            onSubmit={(e) => onRegister(e)}
+             onSubmit={(e) => onRegister(e)}
         >
 
-        <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Staff Registration</h1>
+        {/* <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Add New Reward</h1> */}
         <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
 
             {/* email */}
@@ -101,7 +226,7 @@ const RegisterStaffForm = () => {
                 <input
                 id="email"
                 className="px-4 py-3 w-full focus:outline-none"
-                placeholder="ex. lalamarket@gmail.com"
+                placeholder="Insert Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 />
@@ -124,9 +249,9 @@ const RegisterStaffForm = () => {
                 <input
                 id="name"
                 className="px-4 py-3 w-full focus:outline-none"
-                placeholder="Lala"
+                placeholder="Insert Staff Name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setName(e.target.value)} 
                 />
             </div>
 
@@ -137,20 +262,21 @@ const RegisterStaffForm = () => {
             )}
             </div>
 
-            {/* role dropdown */}
-        <div className="input-form flex flex-col space-y-1">
+            {/* role */}
+            <div className="input-form flex flex-col">
             <label className="input-label font-reynaldo text-left" htmlFor="role">
                 Role<span className="text-danger">*</span>
             </label>
 
-            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg`}>
+            <div className={`relative overflow-clip w-full border border-neutral-40 rounded-lg ${errors.role && "border-danger"}`}>
                 <select
-                    id="role"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
+                id="role"
+                className="appearance-none px-4 py-3 w-full focus:outline-none"
+                placeholder="Choose Role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)} 
                 >
-                    <option value="" disabled>Select a role</option>
+                    <option value="" disabled>Choose Role</option>
                     <option value="ADMIN">Admin</option>
                     <option value="BISDEV">Business Development</option>
                     <option value="PARTNERSHIP">Partnership</option>
@@ -164,36 +290,38 @@ const RegisterStaffForm = () => {
                 {errors.role}
                 </span>
             )}
-        </div>
-    
+            </div>
+
         </div>
 
         <br></br>
-
-        <button
-            className="button-pink"
-            type="submit"
-            // disabled={isRegisterLoading}
-        >
-            Register Staff
-        </button>
+        <div>
+            <button className="button-green" onClick={() => navigate(-1)}>Back</button>
+            <button className="button-pink" type="submit">Add Staff Account</button>
+        </div>
 
         <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                id="modal-confirmation"
-                
-            >
-                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Create Account</h2>
-                <p className="text-center text-gray-700">Are you sure you want to create this staff account?</p>
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            id="modal-confirmation"
+        >
+        {/* <div className='modalBackground'>
+            <div className="modalContainer"> */}
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                <p className="text-center text-gray-700">Are you sure you want to add account?</p>
                 <br></br>
-                <button className="button-red text-center" onClick={closeModal}>Cancel</button>
-                <button className="button-green text-center" onClick={confirmRegistration}>Confirm</button>
+                <div>
+                    <button className="button-red text-center" onClick={closeModal}>Back</button>
+                    <button className="button-green text-center" onClick={confirmRegistration}>Confirm</button>
+                </div>
+            {/* </div>
+        </div> */}
         </Modal>
 
         <br></br>
 
         </form>
+        </div>
     );
 };
 
