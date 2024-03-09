@@ -2,12 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 
-import '../App.css';
-import '../static/css/RewardInventory.css';
-import '../static/css/Button.css';
-import backgroundPhoto from '../assets/bg-cover.png';
+import '../../App.css';
+import '../../static/css/RewardInventory.css';
+import '../../static/css/Button.css';
+import backgroundPhoto from '../../assets/bg-cover.png';
 import { useState, useEffect, useHistory} from "react";
-import { NavbarOperation } from '../components/navbar/NavbarOperation';
+import { NavbarOperation } from '../../components/navbar/NavbarOperation';
 import {toast, Toaster} from 'react-hot-toast';
 import { Link, useNavigate } from "react-router-dom";
 

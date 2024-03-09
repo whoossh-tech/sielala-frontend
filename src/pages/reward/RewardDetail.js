@@ -4,11 +4,11 @@ import Modal from 'react-modal';
 import { useState, useEffect} from "react";
 import {toast, Toaster} from 'react-hot-toast';
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { NavbarOperation } from '../components/navbar/NavbarOperation';
-import '../App.css';
-import '../static/css/RewardInventory.css';
-import '../static/css/Button.css';
-import backgroundPhoto from '../assets/bg-cover.png';
+import { NavbarOperation } from '../../components/navbar/NavbarOperation';
+import '../../App.css';
+import '../../static/css/RewardInventory.css';
+import '../../static/css/Button.css';
+import backgroundPhoto from '../../assets/bg-cover.png';
 
 const RewardDetail = () => {
     const { id } = useParams();

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import '../static/css/RegisterStaffForm.css';
-import '../static/css/Button.css';
+import '../../static/css/RegisterStaffForm.css';
+import '../../static/css/Button.css';
 import { useNavigate } from 'react-router-dom';
 import {toast, Toaster} from 'react-hot-toast';
-import backgroundPhoto from '../assets/bg-cover.png';
+import backgroundPhoto from '../../assets/bg-cover.png';
 
 const RegisterStaffForm = () => {
     const[email, setEmail] = useState('');

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-import '../static/css/RegisterStaffForm.css';
-import '../static/css/Button.css';
-import backgroundPhoto from '../assets/background.svg';
-import '../static/css/Login.css'
+import '../../static/css/RegisterStaffForm.css';
+import '../../static/css/Button.css';
+import backgroundPhoto from '../../assets/background.svg';
+import '../../static/css/Login.css'
 
 const Login = () => {
     const[username, setUsername] = useState('');

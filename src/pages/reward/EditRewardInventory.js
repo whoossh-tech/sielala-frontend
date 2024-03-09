@@ -4,10 +4,10 @@ import { useState, useEffect} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Modal from 'react-modal';
 import {toast, Toaster} from 'react-hot-toast';
-import '../static/css/Button.css';
-import '../static/css/FormRewardInventory.css';
-import '../static/css/Modal.css';
-import backgroundPhoto from '../assets/bg-cover.png';
+import '../../static/css/Button.css';
+import '../../static/css/FormRewardInventory.css';
+import '../../static/css/Modal.css';
+import backgroundPhoto from '../../assets/bg-cover.png';
 
 const EditRewardInventory = () => {
     const { idReward } = useParams();

@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import RewardInventory from './pages/RewardInventory';
-import FormRewardInventory from './pages/FormRewardInventory';
-import EditRewardInventory from './pages/EditRewardInventory';
-import RewardDetail from './pages/RewardDetail';
+
+// import for routes
+import RewardInventory from './pages/reward/RewardInventory';
+import FormRewardInventory from './pages/reward/FormRewardInventory';
+import EditRewardInventory from './pages/reward/EditRewardInventory';
+import RewardDetail from './pages/reward/RewardDetail';
 import { TenantRegistrationForm } from './pages/tenant/TenantRegistrationForm';
 import { TenantRegistrationSuccessPage } from './pages/tenant/TenantRegistrationSuccessPage';
 import { TenantRegistrationFailPage } from './pages/tenant/TenantRegistrationFailPage';
@@ -14,9 +16,9 @@ import { DashboardOperation } from './pages/dashboard/DashboardOperation';
 import { DashboardAdmin } from './pages/dashboard/DashboardAdmin';
 import { DashboardBisdev } from './pages/dashboard/DashboardBisdev';
 import { DashboardFinance } from './pages/dashboard/DashboardFinance';
-import Login from './pages/Login';
-import RegisterStaffForm from './pages/RegisterStaffForm';
-import UserList from './pages/UserList';
+import Login from './pages/auth/Login';
+import RegisterStaffForm from './pages/auth/RegisterStaffForm';
+import UserList from './pages/auth/UserList';
 
 function App() {
   return (
@@ -46,7 +48,6 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/staff-registration" element={<RegisterStaffForm/>}></Route>
             <Route path="/user-list" element={<UserList/>}></Route>
-            
         </Routes>
       </Router>    
     </div>

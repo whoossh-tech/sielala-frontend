@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import backgroundPhoto from '../assets/bg-cover.png';
+import backgroundPhoto from '../../assets/bg-cover.png';
 import { toast, Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { NavbarAdmin } from '../components/navbar/NavbarAdmin';
-import '../static/css/UserList.css';
+import { NavbarAdmin } from '../../components/navbar/NavbarAdmin';
+import '../../static/css/UserList.css';
 
 const UserList = () => {
     const [users, setUserList] = useState([]);
