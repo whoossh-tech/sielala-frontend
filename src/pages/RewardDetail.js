@@ -1,12 +1,13 @@
 import React from 'react';
-import { useState, useEffect } from "react";
-// import './App.css';
-import '../static/css/RewardInventory.css';
-import '../static/css/Button.css';
 import axios from 'axios';
+import Modal from 'react-modal';
+import { useState, useEffect} from "react";
 import {toast, Toaster} from 'react-hot-toast';
 import { useParams, Link, useNavigate } from "react-router-dom";
-import Modal from 'react-modal';
+import '../App.css';
+import '../static/css/RewardInventory.css';
+import '../static/css/Button.css';
+import backgroundPhoto from '../assets/bg-cover.png';
 
 const RewardDetail = () => {
     const { id } = useParams();
@@ -33,7 +34,7 @@ const RewardDetail = () => {
         setCountDays(res.data.daysRange)
     }).catch(err => 
         console.log(err))
-   })
+    })
 
    const confirmDelete = async (e) => {
     closeModal();
@@ -42,16 +43,29 @@ const RewardDetail = () => {
         const response = await axios.delete(`http://localhost:8080/api/reward/delete/${id}`);
         console.log('Reward deleted successfully:', response.data);
         navigate('/reward-inventory');
+
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        toast.success("Reward deleted successfully");
     } catch (error) {
         console.error('Error:', error);
+        toast.error("Cannot delete reward");
     }
 };
 
-    return (  
-        <div className="RewardInventory">
+    const handleBack = () => {
+        navigate(-1); // Redirect back to the previous page
+    };
 
-            <div className="text-center pt-3">
-                <h2>Reward Detail</h2>
+    return (  
+        <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+
+            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
+                <div className="text-wrapper">
+                    <h1 className="title">Reward Detail</h1>
+                    <div className="subtitle-wrapper">
+                        <p className="subtitle">Manage and view reward’s data here.</p>
+                    </div>
+                </div>
             </div>
 
             <Toaster
@@ -59,33 +73,36 @@ const RewardDetail = () => {
                     reverseOrder={false}
             />
 
+            <br></br>
+
             {rewardData ? (
                 <>
 
-            <div className="mb-3">
-                <strong>Reward</strong> : <span>{rewardData.productName}</span>
+            <br></br>
+
+            <div className="detail-reward">
+                <div className="each-reward">
+                        <p className="reward-text-title">Reward:</p>
+                        <p className="reward-text">{rewardData.productName}</p>
+                </div>
+                <div className="each-reward">
+                        <p className="reward-text-title">Brand:</p>
+                        <p className="reward-text">{rewardData.brandName}</p>
+                </div>
+                <div className="each-reward">
+                        <p className="reward-text-title">Category:</p>
+                        <p className="reward-text">{rewardData.category}</p>
+                </div>
+                <div className="each-reward">
+                        <p className="reward-text-title">Event:</p>
+                        <p className="reward-text">{rewardData.event.eventName}</p>
+                </div>
             </div>
 
             <br></br>
-
-            <div className="mb-3">
-                <strong>Brand</strong> : <span>{rewardData.brandName}</span>
-            </div>
-
             <br></br>
 
-            <div className="mb-3">
-                <strong>Category</strong> : <span> CAT {rewardData.category}</span>
-            </div>
-
-            <br></br>
-
-            <div className="mb-3">
-                <strong>Event</strong> : <span>{rewardData.event.eventName}</span>
-            </div>          
-
-            <br></br>
-
+            <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
                 <table>
                     <thead>
                         {/* Row headers */}
@@ -121,27 +138,31 @@ const RewardDetail = () => {
                         </tr>
                     </tbody>
                 </table>
+            </div>
+                
     
                 <div>
                     {rewardData.rewardRedeemed.length === 0 ? (
                     <div className="button-field">
+                        <button className="button-green" onClick={handleBack}>Back</button>
                         <Link to={`/edit-reward/${id}`}>
                             <button className="button-pink">Edit Reward</button>
                         </Link>
-                        <button className="button-green" onClick={openModal}>Delete Reward</button>
+                        <button className="button-red" onClick={openModal}>Delete Reward</button>
                     </div>
                      ) : (
                     <div className="button-field">
+                        <button className="button-green" onClick={handleBack}>Back</button>
                         <button className="button-pink" disabled>Edit Reward</button>
-                        <button className="button-green" disabled>Delete Reward</button>
+                        <button className="button-red" disabled>Delete Reward</button>
                     </div>
                 )}
                 </div>
                 
             </>
-                ) : (
-                    <p>Loading...</p>
-                )}
+            ) : (
+                <p>Loading...</p>
+            )}
 
             <Modal
                 isOpen={isModalOpen}
@@ -154,8 +175,8 @@ const RewardDetail = () => {
                     <p className="text-center text-gray-700">Are you sure you want to delete this reward?</p>
                     <br></br>
                     <div>
-                        <button className="button-green text-center" onClick={closeModal}>Cancel</button>
-                        <button className="button-pink text-center" onClick={confirmDelete}>Confirm</button>
+                        <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+                        <button className="button-green text-center" onClick={confirmDelete}>Confirm</button>
                     </div>
                 {/* </div>
             </div> */}

@@ -3,10 +3,11 @@ import axios from "axios";
 import { useState, useEffect} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Modal from 'react-modal';
-
+import {toast, Toaster} from 'react-hot-toast';
 import '../static/css/Button.css';
 import '../static/css/FormRewardInventory.css';
 import '../static/css/Modal.css';
+import backgroundPhoto from '../assets/bg-cover.png';
 
 const EditRewardInventory = () => {
     const { idReward } = useParams();
@@ -95,10 +96,16 @@ const EditRewardInventory = () => {
                 category,
                 listDayReward
             });
+            
             console.log('Reward edited successfully:', response.data);
             navigate('/reward-inventory');
+
+            await new Promise((resolve) => setTimeout(resolve, 500))
+            toast.success("Reward edited successfully");
+            
         } catch (error) {
             console.error('Error:', error);
+            toast.error("Cannot edit reward");
         }
     };
 
@@ -135,12 +142,28 @@ const EditRewardInventory = () => {
     };
 
     return (
+        <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+
+            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
+                <div className="text-wrapper">
+                    <h1 className="title">Edit Reward</h1>
+                    <div className="subtitle-wrapper">
+                        <p className="subtitle">Manage and view reward’s data here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <Toaster
+                    position="top-center"
+                    reverseOrder={false}
+            />
+
         <form
             className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
              onSubmit={(e) => onSubmit(e)}
         >
 
-        <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Edit Reward</h1>
+        {/* <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Edit Reward</h1> */}
         <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
 
             {/* brand name */}
@@ -278,8 +301,8 @@ const EditRewardInventory = () => {
                 <p className="text-center text-gray-700">Are you sure you want to edit reward?</p>
                 <br></br>
                 <div>
-                    <button className="button-green text-center" onClick={closeModal}>Cancel</button>
-                    <button className="button-pink text-center" onClick={confirmSubmit}>Confirm</button>
+                    <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+                    <button className="button-green text-center" onClick={confirmSubmit}>Confirm</button>
                 </div>
             {/* </div>
         </div> */}
@@ -288,6 +311,7 @@ const EditRewardInventory = () => {
         <br></br>
 
         </form>
+        </div>
     );
 };
 export default EditRewardInventory;
