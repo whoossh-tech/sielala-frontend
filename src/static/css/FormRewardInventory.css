@@ -50,3 +50,17 @@ th, td {
     justify-content: center;
     align-items: center;
 }
+
+.subtitle {
+    font-size: 18px;
+    color: #E685AE;
+    font-weight: bold;
+    letter-spacing: 1px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 210px;
+    margin-bottom: 30px
+    /* margin-top: 0; Reset margin-top */
+    /* margin: 0 5px; */
+}

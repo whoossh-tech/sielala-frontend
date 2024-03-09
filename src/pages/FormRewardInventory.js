@@ -4,6 +4,7 @@ import { useState, useEffect} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Modal from 'react-modal';
 import {toast, Toaster} from 'react-hot-toast';
+import { NavbarOperation } from '../components/navbar/NavbarOperation';
 import '../static/css/Button.css';
 import '../static/css/FormRewardInventory.css';
 import '../static/css/Modal.css';
@@ -132,15 +133,17 @@ const FormRewardInventory = () => {
     return (
 
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+        <NavbarOperation />
 
-            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
-                <div className="text-wrapper">
-                    <h1 className="title">Add New Reward</h1>
-                    <div className="subtitle-wrapper">
+        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
+            <div>
+                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
+                    Add New Reward</h1>
+                <div>
                         <p className="subtitle">Manage and view reward’s data here.</p>
-                    </div>
                 </div>
             </div>
+        </div>
 
             <Toaster
                     position="top-center"

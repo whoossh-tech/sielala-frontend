@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { useState, useEffect} from "react";
 import {toast, Toaster} from 'react-hot-toast';
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { NavbarOperation } from '../components/navbar/NavbarOperation';
 import '../App.css';
 import '../static/css/RewardInventory.css';
 import '../static/css/Button.css';
@@ -58,15 +59,17 @@ const RewardDetail = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+        <NavbarOperation />
 
-            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
-                <div className="text-wrapper">
-                    <h1 className="title">Reward Detail</h1>
-                    <div className="subtitle-wrapper">
+        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
+            <div>
+                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
+                    Reward Detail</h1>
+                <div>
                         <p className="subtitle">Manage and view reward’s data here.</p>
-                    </div>
                 </div>
             </div>
+        </div>
 
             <Toaster
                     position="top-center"
@@ -82,19 +85,23 @@ const RewardDetail = () => {
 
             <div className="detail-reward">
                 <div className="each-reward">
-                        <p className="reward-text-title">Reward:</p>
+                        <p className="reward-text-title">Reward Name</p>
+                        <p>:</p>
                         <p className="reward-text">{rewardData.productName}</p>
                 </div>
                 <div className="each-reward">
-                        <p className="reward-text-title">Brand:</p>
+                        <p className="reward-text-title">Brand</p>
+                        <p>:</p>
                         <p className="reward-text">{rewardData.brandName}</p>
                 </div>
                 <div className="each-reward">
-                        <p className="reward-text-title">Category:</p>
+                        <p className="reward-text-title">Category</p>
+                        <p>:</p>
                         <p className="reward-text">{rewardData.category}</p>
                 </div>
                 <div className="each-reward">
-                        <p className="reward-text-title">Event:</p>
+                        <p className="reward-text-title">Event</p>
+                        <p>:</p>
                         <p className="reward-text">{rewardData.event.eventName}</p>
                 </div>
             </div>

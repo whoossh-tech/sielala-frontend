@@ -98,13 +98,14 @@ const RewardInventory = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation />
+            <NavbarOperation style={{ zIndex: 999 }}/>
 
-            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
-                <div className="text-wrapper">
-                    <h1 className="title">Reward Inventory</h1>
-                    <div className="subtitle-wrapper">
-                        <p className="subtitle">Manage and view reward’s data here.</p>
+            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
+                <div>
+                    <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
+                        Reward Inventory</h1>
+                    <div>
+                            <p className="subtitle">Manage and view reward’s data here.</p>
                     </div>
                 </div>
             </div>
@@ -116,7 +117,7 @@ const RewardInventory = () => {
 
             <br></br>
 
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '200px', margin: '0 auto' }}>
                 <select 
                     className="appearance-none px-4 py-3 w-full focus:outline-none" 
                     onChange={handleChange}
@@ -128,6 +129,8 @@ const RewardInventory = () => {
                         fontSize: '1rem',
                         lineHeight: '1.5',
                         padding: '0.5rem 1rem',
+                        width: '200px',
+                        alignItems: 'center', justifyContent : 'center'
                     }}
                 >
                     <option>select event</option>
@@ -180,7 +183,7 @@ const RewardInventory = () => {
                     <thead>
                         {/* Column headers */}
                         <tr>
-                            <th> Reward</th>
+                            <th>Reward</th>
                             <th>Brand</th>
                             <th>Category</th>
                             {dayRangeCount.map((day, index) => (
@@ -219,7 +222,7 @@ const RewardInventory = () => {
                     </tbody>
                 </table>
             </div>
-
+            <br></br>
         </div>
     );
 }

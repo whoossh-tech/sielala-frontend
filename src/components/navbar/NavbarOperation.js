@@ -39,7 +39,7 @@ export function NavbarOperation() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/" className="font-reynaldo flex items-center text-lg text-neutral-80">
+        <a href="/staff" className="font-reynaldo flex items-center text-lg text-neutral-80">
           Reward Redemption
         </a>
       </Typography>
@@ -49,7 +49,7 @@ export function NavbarOperation() {
   return (
     <div className="w-full">
       <style>{reynaldoStyles}</style>
-      <Navbar className="rounded-none sticky top-0 z-10 h-max bg-primary-60 px-4 py-2 lg:px-8 lg:py-4" style={{ border: 'none' }}>
+      <Navbar className="rounded-none sticky top-0 z-10 h-max bg-primary-60 px-4 py-2 lg:px-8 lg:py-4" style={{ border: 'none', zIndex: '0' }}>
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-4">
             <img
@@ -64,7 +64,7 @@ export function NavbarOperation() {
 
           <div className="flex items-center gap-x-1">
             <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
-              <span className="montserrat text-primary-70 text-lg">Log in</span>
+              <span className="montserrat text-primary-70 text-lg">Logout</span>
             </Button>
           </div>
         </div>
