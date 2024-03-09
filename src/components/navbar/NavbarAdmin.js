@@ -8,7 +8,7 @@ import {
 import logo from "../../assets/logo-sielala.png";
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 
-export function NavbarOperation() {
+export function NavbarAdmin() {
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -17,7 +17,7 @@ export function NavbarOperation() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/operation" className="flex items-center text-md text-neutral-80">
+        <a href="/admin" className="flex items-center text-md text-neutral-80">
           <b>Dashboard</b>
         </a>
       </Typography>
@@ -29,18 +29,7 @@ export function NavbarOperation() {
         className="p-1 font-normal"
       >
         <a href="/reward-inventory" className="flex items-center text-md text-neutral-80">
-          <b>Reward Inventory</b>
-        </a>
-      </Typography>
-
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="/" className="flex items-center text-md text-neutral-80">
-          <b>Reward Redemption</b>
+          <b>User Management</b>
         </a>
       </Typography>
     </ul>
@@ -64,7 +53,7 @@ export function NavbarOperation() {
 
           <div className="flex items-center gap-x-1">
             <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10 mx-4">
-              <span className="montserrat text-primary-70 text-md">Hi, OPERATION!</span>
+              <span className="montserrat text-primary-70 text-md">Hi, ADMIN!</span>
             </Button>
 
             <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">

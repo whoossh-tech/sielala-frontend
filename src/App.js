@@ -8,8 +8,12 @@ import RewardDetail from './pages/RewardDetail';
 import { TenantRegistrationForm } from './pages/tenant/TenantRegistrationForm';
 import { TenantRegistrationSuccessPage } from './pages/tenant/TenantRegistrationSuccessPage';
 import { TenantRegistrationFailPage } from './pages/tenant/TenantRegistrationFailPage';
-import { DashboardGuest } from './pages/DashboardGuest';
-import { DashboardStaff } from './pages/DashboardStaff';
+import { DashboardGuest } from './pages/dashboard/DashboardGuest';
+import { DashboardPartnership } from './pages/dashboard/DashboardPartnership';
+import { DashboardOperation } from './pages/dashboard/DashboardOperation';
+import { DashboardAdmin } from './pages/dashboard/DashboardAdmin';
+import { DashboardBisdev } from './pages/dashboard/DashboardBisdev';
+import { DashboardFinance } from './pages/dashboard/DashboardFinance';
 
 function App() {
   return (
@@ -18,7 +22,11 @@ function App() {
         <Routes>
             {/* please review & correct it */}
             <Route path="/" element={<DashboardGuest />}></Route>
-            <Route path="/staff" element={<DashboardStaff />}></Route>
+            <Route path="/partnership" element={<DashboardPartnership />}></Route>
+            <Route path="/operation" element={<DashboardOperation />}></Route>
+            <Route path="/admin" element={<DashboardAdmin />}></Route>
+            <Route path="/bisdev" element={<DashboardBisdev />}></Route>
+            <Route path="/finance" element={<DashboardFinance />}></Route>
 
             {/* reward routes */}
             <Route path="/reward-inventory" element={<RewardInventory />}></Route>
