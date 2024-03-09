@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { useState, useEffect} from "react";
 import {toast, Toaster} from 'react-hot-toast';
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { NavbarOperation } from '../components/navbar/NavbarOperation';
 import '../App.css';
 import '../static/css/RewardInventory.css';
 import '../static/css/Button.css';
@@ -58,6 +59,7 @@ const RewardDetail = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+            <NavbarOperation />
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
                 <div className="text-wrapper">

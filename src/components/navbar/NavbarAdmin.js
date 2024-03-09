@@ -28,7 +28,7 @@ export function NavbarAdmin() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/reward-inventory" className="flex items-center text-md text-neutral-80">
+        <a href="/user-list" className="flex items-center text-md text-neutral-80">
           <b>User Management</b>
         </a>
       </Typography>

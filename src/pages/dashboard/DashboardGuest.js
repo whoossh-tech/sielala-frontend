@@ -6,7 +6,7 @@ const DashboardGuest = () => {
         <main>
             <NavbarGuest />
             <br></br>
-            <h1>Hello, this is finance staff's dashboard</h1>
+            <h1>Hello, this is guest's dashboard</h1>
         </main>
     )
 }

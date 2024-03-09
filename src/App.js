@@ -14,6 +14,9 @@ import { DashboardOperation } from './pages/dashboard/DashboardOperation';
 import { DashboardAdmin } from './pages/dashboard/DashboardAdmin';
 import { DashboardBisdev } from './pages/dashboard/DashboardBisdev';
 import { DashboardFinance } from './pages/dashboard/DashboardFinance';
+import Login from './pages/Login';
+import RegisterStaffForm from './pages/RegisterStaffForm';
+import UserList from './pages/UserList';
 
 function App() {
   return (
@@ -38,6 +41,11 @@ function App() {
             <Route path="/tenant-registration" element={<TenantRegistrationForm/>}></Route>
             <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage/>}></Route>
             <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage/>}></Route>
+
+            {/* auth routes */}
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/staff-registration" element={<RegisterStaffForm/>}></Route>
+            <Route path="/user-list" element={<UserList/>}></Route>
             
         </Routes>
       </Router>    

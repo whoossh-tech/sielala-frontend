@@ -7,8 +7,15 @@ import {
 
 import logo from "../../assets/logo-sielala.png";
 import { reynaldoStyles } from "../../assets/fonts/fonts";
+import { useNavigate } from 'react-router-dom';
 
 export function NavbarGuest() {
+  const navigate = useNavigate();
+
+  const onLogin = async (e) => {
+    navigate('/login')
+  };
+
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -63,7 +70,7 @@ export function NavbarGuest() {
           </div>
 
           <div className="flex items-center gap-x-1">
-            <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
+            <Button onClick={onLogin} variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
               <span className="montserrat text-primary-70 text-md">Log in</span>
             </Button>
           </div>
