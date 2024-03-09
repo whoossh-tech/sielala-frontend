@@ -8,4 +8,5 @@
 - Shayna Putri Fitria (2106703084) - Lead Programmer
 
 ## Link Deployment
-- Railway
+- [Frontend](https://sielala-frontend-production.up.railway.app/)
+- [Backend (API needs)](https://sielala-backend-production.up.railway.app/)

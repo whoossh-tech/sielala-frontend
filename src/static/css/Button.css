@@ -75,6 +75,10 @@
 }
 
 .button-red:hover {
-    background-color: #FFEDEA;
+    background-color: #e35b5b;
     color: white;
+}
+.button-red:disabled {
+    background-color: #a04646; 
+    cursor: not-allowed; 
 }

@@ -1,13 +1,15 @@
 import React from 'react';
-import { useState, useEffect, useHistory} from "react";
+import axios from 'axios';
+import Modal from 'react-modal';
+
 import '../App.css';
 import '../static/css/RewardInventory.css';
 import '../static/css/Button.css';
-import axios from 'axios';
+import backgroundPhoto from '../assets/bg-cover.png';
+import { useState, useEffect, useHistory} from "react";
+import { NavbarOperation } from '../components/navbar/NavbarOperation';
 import {toast, Toaster} from 'react-hot-toast';
 import { Link, useNavigate } from "react-router-dom";
-import Modal from 'react-modal';
-import backgroundPhoto from '../assets/bg-cover.png';
 
 const RewardInventory = () => {
     const navigate = useNavigate();
@@ -96,6 +98,7 @@ const RewardInventory = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+            <NavbarOperation />
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
                 <div className="text-wrapper">
