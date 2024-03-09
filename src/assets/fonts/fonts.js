@@ -80,4 +80,8 @@ export const reynaldoStyles = css`
     font-weight: 400;
     font-style: normal;
   }
+
+  .navbar-component {
+    font-weight: 400;
+  }
 `;

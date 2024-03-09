@@ -17,8 +17,8 @@ export function NavbarGuest() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/" className="font-reynaldo flex items-center text-lg text-neutral-80">
-          Dashboard
+        <a href="/" className="flex items-center text-md text-neutral-80">
+          <b>Dashboard</b>
         </a>
       </Typography>
 
@@ -28,8 +28,8 @@ export function NavbarGuest() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/" className="font-reynaldo flex items-center text-lg text-neutral-80">
-          Visitor Registration
+        <a href="/" className="flex items-center text-md text-neutral-80">
+          <b>Visitor Registration</b>
         </a>
       </Typography>
 
@@ -39,8 +39,8 @@ export function NavbarGuest() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/tenant-registration" className="font-reynaldo flex items-center text-lg text-neutral-80">
-          Tenant Registration
+        <a href="/tenant-registration" className="flex items-center text-md text-neutral-80">
+          <b>Tenant Registration</b>
         </a>
       </Typography>
     </ul>
@@ -55,7 +55,7 @@ export function NavbarGuest() {
             <img
                 src={logo} 
                 alt="SieLALA Logo"
-                className="cursor-pointer h-11 w-30 object-cover"
+                className="cursor-pointer h-9 w-27 object-cover"
                 href="/"
               />
               <br></br>
@@ -64,7 +64,7 @@ export function NavbarGuest() {
 
           <div className="flex items-center gap-x-1">
             <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
-              <span className="montserrat text-primary-70 text-lg">Log in</span>
+              <span className="montserrat text-primary-70 text-md">Log in</span>
             </Button>
           </div>
         </div>
