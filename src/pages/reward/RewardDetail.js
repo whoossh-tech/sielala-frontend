@@ -67,11 +67,12 @@ const RewardDetail = () => {
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
             <NavbarOperation />
 
-            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
-                <div className="text-wrapper">
-                    <h1 className="title">Reward Detail</h1>
-                    <div className="subtitle-wrapper">
-                        <p className="subtitle">Manage and view reward’s data here.</p>
+            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
+                <div>
+                    <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
+                        Reward Detail</h1>
+                    <div>
+                            <p className="subtitle">Manage and view reward's data here.</p>
                     </div>
                 </div>
             </div>

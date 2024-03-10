@@ -1,16 +1,16 @@
 import React from 'react';
 import { NavbarOperation } from '../../components/navbar/NavbarOperation';
-import { useAuth } from '../../pages/auth/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+// import { useAuth } from '../../pages/auth/AuthProvider';
+// import { useNavigate } from 'react-router-dom';
 
 const DashboardOperation = () => {
-    const { hasRole } = useAuth();
+    // const { hasRole } = useAuth();
 
-    if (!hasRole('OPERATION')) {
-        // Redirect or show unauthorized message
-        // return <UnauthorizedComponent />;
-        return <useNavigate to="/login" />;
-    }
+    // if (!hasRole('OPERATION')) {
+    //     // Redirect or show unauthorized message
+    //     // return <UnauthorizedComponent />;
+    //     return <useNavigate to="/login" />;
+    // }
 
     return (
         <main>

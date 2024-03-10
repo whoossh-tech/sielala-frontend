@@ -40,7 +40,7 @@ export function NavbarPartnership() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/" className="flex items-center text-md text-neutral-80">
+        <a href="/sponsor" className="flex items-center text-md text-neutral-80">
           <b>Partnership Management</b>
         </a>
       </Typography>

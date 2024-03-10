@@ -19,6 +19,12 @@ import { DashboardFinance } from './pages/dashboard/DashboardFinance';
 import Login from './pages/auth/Login';
 import RegisterStaffForm from './pages/auth/RegisterStaffForm';
 import UserList from './pages/auth/UserList';
+import Sponsor from "./pages/sponsor/Sponsor";
+import CreateSponsor from "./pages/sponsor/CreateSponsor";
+import DetailSponsor from "./pages/sponsor/DetailSponsor";
+import Event from "./pages/Event/Event";
+import CreateEvent from "./pages/Event/CreateEvent";
+import DetailEvent from './pages/Event/DetailEvent';
 
 function App() {
   return (
@@ -48,6 +54,13 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/staff-registration" element={<RegisterStaffForm/>}></Route>
             <Route path="/user-list" element={<UserList/>}></Route>
+
+            <Route path="/event" element={<Event />} />
+            <Route path="/event/create" element={<CreateEvent />} />
+            <Route path="/event/detail/:idEvent" element={<DetailEvent/>}></Route>
+            <Route path="/sponsor" element={<Sponsor />} />
+            <Route path="/sponsor/create" element={<CreateSponsor />} />
+            <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor/>}></Route>
         </Routes>
       </Router>    
     </div>

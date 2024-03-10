@@ -1,16 +1,16 @@
 import React from 'react';
 import { NavbarFinance } from '../../components/navbar/NavbarFinance';
-import { useAuth } from '../../pages/auth/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+// import { useAuth } from '../../pages/auth/AuthProvider';
+// import { useNavigate } from 'react-router-dom';
 
 const DashboardFinance = () => {
-    const { hasRole } = useAuth();
+    // const { hasRole } = useAuth();
 
-    if (!hasRole('FINANCE')) {
-        // Redirect or show unauthorized message
-        // return <UnauthorizedComponent />;
-        return <useNavigate to="/login" />;
-    }
+    // if (!hasRole('FINANCE')) {
+    //     // Redirect or show unauthorized message
+    //     // return <UnauthorizedComponent />;
+    //     return <useNavigate to="/login" />;
+    // }
 
     return (
         <main>

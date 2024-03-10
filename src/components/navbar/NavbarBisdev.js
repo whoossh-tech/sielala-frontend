@@ -28,7 +28,7 @@ export function NavbarBisdev() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/reward-inventory" className="flex items-center text-md text-neutral-80">
+        <a href="/event" className="flex items-center text-md text-neutral-80">
           <b>Event Management</b>
         </a>
       </Typography>
