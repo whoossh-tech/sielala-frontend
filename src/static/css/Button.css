@@ -1,0 +1,84 @@
+.button-pink {
+    background-color: #E685AE;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    outline: 0;
+    border: 0; 
+    margin: 10px 10px;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px lightgray;
+    transition: ease background-color 250ms;
+}
+
+.button-pink:hover {
+    background-color: #FFCDE5;
+    color: white;
+}
+
+.button-green {
+    background-color: #A9B245;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    outline: 0;
+    border: 0; 
+    margin: 10px 10px;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px lightgray;
+    transition: ease background-color 250ms;
+}
+
+.button-green:hover {
+    background-color: #D3DA80;
+    color: white;
+}
+
+.button-pink:disabled {
+    background-color: #c19dac; 
+    cursor: not-allowed; 
+}
+
+.button-green:disabled {
+    background-color: #b5b98a; 
+    cursor: not-allowed; 
+}
+.button-brown {
+    background-color: #865C3A;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    outline: 0;
+    border: 0; 
+    margin: 10px 10px;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px lightgray;
+    transition: ease background-color 250ms;
+}
+
+.button-brown:hover {
+    background-color: #A27D60;
+    color: white;
+}
+
+.button-red {
+    background-color: #BA1A1A;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    outline: 0;
+    border: 0; 
+    margin: 10px 10px;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px lightgray;
+    transition: ease background-color 250ms;
+}
+
+.button-red:hover {
+    background-color: #e35b5b;
+    color: white;
+}
+.button-red:disabled {
+    background-color: #a04646; 
+    cursor: not-allowed; 
+}

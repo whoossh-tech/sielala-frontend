@@ -1,0 +1,40 @@
+.RegisterStaffForm {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+
+.input-form {
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.font-reynaldo {
+    font-family: 'Reynaldo', serif;
+}
+
+#page-title {
+    font-size: xx-large;
+}
+
+.input-label {
+    font-size: large;
+}
+
+#modal-confirmation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* transform: translate(-50%, -50%); */
+    width: 80%;
+    height: 60%;
+    max-width: 400px;
+    max-height: 200px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}

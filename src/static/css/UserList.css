@@ -1,0 +1,133 @@
+.UserList {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    margin-top: 100px;
+}
+
+.title {
+    color: var(--Neutral-10, #FFF);
+    /* Desktop/Heading 4 */
+    /* font-family: Reynaldo; */
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    /* line-height: 100%; */
+    letter-spacing: 1px;
+    margin-bottom: 4px; /* Adjust as needed */
+}
+
+.detail-user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 900px;
+    margin: 0 auto; /* Center the container horizontally */
+    gap: 20px;
+}
+
+.reward-text {
+    font-size: 16px;
+    color: #A9B245;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    text-align: left;
+    margin-top: 0; /* Reset margin-top */
+    margin: 0;
+}
+
+.reward-text-title {
+    font-size: 16px;
+    color: #2F3033;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    text-align: left;
+    margin-top: 0; /* Reset margin-top */
+    margin: 0;
+}
+
+.each-user{
+    /* align-items: flex-start; */
+    display: flex;
+    align-items: center;
+    gap: 44px;
+    width: 100%;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #E685AE;
+    font-weight: bold;
+    letter-spacing: 1px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 210px;
+    margin-bottom: 30px
+    /* margin-top: 0; Reset margin-top */
+    /* margin: 0 5px; */
+}
+
+.subtitle-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.text-wrapper {
+    margin-top: 10px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#page-title {
+    font-size: xx-large;
+}
+
+.button-field {
+    margin-bottom: 20px;
+}
+table {
+    border-collapse: collapse;
+    width: 1200px;
+    height: 200px;
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #F59FC3; ;
+    color: white;
+}
+
+#modal-confirmation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* transform: translate(-50%, -50%); */
+    width: 80%;
+    height: 60%;
+    max-width: 400px;
+    max-height: 200px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
