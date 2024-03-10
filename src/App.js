@@ -3,12 +3,13 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Event from "./pages/Event/Event";
 import CreateEvent from "./pages/Event/CreateEvent";
-// import DetailEvent from "./pages/Event/DetailEvent";
+import DetailEvent from './pages/Event/DetailEvent';
 // import EditEvent from "./pages/Event/EditEvent";
 import Sponsor from "./pages/Sponsor/Sponsor";
 import { DashboardGuest } from './pages/DashboardGuest';
 import { DashboardStaff } from './pages/DashboardStaff';
 import CreateSponsor from "./pages/Sponsor/CreateSponsor";
+import DetailSponsor from "./pages/Sponsor/DetailSponsor";
 
 function App() {
   return (
@@ -20,8 +21,10 @@ function App() {
           <Route path="/staff" element={<DashboardStaff />} />
           <Route path="/event" element={<Event />} />
           <Route path="/event/create" element={<CreateEvent />} />
+          <Route path="/event/detail/:idEvent" element={<DetailEvent/>}></Route>
           <Route path="/sponsor" element={<Sponsor />} />
           <Route path="/sponsor/create" element={<CreateSponsor />} />
+          <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor/>}></Route>
         </Routes>
       </Router>
     </div>

@@ -13,6 +13,7 @@ import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { toast, Toaster } from "react-hot-toast";
 import { subDays } from "date-fns";
 
+
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
   const [startDate, setStartDate] = useState(new Date());
