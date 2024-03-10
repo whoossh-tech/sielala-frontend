@@ -61,10 +61,9 @@ const DetailSponsor = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Brand Name</th>
-                <th>PIC Name</th>
-                <th>Brand Email</th>
-                <th>Brand Telephone</th>
+                <th>Tracking Status</th>
+                <th>Payment Validation</th>
+                <th>Action</th>
               </tr>
             </thead>
             {/* <tbody>

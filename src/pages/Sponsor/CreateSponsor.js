@@ -28,29 +28,6 @@ const CreateSponsor = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!picName.trim()) {
-      newErrors.pic_name = "PIC Name cannot be empty";
-    }
-
-    if (!companyAddress.trim()) {
-      newErrors.company_address = "Company Address cannot be empty";
-    }
-
-    if (!companyEmail.trim()) {
-      newErrors.company_email = "Company Email cannot be empty";
-    }
-    //   Handle email validation --> liat partnership
-
-    // Add validation for other fields as needed
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const onCreateSponsor = async (e) => {
     e.preventDefault();
 
@@ -73,9 +50,39 @@ const CreateSponsor = () => {
       });
       console.log("Sponsor created successfully:", response.data);
       navigate("/Sponsor");
+
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      toast.success("Sponsor added successfully");
+      
     } catch (error) {
       console.error("Error creating sponsor:", error);
+      toast.error("Cannot creating sponsor")
     }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!companyName.trim()) {
+      newErrors.company_name = "Company Name cannot be empty";
+    }
+
+    if (!companyAddress.trim()) {
+      newErrors.company_address = "Company Address cannot be empty";
+    }
+
+    if (!picName.trim()) {
+      newErrors.pic_name = "PIC Name cannot be empty";
+    }
+
+    if (!companyEmail.trim()) {
+      newErrors.company_email = "Company Email cannot be empty";
+    } else if (!/^\S+@\S+$/i.test(companyEmail)) {
+      newErrors.company_email = "Email is not valid";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   return (

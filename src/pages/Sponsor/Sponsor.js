@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../static/css/Modal.css";
@@ -11,30 +11,41 @@ import "../../static/css/event/Event.css";
 
 const Sponsor = () => {
   const [sponsors, setSponsors] = useState([]);
-//   const [eventName, setEventName] = useState("");
-//   const [startDate, setStartDate] = useState(new Date());
-//   const [endDate, setEndDate] = useState(new Date());
-//   const [location, setLocation] = useState("");
-//   const [errors, setErrors] = useState({});
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const [eventData, setEventData] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (selectedEvent) {
+      axios
+        .get(`http://localhost:8080/api/sponsor/view-all/${selectedEvent}`)
+        .then((res) => {
+          setSponsors(res.data.data);
+          console.log(sponsors)
+        })
+        .catch((err) => console.log(err));
+    }
+
     axios
-      .get("http://localhost:8080/api/sponsor/view-all")
+      .get("http://localhost:8080/api/event/view-all")
       .then((res) => {
-        setSponsors(res.data.data);
-        console.log(res.data.data); // Make sure that res.data is an array
+        setEventData(res.data.data);
+        // console.log(res.data.data); // Make sure that res.data is an array
       })
       .catch((error) => {
         toast.error("Failed to fetch sponsors");
       });
-  }, [sponsors]);
+  }, [selectedEvent]);
 
   const handleCreateButton = () => {
     navigate("/sponsor/create");
+  };
+
+  const handleChange = (e) => {
+    setSelectedEvent(e.target.value);
   };
 
   return (
@@ -49,6 +60,37 @@ const Sponsor = () => {
             <p className="subtitle">Manage your sponsor here</p>
           </div>
         </div>
+      </div>
+
+      <Toaster position="top-center" reverseOrder={false} />
+
+      <br></br>
+
+      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
+        <select
+          className="appearance-none px-4 py-3 w-full focus:outline-none"
+          onChange={handleChange}
+          style={{
+            backgroundColor: "#ffffff",
+            color: "#333333",
+            borderRadius: "0.375rem",
+            border: "1px solid #E3E2E6",
+            fontSize: "1rem",
+            lineHeight: "1.5",
+            padding: "0.5rem 1rem",
+          }}
+        >
+          <option>select event</option>
+          {eventData && eventData.length > 0 ? (
+            eventData.map((event, index) => (
+              <option key={index} value={event.idEvent}>
+                {event.eventName}
+              </option>
+            ))
+          ) : (
+            <option value="">No events available</option>
+          )}
+        </select>
       </div>
 
       <br></br>
@@ -79,9 +121,11 @@ const Sponsor = () => {
                   <td>{sponsor.idSponsor}</td>
                   <td>
                     <Link to={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                    {sponsor.companyName}
+                      {sponsor.companyName}
                     </Link>
-                    <a href={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{sponsor.sponsorName}</a>
+                    <a href={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
+                      {sponsor.sponsorName}
+                    </a>
                   </td>
                   <td>{sponsor.picName}</td>
                   <td>{sponsor.companyAddress}</td>

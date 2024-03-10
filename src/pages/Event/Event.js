@@ -69,6 +69,7 @@ const Event = () => {
               <th>Start Date</th>
               <th>End Date</th>
               <th>Location</th>
+
             </tr>
           </thead>
 

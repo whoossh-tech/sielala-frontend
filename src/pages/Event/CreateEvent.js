@@ -70,10 +70,14 @@ const CreateEvent = () => {
         endDate,
         location,
       });
-      console.log("Event created successfully:", response.data);
       navigate("/Event");
+
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      toast.success("Event created successfully");
+
     } catch (error) {
       console.error("Error creating event:", error);
+      toast.error("Event cannot created");
     }
   };
 
