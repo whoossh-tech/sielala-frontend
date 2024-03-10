@@ -58,6 +58,38 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // const login = async (username, password) => {
+  //   try {
+  //     const response = await fetch('http://localhost:8080/auth/login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         username,
+  //         password,
+  //       }),
+  //     });
+  
+  //     if (!response.ok) {
+  //       throw new Error('Incorrect username or password');
+  //     }
+  
+  //     const data = await response.json();
+  //     const { jwt, user } = data;
+  
+  //     localStorage.setItem('token', jwt);
+  //     axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+  
+  //     setUser(user);
+  //     setRole(user.authorities[0].authority); // Assuming the role is the first authority in the array
+  //   } catch (error) {
+  //     console.error('Error logging in:', error.message);
+  //     throw new Error('Error logging in.');
+  //   }
+  // };
+  
+
   const logout = () => {
     localStorage.removeItem('token');
     axios.defaults.headers.common['Authorization'] = null;

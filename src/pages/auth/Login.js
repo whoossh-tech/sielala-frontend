@@ -24,10 +24,12 @@ const Login = () => {
         if (validateForm()) {
             try {
                 const response = await login(username, password);
+                console.log(response);
                 const { user, jwt } = response.data;
                 const role = user.authorities[0].authority; // Extract the role from the user's authorities
                 localStorage.setItem('token', jwt); // Store the JWT token in local storage
                 localStorage.setItem('role', role); // Store the user's role in local storage
+                console.log(role);
                 switch (role) {
                     case 'ADMIN':
                         navigate('/admin');
