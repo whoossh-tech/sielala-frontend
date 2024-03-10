@@ -65,10 +65,23 @@ const Login = () => {
             console.log('Logged in successfully:', user);
 
             // Redirect admin to user list page
+            // if (user.authorities.some(authority => authority.authority === 'ADMIN')) {
+            //     navigate('/user-list');
+            // } else {
+            //     navigate('/user-list');
+            //     // Handle redirection for other roles or perform other actions
+            // }
+
             if (user.authorities.some(authority => authority.authority === 'ADMIN')) {
-                navigate('/user-list');
-            } else {
-                // Handle redirection for other roles or perform other actions
+                navigate('/admin');
+            } else if (user.authorities.some(authority => authority.authority === 'BISDEV')) {
+                navigate('/bisdev');
+            } else if (user.authorities.some(authority => authority.authority === 'FINANCE')) {
+                navigate('/finance');
+            } else if (user.authorities.some(authority => authority.authority === 'PARTNERSHIP')) {
+                navigate('/partnership');
+            } else if (user.authorities.some(authority => authority.authority === 'OPERATION')) {
+                navigate('/operation');
             }
             
             } catch (error) {
@@ -80,11 +93,10 @@ const Login = () => {
     return (
         <div className="object-cover-login absolute inset-0 flex justify-center items-center" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh'}}>
             <div className="card bg-white shadow-lg rounded-md p-8">
-                <h2 className="text-2xl font-bold mb-3">Login</h2>
                 <form
-                    className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
                     onSubmit={(e) => onRegister(e)}
                 >
+                    <h2 className="text-2xl font-bold mb-3">Login</h2>
                     {/* Username */}
                     <div className="flex flex-col space-y-1">
                         <label htmlFor="username" className="text-sm" style={{ marginBottom: '5px' }}>Username: </label>
@@ -95,8 +107,6 @@ const Login = () => {
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Enter your username"
                                 className="input-field"
-                            // className="px-4 py-3 w-full focus:outline-none"
-                            // className="border-1 rounded-md border-neutral-30 p-2 mt-1"
                             style={{ marginTop: '5px' }}
                         />
                     </div>
@@ -104,25 +114,27 @@ const Login = () => {
                     <br></br>
 
                     {/* Password */}
-                    <div className="flex flex-col space-y-1 relative">
+                    <div className="flex flex-col space-y-1 relative items-center">
                         <label htmlFor="password" className="text-sm">Password: </label>
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Enter your password"
-                            className="input-field"
-                        />
-                        <button
-                            type="button"
-                            className="absolute top-1/2 right-2 transform -translate-y-1/2 focus:outline-none"
-                            onClick={() => setShowPassword((prevShowPassword) => !prevShowPassword)}
-                        >
-                            {showPassword ? 'Hide' : 'Show'}
-                        </button>
+                        <div className="relative flex items-center">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter your password"
+                                className="input-field"
+                            />
+                            <button
+                                type="button"
+                                className="ml-2 focus:outline-none"
+                                onClick={() => setShowPassword((prevShowPassword) => !prevShowPassword)}
+                            >
+                                {showPassword ? 'Hide' : 'Show'}
+                            </button>
+                        </div>
                     </div>
-        
+
                     {/* Submit Button */}
                     <button
                         type="submit"

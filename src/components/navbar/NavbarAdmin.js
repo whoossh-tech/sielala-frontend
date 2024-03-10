@@ -4,11 +4,31 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 import logo from "../../assets/logo-sielala.png";
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 
 export function NavbarAdmin() {
+    const navigate = useNavigate();
+
+    const logoutUser = async () => {
+        try {
+          // Make a POST request to the logout endpoint
+          const response = await axios.post('http://localhost:8080/auth/logout');
+          
+          localStorage.removeItem('token');
+          delete axios.defaults.headers.common['Authorization'];
+      
+          console.log('Logged out successfully');
+          
+          navigate.push('/login')
+        } catch (error) {
+          console.error('Error logging out:', error);
+        }
+      };
+
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -56,7 +76,7 @@ export function NavbarAdmin() {
               <span className="montserrat text-primary-70 text-md">Hi, ADMIN!</span>
             </Button>
 
-            <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
+            <Button variant="gradient" size="sm" onClick={logoutUser} className="hidden lg:inline-block bg-primary-10">
               <span className="montserrat text-primary-70 text-md">Log Out</span>
             </Button>
           </div>
