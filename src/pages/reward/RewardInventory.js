@@ -21,6 +21,7 @@ const RewardInventory = () => {
     const dayRangeCount = Array.from({ length: countdays });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [dayStatus, setDayStatus] = useState(0);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -51,6 +52,22 @@ const RewardInventory = () => {
 
     const handleChange = (e) => {
         setSelectedEvent(e.target.value);
+    };
+
+    const dayStatus = () => {
+        for (let i = 0; i < eventData.length; i++) {
+            const event = eventData[i];
+            if (event.idEvent === selectedEvent) {
+                return event.dayStatus; // Perbaikan dari "retrun" menjadi "return"
+            }
+        }
+        return null; // Jika tidak ditemukan event dengan id yang sesuai, kembalikan null atau nilai default yang sesuai
+    };
+
+    // const nextDayStatus = dayStatus() + 1
+
+    const nextDayStatus = () => {
+        return dayStatus() + 1;
     };
 
     function carryOutStock() {
@@ -143,6 +160,9 @@ const RewardInventory = () => {
             
             <br></br>
 
+            <div>
+                <p><b>Current Day of Event: {dayStatus()}</b></p>
+            </div>
 
             <div className="button-field">
                 
@@ -156,7 +176,7 @@ const RewardInventory = () => {
                 
             >
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Carry Out Stock</h2>
-                <p className="text-center text-gray-700">Are you sure you want to move remaining stock to the next day of event?</p>
+                <p className="text-center text-gray-700">Are you sure you want to move remaining stock from DAY {dayStatus()} of event to DAY {nextDayStatus()} of event?</p>
                 <br></br>
                 <button className="button-red text-center" onClick={closeModal}>Cancel</button>
                 <button className="button-green text-center" onClick={carryOutStock}>Confirm</button>
@@ -201,7 +221,7 @@ const RewardInventory = () => {
                                         {/* <a href={`/reward-inventory/detail/${reward.idProduct}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{reward.productName}</a> */}
                                     </td>
                                     <td>{reward.brandName}</td>
-                                    <td>{reward.category}</td>
+                                    <td>CAT {reward.category}</td>
                                     {reward.listDayReward.map((dayReward, j) => (
                                         <React.Fragment key={j}>
                                             <td>{dayReward.stokAwal}</td>
