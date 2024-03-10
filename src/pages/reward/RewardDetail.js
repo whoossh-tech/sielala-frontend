@@ -29,6 +29,9 @@ const RewardDetail = () => {
 
    useEffect(() => {
 
+    const token = localStorage.getItem('token');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
     axios.get(`http://localhost:8080/api/reward/detail/${id}`)
     .then(res => {
         setRewardData(res.data.rewardData)
@@ -41,6 +44,9 @@ const RewardDetail = () => {
     closeModal();
 
     try {
+        const token = localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
         const response = await axios.delete(`http://localhost:8080/api/reward/delete/${id}`);
         console.log('Reward deleted successfully:', response.data);
         navigate('/reward-inventory');

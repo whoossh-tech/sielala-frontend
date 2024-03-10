@@ -32,6 +32,10 @@ const RewardInventory = () => {
     };
 
     useEffect(() => {
+
+        const token = localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
         if (selectedEvent) {
             axios.get(`http://localhost:8080/api/reward/view-all/${selectedEvent}`)
             .then(res => {
@@ -72,6 +76,9 @@ const RewardInventory = () => {
 
     function carryOutStock() {
         closeModal();
+
+        const token = localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         if (selectedEvent) {
             axios.post(`http://localhost:8080/api/reward/carry-out-stock/${selectedEvent}`)

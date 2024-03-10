@@ -34,6 +34,9 @@ const EditRewardInventory = () => {
     useEffect(() => {
         const fetchRewardData = async () => {
             try {
+                const token = localStorage.getItem('token');
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
                 const response = await axios.get(`${url}/api/reward/detail/${idReward}`);
                 const rewardData = response.data.rewardData;
                 // console.log(rewardData);

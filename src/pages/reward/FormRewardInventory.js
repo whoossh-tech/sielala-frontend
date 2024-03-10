@@ -86,6 +86,10 @@ const FormRewardInventory = () => {
         closeModal();
 
         try {
+
+            const token = localStorage.getItem('token');
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            
             const response = await axios.post(`${url}/api/reward/add/${idEvent}`, {
                 productName,
                 brandName,
