@@ -55,7 +55,7 @@ function App() {
             <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
               <Route path="/admin" element={<DashboardAdmin />} />
               <Route path="/staff-registration" element={<RegisterStaffForm/>} />
-            <Route path="/user-list" element={<UserList/>}  />
+              <Route path="/user-list" element={<UserList/>}  />
             </Route>
 
             {/* Operation routes */}

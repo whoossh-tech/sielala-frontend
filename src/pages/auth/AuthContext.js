@@ -37,26 +37,48 @@ const AuthContext = createContext();
 // };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [role, setRole] = useState(null); // New state for user role
+  let [user, setUser] = useState(null);
+  let [role, setRole] = useState(null); // New state for user role
 
-  const login = async (username, password) => {
+  let login = async (username, password) => {
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', {
-        username,
-        password
-      });
-
-      const { jwt, user } = response.data;
-      localStorage.setItem('token', jwt);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-      setUser(user);
-      setRole(user.authorities[0].authority); // Assuming the role is the first authority in the array
+        const response = await axios.post('http://localhost:8080/auth/login', {
+            username,
+            password
+        });
+        
+        const { jwt, user } = response.data;
+        localStorage.setItem('token', jwt);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+        setUser(user);
+        const role = user.authorities[0].authority; // Assuming the role is the first authority in the array
+        console.log('Role:', role); // Checkpoint: Log the user's role
+        setRole(role); // Set the user's role in the context
+        return response;
     } catch (error) {
-      console.error('Error logging in:', error.response || error.message);
-      throw new Error('Error logging in.');
+        console.error('Error logging in:', error.response || error.message);
+        throw new Error('Error logging in.');
     }
-  };
+};
+
+
+  // const login = async (username, password) => {
+  //   try {
+  //     const response = await axios.post('http://localhost:8080/auth/login', {
+  //       username,
+  //       password
+  //     });
+
+  //     const { jwt, user } = response.data;
+  //     localStorage.setItem('token', jwt);
+  //     axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+  //     setUser(user);
+  //     setRole(user.authorities[0].authority); // Assuming the role is the first authority in the array
+  //   } catch (error) {
+  //     console.error('Error logging in:', error.response || error.message);
+  //     throw new Error('Error logging in.');
+  //   }
+  // };
 
   // const login = async (username, password) => {
   //   try {
@@ -106,3 +128,4 @@ export const AuthProvider = ({ children }) => {
 
 
 export const useAuth = () => useContext(AuthContext);
+export default AuthContext;

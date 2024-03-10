@@ -22,14 +22,70 @@ const Login = () => {
         e.preventDefault();
 
         if (validateForm()) {
+            // try {
+            //     const response = await login(username, password);
+            //     console.log(response);
+            //     const { user, jwt } = response.data;
+            //     const role = user.authorities[0].authority; // Extract the role from the user's authorities
+            //     localStorage.setItem('token', jwt); // Store the JWT token in local storage
+            //     localStorage.setItem('role', role); // Store the user's role in local storage
+            //     console.log(role);
+            //     switch (role) {
+            //         case 'ADMIN':
+            //             navigate('/admin');
+            //             break;
+            //         case 'PARTNERSHIP':
+            //             navigate('/partnership');
+            //             break;
+            //         case 'OPERATION':
+            //             navigate('/operation');
+            //             break;
+            //         case 'FINANCE':
+            //             navigate('/finance');
+            //             break;
+            //         case 'BISDEV':
+            //             navigate('/bisdev');
+            //             break;
+            //         default:
+            //             navigate('/unauthorized');
+            //     }
+            // } catch (error) {
+            //     console.log('Error logging in:', error.message);
+            //     // Handle error, possibly display error message to user
+            // try {
+            //     const response = await login(username, password);
+            //     const { user } = response.data;
+            //     console.log('User:', user);
+            //     const role = user.authorities[0].authority; // Extract the role from the user's authorities
+            //     console.log('Role:', role); // Checkpoint: Log the user's role
+            //     localStorage.setItem('role', role); // Store the user's role in local storage
+            //     switch (role) {
+            //         case 'ADMIN':
+            //             navigate('/admin');
+            //             break;
+            //         case 'PARTNERSHIP':
+            //             navigate('/partnership');
+            //             break;
+            //         case 'OPERATION':
+            //             navigate('/operation');
+            //             break;
+            //         case 'FINANCE':
+            //             navigate('/finance');
+            //             break;
+            //         case 'BISDEV':
+            //             navigate('/bisdev');
+            //             break;
+            //         default:
+            //             navigate('/unauthorized');
+            //     }
             try {
                 const response = await login(username, password);
+                const { user } = response.data;
+                // console.log('User:', user);
                 console.log(response);
-                const { user, jwt } = response.data;
                 const role = user.authorities[0].authority; // Extract the role from the user's authorities
-                localStorage.setItem('token', jwt); // Store the JWT token in local storage
+                // console.log('Role:', role); // Checkpoint: Log the user's role
                 localStorage.setItem('role', role); // Store the user's role in local storage
-                console.log(role);
                 switch (role) {
                     case 'ADMIN':
                         navigate('/admin');
@@ -50,8 +106,7 @@ const Login = () => {
                         navigate('/unauthorized');
                 }
             } catch (error) {
-                console.log('Error logging in:', error.message);
-                // Handle error, possibly display error message to user
+                console.error('Error logging in:', error.message);
             }
         } else {
             console.log('Form validation failed');
