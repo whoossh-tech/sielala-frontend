@@ -1,80 +1,59 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Modal from 'react-modal';
+import { useAuth } from './AuthContext';
 import '../../static/css/RegisterStaffForm.css';
 import '../../static/css/Button.css';
 import backgroundPhoto from '../../assets/background.svg';
-import '../../static/css/Login.css'
+import '../../static/css/Login.css';
 
 const Login = () => {
-    const[username, setUsername] = useState('');
-    const[password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const[errors, setErrors] = useState({});
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate(); 
-
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const validateForm = () => {
-        const newErrors = {};
-
-        if (!username.trim()) {
-            newErrors.username = 'Username cannot be empty';
-        }
-
-        if (!password.trim()) {
-            newErrors.password = 'Password cannot be empty';
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        return username.trim() !== '' && password.trim() !== '';
     };
 
-    const onRegister = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
         if (validateForm()) {
-            openModal(); // Open the modal if the form is valid
+            try {
+                const response = await login(username, password);
+                const { user, jwt } = response.data;
+                const role = user.authorities[0].authority; // Extract the role from the user's authorities
+                localStorage.setItem('token', jwt); // Store the JWT token in local storage
+                localStorage.setItem('role', role); // Store the user's role in local storage
+                switch (role) {
+                    case 'ADMIN':
+                        navigate('/admin');
+                        break;
+                    case 'PARTNERSHIP':
+                        navigate('/partnership');
+                        break;
+                    case 'OPERATION':
+                        navigate('/operation');
+                        break;
+                    case 'FINANCE':
+                        navigate('/finance');
+                        break;
+                    case 'BISDEV':
+                        navigate('/bisdev');
+                        break;
+                    default:
+                        navigate('/unauthorized');
+                }
+            } catch (error) {
+                console.log('Error logging in:', error.message);
+                // Handle error, possibly display error message to user
+            }
         } else {
             console.log('Form validation failed');
         }
-    };
-
-    const confirmRegistration = async (e) => {
-        closeModal();
-
-        try {
-            const response = await axios.post('http://localhost:8080/auth/login', {
-                username,
-                password
-            })
-
-            const { jwt, user } = response.data;
-            localStorage.setItem('token', jwt);
-
-            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-
-            console.log('Logged in successfully:', user);
-
-            // Redirect admin to user list page
-            if (user.authorities.some(authority => authority.authority === 'ADMIN')) {
-                navigate('/user-list');
-            } else {
-                // Handle redirection for other roles or perform other actions
-            }
-            
-            } catch (error) {
-            console.error('Error logging in:', error.response || error.message);
-            setErrors('Error logging in.');
-            }
     };
 
     return (
@@ -83,7 +62,7 @@ const Login = () => {
                 <h2 className="text-2xl font-bold mb-3">Login</h2>
                 <form
                     className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
-                    onSubmit={(e) => onRegister(e)}
+                    onSubmit={handleLogin}
                 >
                     {/* Username */}
                     <div className="flex flex-col space-y-1">
@@ -94,9 +73,7 @@ const Login = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Enter your username"
-                                className="input-field"
-                            // className="px-4 py-3 w-full focus:outline-none"
-                            // className="border-1 rounded-md border-neutral-30 p-2 mt-1"
+                            className="input-field"
                             style={{ marginTop: '5px' }}
                         />
                     </div>
@@ -130,17 +107,6 @@ const Login = () => {
                     >
                         Login
                     </button>
-
-                    <Modal
-                        isOpen={isModalOpen}
-                        onRequestClose={closeModal}
-                        className="modal-confirmation"
-                    >
-                        <h2>Confirm Registration</h2>
-                        <p>Are you sure you want to register?</p>
-                        <button className="button-green" onClick={confirmRegistration}>Confirm</button>
-                        <button className="button-pink" onClick={closeModal}>Cancel</button>
-                    </Modal>
                 </form>
             </div>
         </div>

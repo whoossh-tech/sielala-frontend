@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './pages/auth/AuthContext';
+import ProtectedRoute from './pages/auth/ProtectedRoute';
 
 // import for routes
 import RewardInventory from './pages/reward/RewardInventory';
@@ -19,39 +21,63 @@ import { DashboardFinance } from './pages/dashboard/DashboardFinance';
 import Login from './pages/auth/Login';
 import RegisterStaffForm from './pages/auth/RegisterStaffForm';
 import UserList from './pages/auth/UserList';
+import UnauthorizedPage from './pages/auth/UnauthorizedPage';
 
 function App() {
   return (
     <div className="App">
+      <AuthProvider>
       <Router>
         <Routes>
-            {/* please review & correct it */}
-            <Route path="/" element={<DashboardGuest />}></Route>
-            <Route path="/partnership" element={<DashboardPartnership />}></Route>
-            <Route path="/operation" element={<DashboardOperation />}></Route>
-            <Route path="/admin" element={<DashboardAdmin />}></Route>
-            <Route path="/bisdev" element={<DashboardBisdev />}></Route>
-            <Route path="/finance" element={<DashboardFinance />}></Route>
+            {/* Public routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<DashboardGuest />} />
+            <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-            {/* reward routes */}
-            <Route path="/reward-inventory" element={<RewardInventory />}></Route>
-            <Route path="/add-reward/:idEvent" element={<FormRewardInventory />}></Route>
-            <Route path="/edit-reward/:idReward" element={<EditRewardInventory />}></Route>
-            <Route path="/reward-inventory/detail/:id" element={<RewardDetail/>}></Route>
+            {/* Dashboards */}
+            <Route element={<ProtectedRoute allowedRoles={['OPERATION']} />}>
+                <Route path="/operation" element={<DashboardOperation />} />
+            </Route>
 
-            {/* tenant routes */}
-            <Route path="/tenant-registration" element={<TenantRegistrationForm/>}></Route>
-            <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage/>}></Route>
-            <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage/>}></Route>
+            <Route element={<ProtectedRoute allowedRoles={['PARTNERSHIP']} />}>
+              <Route path="/partnership" element={<DashboardPartnership />} />
+            </Route>
+            
+            <Route element={<ProtectedRoute allowedRoles={['BISDEV']} />}>
+              <Route path="/bisdev" element={<DashboardBisdev />} />
+            </Route>
 
-            {/* auth routes */}
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/staff-registration" element={<RegisterStaffForm/>}></Route>
-            <Route path="/user-list" element={<UserList/>}></Route>
+            <Route element={<ProtectedRoute allowedRoles={['FINANCE']} />}>
+              <Route path="/finance" element={<DashboardFinance />} />
+            </Route>
+
+              {/* Admin routes */}
+            <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
+              <Route path="/admin" element={<DashboardAdmin />} />
+              <Route path="/staff-registration" element={<RegisterStaffForm/>} />
+            <Route path="/user-list" element={<UserList/>}  />
+            </Route>
+
+            {/* Operation routes */}
+            <Route element={<ProtectedRoute allowedRoles={['OPERATION', 'ADMIN']} />}>
+              <Route path="/reward-inventory" element={<RewardInventory />}  />
+              <Route path="/add-reward/:idEvent" element={<FormRewardInventory />}  />
+              <Route path="/edit-reward/:idReward" element={<EditRewardInventory />}  />
+              <Route path="/reward-inventory/detail/:id" element={<RewardDetail/>} />  
+            </Route>
+
+            {/* Partnership routes */}
+            <Route element={<ProtectedRoute allowedRoles={['PARTNERSHIP', 'ADMIN']} />}>
+              <Route path="/tenant-registration" element={<TenantRegistrationForm/>} />
+              <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage/>} />
+              <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage/>} />
+            </Route>
         </Routes>
-      </Router>    
+      </Router>   
+      </AuthProvider> 
     </div>
   );
 }
 
 export default App;
+
