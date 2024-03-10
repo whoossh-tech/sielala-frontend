@@ -14,45 +14,27 @@ const Sponsor = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [eventData, setEventData] = useState([]);
 
+  const token = localStorage.getItem('token');
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (selectedEvent) {
-
-      const token = localStorage.getItem('token');
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      axios
-        .get(`http://localhost:8080/api/sponsor/view-all/${selectedEvent}`)
-        .then((res) => {
-          setSponsors(res.data.data);
-          console.log(sponsors)
-        })
-        .catch((err) => console.log(err));
-    }
-
-    const token = localStorage.getItem('token');
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
     axios
-      .get("http://localhost:8080/api/event/view-all")
+      .get("https://sielala-backend-production.up.railway.app/api/sponsor/view-all")
       .then((res) => {
-        setEventData(res.data.data);
-        // console.log(res.data.data); // Make sure that res.data is an array
+        setSponsors(res.data.data);
+        console.log(res.data.data); // Make sure that res.data is an array
       })
       .catch((error) => {
         toast.error("Failed to fetch sponsors");
       });
-  }, [selectedEvent]);
+  }, [sponsors]);
 
   const handleCreateButton = () => {
     navigate("/sponsor/create");
-  };
-
-  const handleChange = (e) => {
-    setSelectedEvent(e.target.value);
   };
 
   return (
@@ -65,40 +47,9 @@ const Sponsor = () => {
               <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
               Partnership Management</h1>
               <div>
-                  <p className="subtitle">Manage your sponsor here.</p>
+                  <p className="subtitle">Manage your sponsor here</p>
               </div>
           </div>
-      </div>
-
-      <Toaster position="top-center" reverseOrder={false} />
-
-      <br></br>
-
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
-        <select
-          className="appearance-none px-4 py-3 w-full focus:outline-none"
-          onChange={handleChange}
-          style={{
-            backgroundColor: "#ffffff",
-            color: "#333333",
-            borderRadius: "0.375rem",
-            border: "1px solid #E3E2E6",
-            fontSize: "1rem",
-            lineHeight: "1.5",
-            padding: "0.5rem 1rem",
-          }}
-        >
-          <option>select event</option>
-          {eventData && eventData.length > 0 ? (
-            eventData.map((event, index) => (
-              <option key={index} value={event.idEvent}>
-                {event.eventName}
-              </option>
-            ))
-          ) : (
-            <option value="">No events available</option>
-          )}
-        </select>
       </div>
 
       <br></br>
@@ -110,7 +61,7 @@ const Sponsor = () => {
       </div>
 
       <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
-        <table className="event-table">
+        <table className="event-table mx-8">
           <thead>
             {/* Row headers */}
             <tr>
@@ -129,11 +80,9 @@ const Sponsor = () => {
                   <td>{sponsor.idSponsor}</td>
                   <td>
                     <Link to={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                      {sponsor.companyName}
+                    {sponsor.companyName}
                     </Link>
-                    <a href={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                      {sponsor.sponsorName}
-                    </a>
+                    <a href={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{sponsor.sponsorName}</a>
                   </td>
                   <td>{sponsor.picName}</td>
                   <td>{sponsor.companyAddress}</td>

@@ -25,7 +25,7 @@ const Event = () => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/event/view-all")
+      .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
       .then((res) => {
         setEvents(res.data.data);
         // console.log(res.data.data); // Make sure that res.data is an array
@@ -63,7 +63,7 @@ const Event = () => {
       </div>
 
       <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
-        <table className="event-table">
+        <table className="event-table mx-8">
           <thead>
             {/* Row headers */}
             <tr>

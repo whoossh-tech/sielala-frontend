@@ -32,7 +32,7 @@ const RewardDetail = () => {
     const token = localStorage.getItem('token');
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    axios.get(`http://localhost:8080/api/reward/detail/${id}`)
+    axios.get(`https://sielala-backend-production.up.railway.app/api/reward/detail/${id}`)
     .then(res => {
         setRewardData(res.data.rewardData)
         setCountDays(res.data.daysRange)
@@ -47,7 +47,7 @@ const RewardDetail = () => {
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        const response = await axios.delete(`http://localhost:8080/api/reward/delete/${id}`);
+        const response = await axios.delete(`https://sielala-backend-production.up.railway.app/api/reward/delete/${id}`);
         console.log('Reward deleted successfully:', response.data);
         navigate('/reward-inventory');
 

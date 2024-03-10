@@ -52,7 +52,7 @@ const Login = () => {
         closeModal();
 
         try {
-            const response = await axios.post('http://localhost:8080/auth/login', {
+            const response = await axios.post('https://sielala-backend-production.up.railway.app/auth/login', {
                 username,
                 password
             })
