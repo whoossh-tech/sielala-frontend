@@ -36,7 +36,7 @@ const AuthContext = createContext();
 //   );
 // };
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children}) => {
   let [user, setUser] = useState(null);
   let [role, setRole] = useState(null); // New state for user role
 
@@ -111,12 +111,11 @@ export const AuthProvider = ({ children }) => {
   //   }
   // };
   
-
   const logout = () => {
     localStorage.removeItem('token');
     axios.defaults.headers.common['Authorization'] = null;
     setUser(null);
-    setRole(null); // Clear user role on logout
+    setRole(null); 
   };
 
   return (
