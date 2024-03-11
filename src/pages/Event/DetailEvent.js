@@ -29,7 +29,7 @@ const DetailEvent = () => {
 
   useEffect(() => {
     axios
-      .get(`https://sielala-backend-production.up.railway.app/api/event/detail/${idEvent}`)
+      .get(`http://localhost:8080/api/event/detail/${idEvent}`)
       .then((res) => {
         setEventData(res.data.data);
         // console.log(eventData.eventName);

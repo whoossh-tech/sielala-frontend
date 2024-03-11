@@ -23,7 +23,7 @@ const Sponsor = () => {
 
   useEffect(() => {
     axios
-      .get("https://sielala-backend-production.up.railway.app/api/sponsor/view-all")
+      .get("http://localhost:8080/api/sponsor/view-all")
       .then((res) => {
         setSponsors(res.data.data);
         console.log(res.data.data); // Make sure that res.data is an array
