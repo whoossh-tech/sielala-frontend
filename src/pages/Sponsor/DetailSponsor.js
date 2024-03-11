@@ -21,7 +21,7 @@ const DetailSponsor = () => {
 
   useEffect(() => {
     axios
-      .get(`https://sielala-backend-production.up.railway.app/api/sponsor/detail/${idSponsor}`)
+      .get(`http://localhost:8080/api/sponsor/detail/${idSponsor}`)
       .then((res) => {
         setSponsorData(res.data.data);
       })

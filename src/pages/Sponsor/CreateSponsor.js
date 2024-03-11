@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import "../../static/css/sponsor/CreateSponsor.css";
@@ -11,6 +11,8 @@ import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
 import { toast, Toaster } from "react-hot-toast";
 
 const CreateSponsor = () => {
+  const { idEvent } = useParams();
+
   const [picName, setPicName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
@@ -46,7 +48,7 @@ const CreateSponsor = () => {
       const token = localStorage.getItem('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const response = await axios.post("https://sielala-backend-production.up.railway.app/api/sponsor/create", {
+      const response = await axios.post(`http://localhost:8080/api/sponsor/create/${idEvent}`, {
         picName,
         companyName,
         companyAddress,
