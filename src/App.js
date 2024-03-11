@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './pages/auth/AuthContext';
@@ -24,8 +24,21 @@ import UserList from './pages/auth/UserList';
 import UnauthorizedPage from './pages/auth/UnauthorizedPage';
 
 function App() {
+  // const [token, setAuthToken] = useState(null);
+  // const [role, setAuthRole] = useState(null);
+
+  // useEffect(() => {
+  //   // Retrieve the authentication token and role from localStorage on component mount
+  //   const token = localStorage.getItem('token');
+  //   const role = localStorage.getItem('role');
+
+  // setAuthToken(token);
+  // setAuthRole(role);
+  // }, []);
+
   return (
     <div className="App">
+      {/* <AuthProvider token={token} role={role}> */}
       <AuthProvider>
       <Router>
         <Routes>
@@ -54,17 +67,26 @@ function App() {
               {/* Admin routes */}
             <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
               <Route path="/admin" element={<DashboardAdmin />} />
-              <Route path="/staff-registration" element={<RegisterStaffForm/>} />
-              <Route path="/user-list" element={<UserList/>}  />
+              {/* <Route path="/user-list" element={<UserList/>}  /> */}
+
             </Route>
 
-            {/* Operation routes */}
+            <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
+              <Route path="/user-list" element={<UserList/>}  />
+              <Route path="/staff-registration" element={<RegisterStaffForm/>} />
+            </Route>
+
+              {/* <Route path="/user-list" element={<UserList/>}  /> */}
+
+            {/* Operation & Bisdev routes */}
             <Route element={<ProtectedRoute allowedRoles={['OPERATION', 'ADMIN']} />}>
-              <Route path="/reward-inventory" element={<RewardInventory />}  />
-              <Route path="/add-reward/:idEvent" element={<FormRewardInventory />}  />
+              {/* <Route path="/reward-inventory" element={<RewardInventory />}  /> */}
+              {/* <Route path="/add-reward/:idEvent" element={<FormRewardInventory />}  /> */}
               <Route path="/edit-reward/:idReward" element={<EditRewardInventory />}  />
               <Route path="/reward-inventory/detail/:id" element={<RewardDetail/>} />  
             </Route>
+            <Route path="/reward-inventory" element={<RewardInventory />}  />
+            <Route path="/add-reward/:idEvent" element={<FormRewardInventory />}  />
 
             {/* Partnership routes */}
             <Route element={<ProtectedRoute allowedRoles={['PARTNERSHIP', 'ADMIN']} />}>

@@ -6,6 +6,7 @@ import '../../static/css/Button.css';
 import { useNavigate } from 'react-router-dom';
 import {toast, Toaster} from 'react-hot-toast';
 import backgroundPhoto from '../../assets/bg-cover.png';
+import { NavbarAdmin } from '../../components/navbar/NavbarAdmin';
 
 const RegisterStaffForm = () => {
     const[email, setEmail] = useState('');
@@ -73,13 +74,14 @@ const RegisterStaffForm = () => {
         } catch (error) {
             console.error('Error registering staff:', error.response || error.message);
             setErrors('Error registering staff.');
+            toast.error("Error registering staff: Email has already been used");
         }
     };
 
     return (
 
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-
+            <NavbarAdmin />
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '120px' }}>
                 <div className="text-wrapper">
                     <h1 className="title">Staff Registration</h1>
