@@ -22,19 +22,54 @@ const Sponsor = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/sponsor/view-all")
-      .then((res) => {
-        setSponsors(res.data.data);
-        console.log(res.data.data); // Make sure that res.data is an array
-      })
-      .catch((error) => {
-        toast.error("Failed to fetch sponsors");
-      });
-  }, [sponsors]);
+
+    // const token = localStorage.getItem('token');
+    // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    if (selectedEvent) {
+      axios.get(`http://localhost:8080/api/sponsor/view-all/${selectedEvent}`)
+      .then(res => {
+          setSponsors(res.data.data)
+      }).catch(err => 
+          console.log(err)
+        )
+    }
+
+    // axios
+    //   .get("http://localhost:8080/api/sponsor/view-all")
+    //   .then((res) => {
+    //     setSponsors(res.data.data);
+    //     // console.log(res.data.data); // Make sure that res.data is an array
+    //   })
+    //   .catch((error) => {
+    //     toast.error("Failed to fetch sponsors");
+    //   });
+
+    // axios.get('http://localhost:8080/api/event/view-all')
+    //   .then(res => {
+    //       setEventData(res.data.data)
+    //   })
+    axios.get('http://localhost:8080/api/reward/view-event-all')
+            .then(res => {
+                setEventData(res.data.data)
+            })
+
+  }, [selectedEvent]);
+
+  // const handleCreateButton = () => {
+  //   navigate("/sponsor/create");
+  // };
 
   const handleCreateButton = () => {
-    navigate("/sponsor/create");
+    if (selectedEvent) {
+      navigate(`/sponsor/create/${selectedEvent}`);
+    } else {
+      toast.error('Please select event first');
+    }
+  };
+
+  const handleChange = (e) => {
+    setSelectedEvent(e.target.value);
   };
 
   return (
@@ -53,6 +88,33 @@ const Sponsor = () => {
       </div>
 
       <br></br>
+
+      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '200px', margin: '0 auto' }}>
+          <select 
+              className="appearance-none px-4 py-3 w-full focus:outline-none" 
+              onChange={handleChange}
+              style={{
+                  backgroundColor: '#ffffff',
+                  color: '#333333',
+                  borderRadius: '0.375rem',
+                  border: '1px solid #E3E2E6',
+                  fontSize: '1rem',
+                  lineHeight: '1.5',
+                  padding: '0.5rem 1rem',
+                  width: '200px',
+                  alignItems: 'center', justifyContent : 'center'
+              }}
+          >
+              <option>select event</option>
+              {eventData && eventData.length > 0 ? 
+                  (eventData.map((event, index) => (
+                      <option key={index} value={event.idEvent}>{event.eventName}</option>
+                  ))) : (
+                      <option value="">No events available</option>
+                  )
+              }
+          </select>
+      </div>
 
       <div className="button-field">
         <button className="button-pink" onClick={handleCreateButton}>
