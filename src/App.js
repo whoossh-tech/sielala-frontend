@@ -20,12 +20,12 @@ import { DashboardFinance } from './pages/dashboard/DashboardFinance';
 import Login from './pages/auth/Login';
 import RegisterStaffForm from './pages/auth/RegisterStaffForm';
 import UserList from './pages/auth/UserList';
-import Sponsor from "./pages/Sponsor/Sponsor";
-import CreateSponsor from "./pages/Sponsor/CreateSponsor";
-import DetailSponsor from "./pages/Sponsor/DetailSponsor";
-import Event from "./pages/Event/Event";
-import CreateEvent from "./pages/Event/CreateEvent";
-import DetailEvent from './pages/Event/DetailEvent';
+import Sponsor from "./pages/sponsor/Sponsor";
+import CreateSponsor from "./pages/sponsor/CreateSponsor";
+import DetailSponsor from "./pages/sponsor/DetailSponsor";
+import Event from "./pages/event/Event";
+import CreateEvent from "./pages/event/CreateEvent";
+import DetailEvent from './pages/event/DetailEvent';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -60,9 +60,12 @@ function App() {
             <Route path="/staff-registration" element={<RegisterStaffForm/>}></Route>
             <Route path="/user-list" element={<UserList/>}></Route>
 
+            {/* event routes */}
             <Route path="/event" element={<Event />} />
             <Route path="/event/create" element={<CreateEvent />} />
             <Route path="/event/detail/:idEvent" element={<DetailEvent/>}></Route>
+
+            {/* partnership routes */}
             <Route path="/sponsor" element={<Sponsor />} />
             <Route path="/sponsor/create" element={<CreateSponsor />} />
             <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor/>}></Route>
