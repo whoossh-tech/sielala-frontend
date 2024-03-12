@@ -55,9 +55,12 @@ function App() {
             <Route path="/staff-registration" element={<RegisterStaffForm/>}></Route>
             <Route path="/user-list" element={<UserList/>}></Route>
 
+            {/* event routes */}
             <Route path="/event" element={<Event />} />
             <Route path="/event/create" element={<CreateEvent />} />
             <Route path="/event/detail/:idEvent" element={<DetailEvent/>}></Route>
+
+            {/* partnership routes */}
             <Route path="/sponsor" element={<Sponsor />} />
             <Route path="/sponsor/create" element={<CreateSponsor />} />
             <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor/>}></Route>
