@@ -239,7 +239,7 @@ const TenantRegistrationForm = () => {
                     <input
                     id="brand_instagram"
                     className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. @LalaMarketOfficial"
+                    placeholder="ex. LalaMarketOfficial"
                     value={brandInstagram}
                     onChange={(e) => setBrandInstagram(e.target.value)}
                     />
@@ -365,7 +365,7 @@ const TenantRegistrationForm = () => {
                     id="electricity_amount"
                     type="number"
                     className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="20"
+                    placeholder="ex. 20"
                     value={electricityAmount}
                     onChange={(e) => setElectricityAmount(e.target.value)} 
                     />

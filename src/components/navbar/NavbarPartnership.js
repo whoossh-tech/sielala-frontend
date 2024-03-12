@@ -7,8 +7,14 @@ import {
 
 import logo from "../../assets/logo-sielala.png";
 import { reynaldoStyles } from "../../assets/fonts/fonts";
+import { useAuth } from "../../pages/auth/AuthContext";
 
 export function NavbarPartnership() {
+  const { logout } = useAuth(); 
+  const handleLogout = () => {
+    logout(); 
+    window.location.href = '/';
+  };
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -29,7 +35,7 @@ export function NavbarPartnership() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/" className="flex items-center text-md text-neutral-80">
+        <a href="*" className="flex items-center text-md text-neutral-80">
           <b>Invoice Management</b>
         </a>
       </Typography>
@@ -51,7 +57,7 @@ export function NavbarPartnership() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/" className="flex items-center text-md text-neutral-80">
+        <a href="*" className="flex items-center text-md text-neutral-80">
           <b>Tenant Applicant List</b>
         </a>
       </Typography>
@@ -62,7 +68,7 @@ export function NavbarPartnership() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/" className="flex items-center text-md text-neutral-80">
+        <a href="*" className="flex items-center text-md text-neutral-80">
           <b>Bulk Email</b>
         </a>
       </Typography>
@@ -90,7 +96,7 @@ export function NavbarPartnership() {
               <span className="montserrat text-primary-70 text-md">Hi, PARTNERSHIP!</span>
             </Button>
 
-            <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
+            <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10" onClick={handleLogout}>
               <span className="montserrat text-primary-70 text-md">Log Out</span>
             </Button>
           </div>

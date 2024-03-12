@@ -74,6 +74,7 @@ const RegisterStaffForm = () => {
         } catch (error) {
             console.error('Error registering staff:', error.response || error.message);
             setErrors('Error registering staff.');
+            toast.error("Error registering staff: Email has already been used");
         }
     };
 

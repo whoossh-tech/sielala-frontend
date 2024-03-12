@@ -118,7 +118,7 @@ const RewardDetail = () => {
                         <tr>
                             {dayRangeCount.map((day, index) => (
                                 <React.Fragment key={index}>
-                                    <th colSpan="3">Day {index + 1}</th>
+                                    <th style={{borderRight: '1px solid #E3E2E6'}} colSpan="3">Day {index + 1}</th>
                                 </React.Fragment>
                             ))}
                         </tr>
@@ -130,7 +130,7 @@ const RewardDetail = () => {
                                 <React.Fragment key={index}>
                                     <th>Initial</th>
                                     <th>Redeemed</th>
-                                    <th>Remaining</th>
+                                    <th style={{borderRight: '1px solid #E3E2E6'}}>Remaining</th>
                                 </React.Fragment>
                             ))}
                         </tr>
@@ -141,7 +141,7 @@ const RewardDetail = () => {
                                 <React.Fragment key={j}>
                                     <td>{dayReward.stokAwal}</td>
                                     <td>{dayReward.stokRedeemed}</td>
-                                    <td>{dayReward.stokSisa}</td>
+                                    <td style={{borderRight: '1px solid #E3E2E6'}}>{dayReward.stokSisa}</td>
                                 </React.Fragment>
                             ))}
                         </tr>
