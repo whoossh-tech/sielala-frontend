@@ -26,51 +26,51 @@ const Sponsor = () => {
     // const token = localStorage.getItem('token');
     // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    if (selectedEvent) {
-      axios.get(`http://localhost:8080/api/sponsor/view-all/${selectedEvent}`)
-      .then(res => {
-          setSponsors(res.data.data)
-      }).catch(err => 
-          console.log(err)
-        )
-    }
+    // if (selectedEvent) {
+    //   axios.get(`http://localhost:8080/api/sponsor/view-all/${selectedEvent}`)
+    //   .then(res => {
+    //       setSponsors(res.data.data)
+    //   }).catch(err => 
+    //       console.log(err)
+    //     )
+    // }
 
-    // axios
-    //   .get("http://localhost:8080/api/sponsor/view-all")
-    //   .then((res) => {
-    //     setSponsors(res.data.data);
-    //     // console.log(res.data.data); // Make sure that res.data is an array
-    //   })
-    //   .catch((error) => {
-    //     toast.error("Failed to fetch sponsors");
-    //   });
+    axios
+      .get("http://localhost:8080/api/sponsor/view-all")
+      .then((res) => {
+        setSponsors(res.data.data);
+        // console.log(res.data.data); // Make sure that res.data is an array
+      })
+      .catch((error) => {
+        toast.error("Failed to fetch sponsors");
+      });
 
     // axios.get('http://localhost:8080/api/event/view-all')
     //   .then(res => {
     //       setEventData(res.data.data)
     //   })
-    axios.get('http://localhost:8080/api/reward/view-event-all')
-            .then(res => {
-                setEventData(res.data.data)
-            })
+    // axios.get('http://localhost:8080/api/reward/view-event-all')
+    //         .then(res => {
+    //             setEventData(res.data.data)
+    //         })
 
-  }, [selectedEvent]);
-
-  // const handleCreateButton = () => {
-  //   navigate("/sponsor/create");
-  // };
+  }, [sponsors]);
 
   const handleCreateButton = () => {
-    if (selectedEvent) {
-      navigate(`/sponsor/create/${selectedEvent}`);
-    } else {
-      toast.error('Please select event first');
-    }
+    navigate("/sponsor/create");
   };
 
-  const handleChange = (e) => {
-    setSelectedEvent(e.target.value);
-  };
+  // const handleCreateButton = () => {
+  //   if (selectedEvent) {
+  //     navigate(`/sponsor/create/${selectedEvent}`);
+  //   } else {
+  //     toast.error('Please select event first');
+  //   }
+  // };
+
+  // const handleChange = (e) => {
+  //   setSelectedEvent(e.target.value);
+  // };
 
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -89,7 +89,7 @@ const Sponsor = () => {
 
       <br></br>
 
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '200px', margin: '0 auto' }}>
+      {/* <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '200px', margin: '0 auto' }}>
           <select 
               className="appearance-none px-4 py-3 w-full focus:outline-none" 
               onChange={handleChange}
@@ -114,7 +114,7 @@ const Sponsor = () => {
                   )
               }
           </select>
-      </div>
+      </div> */}
 
       <div className="button-field">
         <button className="button-pink" onClick={handleCreateButton}>

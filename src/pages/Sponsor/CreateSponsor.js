@@ -11,7 +11,7 @@ import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
 import { toast, Toaster } from "react-hot-toast";
 
 const CreateSponsor = () => {
-  const { idEvent } = useParams();
+  // const { idEvent } = useParams();
 
   const [picName, setPicName] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -48,7 +48,7 @@ const CreateSponsor = () => {
       const token = localStorage.getItem('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const response = await axios.post(`http://localhost:8080/api/sponsor/create/${idEvent}`, {
+      const response = await axios.post('http://localhost:8080/api/sponsor/create', {
         picName,
         companyName,
         companyAddress,

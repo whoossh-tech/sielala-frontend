@@ -59,7 +59,7 @@ function App() {
             <Route path="/event/create" element={<CreateEvent />} />
             <Route path="/event/detail/:idEvent" element={<DetailEvent/>}></Route>
             <Route path="/sponsor" element={<Sponsor />} />
-            <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />} />
+            <Route path="/sponsor/create" element={<CreateSponsor />} />
             <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor/>}></Route>
         </Routes>
       </Router>    
