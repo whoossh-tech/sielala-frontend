@@ -19,9 +19,9 @@ const RewardInventory = () => {
     const [eventData, setEventData] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState('');
     const dayRangeCount = Array.from({ length: countdays });
+    const [day, setDay] = useState(0);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [dayStatus, setDayStatus] = useState(0);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -41,6 +41,7 @@ const RewardInventory = () => {
             .then(res => {
                 setRewardData(res.data.data)
                 setCountDays(res.data.dayRange)
+                setDay(res.data.newDay);
             }).catch(err => 
                 console.log(err)
                 
@@ -50,28 +51,15 @@ const RewardInventory = () => {
         axios.get('http://localhost:8080/api/reward/view-event-all')
             .then(res => {
                 setEventData(res.data.data)
-            })
+            }).catch(
+                err => 
+                console.log(err)
+            )
     }, [selectedEvent])
 
 
     const handleChange = (e) => {
         setSelectedEvent(e.target.value);
-    };
-
-    const dayStatus = () => {
-        for (let i = 0; i < eventData.length; i++) {
-            const event = eventData[i];
-            if (event.idEvent === selectedEvent) {
-                return event.dayStatus; // Perbaikan dari "retrun" menjadi "return"
-            }
-        }
-        return null; // Jika tidak ditemukan event dengan id yang sesuai, kembalikan null atau nilai default yang sesuai
-    };
-
-    // const nextDayStatus = dayStatus() + 1
-
-    const nextDayStatus = () => {
-        return dayStatus() + 1;
     };
 
     function carryOutStock() {
@@ -85,6 +73,7 @@ const RewardInventory = () => {
             .then(res => {
                 setRewardData(res.data.data)
                 setCountDays(res.data.dayRange)
+                setDay(res.data.newDay);
                 toast.success("Reward Carry Out Successfully")
             }).catch(function(error) {
                 if (error.response.status === 400) {
@@ -171,7 +160,7 @@ const RewardInventory = () => {
             <br></br>
 
             <div>
-                <p><b>Current Day of Event: {dayStatus()}</b></p>
+                <p><b>Current Day of Event: {day}</b></p>
             </div>
 
             <div className="button-field">
@@ -186,7 +175,7 @@ const RewardInventory = () => {
                 
             >
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Carry Out Stock</h2>
-                <p className="text-center text-gray-700">Are you sure you want to move remaining stock from DAY {dayStatus()} of event to DAY {nextDayStatus()} of event?</p>
+                <p className="text-center text-gray-700">Are you sure you want to move remaining stock from DAY {day} of event to DAY {day + 1} of event?</p>
                 <br></br>
                 <button className="button-red text-center" onClick={closeModal}>Cancel</button>
                 <button className="button-green text-center" onClick={carryOutStock}>Confirm</button>
@@ -199,10 +188,10 @@ const RewardInventory = () => {
                     <thead>
                         {/* Row headers */}
                         <tr>
-                            <th colSpan="3"> </th>
+                            <th style={{borderRight: '1px solid #E3E2E6'}}colSpan="3"> </th>
                             {dayRangeCount.map((day, index) => (
                                 <React.Fragment key={index}>
-                                    <th colSpan="3">Day {index + 1}</th>
+                                    <th style={{borderRight: '1px solid #E3E2E6'}} colSpan="3">Day {index + 1}</th>
                                 </React.Fragment>
                             ))}
                         </tr>
@@ -212,12 +201,12 @@ const RewardInventory = () => {
                         <tr>
                             <th>Reward</th>
                             <th>Brand</th>
-                            <th>Category</th>
+                            <th style={{borderRight: '1px solid #E3E2E6'}}>Category</th>
                             {dayRangeCount.map((day, index) => (
                                 <React.Fragment key={index}>
                                     <th>Initial</th>
                                     <th>Redeemed</th>
-                                    <th>Remaining</th>
+                                    <th style={{borderRight: '1px solid #E3E2E6'}}>Remaining</th>
                                 </React.Fragment>
                             ))}
                         </tr>
@@ -231,12 +220,12 @@ const RewardInventory = () => {
                                         {/* <a href={`/reward-inventory/detail/${reward.idProduct}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{reward.productName}</a> */}
                                     </td>
                                     <td>{reward.brandName}</td>
-                                    <td>CAT {reward.category}</td>
+                                    <td style={{borderRight: '1px solid #E3E2E6'}}>CAT {reward.category}</td>
                                     {reward.listDayReward.map((dayReward, j) => (
                                         <React.Fragment key={j}>
                                             <td>{dayReward.stokAwal}</td>
                                             <td>{dayReward.stokRedeemed}</td>
-                                            <td>{dayReward.stokSisa}</td>
+                                            <td style={{borderRight: '1px solid #E3E2E6'}}>{dayReward.stokSisa}</td>
                                         </React.Fragment>
                                     ))}
                                 </tr>
