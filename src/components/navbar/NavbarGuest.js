@@ -106,6 +106,11 @@ export function NavbarGuest() {
             <div className="mr-4 hidden lg:block">{navList}</div>
           </div>
 
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+          />
+
           <div className="flex items-center gap-x-1">
             <Button onClick={onLogin} variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
               <span className="montserrat text-primary-70 text-md">Log in</span>
