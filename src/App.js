@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './pages/auth/AuthContext';
 
 // import for routes
 import RewardInventory from './pages/reward/RewardInventory';
@@ -19,20 +20,24 @@ import { DashboardFinance } from './pages/dashboard/DashboardFinance';
 import Login from './pages/auth/Login';
 import RegisterStaffForm from './pages/auth/RegisterStaffForm';
 import UserList from './pages/auth/UserList';
-import Sponsor from "./pages/sponsor/Sponsor";
-import CreateSponsor from "./pages/sponsor/CreateSponsor";
-import DetailSponsor from "./pages/sponsor/DetailSponsor";
-import Event from "./pages/event/Event";
-import CreateEvent from "./pages/event/CreateEvent";
-import DetailEvent from './pages/event/DetailEvent';
+import Sponsor from "./pages/Sponsor/Sponsor";
+import CreateSponsor from "./pages/Sponsor/CreateSponsor";
+import DetailSponsor from "./pages/Sponsor/DetailSponsor";
+import Event from "./pages/Event/Event";
+import CreateEvent from "./pages/Event/CreateEvent";
+import DetailEvent from './pages/Event/DetailEvent';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
     <div className="App">
+      <AuthProvider>
       <Router>
         <Routes>
             {/* please review & correct it */}
             <Route path="/" element={<DashboardGuest />}></Route>
+            <Route path="*" element={<NotFoundPage />} />
+
             <Route path="/partnership" element={<DashboardPartnership />}></Route>
             <Route path="/operation" element={<DashboardOperation />}></Route>
             <Route path="/admin" element={<DashboardAdmin />}></Route>
@@ -65,7 +70,8 @@ function App() {
             <Route path="/sponsor/create" element={<CreateSponsor />} />
             <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor/>}></Route>
         </Routes>
-      </Router>    
+      </Router> 
+      </AuthProvider>   
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavbarGuest } from '../../components/navbar/NavbarGuest';
-import { useAuth } from '../../pages/auth/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
 const DashboardGuest = () => {
