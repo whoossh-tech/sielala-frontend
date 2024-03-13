@@ -25,7 +25,7 @@ const Event = () => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   useEffect(() => {
     axios
-      .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
+      .get("http://localhost:8080/api/event/view-all")
       .then((res) => {
         setEvents(res.data.data);
         // console.log(res.data.data); // Make sure that res.data is an array
@@ -84,7 +84,6 @@ const Event = () => {
                     <Link to={`/event/detail/${event.idEvent}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
                     {event.eventName}
                     </Link>
-                    <a href={`/event/detail/${event.idEvent}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{event.eventName}</a>
                   </td>
                   <td>{event.startDate}</td>
                   <td>{event.endDate}</td>

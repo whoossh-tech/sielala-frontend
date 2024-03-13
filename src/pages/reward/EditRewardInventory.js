@@ -12,7 +12,7 @@ import { NavbarOperation } from '../../components/navbar/NavbarOperation';
 
 const EditRewardInventory = () => {
     const { idReward } = useParams();
-    const url = 'https://sielala-backend-production.up.railway.app';
+    const url = 'http://localhost:8080';
     const navigate = useNavigate();
 
     const [productName, setProductName] = useState('');

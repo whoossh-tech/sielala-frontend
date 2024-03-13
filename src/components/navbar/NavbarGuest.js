@@ -21,7 +21,7 @@ export function NavbarGuest() {
 
           const token = localStorage.getItem('token');
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          const response = await axios.get("https://sielala-backend-production.up.railway.app/api/tenant/is-accepting-tenants");
+          const response = await axios.get("http://localhost:8080/api/tenant/is-accepting-tenants");
           const data = response.data;
           setIsRegistrationOpen(data);
           console.log(isRegistrationOpen);

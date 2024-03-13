@@ -67,7 +67,7 @@ const CreateEvent = () => {
       const token = localStorage.getItem('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const response = await axios.post("https://sielala-backend-production.up.railway.app/api/event/create", {
+      const response = await axios.post("http://localhost:8080/api/event/create", {
         eventName,
         startDate,
         endDate,
