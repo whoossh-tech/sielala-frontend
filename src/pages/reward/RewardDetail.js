@@ -16,6 +16,7 @@ const RewardDetail = () => {
 
     const [rewardData, setRewardData] = useState();
     const [countdays, setCountDays] = useState(0);
+    const [idEvent, setIdEvent] = useState('');
     const dayRangeCount = Array.from({ length: countdays });
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,6 +37,7 @@ const RewardDetail = () => {
     .then(res => {
         setRewardData(res.data.rewardData)
         setCountDays(res.data.daysRange)
+        setIdEvent(res.data.rewardData.event.idEvent)
     }).catch(err => 
         console.log(err))
     })
@@ -60,6 +62,7 @@ const RewardDetail = () => {
 };
 
     const handleBack = () => {
+        localStorage.setItem('idSelectedEvent', idEvent);
         navigate(-1); // Redirect back to the previous page
     };
 

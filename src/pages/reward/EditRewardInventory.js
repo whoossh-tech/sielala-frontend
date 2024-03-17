@@ -22,6 +22,7 @@ const EditRewardInventory = () => {
     const [countDays, setCountDays] = useState(1);
     const [eventName, setEventName]  = useState('');
     const [idEvent, setIdEvent] = useState('');
+    const [day, setDay] = useState(0);
     const [errors, setErrors] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,7 +42,7 @@ const EditRewardInventory = () => {
 
                 const response = await axios.get(`${url}/api/reward/detail/${idReward}`);
                 const rewardData = response.data.rewardData;
-                // console.log(rewardData);
+                console.log(rewardData);
 
                 setProductName(rewardData.productName);
                 setBrandName(rewardData.brandName);
@@ -49,7 +50,9 @@ const EditRewardInventory = () => {
                 setListDayReward(rewardData.listDayReward);
                 setEventName(rewardData.event.eventName);
                 setIdEvent(rewardData.event.idEvent);
+                setDay(rewardData.event.dayStatus);
                 setCountDays(response.data.daysRange);
+                console.log(day);
           
             } catch (error) {
                 console.error('Error fetching reward data:', error);
@@ -57,7 +60,7 @@ const EditRewardInventory = () => {
         };
 
         fetchRewardData();
-    }, [idReward]);
+    }, []);
 
     const validateForm = () => {
         const newErrors = {};
@@ -131,6 +134,7 @@ const EditRewardInventory = () => {
                             type="number"
                             value={dayReward.stokAwal || ''}  
                             min="0"
+                            disabled={dayReward.day < day}
                             onChange={(e) => handleDayStockChange(dayReward.day, parseInt(e.target.value))}
                         />
                     </div>
