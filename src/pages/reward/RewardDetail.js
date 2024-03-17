@@ -111,6 +111,24 @@ const RewardDetail = () => {
             <br></br>
             <br></br>
 
+            <div>
+                {rewardData.rewardRedeemed.length === 0 ? (
+                <div className="button-field">
+                    <button className="button-green" onClick={handleBack}>Back</button>
+                    <Link to={`/edit-reward/${id}`}>
+                        <button className="button-pink">Edit Reward</button>
+                    </Link>
+                    <button className="button-red" onClick={openModal}>Delete Reward</button>
+                </div>
+                    ) : (
+                <div className="button-field">
+                    <button className="button-green" onClick={handleBack}>Back</button>
+                    <button className="button-pink" disabled>Edit Reward</button>
+                    <button className="button-red" disabled>Delete Reward</button>
+                </div>
+                )}
+            </div>
+
             <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
                 <table>
                     <thead>
@@ -150,7 +168,7 @@ const RewardDetail = () => {
             </div>
                 
     
-                <div>
+                {/* <div>
                     {rewardData.rewardRedeemed.length === 0 ? (
                     <div className="button-field">
                         <button className="button-green" onClick={handleBack}>Back</button>
@@ -165,8 +183,8 @@ const RewardDetail = () => {
                         <button className="button-pink" disabled>Edit Reward</button>
                         <button className="button-red" disabled>Delete Reward</button>
                     </div>
-                )}
-                </div>
+                    )}
+                </div> */}
                 
             </>
             ) : (
@@ -178,18 +196,17 @@ const RewardDetail = () => {
                 onRequestClose={closeModal}
                 id="modal-confirmation"
             >
-            {/* <div className='modalBackground'>
-                <div className="modalContainer"> */}
-                    <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-                    <p className="text-center text-gray-700">Are you sure you want to delete this reward?</p>
-                    <br></br>
-                    <div>
-                        <button className="button-red text-center" onClick={closeModal}>Cancel</button>
-                        <button className="button-green text-center" onClick={confirmDelete}>Confirm</button>
-                    </div>
-                {/* </div>
-            </div> */}
+            
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                <p className="text-center text-gray-700">Are you sure you want to delete this reward?</p>
+                <br></br>
+                <div>
+                    <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+                    <button className="button-green text-center" onClick={confirmDelete}>Confirm</button>
+                </div>
+                
             </Modal>
+            <br></br>
         </div>
     );
 }
