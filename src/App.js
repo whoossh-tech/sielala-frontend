@@ -20,12 +20,12 @@ import { DashboardFinance } from './pages/dashboard/DashboardFinance';
 import Login from './pages/auth/Login';
 import RegisterStaffForm from './pages/auth/RegisterStaffForm';
 import UserList from './pages/auth/UserList';
-import Sponsor from "./pages/sponsor/Sponsor";
-import CreateSponsor from "./pages/sponsor/CreateSponsor";
-import DetailSponsor from "./pages/sponsor/DetailSponsor";
-import Event from "./pages/event/Event";
-import CreateEvent from "./pages/event/CreateEvent";
-import DetailEvent from './pages/event/DetailEvent';
+import Sponsor from "./pages/Sponsor/Sponsor";
+import CreateSponsor from "./pages/Sponsor/CreateSponsor";
+import DetailSponsor from "./pages/Sponsor/DetailSponsor";
+import Event from "./pages/Event/Event";
+import CreateEvent from "./pages/Event/CreateEvent";
+import DetailEvent from './pages/Event/DetailEvent';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
             <Route path="/reward-inventory/detail/:id" element={<RewardDetail/>}></Route>
 
             {/* tenant routes */}
-            <Route path="/tenant-registration" element={<TenantRegistrationForm/>}></Route>
+            <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm/>}></Route>
             <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage/>}></Route>
             <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage/>}></Route>
 

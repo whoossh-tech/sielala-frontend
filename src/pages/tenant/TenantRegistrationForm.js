@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { NavbarGuest } from '../../components/navbar/NavbarGuest';
 
 import { reynaldoStyles } from "../../assets/fonts/fonts";
@@ -10,6 +10,7 @@ import '../../static/css/TenantRegistrationForm.css';
 import '../../static/css/Button.css';
 
 const TenantRegistrationForm = () => {
+    const { eventId } = useParams();
     const[brandName, setBrandName] = useState('');
     const[brandEmail, setBrandEmail] = useState('');
     const[brandNumber, setBrandNumber] = useState('');
@@ -110,6 +111,7 @@ const TenantRegistrationForm = () => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             
             const response = await axios.post('http://localhost:8080/api/tenant/register', {
+                eventId,
                 picName,
                 address: brandAddress,
                 brandName,
@@ -149,286 +151,291 @@ const TenantRegistrationForm = () => {
                 </div>
             </div>
 
-            <form
-                className="flex flex-col items-center px-4 pt-8 pb-6 mt-3 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
+            <form 
+                className="flex flex-col items-center px-4 pt-8 pb-6 mt-3 w-full max-w-screen-2xl mx-auto text-neutral-100 rounded-2xl"
                 onSubmit={(e) => onRegister(e)}
             >
-            
-            <div className="flex flex-col items-stretch space-y-4 mt-3 w-full">
 
-                {/* brand name */}
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="brand_name">
-                    Brand Name<span className="text-danger">*</span>
-                </label>
+                <div className="columns-2">
+                    <div className="first-column">
 
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_name && "border-danger"}`}>
-                    <input
-                    id="brand_name"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. Lala Market"
-                    value={brandName}
-                    onChange={(e) => setBrandName(e.target.value)}
-                    />
-                </div>
+                        {/* brand name */}
+                        <div className="input-form-tenant flex flex-col space-y-1 mt-2">
+                        <label className="input-label font-reynaldo text-left" htmlFor="brand_name">
+                            Brand Name<span className="text-danger">*</span>
+                        </label>
 
-                {errors.brand_name && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_name}
-                    </span>
-                )}
-                </div>
+                        <div className={`overflow-clip border border-neutral-40 rounded-lg ${errors.brand_name && "border-danger"}`}>
+                            <input
+                            id="brand_name"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="ex. Lala Market"
+                            value={brandName}
+                            onChange={(e) => setBrandName(e.target.value)}
+                            />
+                        </div>
 
-                {/* brand email */}
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="brand_email">
-                    Brand Email<span className="text-danger">*</span>
-                </label>
+                        {errors.brand_name && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.brand_name}
+                            </span>
+                        )}
+                        </div>
 
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_email && "border-danger"}`}>
-                    <input
-                    id="brand_email"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. jane.doe@gmail.com"
-                    value={brandEmail}
-                    onChange={(e) => setBrandEmail(e.target.value)}
-                    />
-                </div>
+                        {/* brand email */}
+                        <div className="input-form-tenant flex flex-col space-y-1">
+                        <label className="input-label font-reynaldo text-left" htmlFor="brand_email">
+                            Brand Email<span className="text-danger">*</span>
+                        </label>
 
-                {errors.brand_email && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_email}
-                    </span>
-                )}
-                </div>
+                        <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_email && "border-danger"}`}>
+                            <input
+                            id="brand_email"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="ex. jane.doe@gmail.com"
+                            value={brandEmail}
+                            onChange={(e) => setBrandEmail(e.target.value)}
+                            />
+                        </div>
 
-                {/* brand telephone number */}
-                <div className="input-form flex flex-col">
-                <label className="input-label font-reynaldo text-left" htmlFor="brand_number">
-                    Brand Telephone Number<span className="text-danger">*</span>
-                </label>
+                        {errors.brand_email && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.brand_email}
+                            </span>
+                        )}
+                        </div>
+                        
+                        {/* brand telephone number */}
+                        <div className="input-form-tenant flex flex-col">
+                        <label className="input-label font-reynaldo text-left" htmlFor="brand_number">
+                            Brand Telephone Number<span className="text-danger">*</span>
+                        </label>
 
-                <div className={`overflow-clip flex items-stretch w-full border border-neutral-40 rounded-lg ${errors.brand_number && "border-danger"}`}>
-                    <div className="flex items-center justify-center px-3 bg-cyan-50">
-                    +62
+                        <div className={`overflow-clip flex items-stretch w-full border border-neutral-40 rounded-lg ${errors.brand_number && "border-danger"}`}>
+                            <div className="flex items-center justify-center px-3 bg-cyan-50">
+                            +62
+                            </div>
+                            <input
+                            id="brand_number"
+                            type="tel"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="ex. 812xxxx..."
+                            value={brandNumber}
+                            onChange={(e) => setBrandNumber(e.target.value)}
+                            />
+                        </div>
+
+                        {errors.brand_number && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.brand_number}
+                            </span>
+                        )}
+                        </div>
+
+                        {/* brand instagram */}
+                        <div className="input-form-tenant flex flex-col space-y-1">
+                        <label className="input-label font-reynaldo text-left" htmlFor="brand_instagram">
+                            Brand Instagram<span className="text-danger">*</span>
+                        </label>
+
+                        <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_instagram && "border-danger"}`}>
+                            <input
+                            id="brand_instagram"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="ex. LalaMarketOfficial"
+                            value={brandInstagram}
+                            onChange={(e) => setBrandInstagram(e.target.value)}
+                            />
+                        </div>
+
+                        {errors.brand_instagram && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.brand_instagram}
+                            </span>
+                        )}
+                        </div>
+
+                        {/* brand address */}
+                        <div className="input-form-tenant flex flex-col space-y-1">
+                        <label className="input-label font-reynaldo text-left" htmlFor="brand_address">
+                            Brand Address<span className="text-danger">*</span>
+                        </label>
+
+                        <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_address && "border-danger"}`}>
+                            <input
+                            id="brand_address"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="ex. Margonda, Kukusan Depok"
+                            value={brandAddress}
+                            onChange={(e) => setBrandAddress(e.target.value)}
+                            />
+                        </div>
+
+                        {errors.brand_address && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.brand_address}
+                            </span>
+                        )}
+                        </div>
+
+                        {/* person in charge */}
+                        <div className="input-form-tenant flex flex-col space-y-1">
+                        <label className="input-label font-reynaldo text-left" htmlFor="pic_name">
+                            Person in Charge Name<span className="text-danger">*</span>
+                        </label>
+
+                        <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.pic_name && "border-danger"}`}>
+                            <input
+                            id="pic_name"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="ex. Jane Doe"
+                            value={picName}
+                            onChange={(e) => setPicName(e.target.value)}
+                            />
+                        </div>
+
+                        {errors.pic_name && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.pic_name}
+                            </span>
+                        )}
+                        </div>
                     </div>
-                    <input
-                    id="brand_number"
-                    type="tel"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. 812xxxx..."
-                    value={brandNumber}
-                    onChange={(e) => setBrandNumber(e.target.value)}
-                    />
+
+                    <div className='second-column mx-10'>
+
+                        {/* brand category */}
+                        <div className="input-form-tenant flex flex-col">
+                        <label className="input-label font-reynaldo text-left" htmlFor="brand_category">
+                            Brand Category<span className="text-danger">*</span>
+                        </label>
+
+                        <div className={`relative overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_category && "border-danger"}`}>
+                            <select
+                            id="brand_category"
+                            className="appearance-none px-4 py-3 w-full focus:outline-none"
+                            placeholder="Choose category"
+                            value={brandCategory}
+                            onChange={(e) => setBrandCategory(e.target.value)}
+                            >
+                            <option>Choose category</option>
+                            <option value="Apparel">Apparel</option>
+                            <option value="Bag">Bag</option>
+                            <option value="Footwear">Footwear</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Hijab">Hijab</option>
+                            <option value="Food">Food</option>
+                            <option value="Drink">Drink</option>
+                            <option value="Others">Others</option>
+                            </select>
+                        </div>
+
+                        {errors.brand_category && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.brand_category}
+                            </span>
+                        )}
+                        </div>
+
+                        {/* brand description */}
+                        <div className="input-form-tenant flex flex-col space-y-1">
+                        <label className="input-label font-reynaldo text-left" htmlFor="brand_description">
+                            Brand Description<span className="text-danger">*</span>
+                        </label>
+
+                        <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_description && "border-danger"}`}>
+                            <textarea
+                            id="brand_description"
+                            className="px-4 py-3 w-full h-24 focus:outline-none"
+                            placeholder="ex. Our brand is about..."
+                            value={brandDescription}
+                            onChange={(e) => setBrandDescription(e.target.value)} 
+                            />
+                        </div>
+
+                        {errors.brand_description && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.brand_description}
+                            </span>
+                        )}
+                        </div>
+
+                        {/* electricity amount */}
+                        <div className="input-form-tenant flex flex-col">
+                        <label className="input-label font-reynaldo text-left" htmlFor="electricity_amount">
+                            Amount of Electricity Needed (in Watt)<span className="text-danger">*</span>
+                        </label>
+
+                        <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.electricity_amount && "border-danger"}`}>
+                            <input
+                            id="electricity_amount"
+                            type="number"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="ex. 20"
+                            value={electricityAmount}
+                            onChange={(e) => setElectricityAmount(e.target.value)} 
+                            />
+                        </div>
+
+                        {errors.electricity_amount && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.electricity_amount}
+                            </span>
+                        )}
+                        </div>
+
+                        {/* brand promo */}
+                        <div className="input-form-tenant flex flex-col space-y-1">
+                        <label className="input-label font-reynaldo text-left" htmlFor="brand_promo">
+                            Brand Promo<span className="text-danger">*</span>
+                        </label>
+
+                        <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_promo && "border-danger"}`}>
+                            <textarea
+                            id="brand_promo"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="ex. Offering a Buy 1 Get 1 for every 50k minimum purchase..."
+                            value={brandPromo}
+                            onChange={(e) => setBrandPromo(e.target.value)} 
+                            />
+                        </div>
+
+                        {errors.brand_promo && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.brand_promo}
+                            </span>
+                        )}
+                        </div>
+
+                        {/* booth preference */}
+                        <div className="input-form-tenant flex flex-col">
+                        <label className="input-label font-reynaldo text-left" htmlFor="booth_preference">
+                            Booth Preference<span className="text-danger">*</span>
+                        </label>
+
+                        <div className={`relative overflow-clip w-full border border-neutral-40 rounded-lg ${errors.booth_preference && "border-danger"}`}>
+                            <select
+                            id="booth_preference"
+                            className="appearance-none px-4 py-3 w-full focus:outline-none"
+                            placeholder="Choose booth preference"
+                            value={boothPreference}
+                            onChange={(e) => setBoothPreference(e.target.value)} 
+                            >
+                            <option>Choose booth preference</option>
+                            <option value="Big">Big Size</option>
+                            <option value="Medium">Medium Size</option>
+                            <option value="Small">Small Size</option>
+                            </select>
+                        </div>
+
+                        {errors.booth_preference && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.booth_preference}
+                            </span>
+                        )}
+                        </div>
+                    </div>
                 </div>
-
-                {errors.brand_number && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_number}
-                    </span>
-                )}
-                </div>
-
-                {/* brand instagram */}
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="brand_instagram">
-                    Brand Instagram<span className="text-danger">*</span>
-                </label>
-
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_instagram && "border-danger"}`}>
-                    <input
-                    id="brand_instagram"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. LalaMarketOfficial"
-                    value={brandInstagram}
-                    onChange={(e) => setBrandInstagram(e.target.value)}
-                    />
-                </div>
-
-                {errors.brand_instagram && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_instagram}
-                    </span>
-                )}
-                </div>
-
-                {/* brand address */}
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="brand_address">
-                    Brand Address<span className="text-danger">*</span>
-                </label>
-
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_address && "border-danger"}`}>
-                    <input
-                    id="brand_address"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. Margonda, Kukusan Depok"
-                    value={brandAddress}
-                    onChange={(e) => setBrandAddress(e.target.value)}
-                    />
-                </div>
-
-                {errors.brand_address && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_address}
-                    </span>
-                )}
-                </div>
-
-                {/* person in charge */}
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="pic_name">
-                    Person in Charge Name<span className="text-danger">*</span>
-                </label>
-
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.pic_name && "border-danger"}`}>
-                    <input
-                    id="pic_name"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. Jane Doe"
-                    value={picName}
-                    onChange={(e) => setPicName(e.target.value)}
-                    />
-                </div>
-
-                {errors.pic_name && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.pic_name}
-                    </span>
-                )}
-                </div>
-
-                {/* brand category */}
-                <div className="input-form flex flex-col">
-                <label className="input-label font-reynaldo text-left" htmlFor="brand_category">
-                    Brand Category<span className="text-danger">*</span>
-                </label>
-
-                <div className={`relative overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_category && "border-danger"}`}>
-                    <select
-                    id="brand_category"
-                    className="appearance-none px-4 py-3 w-full focus:outline-none"
-                    placeholder="Choose category"
-                    value={brandCategory}
-                    onChange={(e) => setBrandCategory(e.target.value)}
-                    >
-                    <option>Choose category</option>
-                    <option value="Apparel">Apparel</option>
-                    <option value="Bag">Bag</option>
-                    <option value="Footwear">Footwear</option>
-                    <option value="Accessories">Accessories</option>
-                    <option value="Hijab">Hijab</option>
-                    <option value="Food">Food</option>
-                    <option value="Drink">Drink</option>
-                    <option value="Others">Others</option>
-                    </select>
-                </div>
-
-                {errors.brand_category && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_category}
-                    </span>
-                )}
-                </div>
-
-                {/* brand description */}
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="brand_description">
-                    Brand Description<span className="text-danger">*</span>
-                </label>
-
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_description && "border-danger"}`}>
-                    <input
-                    id="brand_description"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. Our brand is about..."
-                    value={brandDescription}
-                    onChange={(e) => setBrandDescription(e.target.value)} 
-                    />
-                </div>
-
-                {errors.brand_description && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_description}
-                    </span>
-                )}
-                </div>
-
-                {/* electricity amount */}
-                <div className="input-form flex flex-col">
-                <label className="input-label font-reynaldo text-left" htmlFor="electricity_amount">
-                    Amount of Electricity Needed<span className="text-danger">*</span>
-                </label>
-
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.electricity_amount && "border-danger"}`}>
-                    <input
-                    id="electricity_amount"
-                    type="number"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. 20"
-                    value={electricityAmount}
-                    onChange={(e) => setElectricityAmount(e.target.value)} 
-                    />
-                </div>
-
-                {errors.electricity_amount && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.electricity_amount}
-                    </span>
-                )}
-                </div>
-
-                {/* brand promo */}
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="brand_promo">
-                    Brand Promo<span className="text-danger">*</span>
-                </label>
-
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_promo && "border-danger"}`}>
-                    <input
-                    id="brand_promo"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="ex. Offering a Buy 1 Get 1 for every 50k minimum purchase..."
-                    value={brandPromo}
-                    onChange={(e) => setBrandPromo(e.target.value)} 
-                    />
-                </div>
-
-                {errors.brand_promo && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_promo}
-                    </span>
-                )}
-                </div>
-
-                {/* booth preference */}
-                <div className="input-form flex flex-col">
-                <label className="input-label font-reynaldo text-left" htmlFor="booth_preference">
-                    Booth Preference<span className="text-danger">*</span>
-                </label>
-
-                <div className={`relative overflow-clip w-full border border-neutral-40 rounded-lg ${errors.booth_preference && "border-danger"}`}>
-                    <select
-                    id="booth_preference"
-                    className="appearance-none px-4 py-3 w-full focus:outline-none"
-                    placeholder="Choose booth preference"
-                    value={boothPreference}
-                    onChange={(e) => setBoothPreference(e.target.value)} 
-                    >
-                    <option>Choose booth preference</option>
-                    <option value="Big">Big Size</option>
-                    <option value="Medium">Medium Size</option>
-                    <option value="Small">Small Size</option>
-                    </select>
-                </div>
-
-                {errors.booth_preference && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.booth_preference}
-                    </span>
-                )}
-                </div>
-            </div>
 
             <br></br>
 

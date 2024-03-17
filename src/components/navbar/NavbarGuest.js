@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React from "react";
 import {
   Navbar,
   Typography,
@@ -9,45 +8,12 @@ import {
 import logo from "../../assets/logo-sielala.png";
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import { useNavigate } from 'react-router-dom';
-import {toast, Toaster} from 'react-hot-toast';
 
 export function NavbarGuest() {
   const navigate = useNavigate();
-  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
-
-  useEffect(() => {
-    const checkEventStatus = async () => {
-        try {
-
-          const token = localStorage.getItem('token');
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          const response = await axios.get("http://localhost:8080/api/tenant/is-accepting-tenants");
-          const data = response.data;
-          setIsRegistrationOpen(data);
-          console.log(isRegistrationOpen);
-
-        } catch (error) { 
-            console.error("Error checking event status:", error);
-        }
-    };
-
-    checkEventStatus();
-  }, []);
 
   const onLogin = () => {
     navigate("/login");
-  };
-
-  const tenantRegistrationClick = () => {
-    console.log("isRegistrationOpen:", isRegistrationOpen);
-
-    if (isRegistrationOpen) {
-      navigate("/tenant-registration");
-    } else {
-      // Optionally show a message or perform some action when registration is closed
-      toast.error('Tenant Registration is closed');
-      console.log("Tenant registration is closed.");
-    }
   };
 
   const navList = (
@@ -60,31 +26,6 @@ export function NavbarGuest() {
       >
         <a href="/" className="flex items-center text-md text-neutral-80">
           <b>Dashboard</b>
-        </a>
-      </Typography>
-
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="/" className="flex items-center text-md text-neutral-80">
-          <b>Visitor Registration</b>
-        </a>
-      </Typography>
-
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a
-          className="flex items-center text-md text-neutral-80"
-          onClick={isRegistrationOpen ? tenantRegistrationClick : null}
-        >
-          <b>Tenant Registration</b>
         </a>
       </Typography>
     </ul>
@@ -105,11 +46,6 @@ export function NavbarGuest() {
               <br></br>
             <div className="mr-4 hidden lg:block">{navList}</div>
           </div>
-
-          <Toaster
-            position="top-center"
-            reverseOrder={false}
-          />
 
           <div className="flex items-center gap-x-1">
             <Button onClick={onLogin} variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
