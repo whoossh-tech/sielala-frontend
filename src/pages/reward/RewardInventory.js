@@ -53,6 +53,13 @@ const RewardInventory = () => {
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
+        // Pre-filled dropdown event
+        const storedEvent = localStorage.getItem('idSelectedEvent');
+        if (storedEvent) {
+            setSelectedEvent(storedEvent);
+            localStorage.removeItem('idSelectedEvent'); 
+        }
+
         if (selectedEvent) {
             axios.get(`http://localhost:8080/api/reward/view-all/${selectedEvent}`)
             .then(res => {
@@ -164,6 +171,7 @@ const RewardInventory = () => {
                     <select 
                         className="appearance-none px-4 py-3 w-full focus:outline-none" 
                         onChange={handleChange}
+                        value={selectedEvent}
                         style={{
                             backgroundColor: '#ffffff',
                             color: '#333333',

@@ -21,6 +21,7 @@ const EditRewardInventory = () => {
     const [listDayReward, setListDayReward] = useState([]);
     const [countDays, setCountDays] = useState(1);
     const [eventName, setEventName]  = useState('');
+    const [idEvent, setIdEvent] = useState('');
     const [errors, setErrors] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,6 +48,7 @@ const EditRewardInventory = () => {
                 setCategory(rewardData.category);
                 setListDayReward(rewardData.listDayReward);
                 setEventName(rewardData.event.eventName);
+                setIdEvent(rewardData.event.idEvent);
                 setCountDays(response.data.daysRange);
           
             } catch (error) {
@@ -100,7 +102,9 @@ const EditRewardInventory = () => {
                 category,
                 listDayReward
             });
-            
+            // Untuk pre-filled dropdown event
+            localStorage.setItem('idSelectedEvent', idEvent);
+
             console.log('Reward edited successfully:', response.data);
             navigate('/reward-inventory');
 

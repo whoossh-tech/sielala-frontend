@@ -48,7 +48,7 @@ const FormRewardInventory = () => {
         };
 
         fetchEventInfo();
-    }, []);
+    }, [idEvent]);
 
     const validateForm = () => {
         const newErrors = {};
@@ -97,6 +97,9 @@ const FormRewardInventory = () => {
                 category,
                 listDayReward
             });
+            // Untuk pre-filled dropdown event
+            localStorage.setItem('idSelectedEvent', idEvent);
+
             console.log('Reward added successfully:', response.data);
             navigate('/reward-inventory');
 
