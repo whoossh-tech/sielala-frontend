@@ -51,16 +51,16 @@ const DetailEvent = () => {
 
       <br></br>
 
-      <div className="button-field">
-        <button className="button-green" onClick={handleBack}>
-          Back
-        </button>
-      </div>
-
       <div className="container mx-auto py-8">
-        <h2 className="text-2xl font-semibold mb-4">Event Detail</h2>
-        <div className="bg-white p-6 rounded-lg shadow-md mb-4">
+        <div className="flex justify-between items-center mb-4">
+          <button className="button-green" onClick={handleBack}>
+            Back
+          </button>
+          <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: "-6%" }}>Event Detail</h1>
+          <div></div>
+        </div>
 
+        <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
           <div className="each-event">
             <p className="event-text-title">Event Name:</p>
             <p className="reward-text">{eventData?.eventName}</p>
@@ -80,16 +80,17 @@ const DetailEvent = () => {
         </div>
 
         <br></br>
+        <br></br>
 
-        <h2 className="text-2xl font-semibold mb-4">Accepted Tenant</h2>
+        <h1 className="text-2xl font-semibold mb-4">Accepted Tenant</h1>
         <div className="bg-white p-6 rounded-lg shadow-md mb-4">
           <table className="Tenant-table w-full">
             <thead>
               <tr>
-                <th>Brand Name</th>
-                <th>PIC Name</th>
-                <th>Brand Email</th>
-                <th>Brand Telephone</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Brand Name</th>
+                <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Brand Email</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Brand Telephone</th>
               </tr>
             </thead>
             <tbody>

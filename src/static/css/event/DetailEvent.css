@@ -20,6 +20,27 @@
     margin-bottom: 4px; /* Adjust as needed */
 }
 
+.event-text {
+    font-size: 16px;
+    color: #A9B245;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    text-align: left;
+    margin-top: 0; /* Reset margin-top */
+    margin: 0;
+}
+
+.event-text-title {
+    font-size: 16px;
+    color: #2F3033;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    text-align: left;
+    margin-top: 0; /* Reset margin-top */
+    margin: 0;
+    width: 200px;
+}
+
 .each-event{
     /* align-items: flex-start; */
     display: flex;
@@ -87,12 +108,12 @@ th {
 
 #modal-confirmation {
     position: fixed;
-    top: 0;
-    left: 0;
-    /* transform: translate(-50%, -50%); */
+    top: 10%; /* Menempatkan modal tepat di tengah secara vertikal */
+    left: 50%; /* Menempatkan modal tepat di tengah secara horizontal */
+    transform: translate(180%, 60%); /* Menggeser modal agar posisinya tepat di tengah halaman */
     width: 80%;
-    height: 60%;
     max-width: 400px;
+    height: 60%;
     max-height: 200px;
     background-color: white;
     padding: 20px;
@@ -101,5 +122,6 @@ th {
     text-align: center;
     justify-content: center;
     align-items: center;
+    z-index: 10000; /* Mengatur z-index agar modal berada di atas elemen lain */
 }
 

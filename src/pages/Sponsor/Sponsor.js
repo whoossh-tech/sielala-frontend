@@ -99,6 +99,8 @@ const Sponsor = () => {
                 </select>
             </div>
 
+            <br></br>
+
       <div className="button-field">
         <button className="button-pink" onClick={handleCreateButton}>
           + Add Sponsor
@@ -110,11 +112,11 @@ const Sponsor = () => {
           <thead>
             {/* Row headers */}
             <tr>
-              <th>Company Name</th>
-              <th>Pic Name</th>
-              <th>Company Address</th>
-              <th>Company Email</th>
-              <th>Company Telephone</th>
+              <th style={{ width: "20%", textAlign: "center"}}>Company Name</th>
+              <th style={{ width: "20%", textAlign: "center"}}>Pic Name</th>
+              <th style={{ width: "20%", textAlign: "center"}}>Company Address</th>
+              <th style={{ width: "20%", textAlign: "center"}}>Company Email</th>
+              <th style={{ width: "20%", textAlign: "center"}}>Company Telephone</th>
             </tr>
           </thead>
 
@@ -126,9 +128,6 @@ const Sponsor = () => {
                     <Link to={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
                       {sponsor.companyName}
                     </Link>
-                    <a href={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                      {sponsor.sponsorName}
-                    </a>
                   </td>
                   <td>{sponsor.picName}</td>
                   <td>{sponsor.companyAddress}</td>
