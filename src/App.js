@@ -51,7 +51,7 @@ function App() {
             <Route path="/reward-inventory/detail/:id" element={<RewardDetail/>}></Route>
 
             {/* tenant routes */}
-            <Route path="/tenant-registration" element={<TenantRegistrationForm/>}></Route>
+            <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm/>}></Route>
             <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage/>}></Route>
             <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage/>}></Route>
 
