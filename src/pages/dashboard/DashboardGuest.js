@@ -16,8 +16,19 @@ const DashboardGuest = () => {
     useEffect(() => {
 
         const token = localStorage.getItem('token');
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
+        // if ( role === 'BISDEV' || role === 'ADMIN' || role === 'PARTNERSHIP' || role === 'OPERATION' || role === 'FINANCE') {
+        //     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // } else {
+        //     delete axios.defaults.headers.common["Authorization"];
+        // }
+
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        } else {
+            delete axios.defaults.headers.common['Authorization'];
+        }
+    
         axios.get('http://localhost:8080/api/event/ongoing')
             .then(res => {
                 setEvents(res.data.data)

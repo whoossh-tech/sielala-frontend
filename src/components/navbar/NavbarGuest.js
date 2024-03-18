@@ -10,10 +10,19 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import { useNavigate } from 'react-router-dom';
 
 export function NavbarGuest() {
+  const role = localStorage.getItem('role');
   const navigate = useNavigate();
 
   const onLogin = () => {
     navigate("/login");
+  };
+
+  const seeDashboard = () => {
+    if (role === 'ADMIN') { navigate("/admin") }
+    if (role === 'BISDEV') { navigate("/bisdev") }
+    if (role === 'OPERATION') { navigate("/operation") }
+    if (role === 'PARTNERSHIP') { navigate("/partnership") }
+    if (role === 'FINANCE') { navigate("/finance") }
   };
 
   const navList = (
@@ -48,9 +57,17 @@ export function NavbarGuest() {
           </div>
 
           <div className="flex items-center gap-x-1">
-            <Button onClick={onLogin} variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
-              <span className="montserrat text-primary-70 text-md">Log in</span>
-            </Button>
+
+          {( role === 'BISDEV' || role === 'ADMIN' || role === 'PARTNERSHIP' || role === 'OPERATION' || role === 'FINANCE') ? (
+              <Button onClick={seeDashboard} variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10 mx-4">
+                  <span className="montserrat text-primary-70 text-md">Hi, { role }!</span>
+              </Button>
+          ) : (
+              <Button onClick={onLogin} variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
+                  <span className="montserrat text-primary-70 text-md">Log in</span>
+              </Button>
+          )}
+            
           </div>
         </div>
       </Navbar>

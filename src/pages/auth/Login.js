@@ -39,7 +39,7 @@ const Login = () => {
       const role = localStorage.getItem('role');
       switch (role) {
       case 'ADMIN':
-        toast.success("Reward edited successfully");
+        toast.success("Login successfully");
         toast.loading('Redirecting to Admin Dashboard...');
         window.location.replace('/admin');
         break;
