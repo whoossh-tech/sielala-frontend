@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { toast, Toaster } from 'react-hot-toast';
@@ -11,7 +11,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -24,27 +24,6 @@ const Login = () => {
     if (validateForm()) {
       try {
         await login(username, password);
-        const role = localStorage.getItem('role');
-
-        switch (role) {
-          case 'ADMIN':
-            navigate('/admin');
-            break;
-          case 'PARTNERSHIP':
-            navigate('/partnership');
-            break;
-          case 'OPERATION':
-            navigate('/operation');
-            break;
-          case 'FINANCE':
-            navigate('/finance');
-            break;
-          case 'BISDEV':
-            navigate('/bisdev');
-            break;
-        //   default:
-        //     navigate('/unauthorized');
-        }
       } catch (error) {
         console.error('Error logging in:', error.message);
         toast.error('Login Failed: Your username or password is incorrect');
@@ -55,13 +34,45 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      const role = localStorage.getItem('role');
+      switch (role) {
+      case 'ADMIN':
+        toast.success("Reward edited successfully");
+        toast.loading('Redirecting to Admin Dashboard...');
+        window.location.replace('/admin');
+        break;
+      case 'PARTNERSHIP':
+        toast.loading('Redirecting to Partnerhsip Dashboard...');
+        window.location.replace('/partnership');
+        break;
+      case 'OPERATION':
+        toast.loading('Redirecting to Operations Dashboard...');
+        window.location.replace('/operation');
+        break;
+      case 'FINANCE':
+        toast.loading('Redirecting to Finance Dashboard...');
+        window.location.replace('/finance');
+        break;
+      case 'BISDEV':
+        toast.loading('Redirecting to Business Development Dashboard...');
+        window.location.replace('/bisdev');
+        break;
+      default:
+        toast.loading('Redirecting to Guest Dashboard...');
+        window.location.replace('/'); 
+    }
+  }
+  }, [isAuthenticated]);
+
   return (
     <div className="object-cover-login absolute inset-0 flex justify-center items-center" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh' }}>
       <Toaster position="top-center" reverseOrder={false} />
       <div className="card bg-white shadow-lg rounded-md p-8">
         <h2 className="text-2xl font-bold mb-3">Login</h2>
         <form
-          className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
+          className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100"
           onSubmit={handleLogin}
         >
           {/* Username */}

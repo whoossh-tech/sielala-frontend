@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './pages/auth/AuthContext';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import  { AuthProvider } from './pages/auth/AuthContext';
 
 // import for routes
 import RewardInventory from './pages/reward/RewardInventory';
@@ -29,46 +29,87 @@ import DetailEvent from './pages/Event/DetailEvent';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
+  const role = localStorage.getItem('role');
+
   return (
     <div className="App">
       <AuthProvider>
       <Router>
         <Routes>
-            {/* please review & correct it */}
-            <Route path="/" element={<DashboardGuest />}></Route>
-            <Route path="*" element={<NotFoundPage />} />
+          {/* PUBLIC ROUTES */}
+          <Route path="/" element={<DashboardGuest />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm/>}></Route>
+          <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
+          <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
 
-            <Route path="/partnership" element={<DashboardPartnership />}></Route>
-            <Route path="/operation" element={<DashboardOperation />}></Route>
-            <Route path="/admin" element={<DashboardAdmin />}></Route>
-            <Route path="/bisdev" element={<DashboardBisdev />}></Route>
-            <Route path="/finance" element={<DashboardFinance />}></Route>
+          {/* ROLE: PARTNERHSIP */}
+          {role === 'PARTNERSHIP' && (
+            <>
+              <Route path="/partnership" element={<DashboardPartnership />} />
+            </>
+          )}
 
-            {/* reward routes */}
-            <Route path="/reward-inventory" element={<RewardInventory />}></Route>
-            <Route path="/add-reward/:idEvent" element={<FormRewardInventory />}></Route>
-            <Route path="/edit-reward/:idReward" element={<EditRewardInventory />}></Route>
-            <Route path="/reward-inventory/detail/:id" element={<RewardDetail/>}></Route>
+          {/* ROLE: OPERATION */}
+          {role === 'OPERATION' && (
+            <>
+              <Route path="/operation" element={<DashboardOperation />} />
+            </>
+          )}
 
-            {/* tenant routes */}
-            <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm/>}></Route>
-            <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage/>}></Route>
-            <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage/>}></Route>
+          {/* ROLE: BISDEV */}
+          {role === 'BISDEV' && (
+            <>
+              <Route path="/bisdev" element={<DashboardBisdev />} />
+            </>
+          )}
 
-            {/* auth routes */}
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/staff-registration" element={<RegisterStaffForm/>}></Route>
-            <Route path="/user-list" element={<UserList/>}></Route>
+          {/* ROLE: FINANCE */}
+          {role === 'FINANCE' && (
+            <>
+              <Route path="/finance" element={<DashboardFinance />} />
+            </>
+          )}
 
-            {/* event routes */}
-            <Route path="/event" element={<Event />} />
-            <Route path="/event/create" element={<CreateEvent />} />
-            <Route path="/event/detail/:idEvent" element={<DetailEvent/>}></Route>
+          {/* ROLE: ADMIN */}
+          {role === 'ADMIN' && (
+            <>
+              <Route path="/admin" element={<DashboardAdmin />} />
+              <Route path="/staff-registration" element={<RegisterStaffForm />} />
+              <Route path="/user-list" element={<UserList />} />
+            </>
+          )}
 
-            {/* partnership routes */}
-            <Route path="/sponsor" element={<Sponsor />} />
-            <Route path="/sponsor/create" element={<CreateSponsor />} />
-            <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor/>}></Route>
+          {/* ROLE: OPERATION & ADMIN */}
+          {(role === 'OPERATION' || role === 'ADMIN') && (
+            <>
+              <Route path="/reward-inventory" element={<RewardInventory />} />
+              <Route path="/add-reward/:idEvent" element={<FormRewardInventory />} />
+              <Route path="/edit-reward/:idReward" element={<EditRewardInventory />} />
+              <Route path="/reward-inventory/detail/:id" element={<RewardDetail />} />
+            </>
+          )}
+
+          {/* ROLE: BISDEV and ADMIN */}
+          {(role === 'BISDEV' || role === 'ADMIN') && (
+            <>
+              <Route path="/event" element={<Event />} />
+              <Route path="/event/create" element={<CreateEvent />} />
+              <Route path="/event/detail/:idEvent" element={<DetailEvent />} />
+            </>
+          )}
+
+          {/* ROLE: PARTNERSHIP and ADMIN */}
+          {(role === 'PARTNERSHIP' || role === 'ADMIN') && (
+            <>
+              <Route path="/sponsor" element={<Sponsor />} />
+              <Route path="/sponsor/create" element={<CreateSponsor />} />
+              <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
+            </>
+          )}
+
+          {/* Catch-all route for 404 */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router> 
       </AuthProvider>   
