@@ -108,40 +108,44 @@ const Sponsor = () => {
       </div>
 
       <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
-        <table className="event-table mx-8">
-          <thead>
-            {/* Row headers */}
-            <tr>
-              <th style={{ width: "20%", textAlign: "center"}}>Company Name</th>
-              <th style={{ width: "20%", textAlign: "center"}}>Pic Name</th>
-              <th style={{ width: "20%", textAlign: "center"}}>Company Address</th>
-              <th style={{ width: "20%", textAlign: "center"}}>Company Email</th>
-              <th style={{ width: "20%", textAlign: "center"}}>Company Telephone</th>
-            </tr>
-          </thead>
+      {selectedEvent ? (
+  <table className="event-table mx-8">
+    <thead>
+      {/* Row headers */}
+      <tr>
+        <th style={{ width: "20%", textAlign: "center" }}>Company Name</th>
+        <th style={{ width: "20%", textAlign: "center" }}>Pic Name</th>
+        <th style={{ width: "20%", textAlign: "center" }}>Company Address</th>
+        <th style={{ width: "20%", textAlign: "center" }}>Company Email</th>
+        <th style={{ width: "20%", textAlign: "center" }}>Company Telephone</th>
+      </tr>
+    </thead>
 
-          <tbody>
-            {sponsors && sponsors.length > 0 ? (
-              sponsors.map((sponsor, i) => (
-                <tr key={i}>
-                  <td>
-                    <Link to={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                      {sponsor.companyName}
-                    </Link>
-                  </td>
-                  <td>{sponsor.picName}</td>
-                  <td>{sponsor.companyAddress}</td>
-                  <td>{sponsor.companyEmail}</td>
-                  <td>{sponsor.companyTelephone}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No sponsors available</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+    <tbody>
+      {sponsors && sponsors.length > 0 ? (
+        sponsors.map((sponsor, i) => (
+          <tr key={i}>
+            <td>
+              <Link to={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
+                {sponsor.companyName}
+              </Link>
+            </td>
+            <td>{sponsor.picName}</td>
+            <td>{sponsor.companyAddress}</td>
+            <td>{sponsor.companyEmail}</td>
+            <td>{sponsor.companyTelephone}</td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="6">No sponsors available</td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+) : (
+  <div className="text-center">Please select an event to view sponsors</div>
+)}
       </div>
     </div>
   );
