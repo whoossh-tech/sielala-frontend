@@ -103,13 +103,14 @@ function App() {
           {(role === 'PARTNERSHIP' || role === 'ADMIN') && (
             <>
               <Route path="/sponsor" element={<Sponsor />} />
-              <Route path="/sponsor/create" element={<CreateSponsor />} />
+              <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
               <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
             </>
           )}
-
+          
           {/* Catch-all route for 404 */}
           <Route path="*" element={<NotFoundPage />} />
+
         </Routes>
       </Router> 
       </AuthProvider>   
