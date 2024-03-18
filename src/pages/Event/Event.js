@@ -42,7 +42,7 @@ const Event = () => {
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarBisdev />
+      <NavbarBisdev style={{ zIndex: 999 }} />
 
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>

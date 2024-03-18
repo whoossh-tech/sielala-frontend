@@ -73,7 +73,7 @@ const CreateEvent = () => {
         endDate,
         location,
       });
-
+      console.log("Event created successfully:", response.data);
       navigate("/Event");
 
       await new Promise((resolve) => setTimeout(resolve, 500))

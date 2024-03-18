@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { reynaldoStyles } from "../../assets/fonts/fonts";
+import "../../static/css/sponsor/DetailSponsor.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
@@ -46,6 +47,12 @@ const DetailSponsor = () => {
           </div>
       </div>
 
+      <div className="button-field">
+        <button className="button-green" onClick={handleBack}>
+          Back
+        </button>
+      </div>
+
       <br></br>
 
       <div className="container mx-auto py-8">
@@ -59,6 +66,8 @@ const DetailSponsor = () => {
           <p>{sponsorData?.companyAddress}</p>
           <p className="font-semibold mb-2">Company Email:</p>
           <p>{sponsorData?.companyEmail}</p>
+          <p className="font-semibold mb-2">Company Telephone:</p>
+          <p>{sponsorData?.companyTelephone}</p>
         </div>
 
         <h2 className="text-2xl font-semibold mb-4">Invoice</h2>
@@ -92,11 +101,11 @@ const DetailSponsor = () => {
         </div>
       </div>
       
-      <div className="button-field">
+      {/* <div className="button-field">
         <button className="button-green" onClick={handleBack}>
           Back
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

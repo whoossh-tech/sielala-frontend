@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import "../../static/css/sponsor/CreateSponsor.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
-import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
+import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { toast, Toaster } from "react-hot-toast";
 
 const CreateSponsor = () => {
@@ -15,8 +15,11 @@ const CreateSponsor = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
+  const [companyTelephone, setCompanyTelephone] = useState("");
 
   const [errors, setErrors] = useState({});
+  const { idEvent } = useParams();
+  const [eventName, setEventName]  = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -28,6 +31,20 @@ const CreateSponsor = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    const fetchEventInfo = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/sponsor/${idEvent}`);
+            const eventData = response.data.eventData;
+            setEventName(eventData.eventName);
+        } catch (error) {
+            console.error('Error fetching event information:', error);
+        }
+    };
+
+    fetchEventInfo();
+}, []);
 
   const onCreateSponsor = async (e) => {
     e.preventDefault();
@@ -46,20 +63,21 @@ const CreateSponsor = () => {
       const token = localStorage.getItem('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const response = await axios.post("http://localhost:8080/api/sponsor/create", {
+      const response = await axios.post(`http://localhost:8080/api/sponsor/create/${idEvent}`, {
         picName,
         companyName,
         companyAddress,
         companyEmail,
+        companyTelephone,
       });
       console.log("Sponsor created successfully:", response.data);
       navigate("/Sponsor");
 
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 500));
       toast.success("Sponsor added successfully");
     } catch (error) {
       console.error("Error creating sponsor:", error);
-      toast.error("Cannot creating sponsor")
+      toast.error("Cannot creating sponsor");
     }
   };
 
@@ -84,6 +102,10 @@ const CreateSponsor = () => {
       newErrors.company_email = "Email is not valid";
     }
 
+    if (!companyTelephone.trim()) {
+      newErrors.company_telephone = "Company Telephone Number cannot be empty";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -93,14 +115,15 @@ const CreateSponsor = () => {
       <style>{reynaldoStyles}</style>
       <NavbarPartnership />
 
-      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
+      <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
+        <div>
+          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
+            Add Sponsor
+          </h1>
           <div>
-              <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-              Add Sponsor</h1>
-              <div>
-                  <p className="subtitle">Add sponsor data here</p>
-              </div>
+            <p className="subtitle">Add sponsor data here</p>
           </div>
+        </div>
       </div>
 
       <Toaster position="top-center" reverseOrder={false} />
@@ -159,6 +182,20 @@ const CreateSponsor = () => {
             </div>
 
             {errors.company_email && <span className="mt-0.5 text-danger text-xs">{errors.company_email}</span>}
+          </div>
+
+          {/* company telephone number */}
+          <div className="input-form flex flex-col space-y-1">
+            <label className="input-label font-reynaldo text-left" htmlFor="company_telephone">
+              Company Telephone<span className="text-danger">*</span>
+            </label>
+
+            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.company_telephone && "border-danger"}`}>
+              <div className="flex items-center justify-start px-3 bg-cyan-50">+62</div>
+              <input id="company_telephone" type="tel" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. 812xxxx..." value={companyTelephone} onChange={(e) => setCompanyTelephone(e.target.value)} />
+            </div>
+
+            {errors.company_telephone && <span className="mt-0.5 text-danger text-xs">{errors.company_telephone}</span>}
           </div>
 
           <br></br>
