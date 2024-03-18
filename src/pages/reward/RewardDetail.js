@@ -50,6 +50,10 @@ const RewardDetail = () => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         const response = await axios.delete(`http://localhost:8080/api/reward/delete/${id}`);
+
+        // Untuk pre-filled dropdown event
+        localStorage.setItem('idSelectedEvent', idEvent);
+    
         console.log('Reward deleted successfully:', response.data);
         navigate('/reward-inventory');
 
