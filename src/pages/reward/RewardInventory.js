@@ -23,6 +23,22 @@ const RewardInventory = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Mendapatkan tanggal saat ini
+    const currentDate = new Date();
+    
+    // Mendapatkan tanggal mulai dan akhir dari event yang dipilih
+    const eventStartDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.startDate);
+    const eventEndDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.endDate);
+
+    const formattedStartDate = new Date(eventStartDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    const formattedEndDate = new Date(eventEndDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+
+    const disableCarryOutStockButton = !selectedEvent || currentDate < eventStartDate || currentDate > eventEndDate || currentDate === eventEndDate;
+
+    const disableAddRewardButton = !selectedEvent
+
+    
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -31,10 +47,18 @@ const RewardInventory = () => {
         setIsModalOpen(false);
     };
 
+
     useEffect(() => {
 
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        // Pre-filled dropdown event
+        const storedEvent = localStorage.getItem('idSelectedEvent');
+        if (storedEvent) {
+            setSelectedEvent(storedEvent);
+            localStorage.removeItem('idSelectedEvent'); 
+        }
 
         if (selectedEvent) {
             axios.get(`http://localhost:8080/api/reward/view-all/${selectedEvent}`)
@@ -130,116 +154,181 @@ const RewardInventory = () => {
 
             <br></br>
 
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '200px', margin: '0 auto' }}>
-                <select 
-                    className="appearance-none px-4 py-3 w-full focus:outline-none" 
-                    onChange={handleChange}
-                    style={{
-                        backgroundColor: '#ffffff',
-                        color: '#333333',
-                        borderRadius: '0.375rem',
-                        border: '1px solid #E3E2E6',
-                        fontSize: '1rem',
-                        lineHeight: '1.5',
-                        padding: '0.5rem 1rem',
-                        width: '200px',
-                        alignItems: 'center', justifyContent : 'center'
-                    }}
-                >
-                    <option>select event</option>
-                    {eventData && eventData.length > 0 ? 
-                        (eventData.map((event, index) => (
-                            <option key={index} value={event.idEvent}>{event.eventName}</option>
-                        ))) : (
-                            <option value="">No events available</option>
-                        )
-                    }
-                </select>
+            {/* <div>
+                <p><b>Select Event First to Manage Reward</b></p>
+            </div> */}
+
+            {(!selectedEvent) && (
+                <div className="text-center text-red-500 font-bold mb-4">
+                    Event is not selected, please select event on the dropdown.
+                </div>
+            )}
+
+            {/* <br></br> */}
+
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+                <div style={{ position: 'relative' }}>
+                    <select 
+                        className="appearance-none px-4 py-3 w-full focus:outline-none" 
+                        onChange={handleChange}
+                        value={selectedEvent}
+                        style={{
+                            backgroundColor: '#ffffff',
+                            color: '#333333',
+                            borderRadius: '0.375rem',
+                            fontSize: '1rem',
+                            lineHeight: '1.5',
+                            padding: '0.5rem 1rem',
+                            width: '300px',
+                        }}
+                    >
+                        <option>select event</option>
+                        {eventData && eventData.length > 0 ? 
+                            (eventData.map((event, index) => (
+                                <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
+                            ))) : (
+                                <option value="">No events available</option>
+                            )
+                        }
+                    </select>
+                    <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            width="24" 
+                            height="24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            className="feather feather-chevron-down"
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
             </div>
             
             <br></br>
 
-            <div>
-                <p><b>Current Day of Event: {day}</b></p>
-            </div>
+            {(selectedEvent && eventData.length > 0) && (
+                <div style={{marginBottom: '10px'}}>
+                    <p><b>Current Inventory Day Status:</b></p>
+                    <p style={{color: '#7D512D'}}><b>Day {day}</b></p>
+                </div>
+            )}
 
+            {/* <div className="detail-reward">
+                    <div className="each-reward">
+                            <p className="reward-text-title">Current Inventory Day Status:</p>
+                            <p className="reward-text">Day {day}</p>
+                    </div>
+                </div> */}
+
+            {(selectedEvent && eventData.length > 0) && (
+                
+                <div className="detail-inventory">
+                    {/* <div className="each-reward">
+                            <p className="reward-text-title">Event:</p>
+                            <p className="reward-text">{eventData.find(event => event.idEvent === selectedEvent)?.eventName}</p>
+                    </div> */}
+                    <div className="each-inventory">
+                            <p className="inventory-text-title">Start Date of Event:</p>
+                            <p className="inventory-text">{formattedStartDate}</p>
+                    </div>
+                    <div className="each-inventory">
+                            <p className="inventory-text-title">End Date of Event:</p>
+                            <p className="inventory-text">{formattedEndDate}</p>
+                    </div>
+                </div>
+            )}
+            
             <div className="button-field">
                 
-                <button className="button-pink" onClick={handleAddRewardButton}>+ Add Reward</button>
-                <button className="button-green" onClick={carryOutStockModal}>Carry Out Stock</button>
-
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                id="modal-confirmation"
-                
-            >
-                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Carry Out Stock</h2>
-                <p className="text-center text-gray-700">Are you sure you want to move remaining stock from DAY {day} of event to DAY {day + 1} of event?</p>
-                <br></br>
-                <button className="button-red text-center" onClick={closeModal}>Cancel</button>
-                <button className="button-green text-center" onClick={carryOutStock}>Confirm</button>
-            </Modal>
+                <button className="button-pink" onClick={handleAddRewardButton} disabled={disableAddRewardButton}>+ Add Reward</button>
+                <button className="button-green" onClick={carryOutStockModal} disabled={disableCarryOutStockButton}>Carry Out Stock</button>
 
             </div>
 
-            <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                <table>
-                    <thead>
-                        {/* Row headers */}
-                        <tr>
-                            <th style={{borderRight: '1px solid #E3E2E6'}}colSpan="3"> </th>
-                            {dayRangeCount.map((day, index) => (
-                                <React.Fragment key={index}>
-                                    <th style={{borderRight: '1px solid #E3E2E6'}} colSpan="3">Day {index + 1}</th>
-                                </React.Fragment>
-                            ))}
-                        </tr>
-                    </thead>
-                    <thead>
-                        {/* Column headers */}
-                        <tr>
-                            <th>Reward</th>
-                            <th>Brand</th>
-                            <th style={{borderRight: '1px solid #E3E2E6'}}>Category</th>
-                            {dayRangeCount.map((day, index) => (
-                                <React.Fragment key={index}>
-                                    <th>Initial</th>
-                                    <th>Redeemed</th>
-                                    <th style={{borderRight: '1px solid #E3E2E6'}}>Remaining</th>
-                                </React.Fragment>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sortedRewardData && sortedRewardData.length > 0 ? (
-                            sortedRewardData.map((reward, i) => (
-                                <tr key={i}>
-                                    <td>
-                                        <Link to={`/reward-inventory/detail/${reward.idProduct}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{reward.productName}</Link>
-                                        {/* <a href={`/reward-inventory/detail/${reward.idProduct}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{reward.productName}</a> */}
-                                    </td>
-                                    <td>{reward.brandName}</td>
-                                    <td style={{borderRight: '1px solid #E3E2E6'}}>CAT {reward.category}</td>
-                                    {reward.listDayReward.map((dayReward, j) => (
-                                        <React.Fragment key={j}>
-                                            <td>{dayReward.stokAwal}</td>
-                                            <td>{dayReward.stokRedeemed}</td>
-                                            <td style={{borderRight: '1px solid #E3E2E6'}}>{dayReward.stokSisa}</td>
-                                        </React.Fragment>
-                                    ))}
-                                </tr>
-                            ))
-                        ) : (
+            <div>
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    id="modal-confirmation"
+                    
+                >
+                    <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Carry Out Stock</h2>
+                    <p className="text-center text-gray-700">Are you sure you want to move remaining stock from DAY {day} of event to DAY {day + 1} of event?</p>
+                    <br></br>
+                    <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+                    <button className="button-green text-center" onClick={carryOutStock}>Confirm</button>
+                </Modal>
+            </div>
+
+
+            
+
+            {(selectedEvent && eventData.length > 0) && (
+                <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <table>
+                        <thead>
+                            {/* Row headers */}
                             <tr>
-                                <td colSpan={3 + dayRangeCount.length * 3}>No rewards available</td>
+                                <th style={{borderRight: '1px solid #E3E2E6'}}colSpan="3"> </th>
+                                {dayRangeCount.map((day, index) => (
+                                    <React.Fragment key={index}>
+                                        <th style={{borderRight: '1px solid #E3E2E6'}} colSpan="3">Day {index + 1}</th>
+                                    </React.Fragment>
+                                ))}
                             </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <thead>
+                            {/* Column headers */}
+                            <tr>
+                                <th>Reward</th>
+                                <th>Brand</th>
+                                <th style={{borderRight: '1px solid #E3E2E6'}}>Category</th>
+                                {dayRangeCount.map((day, index) => (
+                                    <React.Fragment key={index}>
+                                        <th>Initial</th>
+                                        <th>Redeemed</th>
+                                        <th style={{borderRight: '1px solid #E3E2E6'}}>Remaining</th>
+                                    </React.Fragment>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {sortedRewardData && sortedRewardData.length > 0 ? (
+                                sortedRewardData.map((reward, i) => (
+                                    <tr key={i}>
+                                        <td>
+                                            <Link to={`/reward-inventory/detail/${reward.idProduct}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{reward.productName}</Link>
+                                            {/* <a href={`/reward-inventory/detail/${reward.idProduct}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{reward.productName}</a> */}
+                                        </td>
+                                        <td>{reward.brandName}</td>
+                                        <td style={{borderRight: '1px solid #E3E2E6'}}>CAT {reward.category}</td>
+                                        {reward.listDayReward.map((dayReward, j) => (
+                                            <React.Fragment key={j}>
+                                                <td>{dayReward.stokAwal}</td>
+                                                <td>{dayReward.stokRedeemed}</td>
+                                                <td style={{borderRight: '1px solid #E3E2E6'}}>{dayReward.stokSisa}</td>
+                                            </React.Fragment>
+                                        ))}
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={3 + dayRangeCount.length * 3}>No rewards available</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            )}
             <br></br>
         </div>
+        
     );
 }
  
