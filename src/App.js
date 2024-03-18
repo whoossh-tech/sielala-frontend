@@ -39,7 +39,7 @@ function App() {
           {/* PUBLIC ROUTES */}
           <Route path="/" element={<DashboardGuest />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/tenant-registration" element={<TenantRegistrationForm />} />
+          <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm/>}></Route>
           <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
           <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
 

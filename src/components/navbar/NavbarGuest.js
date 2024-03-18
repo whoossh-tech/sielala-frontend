@@ -12,8 +12,8 @@ import { useNavigate } from 'react-router-dom';
 export function NavbarGuest() {
   const navigate = useNavigate();
 
-  const onLogin = async (e) => {
-    navigate('/login')
+  const onLogin = () => {
+    navigate("/login");
   };
 
   const navList = (
@@ -26,28 +26,6 @@ export function NavbarGuest() {
       >
         <a href="/" className="flex items-center text-md text-neutral-80">
           <b>Dashboard</b>
-        </a>
-      </Typography>
-
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="/" className="flex items-center text-md text-neutral-80">
-          <b>Visitor Registration</b>
-        </a>
-      </Typography>
-
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="/tenant-registration" className="flex items-center text-md text-neutral-80">
-          <b>Tenant Registration</b>
         </a>
       </Typography>
     </ul>
