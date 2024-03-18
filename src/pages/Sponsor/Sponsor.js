@@ -72,34 +72,37 @@ const Sponsor = () => {
 
       <br></br>
 
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '200px', margin: '0 auto' }}>
-                <select 
-                    className="appearance-none px-4 py-3 w-full focus:outline-none" 
-                    onChange={handleChange}
-                    style={{
-                        backgroundColor: '#ffffff',
-                        color: '#333333',
-                        borderRadius: '0.375rem',
-                        border: '1px solid #E3E2E6',
-                        fontSize: '1rem',
-                        lineHeight: '1.5',
-                        padding: '0.5rem 1rem',
-                        width: '200px',
-                        alignItems: 'center', justifyContent : 'center'
-                    }}
-                >
-                    <option>select event</option>
-                    {eventData && eventData.length > 0 ? 
-                        (eventData.map((event, index) => (
-                            <option key={index} value={event.idEvent}>{event.eventName}</option>
-                        ))) : (
-                            <option value="">No events available</option>
-                        )
-                    }
-                </select>
-            </div>
+      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
+        <select
+          className="appearance-none px-4 py-3 w-full focus:outline-none"
+          onChange={handleChange}
+          style={{
+            backgroundColor: "#ffffff",
+            color: "#333333",
+            borderRadius: "0.375rem",
+            border: "1px solid #E3E2E6",
+            fontSize: "1rem",
+            lineHeight: "1.5",
+            padding: "0.5rem 1rem",
+            width: "200px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <option>select event</option>
+          {eventData && eventData.length > 0 ? (
+            eventData.map((event, index) => (
+              <option key={index} value={event.idEvent}>
+                {event.eventName}
+              </option>
+            ))
+          ) : (
+            <option value="">No events available</option>
+          )}
+        </select>
+      </div>
 
-            <br></br>
+      <br></br>
 
       <div className="button-field">
         <button className="button-pink" onClick={handleCreateButton}>
@@ -108,44 +111,44 @@ const Sponsor = () => {
       </div>
 
       <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
-      {selectedEvent ? (
-  <table className="event-table mx-8">
-    <thead>
-      {/* Row headers */}
-      <tr>
-        <th style={{ width: "20%", textAlign: "center" }}>Company Name</th>
-        <th style={{ width: "20%", textAlign: "center" }}>Pic Name</th>
-        <th style={{ width: "20%", textAlign: "center" }}>Company Address</th>
-        <th style={{ width: "20%", textAlign: "center" }}>Company Email</th>
-        <th style={{ width: "20%", textAlign: "center" }}>Company Telephone</th>
-      </tr>
-    </thead>
+        {selectedEvent ? (
+          <table className="event-table mx-8">
+            <thead>
+              {/* Row headers */}
+              <tr>
+                <th style={{ width: "20%", textAlign: "center" }}>Company Name</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Pic Name</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Company Address</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Company Email</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Company Telephone</th>
+              </tr>
+            </thead>
 
-    <tbody>
-      {sponsors && sponsors.length > 0 ? (
-        sponsors.map((sponsor, i) => (
-          <tr key={i}>
-            <td>
-              <Link to={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                {sponsor.companyName}
-              </Link>
-            </td>
-            <td>{sponsor.picName}</td>
-            <td>{sponsor.companyAddress}</td>
-            <td>{sponsor.companyEmail}</td>
-            <td>{sponsor.companyTelephone}</td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan="6">No sponsors available</td>
-        </tr>
-      )}
-    </tbody>
-  </table>
-) : (
-  <div className="text-center">Please select an event to view sponsors</div>
-)}
+            <tbody>
+              {sponsors && sponsors.length > 0 ? (
+                sponsors.map((sponsor, i) => (
+                  <tr key={i}>
+                    <td>
+                      <Link to={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
+                        {sponsor.companyName}
+                      </Link>
+                    </td>
+                    <td>{sponsor.picName}</td>
+                    <td>{sponsor.companyAddress}</td>
+                    <td>{sponsor.companyEmail}</td>
+                    <td>{sponsor.companyTelephone}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6">No sponsors available</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className="text-center">Please select an event to view sponsors</div>
+        )}
       </div>
     </div>
   );
