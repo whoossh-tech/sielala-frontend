@@ -107,10 +107,9 @@ function App() {
               <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
             </>
           )}
-          
+
           {/* Catch-all route for 404 */}
           <Route path="*" element={<NotFoundPage />} />
-
         </Routes>
       </Router> 
       </AuthProvider>   
