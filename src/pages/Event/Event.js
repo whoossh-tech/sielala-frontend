@@ -42,7 +42,7 @@ const Event = () => {
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarBisdev />
+      <NavbarBisdev style={{ zIndex: 999 }} />
 
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>
@@ -67,11 +67,10 @@ const Event = () => {
           <thead>
             {/* Row headers */}
             <tr>
-              <th>ID</th>
-              <th>Event Name</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Location</th>
+              <th style={{ width: "20%", textAlign: "center"}}>Event Name</th>
+              <th style={{ width: "20%", textAlign: "center"}}>Start Date</th>
+              <th style={{ width: "20%", textAlign: "center"}}>End Date</th>
+              <th style={{ width: "20%", textAlign: "center"}}>Location</th>
             </tr>
           </thead>
 
@@ -79,12 +78,10 @@ const Event = () => {
             {events && events.length > 0 ? (
               events.map((event, i) => (
                 <tr key={i}>
-                  <td>{event.idEvent}</td>
                   <td>
                     <Link to={`/event/detail/${event.idEvent}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
                     {event.eventName}
                     </Link>
-                    <a href={`/event/detail/${event.idEvent}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{event.eventName}</a>
                   </td>
                   <td>{event.startDate}</td>
                   <td>{event.endDate}</td>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { reynaldoStyles } from "../../assets/fonts/fonts";
+import "../../static/css/sponsor/DetailSponsor.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
@@ -14,6 +15,7 @@ const DetailSponsor = () => {
   const navigate = useNavigate();
   const { idSponsor } = useParams();
   const [sponsorData, setSponsorData] = useState();
+  const [eventData, setEventData] = useState();
 //   const [tenantData, setTenantData] = useState();
 
   const token = localStorage.getItem('token');
@@ -47,56 +49,80 @@ const DetailSponsor = () => {
       </div>
 
       <br></br>
+      <Toaster
+                    position="top-center"
+                    reverseOrder={false}
+            />
+
+      <br></br>
 
       <div className="container mx-auto py-8">
-        <h2 className="text-2xl font-semibold mb-4">Detail Sponsor</h2>
-        <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-          <p className="font-semibold mb-2">Company Name:</p>
-          <p>{sponsorData?.companyName}</p>
-          <p className="font-semibold mb-2">PIC Name:</p>
-          <p>{sponsorData?.picName}</p>
-          <p className="font-semibold mb-2">Company Address:</p>
-          <p>{sponsorData?.companyAddress}</p>
-          <p className="font-semibold mb-2">Company Email:</p>
-          <p>{sponsorData?.companyEmail}</p>
+      <div className="flex justify-between items-center mb-4">
+          <button className="button-green" onClick={handleBack}>
+            Back
+          </button>
+          <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: '-6%' }}>Sponsor Detail</h1>
+          <div></div>
         </div>
+      <br></br>
 
-        <h2 className="text-2xl font-semibold mb-4">Invoice</h2>
+        <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
+                <div className="each-sponsor">
+                        <p className="sponsor-text-title">Company Name :</p>
+                        <p className="sponsor-text">{sponsorData?.companyName}</p>
+                </div>
+                <div className="each-sponsor">
+                        <p className="sponsor-text-title">PIC Name :</p>
+                        <p className="sponsor-text">{sponsorData?.picName}</p>
+                </div>
+                <div className="each-sponsor">
+                        <p className="sponsor-text-title">Company Address :</p>
+                        <p className="sponsor-text">{sponsorData?.companyAddress}</p>
+                </div>
+                <div className="each-sponsor">
+                        <p className="sponsor-text-title">Company Email :</p>
+                        <p className="sponsor-text">{sponsorData?.companyEmail}</p>
+                </div>
+                <div className="each-sponsor">
+                        <p className="sponsor-text-title">Company Telephone :</p>
+                        <p className="sponsor-text">{sponsorData?.companyTelephone}</p>
+                </div>
+            </div>
+
+            <br></br>
+            <br></br>
+
+        <h1 className="text-2xl font-semibold mb-4">List Invoice</h1>
         <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-          <table className="Tenant-table w-full">
+          <table className="Invoice-table w-full">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Tracking Status</th>
-                <th>Payment Validation</th>
-                <th>Action</th>
+                <th style={{ width: "20%", textAlign: "center"}}>ID</th>
+                <th style={{ width: "20%", textAlign: "center"}}>Tracking Status</th>
+                <th style={{ width: "20%", textAlign: "center"}}>Payment Validation</th>
+                <th style={{ width: "20%", textAlign: "center"}}>Action</th>
               </tr>
             </thead>
-            {/* <tbody>
-              {eventData?.listTenant && eventData.listTenant.length > 0 ? (
-                eventData.listTenant.map((tenant, i) => (
+            <tbody>
+              {eventData?.listInvoice && eventData.listInvoice.length > 0 ? (
+                eventData.listInvoice.map((invoice, i) => (
                   <tr key={i}>
-                    <td>{tenant.brandName}</td>
-                    <td>{tenant.picName}</td>
-                    <td>{tenant.brandEmail}</td>
-                    <td>{tenant.brandTelephone}</td>
+                    <td>{invoice.brandName}</td>
+                    <td>{invoice.picName}</td>
+                    <td>{invoice.brandEmail}</td>
+                    <td>{invoice.brandTelephone}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5">No tenantData available</td>
+                  <td colSpan="5">No invoiceData available</td>
                 </tr>
               )}
-            </tbody> */}
+            </tbody>
           </table>
         </div>
       </div>
-      
-      <div className="button-field">
-        <button className="button-green" onClick={handleBack}>
-          Back
-        </button>
-      </div>
+
     </div>
   );
 };

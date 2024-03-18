@@ -73,10 +73,11 @@ const CreateEvent = () => {
         endDate,
         location,
       });
-
+      console.log("Event created successfully:", response.data);
       navigate("/Event");
 
       await new Promise((resolve) => setTimeout(resolve, 500))
+      console.success("Event created successfully")
       toast.success("Event created successfully");
     } catch (error) {
       console.error("Error creating event:", error);
@@ -96,7 +97,7 @@ const CreateEvent = () => {
   return (
     <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarBisdev />
+      <NavbarBisdev style={{ zIndex: 20 }}  />
 
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>
@@ -180,13 +181,6 @@ const CreateEvent = () => {
               Create
             </button>
           </div>
-
-          {/* <button
-                className="button-pink montserrat"
-                type="submit"
-            >
-                Create
-            </button> */}
 
           <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
             <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Create Event</h2>

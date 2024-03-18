@@ -21,6 +21,7 @@ const FormRewardInventory = () => {
     const [listDayReward, setListDayReward] = useState([]);
     const [countDays, setCountDays] = useState(1);
     const [eventName, setEventName]  = useState('');
+    const [day, setDay] = useState(0);
     const [errors, setErrors] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,12 +37,15 @@ const FormRewardInventory = () => {
         const fetchEventInfo = async () => {
             try {
                 const response = await axios.get(`${url}/api/reward/${idEvent}`);
+                console.log(response.data);
                 const eventData = response.data.eventData;
                 setEventName(eventData.eventName);
                 const countDays = response.data.daysRange;
                 setCountDays(countDays);
           
                 setListDayReward(Array.from({length: countDays}, (_, index) => ({ stokAwal: 0, day: index + 1 })));
+
+                setDay(eventData.dayStatus);
             } catch (error) {
                 console.error('Error fetching event information:', error);
             }
@@ -97,6 +101,9 @@ const FormRewardInventory = () => {
                 category,
                 listDayReward
             });
+            // Untuk pre-filled dropdown event
+            localStorage.setItem('idSelectedEvent', idEvent);
+
             console.log('Reward added successfully:', response.data);
             navigate('/reward-inventory');
 
@@ -109,6 +116,12 @@ const FormRewardInventory = () => {
         }
     };
 
+    const handleBack = () => {
+        // Untuk pre-filled dropdown event
+        localStorage.setItem('idSelectedEvent', idEvent);
+        navigate(-1);
+    }
+
     const renderDayRewardRows = () => {
         return Array.from({ length: countDays }, (_, index) => (
             <tr key={index}>
@@ -120,6 +133,7 @@ const FormRewardInventory = () => {
                             type="number"
                             value={listDayReward[index]?.stokAwal || ''}  
                             min="0"
+                            disabled={index+1 < day}
                             onChange={(e) => handleDayStockChange(index, parseInt(e.target.value))}
                         />
                     </div>
@@ -282,7 +296,7 @@ const FormRewardInventory = () => {
 
         <br></br>
         <div>
-            <button className="button-green" onClick={() => navigate(-1)}>Cancel</button>
+            <button className="button-green" onClick={handleBack}>Cancel</button>
             <button className="button-pink" type="submit">Add Reward</button>
         </div>
 
