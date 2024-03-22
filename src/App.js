@@ -26,6 +26,7 @@ import DetailSponsor from "./pages/Sponsor/DetailSponsor";
 import Event from "./pages/Event/Event";
 import CreateEvent from "./pages/Event/CreateEvent";
 import DetailEvent from './pages/Event/DetailEvent';
+import EditEvent from "./pages/Event/EditEvent";
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -96,6 +97,7 @@ function App() {
               <Route path="/event" element={<Event />} />
               <Route path="/event/create" element={<CreateEvent />} />
               <Route path="/event/detail/:idEvent" element={<DetailEvent />} />
+              <Route path="/event/edit/:idEvent" element={<EditEvent />} />
             </>
           )}
 
