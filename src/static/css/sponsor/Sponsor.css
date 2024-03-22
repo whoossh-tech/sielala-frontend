@@ -79,12 +79,12 @@
   
   #modal-confirmation {
     position: fixed;
-    top: 0;
-    left: 0;
-    /* transform: translate(-50%, -50%); */
+    top: 10%; /* Menempatkan modal tepat di tengah secara vertikal */
+    left: 50%; /* Menempatkan modal tepat di tengah secara horizontal */
+    transform: translate(180%, 60%); /* Menggeser modal agar posisinya tepat di tengah halaman */
     width: 80%;
-    height: 60%;
     max-width: 400px;
+    height: 60%;
     max-height: 200px;
     background-color: white;
     padding: 20px;
@@ -93,7 +93,8 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-  }
+    z-index: 10000; /* Mengatur z-index agar modal berada di atas elemen lain */
+}
   
   .event-table {
     border-collapse: collapse;
@@ -133,5 +134,7 @@
   .event-table th:nth-child(6), .event-table td:nth-child(6) {
     width: 20%;
   }
+
+  
   
   

@@ -10,6 +10,7 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import { useAuth } from "../../pages/auth/AuthContext";
 
 export function NavbarFinance() {
+  const role = localStorage.getItem('role');
   const { logout } = useAuth(); 
   const handleLogout = () => {
     logout(); 
@@ -60,7 +61,7 @@ export function NavbarFinance() {
 
           <div className="flex items-center gap-x-1">
             <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10 mx-4">
-              <span className="montserrat text-primary-70 text-md">Hi, FINANCE!</span>
+              <span className="montserrat text-primary-70 text-md">Hi, { role }!</span>
             </Button>
 
             <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10" onClick={handleLogout}>

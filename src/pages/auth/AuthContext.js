@@ -5,16 +5,16 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState(null); // New state for user role
+  const [role, setRole] = useState(null); 
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
     const storedRole = localStorage.getItem('role');
     if (storedRole) {
       setRole(storedRole);
+      setIsAuthenticated(true);
     }
   }, []);
-  
-
 
   const login = async (username, password) => {
     try {
@@ -27,14 +27,9 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', jwt);
       localStorage.setItem('role', user.authorities[0].authority);
       axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-      console.log('Response from authcontext:');
-      console.log(response);
-      console.log('Role:', role); // Checkpoint: Log the user's role
       setUser(user);
-      setRole(response.data.user.authorities[0].authority);
-      console.log('Role set:', response.data.user.authorities[0].authority);
-
-      return response;
+      setRole(user.authorities[0].authority);
+      setIsAuthenticated(true);
     } catch (error) {
       console.error('Error logging in:', error.response || error.message);
       throw new Error('Error logging in.');
@@ -47,10 +42,11 @@ export const AuthProvider = ({ children }) => {
     axios.defaults.headers.common['Authorization'] = null;
     setUser(null);
     setRole(null);
+    setIsAuthenticated(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, role, login, logout }}>
+    <AuthContext.Provider value={{ user, role, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
