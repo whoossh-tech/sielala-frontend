@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 // import { EventCard } from "../../components/EventCard";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../static/css/Modal.css";
@@ -53,6 +53,11 @@ const Event = () => {
               </div>
           </div>
       </div>
+      
+      <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
 
       <br></br>
 

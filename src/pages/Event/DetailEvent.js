@@ -47,6 +47,11 @@ const DetailEvent = () => {
           </div>
         </div>
       </div>
+      
+      <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
 
       <br></br>
 

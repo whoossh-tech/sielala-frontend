@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
+import {toast, Toaster} from 'react-hot-toast';
 import { useNavigate, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,7 +11,6 @@ import "../../static/css/event/CreateEvent.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
-import { toast, Toaster } from "react-hot-toast";
 import { subDays, format } from "date-fns";
 
 
@@ -80,9 +80,6 @@ const EditEvent = () => {
     const onEditEvent = async (e) => {
         e.preventDefault();
 
-        console.log(format(startDate, 'dd/MM/yyyy'));
-        console.log(format(endDate, 'dd/MM/yyyy'));
-
         if (validateForm()) {
             openModal(); 
         } else {
@@ -103,8 +100,9 @@ const EditEvent = () => {
             console.log("Event edited successfully:", response.data);
             navigate("/Event");
 
-            await new Promise((resolve) => setTimeout(resolve, 500))
+            await new Promise((resolve) => setTimeout(resolve, 1000))
             toast.success("Event edited successfully");
+
         } catch (error) {
             console.error("Error editing event:", error);
             toast.error("Cannot edit event");
@@ -121,7 +119,7 @@ const EditEvent = () => {
     // };
 
   return (
-    <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
       <NavbarBisdev style={{ zIndex: 20 }}  />
 
@@ -135,7 +133,10 @@ const EditEvent = () => {
           </div>
       </div>
 
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster
+            position="top-center"
+            reverseOrder={false}
+        />
 
       <br></br>
 
@@ -225,7 +226,7 @@ const EditEvent = () => {
           <br></br>
         </div>
       </form>
-    </main>
+    </div>
   );
 };
 
