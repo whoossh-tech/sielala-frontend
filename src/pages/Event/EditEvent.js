@@ -25,7 +25,6 @@ const EditEvent = () => {
     const [location, setLocation] = useState("");
     const [errors, setErrors] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [error, setError] = useState("");
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -69,8 +68,8 @@ const EditEvent = () => {
             newErrors.event_location = "Event location cannot be empty";
         }
 
-        if (endDate <= startDate) {
-            newErrors.end_date = "End Date must be greater than Start Date";
+        if (endDate < startDate) {
+            newErrors.date = "End Date must be greater than Start Date";
         }
 
         setErrors(newErrors);
@@ -100,7 +99,7 @@ const EditEvent = () => {
             console.log("Event edited successfully:", response.data);
             navigate("/Event");
 
-            await new Promise((resolve) => setTimeout(resolve, 1000))
+            await new Promise((resolve) => setTimeout(resolve, 500))
             toast.success("Event edited successfully");
 
         } catch (error) {
@@ -108,15 +107,6 @@ const EditEvent = () => {
             toast.error("Cannot edit event");
         }
     };
-
-    // const handleEndDateChange = (date) => {
-    //     setEndDate(date);
-    //     if (date <= startDate) {
-    //         setError("End Date must be greater than Start Date");
-    //     } else {
-    //         setError("");
-    //     }
-    // };
 
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -168,6 +158,9 @@ const EditEvent = () => {
               className="px-4 py-3 w-full focus:outline-none"
             />
 
+            {/* Error message */}
+            {errors.date && <span className="mt-0.5 text-danger text-xs">{errors.date}</span>}
+
           </div>
 
           {/* End Date */}
@@ -181,10 +174,11 @@ const EditEvent = () => {
                 selected={endDate} 
                 onChange={(date) => setEndDate(date)}
                 minDate={subDays(new Date(), 0)}
-                className="px-4 py-3 w-full focus:outline-none" />
+                className="px-4 py-3 w-full focus:outline-none" 
+            />
 
             {/* Error message */}
-            {errors.end_date && <span className="mt-0.5 text-danger text-xs">{errors.end_date}</span>}
+            {errors.date && <span className="mt-0.5 text-danger text-xs">{errors.date}</span>}
           </div>
 
           {/* Event Location */}

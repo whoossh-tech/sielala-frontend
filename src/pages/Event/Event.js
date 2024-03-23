@@ -23,6 +23,7 @@ const Event = () => {
 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/event/view-all")
@@ -30,9 +31,10 @@ const Event = () => {
         setEvents(res.data.data);
         // console.log(res.data.data); // Make sure that res.data is an array
       })
-      .catch((error) => {
-        toast.error("Failed to fetch events");
-      });
+      .catch(
+        err => 
+        console.log(err)
+    )
   }, [events]);
 
   const handleCreateButton = () => {

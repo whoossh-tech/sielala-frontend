@@ -22,7 +22,7 @@ const CreateEvent = () => {
 
   const [errors, setErrors] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const openModal = () => {
@@ -44,7 +44,9 @@ const CreateEvent = () => {
       newErrors.event_location = "Event location cannot be empty";
     }
 
-    // Add validation for other fields as needed
+    if (endDate < startDate) {
+      newErrors.date = "End Date must be greater than Start Date";
+  }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -85,14 +87,14 @@ const CreateEvent = () => {
     }
   };
 
-  const handleEndDateChange = (date) => {
-    setEndDate(date);
-    if (date <= startDate) {
-      setError("End Date must be greater than Start Date");
-    } else {
-      setError("");
-    }
-  };
+  // const handleEndDateChange = (date) => {
+  //   setEndDate(date);
+  //   if (date <= startDate) {
+  //     setError("End Date must be greater than Start Date");
+  //   } else {
+  //     setError("");
+  //   }
+  // };
 
   return (
     <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -142,7 +144,7 @@ const CreateEvent = () => {
             />
 
             {/* Error message */}
-            {error && <span className="mt-0.5 text-danger text-xs">{error}</span>}
+            {errors.date && <span className="mt-0.5 text-danger text-xs">{errors.date}</span>}
 
           </div>
 
@@ -152,10 +154,16 @@ const CreateEvent = () => {
               End Date<span className="text-danger">*</span>
             </label>
 
-            <DatePicker id="end_date" selected={endDate} onChange={handleEndDateChange} className="px-4 py-3 w-full focus:outline-none" />
+            <DatePicker 
+                id="end_date" 
+                selected={endDate} 
+                onChange={(date) => setEndDate(date)}
+                minDate={subDays(new Date(), 0)}
+                className="px-4 py-3 w-full focus:outline-none" 
+            />
 
-            {/* Error message */}
-            {error && <span className="mt-0.5 text-danger text-xs">{error}</span>}
+             {/* Error message */}
+             {errors.date && <span className="mt-0.5 text-danger text-xs">{errors.date}</span>}
           </div>
 
           {/* Event Location */}
