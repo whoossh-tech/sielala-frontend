@@ -65,10 +65,10 @@ const CreateSponsor = () => {
 
       const response = await axios.post(`http://localhost:8080/api/sponsor/create/${idEvent}`, {
         picName,
-        companyName,
-        companyAddress,
-        companyEmail,
-        companyTelephone,
+        name: companyName,
+        address: companyAddress,
+        email: companyEmail,
+        telephone: companyTelephone,
       });
       console.log("Sponsor created successfully:", response.data);
       navigate("/Sponsor");
