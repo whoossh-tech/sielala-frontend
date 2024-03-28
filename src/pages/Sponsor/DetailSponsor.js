@@ -69,7 +69,7 @@ const DetailSponsor = () => {
         <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">Company Name :</p>
-                        <p className="sponsor-text">{sponsorData?.companyName}</p>
+                        <p className="sponsor-text">{sponsorData?.name}</p>
                 </div>
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">PIC Name :</p>
@@ -77,15 +77,15 @@ const DetailSponsor = () => {
                 </div>
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">Company Address :</p>
-                        <p className="sponsor-text">{sponsorData?.companyAddress}</p>
+                        <p className="sponsor-text">{sponsorData?.address}</p>
                 </div>
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">Company Email :</p>
-                        <p className="sponsor-text">{sponsorData?.companyEmail}</p>
+                        <p className="sponsor-text">{sponsorData?.email}</p>
                 </div>
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">Company Telephone :</p>
-                        <p className="sponsor-text">{sponsorData?.companyTelephone}</p>
+                        <p className="sponsor-text">{sponsorData?.telephone}</p>
                 </div>
             </div>
 
