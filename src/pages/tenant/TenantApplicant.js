@@ -18,6 +18,14 @@ const TenantApplicant = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+
+        // Pre-filled dropdown event
+        const storedEvent = localStorage.getItem('idSelectedEvent');
+        if (storedEvent) {
+            setSelectedEvent(storedEvent);
+            localStorage.removeItem('idSelectedEvent'); 
+        }
+
         if (selectedEvent) {
             axios
             .get(`http://localhost:8080/api/tenant/view-all/${selectedEvent}`)
@@ -72,6 +80,7 @@ const TenantApplicant = () => {
                 <select
                 className="appearance-none px-4 py-3 w-full focus:outline-none"
                 onChange={handleChange}
+                value={selectedEvent}
                 style={{
                     backgroundColor: "#ffffff",
                     color: "#333333",
@@ -135,7 +144,7 @@ const TenantApplicant = () => {
                         tenantApplicants.map((tenant, i) => (
                         <tr key={i}>
                             <td>
-                            <Link to={`/`} style={{ color: "#A9B245", fontWeight: "bold" }}>
+                            <Link to={`/tenant-applicant/${tenant.idTenant}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
                                 {tenant.brandName}
                             </Link>
                             </td>
