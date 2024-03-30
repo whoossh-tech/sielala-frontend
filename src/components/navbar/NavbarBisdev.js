@@ -47,7 +47,7 @@ export function NavbarBisdev() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="*" className="flex items-center text-md text-neutral-80">
+        <a href="/visitor" className="flex items-center text-md text-neutral-80">
           <b>Visitor Data Report</b>
         </a>
       </Typography>

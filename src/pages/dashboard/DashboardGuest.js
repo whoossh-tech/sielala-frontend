@@ -39,6 +39,10 @@ const DashboardGuest = () => {
             )
     }, [])
 
+    const visitorRegistrationClick = (eventId) => {
+        navigate(`/visitor-registration/${eventId}`);
+    };
+
     const tenantRegistrationClick = (eventId) => {
         navigate(`/tenant-registration/${eventId}`);
     };
@@ -66,7 +70,7 @@ const DashboardGuest = () => {
 
                         <div className="5 flex items-center gap-0 mx-3">
                             <div className="flex space-x-4">
-                                <button className="button-pink text-sm">
+                                <button className="button-pink text-sm" onClick={() => visitorRegistrationClick(event.idEvent)}>
                                     Register as Visitor
                                 </button>
 
