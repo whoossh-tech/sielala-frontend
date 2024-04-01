@@ -79,7 +79,7 @@ const CreateEvent = () => {
       navigate("/Event");
 
       await new Promise((resolve) => setTimeout(resolve, 500))
-      console.success("Event created successfully")
+      console.log("Event created successfully")
       toast.success("Event created successfully");
     } catch (error) {
       console.error("Error creating event:", error);
@@ -194,11 +194,11 @@ const CreateEvent = () => {
             <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Create Event</h2>
             <p className="text-center text-gray-700">Are you sure you want to create event?</p>
             <br></br>
+            <button className="button-red text-center" onClick={closeModal}>
+              Cancel
+            </button>
             <button className="button-green text-center" onClick={confirmCreateEvent}>
               Confirm
-            </button>
-            <button className="button-pink text-center" onClick={closeModal}>
-              Cancel
             </button>
           </Modal>
 
