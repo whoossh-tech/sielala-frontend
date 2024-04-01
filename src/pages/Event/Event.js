@@ -82,6 +82,10 @@ const Event = () => {
                     <Link to={`/event/detail/${event.idEvent}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
                     {event.eventName}
                     </Link>
+<<<<<<< HEAD
+=======
+                    {/* <a href={`/event/detail/${event.idEvent}`} style={{ color: '#A9B245', fontWeight: 'bold'}}>{event.eventName}</a> */}
+>>>>>>> 79e575d3c9fc9dba4bcff8315e7ccdfbb29832cb
                   </td>
                   <td>{event.startDate}</td>
                   <td>{event.endDate}</td>

@@ -11,6 +11,8 @@ import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { toast, Toaster } from "react-hot-toast";
 
 const CreateSponsor = () => {
+  // const { idEvent } = useParams();
+
   const [picName, setPicName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
