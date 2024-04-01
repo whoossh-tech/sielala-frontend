@@ -122,7 +122,7 @@ const RewardDetail = () => {
                     <Link to={`/edit-reward/${id}`}>
                         <button className="button-pink">Edit Reward</button>
                     </Link>
-                    <button className="button-red" onClick={openModal}>Delete Reward</button>
+                  <button className="button-red" onClick={openModal}>Delete Reward</button>
                 </div>
                     ) : (
                 <div className="button-field">
