@@ -129,14 +129,14 @@ const Sponsor = () => {
                 sponsors.map((sponsor, i) => (
                   <tr key={i}>
                     <td>
-                      <Link to={`/sponsor/detail/${sponsor.idSponsor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                        {sponsor.companyName}
+                      <Link to={`/sponsor/detail/${sponsor.idContact}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
+                        {sponsor.name}
                       </Link>
                     </td>
                     <td>{sponsor.picName}</td>
-                    <td>{sponsor.companyAddress}</td>
-                    <td>{sponsor.companyEmail}</td>
-                    <td>{sponsor.companyTelephone}</td>
+                    <td>{sponsor.address}</td>
+                    <td>{sponsor.email}</td>
+                    <td>{sponsor.telephone}</td>
                   </tr>
                 ))
               ) : (

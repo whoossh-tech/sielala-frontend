@@ -40,6 +40,94 @@ export function NavbarAdmin() {
         </a>
       </Typography>
 
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="/event" className="flex items-center text-md text-neutral-80">
+          <b>Event Management</b>
+        </a>
+      </Typography>
+
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="*" className="flex items-center text-md text-neutral-80">
+          <b>Visitor Data Report</b>
+        </a>
+      </Typography>
+
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="*" className="flex items-center text-md text-neutral-80">
+          <b>Bulk Email</b>
+        </a>
+      </Typography>
+
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="/reward-inventory" className="flex items-center text-md text-neutral-80">
+          <b>Reward Inventory</b>
+        </a>
+      </Typography>
+
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="*" className="flex items-center text-md text-neutral-80">
+          <b>Reward Redemption</b>
+        </a>
+      </Typography>
+
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="*" className="flex items-center text-md text-neutral-80">
+          <b>Invoice Management</b>
+        </a>
+      </Typography>
+
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="/sponsor" className="flex items-center text-md text-neutral-80">
+          <b>Partnership Management</b>
+        </a>
+      </Typography>
+
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="tenant-applicant" className="flex items-center text-md text-neutral-80">
+          <b>Tenant Applicant List</b>
+        </a>
+      </Typography>
+
     </ul>
   );
 

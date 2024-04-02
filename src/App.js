@@ -30,6 +30,8 @@ import CreateEvent from "./pages/Event/CreateEvent";
 import DetailEvent from './pages/Event/DetailEvent';
 import EditEvent from "./pages/Event/EditEvent";
 import NotFoundPage from './pages/NotFoundPage';
+import TenantApplicant from './pages/tenant/TenantApplicant'
+import TenantApplicantDetail from './pages/tenant/TenantApplicantDetail';
 
 function App() {
   const role = localStorage.getItem('role');
@@ -111,6 +113,9 @@ function App() {
               <Route path="/sponsor" element={<Sponsor />} />
               <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
               <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
+              <Route path="/tenant-applicant" element={<TenantApplicant />} />
+              <Route path="/tenant-applicant/:idTenantApplicant" element={<TenantApplicantDetail />} />
+
             </>
           )}
 
