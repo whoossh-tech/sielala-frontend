@@ -31,6 +31,8 @@ import CreateInvoice from './pages/invoice/CreateInvoice';
 import Invoice from './pages/invoice/Invoice';
 import InvoiceDetail from './pages/invoice/InvoiceDetail';
 import EditDetailInvoice from './pages/invoice/EditDetailInvoice';
+import TenantApplicant from './pages/tenant/TenantApplicant'
+import TenantApplicantDetail from './pages/tenant/TenantApplicantDetail';
 
 function App() {
   const role = localStorage.getItem('role');
@@ -109,10 +111,13 @@ function App() {
               <Route path="/sponsor" element={<Sponsor />} />
               <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
               <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
-              <Route path="/invoice-sponsor/create/:idSponsor" element={<CreateInvoice />} />
+              <Route path="/invoice/create/:idContact" element={<CreateInvoice />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/invoice/detail/:idInvoice" element={<InvoiceDetail />} />
               <Route path="/invoice/edit-detail/:idInvoice" element={<EditDetailInvoice />} />
+              <Route path="/tenant-applicant" element={<TenantApplicant />} />
+              <Route path="/tenant-applicant/:idTenantApplicant" element={<TenantApplicantDetail />} />
+
             </>
           )}
 

@@ -12,7 +12,7 @@ import { NavbarOperation } from '../../components/navbar/NavbarOperation';
 import Sponsor from '../Sponsor/Sponsor';
 
 const CreateInvoice = () => {
-    const { idSponsor } = useParams();
+    const { idContact } = useParams();
     const url = 'http://localhost:8080';
     const navigate = useNavigate();
 
@@ -33,25 +33,25 @@ const CreateInvoice = () => {
     };
 
     useEffect(() => {
-        const fetchSponsorInfo = async () => {
+        const fetchContactInfo = async () => {
             try {
                 const token = localStorage.getItem('token');
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-                const response = await axios.get(`${url}/api/sponsor/detail/${idSponsor}`);
+                const response = await axios.get(`${url}/api/contact/detail/${idContact}`);
                 console.log(response.data);
-                const sponsor = response.data.data;
-                console.log(sponsor.companyName);
+                const contact = response.data.data;
+                console.log(contact.name);
                 // setSponsorName(sponsor.companyName);
-                setCompanyName(sponsor.companyName);
-                setCompanyAddress(sponsor.companyAddress);
-                setPicName(sponsor.picName);
+                setCompanyName(contact.name);
+                setCompanyAddress(contact.address);
+                setPicName(contact.picName);
             } catch (error) {
-                console.error('Error fetching sponsor information:', error);
+                console.error('Error fetching contact information:', error);
             }
         };
 
-        fetchSponsorInfo();
+        fetchContactInfo();
     }, []);
 
     const validateForm = () => {
@@ -146,12 +146,11 @@ const CreateInvoice = () => {
             const token = localStorage.getItem('token');
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             
-            const response = await axios.post(`${url}/api/invoice/add/${idSponsor}`, {
+            const response = await axios.post(`${url}/api/invoice/add/${idContact}`, {
                 companyName,
                 companyAddress,
                 picName,
                 listInvoiceItem,
-                type: "sponsor"
             });
             // Untuk pre-filled dropdown event
             // localStorage.setItem('idSelectedEvent', idEvent);

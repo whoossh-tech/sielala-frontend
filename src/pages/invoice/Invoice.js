@@ -63,12 +63,12 @@ const Invoice = () => {
         if (selectedEvent) {
             axios.get(`http://localhost:8080/api/invoice/view-all/${selectedEvent}`)
             .then(res => {
+                console.log(res.data.data)
                 setInvoiceData(res.data.data)
                 // setCountDays(res.data.dayRange)
                 // setDay(res.data.newDay);
             }).catch(err => 
                 console.log(err)
-                
                 )
         }
 
