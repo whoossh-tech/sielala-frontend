@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from 'react-modal';
 import AutoSuggest from 'react-autosuggest';
 import {toast, Toaster} from 'react-hot-toast';
@@ -26,14 +26,12 @@ const AddRewardRedemptionData = () => {
     // data difetch
     const [listVisitor, setListVisitor] = useState([]); // untuk pilihan autosuggest visitor
     const [eventData, setEventData]  = useState(''); // untuk prefilled field event
-    const [listRewardCat1, setListRewardCat1] = useState([]); // untuk data di dalem roulette cat 1
-    const [listRewardCat2, setListRewardCat2] = useState([]); // untuk data di dalem roulette cat 2
 
     // confirmation message
     const [errors, setErrors] = useState('');
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
-    // autosuggest (BENERIN LAGI!)
+    // autosuggest
     const [value, setValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
 
@@ -102,9 +100,9 @@ const AddRewardRedemptionData = () => {
                     option: `${reward.productName} ${reward.brandName}`,
                     idProduct: `${reward.idProduct}`
                 }));
-                // console.log(JSON.stringify(temp));
+                console.log(res.data.data);
                 setRouletteDataCat1(temp);
-                setListRewardCat1(res.data.data);
+                // setListRewardCat1(res.data.data);
                 console.log(res.data.data)
             }).catch(err => 
                 console.error('Error fetching reward cat1 data:', err)
@@ -117,25 +115,14 @@ const AddRewardRedemptionData = () => {
                     option: `${reward.productName} ${reward.brandName}`,
                     idProduct: `${reward.idProduct}`
                 }));
-                // console.log(JSON.stringify(temp));
-                setRouletteDataCat2(temp);
-                setListRewardCat2(res.data.data);
                 console.log(res.data.data);
+                setRouletteDataCat2(temp);
+                // setListRewardCat2(res.data.data);
             }).catch(err => 
                 console.error('Error fetching reward cat2 data:', err)
         )
-    }, []);
+    }, [idEvent]);
 
-    // useEffect(() => {
-    //     const temp = listRewardCat1.map(reward => ({
-    //         option: `${reward.productName} ${reward.brandName}`,
-    //         idProduct: `${reward.idProduct}`
-    //     }));
-    //     // console.log(JSON.stringify(temp));
-    //     setRouletteData(temp);
-    // }, [listRewardCat1]); 
-
-    // console.log(JSON.stringify(rouletteData));
     const validateForm = () => {
         const newErrors = {};
 
@@ -166,12 +153,8 @@ const AddRewardRedemptionData = () => {
     const confirmSubmit = async (e) => {
         closeConfirmationModal();
 
-        // const newPrizeNumber = Math.floor(Math.random() * rouletteData.length);
-        // setPrizeNumber(newPrizeNumber);
+        // mulai spin
         setMustSpin(true);
-        // setReward(rouletteData[newPrizeNumber].idProduct);
-        
-        console.log(redeemDate)
 
         try {
 
@@ -189,7 +172,6 @@ const AddRewardRedemptionData = () => {
             localStorage.setItem('idSelectedEvent', idEvent);
 
             console.log('Reward redeemed successfully:', response.data);
-            // navigate('/reward-inventory');
 
             // await new Promise((resolve) => setTimeout(resolve, 500))
             // toast.success("Reward redeemed successfully");
@@ -211,16 +193,19 @@ const AddRewardRedemptionData = () => {
         setRedeemDate(formatDate(currentDate));
 
         if (e.target.value < 1500){
-            const newPrizeNumber = Math.floor(Math.random() * rouletteDataCat1.length);
-            setPrizeNumber(newPrizeNumber);
-            setReward(rouletteDataCat1[newPrizeNumber].idProduct);
-            setStringRewardPicked(rouletteDataCat1[newPrizeNumber].option);
-
+            if (rouletteDataCat1.length > 0){
+                const newPrizeNumber = Math.floor(Math.random() * rouletteDataCat1.length);
+                setPrizeNumber(newPrizeNumber);
+                setReward(rouletteDataCat1[newPrizeNumber].idProduct);
+                setStringRewardPicked(rouletteDataCat1[newPrizeNumber].option);
+            }
         } else {
-            const newPrizeNumber = Math.floor(Math.random() * rouletteDataCat2.length);
-            setPrizeNumber(newPrizeNumber);
-            setReward(rouletteDataCat2[newPrizeNumber].idProduct);
-            setStringRewardPicked(rouletteDataCat2[newPrizeNumber].option);
+            if (rouletteDataCat2.length > 0){
+                const newPrizeNumber = Math.floor(Math.random() * rouletteDataCat2.length);
+                setPrizeNumber(newPrizeNumber);
+                setReward(rouletteDataCat2[newPrizeNumber].idProduct);
+                setStringRewardPicked(rouletteDataCat2[newPrizeNumber].option);
+            }
         } 
     }
 
@@ -229,35 +214,13 @@ const AddRewardRedemptionData = () => {
         openRewardModal();
     }
 
-    const handleClaim = () => {
+    const handleClaim = async () => {
         closeRewardModal();
 
-        // try {
-
-        //     const token = localStorage.getItem('token');
-        //     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            
-        //     const response = await axios.post(`${url}/api/reward/add/${idEvent}`, {
-        //         productName,
-        //         brandName,
-        //         category,
-        //         listDayReward
-        //     });
-        //     // Untuk pre-filled dropdown event
-        //     localStorage.setItem('idSelectedEvent', idEvent);
-
-        //     console.log('Reward added successfully:', response.data);
-        //     navigate('/reward-inventory');
-
-        //     await new Promise((resolve) => setTimeout(resolve, 500))
-        //     toast.success("Reward added successfully");
-            
-        // } catch (error) {
-        //     console.error('Error:', error);
-        //     toast.error("Cannot add reward");
-        // }
-
         navigate('/reward-redemption-history');
+
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        toast.success("Reward claimed");
     }
    
     // autosuggest
@@ -305,7 +268,7 @@ const AddRewardRedemptionData = () => {
 
         <div className="flex flex-col space-y-4 pl-40">
         {points < 1500 ? (
-            rouletteDataCat1.length == 0 ? (
+            rouletteDataCat1.length === 0 ? (
                 <p>No Reward Available</p>
                 ) : (
                 <div style={{ border: 'none', zIndex: '0' }}>
@@ -341,7 +304,7 @@ const AddRewardRedemptionData = () => {
                 </div>
                 )
             ) : (
-            rouletteDataCat2.length == 0 ? (
+            rouletteDataCat2.length === 0 ? (
                 <p>No Reward Available</p>
                 ) : (
                 <div style={{ border: 'none', zIndex: '0' }}>
