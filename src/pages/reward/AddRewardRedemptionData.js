@@ -136,6 +136,10 @@ const AddRewardRedemptionData = () => {
             newErrors.points = 'Points to Redeem must be a positive number';
         }
 
+        if (rouletteDataCat1.length == 0 || rouletteDataCat2.length == 0) {
+            newErrors.roulette = 'Cannot redeem because there is no reward';
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -339,6 +343,11 @@ const AddRewardRedemptionData = () => {
                 />
                 </div>
             ))}
+            {errors.roulette && (
+                <span className="mt-0.5 text-danger text-xs">
+                {errors.roulette}
+                </span>
+            )}
         </div>
 
         {/* <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Add New Reward</h1> */}
