@@ -96,7 +96,7 @@ const EmailDetail = () => {
             </p>
             </div>
         ) : (
-            <p>Loading...</p>
+            <p>Retrieving your email...</p>
         )}
 
         <br></br>

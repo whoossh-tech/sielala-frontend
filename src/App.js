@@ -124,7 +124,6 @@ function App() {
               <Route path="/email/:idEmail" element={<EmailDetail />} />
               <Route path="/email/write" element={<CreateEmail />} />
               <Route path="/email/choose-contact" element={<ChooseContact />} />
-
             </>
           )}
 
