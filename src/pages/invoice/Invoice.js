@@ -15,38 +15,8 @@ const Invoice = () => {
     const navigate = useNavigate();
 
     const [invoiceData, setInvoiceData] = useState([]);
-    // const [countdays, setCountDays] = useState(0);
     const [eventData, setEventData] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState('');
-    // const dayRangeCount = Array.from({ length: countdays });
-    // const [day, setDay] = useState(0);
-
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // Mendapatkan tanggal saat ini
-    // const currentDate = new Date();
-    
-    // Mendapatkan tanggal mulai dan akhir dari event yang dipilih
-    // const eventStartDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.startDate);
-    // const eventEndDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.endDate);
-
-    // const formattedStartDate = new Date(eventStartDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-    // const formattedEndDate = new Date(eventEndDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-
-
-    // const disableCarryOutStockButton = !selectedEvent || currentDate < eventStartDate || currentDate > eventEndDate || currentDate === eventEndDate;
-
-    // const disableAddRewardButton = !selectedEvent
-
-    
-    // const openModal = () => {
-    //     setIsModalOpen(true);
-    // };
-
-    // const closeModal = () => {
-    //     setIsModalOpen(false);
-    // };
-
 
     useEffect(() => {
 
@@ -65,8 +35,6 @@ const Invoice = () => {
             .then(res => {
                 console.log(res.data.data)
                 setInvoiceData(res.data.data)
-                // setCountDays(res.data.dayRange)
-                // setDay(res.data.newDay);
             }).catch(err => 
                 console.log(err)
                 )
@@ -85,19 +53,6 @@ const Invoice = () => {
     const handleChange = (e) => {
         setSelectedEvent(e.target.value);
     };
-
-    // const sortedRewardData = rewardData.map(reward => {
-    //     const sortedListDayReward = reward.listDayReward.sort((a, b) => a.day - b.day);
-    //     return { ...reward, listDayReward: sortedListDayReward };
-    // });
-
-    // const handleAddRewardButton = () => {
-    //     if (selectedEvent) {
-    //       navigate(`/add-reward/${selectedEvent}`);
-    //     } else {
-    //       toast.error('Please select event first');
-    //     }
-    //   };
 
 
     return (  
@@ -199,7 +154,7 @@ const Invoice = () => {
                                         <td>{invoice.trackingStatus}</td>
                                         <td>{invoice.paymentStatus}</td>
                                         
-                                        <td> {/* Kolom untuk tombol */}
+                                        <td>
                                             <Link to={`/invoice/detail/${invoice.idInvoice}`}>
                                                 <button className="button-green-invoice">Detail</button>
                                             </Link>

@@ -6,18 +6,19 @@ import {toast, Toaster} from 'react-hot-toast';
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { NavbarOperation } from '../../components/navbar/NavbarOperation';
 import '../../App.css';
-import '../../static/css/invoice/Invoice.css';
+import '../../static/css/invoice/DetailInvoice.css';
 import '../../static/css/Button.css';
 import backgroundPhoto from '../../assets/bg-cover.png';
 
 const InvoiceDetail = () => {
     const { idInvoice } = useParams();
+    const url = 'http://localhost:8080';
+
     const navigate = useNavigate();
 
     const [invoiceData, setInvoiceData] = useState();
     const [countdays, setCountDays] = useState(0);
-    // const [idEvent, setIdEvent] = useState('');
-    const dayRangeCount = Array.from({ length: countdays });
+    const [idEvent, setIdEvent] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -36,15 +37,58 @@ const InvoiceDetail = () => {
     axios.get(`http://localhost:8080/api/invoice/detail/${idInvoice}`)
         .then(res => {
             setInvoiceData(res.data.data)
-            // setIdEvent(res.data.data.event.idEvent)
+            setIdEvent(res.data.data.event.idEvent)
         }).catch(err => 
             console.log(err))
         })
 
     const handleBack = () => {
-        // localStorage.setItem('idSelectedEvent', idEvent);
-        navigate(-1); // Redirect back to the previous page
+        localStorage.setItem('idSelectedEvent', idEvent);
+        navigate(-1);
     };
+
+    const handleGenerate = async (e) => {
+        try {
+            // const response = await axios.get(`${url}/api/invoice/generate-pdf/invoice/${idInvoice}`, {
+            //     responseType: 'blob'
+            // });
+    
+            // const file = new Blob([response.data], { type: 'application/pdf' });
+            // const fileURL = URL.createObjectURL(file);
+    
+            // window.open(fileURL, '_blank');
+            const response = await axios.get(`${url}/api/invoice/generate-pdf/invoice/${idInvoice}`, {
+                responseType: 'blob'
+            });
+    
+            // Membuat objek URL untuk blob
+            const fileURL = URL.createObjectURL(new Blob([response.data]));
+    
+            // Membuat elemen <a> untuk men-download file
+            const link = document.createElement('a');
+            link.href = fileURL;
+            link.setAttribute('download', `SIELALA_INVOICE_${invoiceData.companyName}.pdf`);
+    
+            // Menambahkan elemen <a> ke dokumen dan memicu klik pada elemen tersebut
+            document.body.appendChild(link);
+            link.click();
+    
+            // Menghapus elemen <a> setelah proses download selesai
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error('Error:', error);
+            toast.error("Cannot generate invoice");
+        }
+    };
+
+    function formatRupiah(angka) {
+        var formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 2
+        });
+        return formatter.format(angka);
+    }
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -114,10 +158,10 @@ const InvoiceDetail = () => {
             <div>
                 <div className="button-field">
                     <button className="button-green" onClick={handleBack}>Back</button>
-                    {/* <Link to={`/edit-reward/${id}`}> */}
+                    <Link to={`/invoice/edit-detail/${idInvoice}`}>
                         <button className="button-pink">Edit Invoice</button>
-                    {/* </Link> */}
-                    <button className="button-brown">Generate to PDF</button>
+                    </Link>
+                    <button className="button-brown" onClick={handleGenerate}>Generate to PDF</button>
                 </div>
                     
             </div>
@@ -138,15 +182,15 @@ const InvoiceDetail = () => {
                             <tr key={j}>
                                 <td>{itemInvoice.item}</td>
                                 <td>{itemInvoice.quantity}</td>
-                                <td>{itemInvoice.rate}</td>
-                                <td>{itemInvoice.totalAmountItem}</td>
+                                <td>{formatRupiah(itemInvoice.rate)}</td>
+                                <td>{formatRupiah(itemInvoice.totalAmountItem)}</td>
                             </tr>
                         ))}
                     </tbody>
                     <tbody>
                         <tr>
                             <td colSpan={3}>Total</td>
-                            <td>{invoiceData.totalAmount}</td>
+                            <td>{formatRupiah(invoiceData.totalAmount)}</td>
                         </tr>
                     </tbody>
                 </table>

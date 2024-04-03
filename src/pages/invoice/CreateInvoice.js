@@ -16,7 +16,6 @@ const CreateInvoice = () => {
     const url = 'http://localhost:8080';
     const navigate = useNavigate();
 
-    // const [sponsorName, setSponsorName] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [companyAddress, setCompanyAddress] = useState('');
     const [picName, setPicName] = useState('');
@@ -42,7 +41,6 @@ const CreateInvoice = () => {
                 console.log(response.data);
                 const contact = response.data.data;
                 console.log(contact.name);
-                // setSponsorName(sponsor.companyName);
                 setCompanyName(contact.name);
                 setCompanyAddress(contact.address);
                 setPicName(contact.picName);
@@ -65,16 +63,10 @@ const CreateInvoice = () => {
             newErrors.pic_name = 'PIC Name cannot be empty';
         }
         
-            // Validasi apakah ada item yang kosong
-        // const anyItemEmpty = listInvoiceItem.some(item => item.item.trim() === '' || item.quantity === '' || item.rate === '');
-        // if (anyItemEmpty) {
-        //     newErrors.listInvoiceItem = 'Input for items cannot be empty';
-        // }
-
-        // const everyItemEmpty = listInvoiceItem.some(item => item.item.trim() === '' || item.quantity === '' || item.rate === '');
-        // if (everyItemEmpty) {
-        //     newErrors.listInvoiceItem = 'Input for item, rate, and quantity cannot be empty';
-        // }
+        const quantityZero = listInvoiceItem.some(item => item.quantity < 1);
+        if (quantityZero) {
+            newErrors.listInvoiceItem = 'Quantity must be more than 0';
+        }
 
         const itemEmpty = listInvoiceItem.some(item => item.item.trim() === '');
         if (itemEmpty) {
@@ -97,32 +89,15 @@ const CreateInvoice = () => {
             newErrors.listInvoiceItem = 'Input for every item, rate, and quantity cannot be empty';
         }
 
-        // Validasi apakah semua nilai quantity adalah angka
         const anyQuantityNotNumber = listInvoiceItem.some(item => isNaN(item.quantity));
         if (anyQuantityNotNumber) {
             newErrors.listInvoiceItem = 'Input for quantity has to be a number';
         }
 
-        // Validasi apakah semua nilai rate adalah angka
         const anyRateNotNumber = listInvoiceItem.some(item => isNaN(item.rate));
         if (anyRateNotNumber) {
             newErrors.listInvoiceItem = 'Input for rate has to be a number';
         }
-
-        // const allItemsEmpty = listInvoiceItem.every(item => item.item.trim() === '' || item.quantity === '' || item.rate === '' || isNaN(item.quantity) || isNaN(item.rate));
-        // if (allItemsEmpty) {
-        //     newErrors.listInvoiceItem = 'Input for items cannot be empty';
-        // }
-
-        // const quantityNumber = listInvoiceItem.every(item => isNaN(item.quantity));
-        // if (quantityNumber) {
-        //     newErrors.listInvoiceItem = 'Input for quantity has to be a number';
-        // }
-
-        // const rateNumber = listInvoiceItem.every(item => isNaN(item.rate));
-        // if (rateNumber) {
-        //     newErrors.listInvoiceItem = 'Input for rate has to be a number';
-        // }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -152,8 +127,6 @@ const CreateInvoice = () => {
                 picName,
                 listInvoiceItem,
             });
-            // Untuk pre-filled dropdown event
-            // localStorage.setItem('idSelectedEvent', idEvent);
 
             console.log('Invoice Created successfully:', response.data);
             navigate('/reward-inventory');
@@ -173,36 +146,17 @@ const CreateInvoice = () => {
 
     const handleDeleteRow = (index) => {
         const newListInvoiceItem = [...listInvoiceItem];
-        newListInvoiceItem.splice(index, 1); // Hapus item dari listInvoiceItem
-        setInvoiceItems(newListInvoiceItem); // Atur listInvoiceItem dengan array yang baru
+        newListInvoiceItem.splice(index, 1);
+        setInvoiceItems(newListInvoiceItem);
     };
-    
-    // const handleInputChange = (index, input) => {
-    //     const { name, value } = input.target;
-    //     const list = [...listInvoiceItem];
-    //     list[index][name] = value;
-    //     setInvoiceItems(list);
-    // };
-
-    // const handleInputChange = (index, event) => {
-    //     const { name, value } = event;
-    //     const newList = [...listInvoiceItem];
-    //     newList[index][name] = value;
-    //     setInvoiceItems(newList);
-    // };
 
     const handleInputChange = (index, name, value) => {
-        const newListInvoiceItem = [...listInvoiceItem]; // Salin listInvoiceItem ke array baru
-        newListInvoiceItem[index][name] = value; // Perbarui nilai item dengan nilai baru
-        setInvoiceItems(newListInvoiceItem); // Atur listInvoiceItem dengan array yang baru
+        const newListInvoiceItem = [...listInvoiceItem]; 
+        newListInvoiceItem[index][name] = value; 
+        setInvoiceItems(newListInvoiceItem);
     };
 
-    // const updatedDayRewards = [...listDayReward];
-    //     updatedDayRewards[index] = { ...updatedDayRewards[index], stokAwal: value };
-
     const handleBack = () => {
-        // Untuk pre-filled dropdown event
-        // localStorage.setItem('idSelectedEvent', idEvent);
         navigate(-1);
     }
 
@@ -230,26 +184,8 @@ const CreateInvoice = () => {
              onSubmit={(e) => onSubmit(e)}
         >
 
-            {/* <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Add New Reward</h1> */}
             <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
 
-                {/* brand name */}
-                {/* <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="company_name">
-                    Company Name<span className="text-danger">*</span>
-                </label>
-
-                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
-                    <input
-                        id="company_name"
-                        className="px-4 py-3 w-full focus:outline-none bg-gray-100"
-                        value={companyName}
-                        readOnly
-                    />
-                </div> */}
-
-
-                {/* event */}
                 <div className="input-form flex flex-col">
                     <label className="input-label font-reynaldo text-left" htmlFor="event">
                         Company Name
@@ -265,14 +201,6 @@ const CreateInvoice = () => {
                     </div>
                 </div>
 
-                {/* {errors.brand_name && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_name}
-                    </span>
-                )} */}
-                {/* </div> */}
-
-                {/* product name */}
                 <div className="input-form flex flex-col space-y-1">
                 <label className="input-label font-reynaldo text-left" htmlFor="company_address">
                     Company Address<span className="text-danger">*</span>
@@ -295,7 +223,6 @@ const CreateInvoice = () => {
                 )}
                 </div>
 
-                {/* product name */}
                 <div className="input-form flex flex-col space-y-1">
                 <label className="input-label font-reynaldo text-left" htmlFor="pic_name">
                     Company PIC<span className="text-danger">*</span>
@@ -324,7 +251,6 @@ const CreateInvoice = () => {
                     </div>
                 </div>
 
-                {/* initial stock */}
                 <div className="input-form flex flex-col">
                 <label className="input-label font-reynaldo text-left" htmlFor="items">
                     Items<span className="text-danger">*</span>
@@ -349,8 +275,7 @@ const CreateInvoice = () => {
                                         className="px-4 py-3 w-full focus:outline-none"
                                         type="text"
                                         value={item.item}  
-                                        // min="0"
-                                        // disabled={index+1 < day}
+  
                                         onChange={(e) => handleInputChange(index, 'item', e.target.value)}
                                     />
                                 </div>
@@ -361,8 +286,7 @@ const CreateInvoice = () => {
                                         className="px-4 py-3 w-full focus:outline-none"
                                         type="number"
                                         value={item.quantity}  
-                                        min="0"
-                                        // disabled={index+1 < day}
+                                        min="1"
                                         onChange={(e) => handleInputChange(index, 'quantity', parseInt(e.target.value))}
                                     />
                                 </div>
@@ -373,14 +297,12 @@ const CreateInvoice = () => {
                                         className="px-4 py-3 w-full focus:outline-none"
                                         type="number"
                                         value={item.rate}  
-                                        min="0"
-                                        // disabled={index+1 < day}
+                                        min="1"
                                         onChange={(e) => handleInputChange(index, 'rate', parseInt(e.target.value))}
                                     />
                                 </div>
                             </td>
                             <td>
-                                {/* Tombol hapus */}
                                 <button className="button-red"onClick={() => handleDeleteRow(index)}>Delete</button>
                             </td>
                         </tr>

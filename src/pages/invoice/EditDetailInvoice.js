@@ -21,14 +21,7 @@ const EditDetailInvoice = () => {
     const [companyName, setCompanyName] = useState('');
     const [companyAddress, setCompanyAddress] = useState('');
 
-    const [productName, setProductName] = useState('');
-    const [brandName, setBrandName] = useState('');
-    const [category, setCategory] = useState('');
-    const [listDayReward, setListDayReward] = useState([]);
-    const [countDays, setCountDays] = useState(1);
-    const [eventName, setEventName]  = useState('');
     const [idEvent, setIdEvent] = useState('');
-    const [day, setDay] = useState(0);
     const [errors, setErrors] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -55,16 +48,6 @@ const EditDetailInvoice = () => {
                 setCompanyAddress(invoiceData.companyAddress);
                 setPicName(invoiceData.picName);
                 setInvoiceItems(invoiceData.listInvoiceItem);
-
-                // setProductName(rewardData.productName);
-                // setBrandName(rewardData.brandName);
-                // setCategory(rewardData.category);
-                // setListDayReward(rewardData.listDayReward);
-                // setEventName(rewardData.event.eventName);
-                // setIdEvent(rewardData.event.idEvent);
-                // setDay(rewardData.event.dayStatus);
-                // setCountDays(response.data.daysRange);
-                // console.log(day);
           
             } catch (error) {
                 console.error('Error fetching invoice data:', error);
@@ -84,17 +67,11 @@ const EditDetailInvoice = () => {
         if (!picName.trim()) {
             newErrors.pic_name = 'PIC Name cannot be empty';
         }
-        
-            // Validasi apakah ada item yang kosong
-        // const anyItemEmpty = listInvoiceItem.some(item => item.item.trim() === '' || item.quantity === '' || item.rate === '');
-        // if (anyItemEmpty) {
-        //     newErrors.listInvoiceItem = 'Input for items cannot be empty';
-        // }
 
-        // const everyItemEmpty = listInvoiceItem.some(item => item.item.trim() === '' || item.quantity === '' || item.rate === '');
-        // if (everyItemEmpty) {
-        //     newErrors.listInvoiceItem = 'Input for item, rate, and quantity cannot be empty';
-        // }
+        const quantityZero = listInvoiceItem.some(item => item.quantity < 1);
+        if (quantityZero) {
+            newErrors.listInvoiceItem = 'Quantity must be more than 0';
+        }
 
         const itemEmpty = listInvoiceItem.some(item => item.item.trim() === '');
         if (itemEmpty) {
@@ -117,32 +94,15 @@ const EditDetailInvoice = () => {
             newErrors.listInvoiceItem = 'Input for every item, rate, and quantity cannot be empty';
         }
 
-        // Validasi apakah semua nilai quantity adalah angka
         const anyQuantityNotNumber = listInvoiceItem.some(item => isNaN(item.quantity));
         if (anyQuantityNotNumber) {
             newErrors.listInvoiceItem = 'Input for quantity has to be a number';
         }
 
-        // Validasi apakah semua nilai rate adalah angka
         const anyRateNotNumber = listInvoiceItem.some(item => isNaN(item.rate));
         if (anyRateNotNumber) {
             newErrors.listInvoiceItem = 'Input for rate has to be a number';
         }
-
-        // const allItemsEmpty = listInvoiceItem.every(item => item.item.trim() === '' || item.quantity === '' || item.rate === '' || isNaN(item.quantity) || isNaN(item.rate));
-        // if (allItemsEmpty) {
-        //     newErrors.listInvoiceItem = 'Input for items cannot be empty';
-        // }
-
-        // const quantityNumber = listInvoiceItem.every(item => isNaN(item.quantity));
-        // if (quantityNumber) {
-        //     newErrors.listInvoiceItem = 'Input for quantity has to be a number';
-        // }
-
-        // const rateNumber = listInvoiceItem.every(item => isNaN(item.rate));
-        // if (rateNumber) {
-        //     newErrors.listInvoiceItem = 'Input for rate has to be a number';
-        // }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -167,7 +127,7 @@ const EditDetailInvoice = () => {
                 picName,
                 listInvoiceItem
             });
-            // Untuk pre-filled dropdown event
+
             localStorage.setItem('idSelectedEvent', idEvent);
 
             console.log('Invoice edited successfully:', response.data);
@@ -187,20 +147,18 @@ const EditDetailInvoice = () => {
     };
 
     const handleInputChange = (index, name, value) => {
-        const newListInvoiceItem = [...listInvoiceItem]; // Salin listInvoiceItem ke array baru
-        newListInvoiceItem[index][name] = value; // Perbarui nilai item dengan nilai baru
-        setInvoiceItems(newListInvoiceItem); // Atur listInvoiceItem dengan array yang baru
+        const newListInvoiceItem = [...listInvoiceItem];
+        newListInvoiceItem[index][name] = value;
+        setInvoiceItems(newListInvoiceItem);
     };
 
     const handleDeleteRow = (index) => {
         const newListInvoiceItem = [...listInvoiceItem];
-        newListInvoiceItem.splice(index, 1); // Hapus item dari listInvoiceItem
-        setInvoiceItems(newListInvoiceItem); // Atur listInvoiceItem dengan array yang baru
+        newListInvoiceItem.splice(index, 1);
+        setInvoiceItems(newListInvoiceItem);
     };
 
     const handleBack = () => {
-        // Untuk pre-filled dropdown event
-        // localStorage.setItem('idSelectedEvent', idEvent);
         navigate(-1);
     }
 
@@ -228,26 +186,8 @@ const EditDetailInvoice = () => {
              onSubmit={(e) => onSubmit(e)}
         >
 
-            {/* <h1 id="page-title" className="font-reynaldo text-3xl font-bold mb-6 text-primary-80">Add New Reward</h1> */}
             <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
 
-                {/* brand name */}
-                {/* <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="company_name">
-                    Company Name<span className="text-danger">*</span>
-                </label>
-
-                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
-                    <input
-                        id="company_name"
-                        className="px-4 py-3 w-full focus:outline-none bg-gray-100"
-                        value={companyName}
-                        readOnly
-                    />
-                </div> */}
-
-
-                {/* event */}
                 <div className="input-form flex flex-col">
                     <label className="input-label font-reynaldo text-left" htmlFor="event">
                         Company Name
@@ -263,14 +203,6 @@ const EditDetailInvoice = () => {
                     </div>
                 </div>
 
-                {/* {errors.brand_name && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.brand_name}
-                    </span>
-                )} */}
-                {/* </div> */}
-
-                {/* product name */}
                 <div className="input-form flex flex-col space-y-1">
                 <label className="input-label font-reynaldo text-left" htmlFor="company_address">
                     Company Address<span className="text-danger">*</span>
@@ -347,8 +279,6 @@ const EditDetailInvoice = () => {
                                         className="px-4 py-3 w-full focus:outline-none"
                                         type="text"
                                         value={item.item}  
-                                        // min="0"
-                                        // disabled={index+1 < day}
                                         onChange={(e) => handleInputChange(index, 'item', e.target.value)}
                                     />
                                 </div>
@@ -359,8 +289,7 @@ const EditDetailInvoice = () => {
                                         className="px-4 py-3 w-full focus:outline-none"
                                         type="number"
                                         value={item.quantity}  
-                                        min="0"
-                                        // disabled={index+1 < day}
+                                        min="1"
                                         onChange={(e) => handleInputChange(index, 'quantity', parseInt(e.target.value))}
                                     />
                                 </div>
@@ -371,14 +300,12 @@ const EditDetailInvoice = () => {
                                         className="px-4 py-3 w-full focus:outline-none"
                                         type="number"
                                         value={item.rate}  
-                                        min="0"
-                                        // disabled={index+1 < day}
+                                        min="1"
                                         onChange={(e) => handleInputChange(index, 'rate', parseInt(e.target.value))}
                                     />
                                 </div>
                             </td>
                             <td>
-                                {/* Tombol hapus */}
                                 <button className="button-red"onClick={() => handleDeleteRow(index)}>Delete</button>
                             </td>
                         </tr>
@@ -412,8 +339,6 @@ const EditDetailInvoice = () => {
                 onRequestClose={closeModal}
                 id="modal-confirmation"
             >
-            {/* <div className='modalBackground'>
-                <div className="modalContainer"> */}
                     <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
                     <p className="text-center text-gray-700">Are you sure you want to edit this invoice?</p>
                     <br></br>
@@ -421,8 +346,6 @@ const EditDetailInvoice = () => {
                         <button className="button-red text-center" onClick={closeModal}>Cancel</button>
                         <button className="button-green text-center" onClick={confirmSubmit}>Confirm</button>
                     </div>
-                {/* </div>
-            </div> */}
             </Modal>
 
             <br></br>
