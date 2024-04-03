@@ -128,15 +128,15 @@ const TenantApplicant = () => {
             <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
                 {selectedEvent ? (
                 <table className="event-table mx-8">
+                    
                     <thead>
-                    {/* Row headers */}
-                    <tr>
-                        <th style={{ width: "28%", textAlign: "center" }}>Brand Name</th>
-                        <th style={{ width: "20%", textAlign: "center" }}>Email</th>
-                        <th style={{ width: "20%", textAlign: "center" }}>Instagram</th>
-                        <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
-                        <th style={{ width: "12%", textAlign: "center" }}>Status</th>
-                    </tr>
+                        <tr>
+                            <th style={{ width: "28%", textAlign: "center" }}>Brand Name</th>
+                            <th style={{ width: "20%", textAlign: "center" }}>Email</th>
+                            <th style={{ width: "20%", textAlign: "center" }}>Instagram</th>
+                            <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
+                            <th style={{ width: "12%", textAlign: "center" }}>Status</th>
+                        </tr>
                     </thead>
         
                     <tbody>
