@@ -183,13 +183,6 @@ const Visitor = () => {
                         }
                     </select>
 
-                    <input
-                      className="search"
-                      placeholder="Search..."
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-
                     <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
@@ -207,8 +200,57 @@ const Visitor = () => {
                         </svg>
                     </div>
                 </div>
-            </div>
+            </div> 
             
+            <br></br>
+
+            {/* <input
+              className="search"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            /> */}
+
+          <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+              <div style={{ position: 'relative' }}>
+                  <input
+                      className="search px-4 py-3 w-full focus:outline-none"
+                      placeholder="Search..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      style={{
+                          backgroundColor: '#ffffff',
+                          color: '#333333',
+                          borderRadius: '0.375rem',
+                          fontSize: '1rem',
+                          lineHeight: '1.5',
+                          padding: '0.5rem 1rem',
+                          width: '300px',
+                          paddingRight: '40px', // Space for the search icon
+                      }}
+                  />
+                  <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="feather feather-search"
+                          style={{ color: '#333333' }} // Color of the search icon
+                      >
+                          <circle cx="11" cy="11" r="8" />
+                          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                      </svg>
+                  </div>
+              </div>
+          </div>
+
+
             <br></br>
 
             {selectedEvent && eventData.length > 0 && (
@@ -240,11 +282,12 @@ const Visitor = () => {
                 <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
                     <table>
                         <thead>
-                            {/* Row headers */}
-                            {/* <tr>
-                                <th style={{borderRight: '1px solid #E3E2E6'}}colSpan="3"> ATTENDANCE</th>
-                            </tr> */}
-                        </thead>
+                            {/* Row headers  */}
+                            <tr>
+                                <th style={{borderRight: '1px solid #E3E2E6'}}colSpan="4"> VISITOR </th>
+                                <th style={{borderRight: '1px solid #E3E2E6'}}colSpan="4"> ATTENDANCE</th>
+                            </tr>
+                        </thead> 
                         <thead>
                             {/* Column headers */}
                             <tr>
@@ -273,13 +316,13 @@ const Visitor = () => {
                                   <input
                                     type="checkbox"
                                     disabled={disableCheckbox}
-                                    checked={(attendanceData || []).find(att => att.day === dayIndex)?.attended || false}
-                                    onChange={(e) => {
-                                        const newCheckedValue = e.target.checked;
-                                        if (newCheckedValue !== ((attendanceData || []).find(att => att.day === dayIndex) || {}).attended) {
-                                            markAttendance(visitor.id, dayIndex, newCheckedValue);
-                                        }
-                                    }}
+                                    // checked={(attendanceData || []).find(att => att.day === dayIndex)?.attended || false}
+                                    // onChange={(e) => {
+                                    //     const newCheckedValue = e.target.checked;
+                                    //     if (newCheckedValue !== ((attendanceData || []).find(att => att.day === dayIndex) || {}).attended) {
+                                    //         markAttendance(visitor.id, dayIndex, newCheckedValue);
+                                    //     }
+                                    // }}
                                   />
                                   </td>
                                 </React.Fragment>
