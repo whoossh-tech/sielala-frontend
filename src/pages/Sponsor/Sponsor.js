@@ -52,6 +52,18 @@ const Sponsor = () => {
     setSelectedEvent(e.target.value);
   };
 
+  // const handleCreateButton = () => {
+  //   if (selectedEvent) {
+  //     navigate(`/sponsor/create/${selectedEvent}`);
+  //   } else {
+  //     toast.error('Please select event first');
+  //   }
+  // };
+
+  // const handleChange = (e) => {
+  //   setSelectedEvent(e.target.value);
+  // };
+
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
@@ -103,6 +115,33 @@ const Sponsor = () => {
       </div>
 
       <br></br>
+
+      {/* <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '200px', margin: '0 auto' }}>
+          <select 
+              className="appearance-none px-4 py-3 w-full focus:outline-none" 
+              onChange={handleChange}
+              style={{
+                  backgroundColor: '#ffffff',
+                  color: '#333333',
+                  borderRadius: '0.375rem',
+                  border: '1px solid #E3E2E6',
+                  fontSize: '1rem',
+                  lineHeight: '1.5',
+                  padding: '0.5rem 1rem',
+                  width: '200px',
+                  alignItems: 'center', justifyContent : 'center'
+              }}
+          >
+              <option>select event</option>
+              {eventData && eventData.length > 0 ? 
+                  (eventData.map((event, index) => (
+                      <option key={index} value={event.idEvent}>{event.eventName}</option>
+                  ))) : (
+                      <option value="">No events available</option>
+                  )
+              }
+          </select>
+      </div> */}
 
       <div className="button-field">
         <button className="button-pink" onClick={handleCreateButton}>
