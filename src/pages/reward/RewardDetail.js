@@ -50,6 +50,10 @@ const RewardDetail = () => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         const response = await axios.delete(`http://localhost:8080/api/reward/delete/${id}`);
+
+        // Untuk pre-filled dropdown event
+        localStorage.setItem('idSelectedEvent', idEvent);
+    
         console.log('Reward deleted successfully:', response.data);
         localStorage.setItem('idSelectedEvent', idEvent);
         navigate('/reward-inventory');
@@ -116,20 +120,20 @@ const RewardDetail = () => {
             <br></br>
 
             <div>
-                {rewardData.rewardRedeemed.length === 0 ? (
-                <div className="button-field">
-                    <button className="button-green" onClick={handleBack}>Back</button>
-                    <Link to={`/edit-reward/${id}`}>
-                        <button className="button-pink">Edit Reward</button>
-                    </Link>
-                  <button className="button-red" onClick={openModal}>Delete Reward</button>
-                </div>
-                    ) : (
-                <div className="button-field">
-                    <button className="button-green" onClick={handleBack}>Back</button>
-                    <button className="button-pink" disabled>Edit Reward</button>
-                    <button className="button-red" disabled>Delete Reward</button>
-                </div>
+                {rewardData.redeemed ? (
+                    <div className="button-field">
+                        <button className="button-green" onClick={handleBack}>Back</button>
+                        <button className="button-pink" disabled>Edit Reward</button>
+                        <button className="button-red" disabled>Delete Reward</button>
+                    </div>
+                ) : (
+                    <div className="button-field">
+                        <button className="button-green" onClick={handleBack}>Back</button>
+                        <Link to={`/edit-reward/${id}`}>
+                            <button className="button-pink">Edit Reward</button>
+                        </Link>
+                        <button className="button-red" onClick={openModal}>Delete Reward</button>
+                    </div>
                 )}
             </div>
 

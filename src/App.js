@@ -8,6 +8,8 @@ import RewardInventory from './pages/reward/RewardInventory';
 import FormRewardInventory from './pages/reward/FormRewardInventory';
 import EditRewardInventory from './pages/reward/EditRewardInventory';
 import RewardDetail from './pages/reward/RewardDetail';
+import RewardRedemptionHistory from './pages/reward/RewardRedemptionHistory';
+import AddRewardRedemptionData from './pages/reward/AddRewardRedemptionData';
 import { TenantRegistrationForm } from './pages/tenant/TenantRegistrationForm';
 import { TenantRegistrationSuccessPage } from './pages/tenant/TenantRegistrationSuccessPage';
 import { TenantRegistrationFailPage } from './pages/tenant/TenantRegistrationFailPage';
@@ -26,6 +28,7 @@ import DetailSponsor from "./pages/Sponsor/DetailSponsor";
 import Event from "./pages/Event/Event";
 import CreateEvent from "./pages/Event/CreateEvent";
 import DetailEvent from './pages/Event/DetailEvent';
+import EditEvent from "./pages/Event/EditEvent";
 import NotFoundPage from './pages/NotFoundPage';
 import CreateInvoice from './pages/invoice/CreateInvoice';
 import Invoice from './pages/invoice/Invoice';
@@ -97,6 +100,8 @@ function App() {
               <Route path="/add-reward/:idEvent" element={<FormRewardInventory />} />
               <Route path="/edit-reward/:idReward" element={<EditRewardInventory />} />
               <Route path="/reward-inventory/detail/:id" element={<RewardDetail />} />
+              <Route path="/reward-redemption-history" element={<RewardRedemptionHistory />} />
+              <Route path="/add-redemption-data/:idEvent" element={<AddRewardRedemptionData />} />
             </>
           )}
 
@@ -106,6 +111,7 @@ function App() {
               <Route path="/event" element={<Event />} />
               <Route path="/event/create" element={<CreateEvent />} />
               <Route path="/event/detail/:idEvent" element={<DetailEvent />} />
+              <Route path="/event/edit/:idEvent" element={<EditEvent />} />
             </>
           )}
 
