@@ -17,12 +17,6 @@ const DashboardGuest = () => {
 
         const token = localStorage.getItem('token');
 
-        // if ( role === 'BISDEV' || role === 'ADMIN' || role === 'PARTNERSHIP' || role === 'OPERATION' || role === 'FINANCE') {
-        //     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // } else {
-        //     delete axios.defaults.headers.common["Authorization"];
-        // }
-
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         } else {
@@ -83,31 +77,6 @@ const DashboardGuest = () => {
             ) : (
               <p><b>No Upcoming Events Available</b></p>
             )}
-
-            {/* <div className="event-card bg-primary-10 shadow-lg rounded-lg py-4 px-8">
-                <div className="flex justify-between">
-                    <div className='text-left'>
-                        <h1 className='text-2xl my-2'>LalaMarket Lebaran Edition</h1>
-                        <p className="text-md mb-2 text-center">
-                            📆 16 March 2024 - 18 March 2024 | 📍 Gelora Bung Karno
-                        </p>
-                    </div>
-
-                    <div className="5 flex items-center gap-0 mx-3">
-                        <div className="flex space-x-4">
-                            <button className="button-pink text-sm">
-                                Register as Visitor
-                            </button>
-
-                            {isTenantRegistrationOpen && (
-                                <button className="button-green text-sm" onClick={tenantRegistrationClick}>
-                                    Register as Tenant
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 
         </main>
     )

@@ -36,7 +36,7 @@ export function NavbarAdmin() {
         className="p-1 font-normal"
       >
         <a href="/user-list" className="flex items-center text-md text-neutral-80">
-          <b>User Management</b>
+          <b>User</b>
         </a>
       </Typography>
 
@@ -47,7 +47,7 @@ export function NavbarAdmin() {
         className="p-1 font-normal"
       >
         <a href="/event" className="flex items-center text-md text-neutral-80">
-          <b>Event Management</b>
+          <b>Event</b>
         </a>
       </Typography>
 
@@ -68,7 +68,7 @@ export function NavbarAdmin() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="*" className="flex items-center text-md text-neutral-80">
+        <a href="/email" className="flex items-center text-md text-neutral-80">
           <b>Bulk Email</b>
         </a>
       </Typography>
@@ -102,7 +102,7 @@ export function NavbarAdmin() {
         className="p-1 font-normal"
       >
         <a href="*" className="flex items-center text-md text-neutral-80">
-          <b>Invoice Management</b>
+          <b>Invoice</b>
         </a>
       </Typography>
 
@@ -113,7 +113,7 @@ export function NavbarAdmin() {
         className="p-1 font-normal"
       >
         <a href="/sponsor" className="flex items-center text-md text-neutral-80">
-          <b>Partnership Management</b>
+          <b>Partnership</b>
         </a>
       </Typography>
 
@@ -123,8 +123,8 @@ export function NavbarAdmin() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="tenant-applicant" className="flex items-center text-md text-neutral-80">
-          <b>Tenant Applicant List</b>
+        <a href="/tenant-applicant" className="flex items-center text-md text-neutral-80">
+          <b>Tenant Applicant</b>
         </a>
       </Typography>
 
