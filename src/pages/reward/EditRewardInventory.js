@@ -77,6 +77,10 @@ const EditRewardInventory = () => {
             newErrors.category = 'Category cannot be empty';
         }
         
+        if (!category || isNaN(category)) {
+            newErrors.category = 'Category cannot be empty';
+        }
+        
         const allStocksEmpty = listDayReward.every(day => day.stokAwal === 0 || day.stokAwal === null || day.stokAwal === undefined || Number.isNaN(day.stokAwal));
         if (allStocksEmpty) {
             newErrors.listDayReward = 'Fill at least one Initial Stock';

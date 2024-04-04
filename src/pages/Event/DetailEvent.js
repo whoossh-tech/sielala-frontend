@@ -9,13 +9,15 @@ import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { toast, Toaster } from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const DetailEvent = () => {
   const navigate = useNavigate();
   const { idEvent } = useParams();
   const [eventData, setEventData] = useState();
+  const [startDate, setStartDate] = useState(new Date());
   const [tenantData, setTenantData] = useState();
+  const currentDate = new Date();
 
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -25,9 +27,9 @@ const DetailEvent = () => {
       .get(`http://localhost:8080/api/event/detail/${idEvent}`)
       .then((res) => {
         setEventData(res.data.data);
+        setStartDate(new Date(eventData.startDate));
       })
       .catch((err) => console.log(err));
-    console.log(eventData);
   });
 
   const handleBack = () => {
@@ -48,6 +50,11 @@ const DetailEvent = () => {
           </div>
         </div>
       </div>
+      
+      <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
 
       <br></br>
 
@@ -57,7 +64,15 @@ const DetailEvent = () => {
             Back
           </button>
           <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: "-6%" }}>Event Detail</h1>
-          <div></div>
+            <div>
+                {currentDate < startDate ? (
+                  <Link to={`/event/edit/${idEvent}`}>
+                    <button className="button-pink">Edit Event</button>
+                  </Link>
+                ) : (
+                    <button className="button-pink" disabled>Edit Event</button>
+                )}
+            </div>
         </div>
 
         <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
