@@ -33,6 +33,10 @@ import InvoiceDetail from './pages/invoice/InvoiceDetail';
 import EditDetailInvoice from './pages/invoice/EditDetailInvoice';
 import TenantApplicant from './pages/tenant/TenantApplicant'
 import TenantApplicantDetail from './pages/tenant/TenantApplicantDetail';
+import Emails from './pages/email/Emails';
+import CreateEmail from './pages/email/CreateEmail';
+import ChooseContact from './pages/email/ChooseContact';
+import EmailDetail from './pages/email/EmailDetail';
 
 function App() {
   const role = localStorage.getItem('role');
@@ -121,7 +125,16 @@ function App() {
             </>
           )}
 
-          
+          {/* ROLE: PARTNERSHIP, BISDEV, and ADMIN */}
+          {(role === 'PARTNERSHIP' || role === 'ADMIN' || role === 'BISDEV') && (
+            <>
+              <Route path="/email" element={<Emails />} />
+              <Route path="/email/:idEmail" element={<EmailDetail />} />
+              <Route path="/email/write" element={<CreateEmail />} />
+              <Route path="/email/choose-contact" element={<ChooseContact />} />
+            </>
+          )}
+
           {/* Catch-all route for 404 */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
