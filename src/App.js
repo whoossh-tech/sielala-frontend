@@ -27,6 +27,12 @@ import Event from "./pages/Event/Event";
 import CreateEvent from "./pages/Event/CreateEvent";
 import DetailEvent from './pages/Event/DetailEvent';
 import NotFoundPage from './pages/NotFoundPage';
+import TenantApplicant from './pages/tenant/TenantApplicant'
+import TenantApplicantDetail from './pages/tenant/TenantApplicantDetail';
+import Emails from './pages/email/Emails';
+import CreateEmail from './pages/email/CreateEmail';
+import ChooseContact from './pages/email/ChooseContact';
+import EmailDetail from './pages/email/EmailDetail';
 
 function App() {
   const role = localStorage.getItem('role');
@@ -105,6 +111,19 @@ function App() {
               <Route path="/sponsor" element={<Sponsor />} />
               <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
               <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
+              <Route path="/tenant-applicant" element={<TenantApplicant />} />
+              <Route path="/tenant-applicant/:idTenantApplicant" element={<TenantApplicantDetail />} />
+
+            </>
+          )}
+
+          {/* ROLE: PARTNERSHIP, BISDEV, and ADMIN */}
+          {(role === 'PARTNERSHIP' || role === 'ADMIN' || role === 'BISDEV') && (
+            <>
+              <Route path="/email" element={<Emails />} />
+              <Route path="/email/:idEmail" element={<EmailDetail />} />
+              <Route path="/email/write" element={<CreateEmail />} />
+              <Route path="/email/choose-contact" element={<ChooseContact />} />
             </>
           )}
 
