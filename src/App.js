@@ -41,6 +41,11 @@ import CreateEmail from './pages/email/CreateEmail';
 import ChooseContact from './pages/email/ChooseContact';
 import EmailDetail from './pages/email/EmailDetail';
 
+import {VisitorRegistrationForm} from './pages/Visitor/VisitorRegistrationForm';
+import { VisitorRegistrationSuccessPage } from './pages/Visitor/VisitorRegistrationSuccessPage';
+import { VisitorRegistrationFailPage } from './pages/Visitor/VisitorRegistrationFailPage';
+import Visitor from "./pages/Visitor/Visitor";
+
 function App() {
   const role = localStorage.getItem('role');
 
@@ -55,6 +60,9 @@ function App() {
           <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm/>}></Route>
           <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
           <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
+          <Route path="/visitor-registration/:eventId" element={<VisitorRegistrationForm/>}></Route>
+          <Route path="/visitor-registration/success" element={<VisitorRegistrationSuccessPage />} />
+          <Route path="/visitor-registration/fail" element={<VisitorRegistrationFailPage />} />
 
           {/* ROLE: PARTNERHSIP */}
           {role === 'PARTNERSHIP' && (
@@ -111,6 +119,7 @@ function App() {
               <Route path="/event" element={<Event />} />
               <Route path="/event/create" element={<CreateEvent />} />
               <Route path="/event/detail/:idEvent" element={<DetailEvent />} />
+              <Route path="/visitor" element={<Visitor />} />
               <Route path="/event/edit/:idEvent" element={<EditEvent />} />
             </>
           )}
