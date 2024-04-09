@@ -3,7 +3,6 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NavbarGuest } from '../../components/navbar/NavbarGuest';
-import {toast} from 'react-hot-toast';
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import '../../static/css/VisitorRegistrationForm.css';
@@ -46,21 +45,25 @@ const VisitorRegistrationForm = () => {
         }
 
         if (!telephone.trim()) {
-            newErrors.telephone = 'Brand Telephone Telephone cannot be empty';
+            newErrors.telephone = 'Telephone Number cannot be empty';
+        } else if (!/^\d+$/.test(telephone)) {
+            newErrors.telephone = 'Telephone Number must contain only numbers';
+        } else if (telephone.charAt(0) === '0') {
+            newErrors.telephone = 'Telephone Number cannot start with 0';
         }
 
         if (!location.trim() || location === 'Choose booth preference') {
-            newErrors.location = 'Booth Preference cannot be empty';
+            newErrors.location = 'Location cannot be empty';
         }
 
         if (!age.trim()) {
-            newErrors.age = 'Age';
+            newErrors.age = 'Age cannot be empty';
         } else if (isNaN(age) || age <= 0) {
-            newErrors.age = 'Electricity Amount must be a positive telephone';
+            newErrors.age = 'Age must be a positive telephone';
         }
 
-        if (!gender.trim() || gender === 'Choose booth preference') {
-            newErrors.gender = 'Booth Preference cannot be empty';
+        if (!gender.trim() || gender === 'Choose gender') {
+            newErrors.gender = 'Gender cannot be empty';
         }
 
         setErrors(newErrors);
@@ -96,10 +99,9 @@ const VisitorRegistrationForm = () => {
             console.log('Visitor registered successfully:', response.data);
             navigate('/visitor-registration/success');
         } catch (error) {
-            toast.error("Error registering: Email or Telephone Number has already been used");
             console.error('Error registering visitor:', error.response || error.message);
             setErrors('Error registering visitor.');
-            // navigate('/visitor-registration/fail');
+            navigate('/visitor-registration/fail');
         } finally {
             setIsLoading(false); // Reset loading state
         }
@@ -278,9 +280,9 @@ const VisitorRegistrationForm = () => {
                             </select>
                         </div>
 
-                        {errors.booth_preference && (
+                        {errors.gender && (
                             <span className="mt-0.5 text-danger text-xs">
-                            {errors.booth_preference}
+                            {errors.gender}
                             </span>
                         )}
                         </div>

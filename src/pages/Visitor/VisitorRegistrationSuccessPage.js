@@ -6,6 +6,7 @@ import '../../static/css/Button.css';
 // import { reynaldoStyles } from "../../assets/fonts/fonts";
 
 const VisitorRegistrationSuccessPage = () => {
+
     return (
         <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
             {/* <style>{reynaldoStyles}</style> */}

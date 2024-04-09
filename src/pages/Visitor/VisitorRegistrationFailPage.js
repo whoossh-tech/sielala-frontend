@@ -19,6 +19,10 @@ const VisitorRegistrationFailPage = () => {
                     </div>
                     <p className="mt-4 text-secondary-90 text-lg">
                     We're sorry, but it seems there was an issue with your visitor registration. To proceed, we kindly ask you to resubmit your registration form.
+                    </p> 
+
+                    <p className="mt-4 text-secondary-90 text-lg">
+                    Please make sure that the email or telephone number you registered is valid and has not been used for this event yet.
                     </p> <br></br>
 
                     <p className="text-secondary-90 text-lg">
