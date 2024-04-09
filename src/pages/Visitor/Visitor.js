@@ -107,7 +107,8 @@ const Visitor = () => {
           axios.get(`http://localhost:8080/api/visitor/attendance/${selectedEvent}`)
               .then(res => {
                   setAttendanceData(res.data);
-                  console.log(res.data);
+                  // console.log(res.data);
+                  console.log('Attendance Data:', res.data); 
               })
               .catch(err => {
                   console.log(err);
@@ -115,20 +116,30 @@ const Visitor = () => {
       }
   }, [selectedEvent]);
 
-    function markAttendance(attendanceId, attended) {
-    
-      axios.put(`http://localhost:8080/api/visitor/attendance/${attendanceId}`, {
+  function markAttendance(attendanceId, attended) {
+    axios
+      .put(`http://localhost:8080/api/visitor/attendance/update/${attendanceId}`, {
         attended: attended,
       })
       .then(res => {
-        // Handle success response if needed
+        // Update attendanceData after successful response
+        const updatedAttendanceData = attendanceData.data.map(att => {
+          if (att.id_visitor === attendanceId) {
+            return { ...att, attended: attended };
+          } else {
+            return att;
+          }
+        });
+        setAttendanceData(updatedAttendanceData);
+  
+        // Handle other actions if needed
         console.log(res.data);
       })
       .catch(error => {
         // Handle error response
         console.error('Error marking attendance:', error);
       });
-    }
+  }  
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -203,13 +214,6 @@ const Visitor = () => {
             </div> 
             
             <br></br>
-
-            {/* <input
-              className="search"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            /> */}
 
           <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
               <div style={{ position: 'relative' }}>
@@ -304,31 +308,61 @@ const Visitor = () => {
                             </tr>
                         </thead>
                         <tbody>
-                          {filterVisitors().map((visitor, visitorIndex) => (
-                            <tr key={visitorIndex}>
-                              <td>{highlightSearchText(visitor.eventPass)}</td>
-                              <td>{highlightSearchText(visitor.name)}</td>
-                              <td>{highlightSearchText(visitor.email)}</td>
-                              <td>{highlightSearchText(visitor.telephone)}</td>
-                              {[...Array(countDays)].map((_, dayIndex) => (
-                                <React.Fragment key={dayIndex}>
-                                  <td>
-                                  <input
-                                    type="checkbox"
-                                    disabled={disableCheckbox}
-                                    // checked={(attendanceData || []).find(att => att.day === dayIndex)?.attended || false}
-                                    // onChange={(e) => {
-                                    //     const newCheckedValue = e.target.checked;
-                                    //     if (newCheckedValue !== ((attendanceData || []).find(att => att.day === dayIndex) || {}).attended) {
-                                    //         markAttendance(visitor.id, dayIndex, newCheckedValue);
-                                    //     }
-                                    // }}
-                                  />
-                                  </td>
-                                </React.Fragment>
-                              ))}
-                            </tr>
-                          ))}
+                        {filterVisitors().map((visitor, visitorIndex) => (
+                        <tr key={visitorIndex}>
+                          <td>{highlightSearchText(visitor.eventPass)}</td>
+                          <td>{highlightSearchText(visitor.name)}</td>
+                          <td>{highlightSearchText(visitor.email)}</td>
+                          <td>{highlightSearchText(visitor.telephone)}</td>
+                          {/* {[...Array(countDays)].map((_, dayIndex) => {
+                          const attendanceRecord = attendanceData.data.find(
+                              record =>
+                                  record.id_visitor === visitor.idVisitor &&
+                                  record.day === dayIndex + 1 // Days are 1-based
+                          );
+                            return (
+                                <td key={dayIndex} style={{ borderRight: '1px solid #E3E2E6' }}>
+                                    {attendanceRecord ? attendanceRecord.id : ''}
+                                </td>
+                            );
+                        })} */}
+                            {[...Array(countDays)].map((_, dayIndex) => {
+                            const checkboxId = `checkbox_${visitor.idVisitor}_${dayIndex + 1}`;
+
+                            return (
+                                <td key={dayIndex} style={{ borderRight: '1px solid #E3E2E6' }}>
+                                    <input
+                                        type="checkbox"
+                                        id={checkboxId}
+                                        checked={
+                                          attendanceData.data.find(
+                                            record =>
+                                                record.id_visitor === visitor.idVisitor &&
+                                                record.day === dayIndex + 1 // Days are 1-based
+                                          )?.attended || false
+                                        }
+                                        onChange={(e) => {
+                                          const attendanceRecord = attendanceData.data.find(
+                                              record =>
+                                                  record.id_visitor === visitor.idVisitor &&
+                                                  record.day === dayIndex + 1 // Days are 1-based
+                                          );
+                      
+                                          if (attendanceRecord) {
+                                              markAttendance(attendanceRecord.id, e.target.checked);
+                                          } else {
+                                              console.error('Attendance record not found');
+                                          }
+                                      }}
+                                    />
+                                </td>
+                            );
+                        })}
+
+                        </tr>
+                        ))}
+
+
                           {filterVisitors().length === 0 && (
                             <tr>
                               <td colSpan="4">No visitors match the search criteria</td>

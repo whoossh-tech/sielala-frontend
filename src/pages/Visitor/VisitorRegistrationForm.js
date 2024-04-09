@@ -3,7 +3,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NavbarGuest } from '../../components/navbar/NavbarGuest';
-
+import {toast} from 'react-hot-toast';
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import '../../static/css/VisitorRegistrationForm.css';
@@ -96,9 +96,10 @@ const VisitorRegistrationForm = () => {
             console.log('Visitor registered successfully:', response.data);
             navigate('/visitor-registration/success');
         } catch (error) {
+            toast.error("Error registering: Email or Telephone Number has already been used");
             console.error('Error registering visitor:', error.response || error.message);
             setErrors('Error registering visitor.');
-            navigate('/visitor-registration/fail');
+            // navigate('/visitor-registration/fail');
         } finally {
             setIsLoading(false); // Reset loading state
         }
