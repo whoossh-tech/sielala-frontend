@@ -9,7 +9,7 @@ import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
 import { toast, Toaster } from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const DetailSponsor = () => {
   const navigate = useNavigate();
@@ -57,13 +57,6 @@ const DetailSponsor = () => {
       <br></br>
 
       <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-4">
-          <button className="button-green" onClick={handleBack}>
-            Back
-          </button>
-          <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: '-6%' }}>Sponsor Detail</h1>
-          <div></div>
-        </div>
       <br></br>
 
         <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
@@ -90,7 +83,19 @@ const DetailSponsor = () => {
             </div>
 
             <br></br>
-            <br></br>
+
+            <div>
+                <div className="button-field">
+                    <button className="button-green" onClick={handleBack}>Back</button>
+                    <Link to={`/sponsor/edit/${idSponsor}`}>
+                        <button className="button-pink">Edit Sponsor</button>
+                    </Link>
+                    {/* <button className="button-red" onClick={openModal}>Delete Reward</button> */}
+                </div>
+            </div>
+            
+          <br></br>
+          <br></br>
 
         <h1 className="text-2xl font-semibold mb-4">List Invoice</h1>
         <div className="bg-white p-6 rounded-lg shadow-md mb-4">
