@@ -6,16 +6,18 @@ import Modal from "../../static/css/Modal.css";
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 // import "../../static/css/event/Event.css";
 
 const TenantApplicant = () => {
     const [tenantApplicants, setTenantApplicants] = useState("");
     const [selectedEvent, setSelectedEvent] = useState("");
     const [eventData, setEventData] = useState([]);
+
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
     useEffect(() => {
 
@@ -52,8 +54,15 @@ const TenantApplicant = () => {
 
     return (
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-          <style>{reynaldoStyles}</style>
-          <NavbarPartnership style={{ zIndex: 999 }} />
+            <style>{reynaldoStyles}</style>
+
+            {( role === 'PARTNERSHIP' ) && (
+                <NavbarPartnership style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
     
             <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
                 <div>
@@ -128,15 +137,15 @@ const TenantApplicant = () => {
             <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
                 {selectedEvent ? (
                 <table className="event-table mx-8">
+
                     <thead>
-                    {/* Row headers */}
-                    <tr>
-                        <th style={{ width: "28%", textAlign: "center" }}>Brand Name</th>
-                        <th style={{ width: "20%", textAlign: "center" }}>Email</th>
-                        <th style={{ width: "20%", textAlign: "center" }}>Instagram</th>
-                        <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
-                        <th style={{ width: "12%", textAlign: "center" }}>Status</th>
-                    </tr>
+                        <tr>
+                            <th style={{ width: "28%", textAlign: "center" }}>Brand Name</th>
+                            <th style={{ width: "20%", textAlign: "center" }}>Email</th>
+                            <th style={{ width: "20%", textAlign: "center" }}>Instagram</th>
+                            <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
+                            <th style={{ width: "12%", textAlign: "center" }}>Status</th>
+                        </tr>
                     </thead>
         
                     <tbody>

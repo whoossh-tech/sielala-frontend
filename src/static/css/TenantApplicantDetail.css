@@ -8,3 +8,41 @@
     margin-bottom: 20px;
     margin-top: 20px;
 }
+
+#modal-accept-tenant {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 60%;
+    max-width: 400px;
+    max-height: 200px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    transform: translate(180%, 90%);
+    z-index: 1000;
+  }
+
+  #modal-reject-tenant {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 60%;
+    max-width: 400px;
+    max-height: 200px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    transform: translate(180%, 90%);
+    z-index: 1000;
+  }

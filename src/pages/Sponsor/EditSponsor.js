@@ -24,7 +24,6 @@ const EditSponsor = () => {
   const [error, setError] = useState("");
 
   const { idSponsor } = useParams();
-  const url = "http://localhost:8080";
   const navigate = useNavigate();
 
   const openModal = () => {
@@ -41,7 +40,7 @@ const EditSponsor = () => {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-        const response = await axios.get(`${url}/api/sponsor/edit/${idSponsor}`);
+        const response = await axios.get(`http://localhost:8080/api/sponsor/edit/${idSponsor}`);
         const sponsorData = response.data.sponsorData;
         console.log(sponsorData);
 
@@ -102,7 +101,7 @@ const EditSponsor = () => {
     closeModal();
 
     try {
-      const response = await axios.put(`${url}/api/sponsor/edit/${idSponsor}`, {
+      const response = await axios.put(`http://localhost:8080/api/sponsor/edit/${idSponsor}`, {
         picName,
         companyName,
         companyAddress,

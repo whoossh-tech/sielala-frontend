@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 // import { EventCard } from "../../components/EventCard";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../static/css/Modal.css";
@@ -23,6 +23,7 @@ const Event = () => {
 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/event/view-all")
@@ -30,9 +31,10 @@ const Event = () => {
         setEvents(res.data.data);
         // console.log(res.data.data); // Make sure that res.data is an array
       })
-      .catch((error) => {
-        toast.error("Failed to fetch events");
-      });
+      .catch(
+        err => 
+        console.log(err)
+    )
   }, [events]);
 
   const handleCreateButton = () => {
@@ -53,6 +55,11 @@ const Event = () => {
               </div>
           </div>
       </div>
+      
+      <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
 
       <br></br>
 
