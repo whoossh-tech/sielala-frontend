@@ -20,6 +20,7 @@ const InvoiceDetail = () => {
     const [countdays, setCountDays] = useState(0);
     const [idEvent, setIdEvent] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -46,6 +47,21 @@ const InvoiceDetail = () => {
         localStorage.setItem('idSelectedEvent', idEvent);
         navigate(-1);
     };
+
+    const handleNotify = async (e) => {
+        setIsLoading(true);
+        closeModal();
+
+        try {
+            const response = await axios.put(`${url}/api/invoice/notify/${idInvoice}`);
+            toast.success("Successfully notified");
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     const handleGenerate = async (e) => {
         try {
@@ -162,6 +178,12 @@ const InvoiceDetail = () => {
                         <button className="button-pink">Edit Invoice</button>
                     </Link>
                     <button className="button-brown" onClick={handleGenerate}>Generate to PDF</button>
+
+                    { (invoiceData.trackingStatus === 'Issued' || invoiceData.trackingStatus === 'Pending') && (
+                        <button className="button-green" onClick={openModal} disabled={isLoading}>
+                            {isLoading ? 'Sending...' : 'Notify Client'}
+                        </button>
+                    )}
                 </div>
                     
             </div>
@@ -207,11 +229,11 @@ const InvoiceDetail = () => {
             >
             
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-                <p className="text-center text-gray-700">Are you sure you want to delete this reward?</p>
+                <p className="text-center text-gray-700">Are you sure you want to notify the client?</p>
                 <br></br>
                 <div>
                     <button className="button-red text-center" onClick={closeModal}>Cancel</button>
-                    <button className="button-green text-center">Confirm</button>
+                    <button className="button-green text-center" onClick={handleNotify}>Confirm</button>
                 </div>
                 
             </Modal>
