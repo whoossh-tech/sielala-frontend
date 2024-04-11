@@ -125,7 +125,8 @@ const Visitor = () => {
             return att;
           }
         });
-        setAttendanceData(updatedAttendanceData);
+        
+        setAttendanceData({ data: updatedAttendanceData });
 
         console.log(res.data);
       })
@@ -135,14 +136,14 @@ const Visitor = () => {
   }
 
   useEffect(() => {
-    if (selectedEvent) {
+    if (selectedEvent && attendanceData.data) {
       const initialCheckedState = attendanceData.data.map(record => ({
         id: record.id,
         checked: record.attended
       }));
       setCheckedState(initialCheckedState);
     }
-  }, [attendanceData]);
+  }, [selectedEvent, attendanceData.data]);
 
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -270,14 +271,29 @@ const Visitor = () => {
 
       {selectedEvent && eventData.length > 0 && (
         <div style={{ marginBottom: '10px' }}>
-          <p>
-            <b>Current Event Day:</b>
-          </p>
-          <p style={{ color: '#7D512D' }}>
-            <b>Day {day}</b>
-          </p>
+          {day <= countDays ? (
+            <React.Fragment>
+              <p>
+                <b>Current Event Day:</b>
+              </p>
+              <p style={{ color: '#7D512D' }}>
+                <b>Day {day}</b>
+              </p>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <p>
+                <b>Current Event Day:</b>
+              </p>
+              <p style={{ color: '#7D512D' }}>
+                <b>Event has already passed</b>
+              </p>
+            </React.Fragment>
+
+          )}
         </div>
       )}
+
 
       {(selectedEvent && eventData.length > 0) && (
 
@@ -313,7 +329,6 @@ const Visitor = () => {
                 {[...Array(countDays)].map((_, index) => (
                   <React.Fragment key={index}>
                     <th style={{ borderRight: '1px solid #E3E2E6' }}>Day {index + 1}</th>
-                    {/* <th style={{ borderRight: '1px solid #E3E2E6' }}>Attendance</th> */}
                   </React.Fragment>
                 ))}
               </tr>
@@ -326,13 +341,13 @@ const Visitor = () => {
                   <td>{highlightSearchText(visitor.email)}</td>
                   <td>{highlightSearchText(visitor.telephone)}</td>
                   {[...Array(countDays)].map((_, dayIndex) => {
-                    // const checkboxId = `checkbox_${visitor.idVisitor}_${dayIndex + 1}`;
                     let attendanceRecord = attendanceData.data?.find(
                       record =>
                         record.id_visitor === visitor.idVisitor &&
                         record.day === dayIndex + 1
                     );
-                    
+
+                    const checkboxId = `checkbox_${visitor.idVisitor}_${dayIndex + 1}`;
 
                     const checkedStateRecord = checkedState.find(
                       record => record.id === (attendanceRecord?.id || '')
@@ -342,7 +357,6 @@ const Visitor = () => {
 
                     const disableColumns = dayIndex + 1 < day;
 
-                    // console.log('Checkbox ID:', checkboxId);
                     console.log('Attendance Record:', attendanceRecord);
                     console.log('Checked State Record:', checkedStateRecord);
                     console.log('Is Checked:', isChecked);
@@ -351,6 +365,7 @@ const Visitor = () => {
                       <td key={dayIndex} style={{ borderRight: '1px solid #E3E2E6' }}>
                         <input
                           type="checkbox"
+                          id={checkboxId}
                           checked={isChecked}
                           disabled={disableColumns}
                           onChange={(e) => {
