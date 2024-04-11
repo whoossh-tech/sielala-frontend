@@ -5,7 +5,8 @@ import "../../static/css/Button.css";
 import '../../static/css/TenantRegistrationForm.css';
 import '../../static/css/TenantApplicantDetail.css';
 import backgroundPhoto from "../../assets/bg-cover.png";
-import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
+import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import Modal from 'react-modal';
@@ -17,6 +18,7 @@ const TenantApplicantDetail = () => {
   const [eventData, setEventData] = useState();
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const role = localStorage.getItem('role');
 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -98,7 +100,13 @@ const TenantApplicantDetail = () => {
 
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-        <NavbarPartnership />
+        {( role === 'PARTNERSHIP' ) && (
+            <NavbarPartnership style={{ zIndex: 999 }} />
+        )}
+
+        {( role === 'ADMIN' ) && (
+            <NavbarAdmin style={{ zIndex: 999 }} />
+        )}
 
         <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
             <div>
