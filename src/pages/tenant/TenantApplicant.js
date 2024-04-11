@@ -36,7 +36,7 @@ const TenantApplicant = () => {
                 console.log(res.data.data);
             })
             .catch((error) => {
-                toast.error("Failed to fetch tenant applicant");
+                toast.error("Failed to fetch tenant applicant"); // TODO: fix this
             });
         }
 

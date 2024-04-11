@@ -57,7 +57,7 @@ export function NavbarAdmin() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="*" className="flex items-center text-md text-neutral-80">
+        <a href="/visitor" className="flex items-center text-md text-neutral-80">
           <b>Visitor Data Report</b>
         </a>
       </Typography>
@@ -90,7 +90,7 @@ export function NavbarAdmin() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="*" className="flex items-center text-md text-neutral-80">
+        <a href="/reward-redemption-history" className="flex items-center text-md text-neutral-80">
           <b>Reward Redemption</b>
         </a>
       </Typography>
@@ -101,7 +101,7 @@ export function NavbarAdmin() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="*" className="flex items-center text-md text-neutral-80">
+        <a href="/invoice" className="flex items-center text-md text-neutral-80">
           <b>Invoice</b>
         </a>
       </Typography>
@@ -112,7 +112,7 @@ export function NavbarAdmin() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/sponsor" className="flex items-center text-md text-neutral-80">
+        <a href="/contact" className="flex items-center text-md text-neutral-80">
           <b>Partnership</b>
         </a>
       </Typography>
