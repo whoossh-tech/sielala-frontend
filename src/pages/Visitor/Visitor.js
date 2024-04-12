@@ -41,7 +41,6 @@ const Visitor = () => {
 
   useEffect(() => {
 
-    // Pre-filled dropdown event
     const storedEvent = localStorage.getItem('idSelectedEvent');
     if (storedEvent) {
       setSelectedEvent(storedEvent);

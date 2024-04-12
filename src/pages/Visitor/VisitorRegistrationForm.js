@@ -76,7 +76,7 @@ const VisitorRegistrationForm = () => {
         e.preventDefault();
 
         if (validateForm()) {
-            openModal(); // Open the modal if the form is valid
+            openModal(); 
         } else {
             console.log('Form validation failed');
         }
