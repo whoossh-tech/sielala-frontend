@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import '../../static/css/VisitorRegistrationForm.css';
 import '../../static/css/Button.css';
+import { VisitorRegistrationSuccessPage } from './VisitorRegistrationSuccessPage';
 
 const VisitorRegistrationForm = () => {
     const { eventId } = useParams();
@@ -18,10 +19,29 @@ const VisitorRegistrationForm = () => {
     const[gender, setGender] = useState('');
     const[errors, setErrors] = useState({});
 
+    const[eventPass, setEventPass] = useState('');
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchEventPass = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/visitor/view-all/${eventId}`);
+                if (response.data && response.data.length > 0) {
+                    setEventPass(response.data.eventPass);
+                }
+            } catch (error) {
+                console.error('Error fetching event pass:', error.response || error.message);
+            }
+        };
+
+        if (eventId) {
+            fetchEventPass();
+        }
+    }, [eventId]);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -315,6 +335,10 @@ const VisitorRegistrationForm = () => {
             <br></br>
 
             </form>
+
+            {eventPass && (
+                <VisitorRegistrationSuccessPage eventPass={eventPass} />
+            )}
         </main>
     );
 };

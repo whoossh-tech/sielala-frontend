@@ -95,7 +95,12 @@ const Visitor = () => {
 
 
   const handleChange = (e) => {
-    setSelectedEvent(e.target.value);
+    const selectedValue = e.target.value;
+    if (selectedValue === "Select event") {
+      setSelectedEvent(""); // Reset selectedEvent to empty string
+    } else {
+      setSelectedEvent(selectedValue);
+    }
   };
 
   useEffect(() => {
@@ -119,15 +124,15 @@ const Visitor = () => {
       })
       .then(res => {
         const updatedAttendanceData = attendanceData.data.map(att => {
-          if (att.id_visitor === attendanceId) {
+          if (att.id === attendanceId) {
             return { ...att, attended: attended };
           } else {
             return att;
           }
         });
-        
-        setAttendanceData({ data: updatedAttendanceData });
 
+        setAttendanceData({ data: updatedAttendanceData });
+  
         console.log(res.data);
       })
       .catch(error => {
@@ -194,7 +199,7 @@ const Visitor = () => {
               width: '300px',
             }}
           >
-            <option>select event</option>
+            <option value="Select event">Select event </option>
             {eventData && eventData.length > 0 ?
               (eventData.map((event, index) => (
                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -349,16 +354,12 @@ const Visitor = () => {
 
                     const checkboxId = `checkbox_${visitor.idVisitor}_${dayIndex + 1}`;
 
-                    const checkedStateRecord = checkedState.find(
-                      record => record.id === (attendanceRecord?.id || '')
-                    );
+                    const isChecked = attendanceRecord ? attendanceRecord.attended : false;
 
-                    const isChecked = checkedStateRecord ? checkedStateRecord.checked : false;
-
-                    const disableColumns = dayIndex + 1 < day;
+                    const disableColumns = dayIndex + 1 != day;
 
                     console.log('Attendance Record:', attendanceRecord);
-                    console.log('Checked State Record:', checkedStateRecord);
+                    // console.log('Checked State Record:', checkedStateRecord);
                     console.log('Is Checked:', isChecked);
 
                     return (

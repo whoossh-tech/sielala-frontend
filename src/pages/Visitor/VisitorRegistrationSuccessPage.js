@@ -5,7 +5,7 @@ import { NavbarGuest } from '../../components/navbar/NavbarGuest';
 import '../../static/css/Button.css';
 // import { reynaldoStyles } from "../../assets/fonts/fonts";
 
-const VisitorRegistrationSuccessPage = () => {
+const VisitorRegistrationSuccessPage = ({ eventPass }) => {
 
     return (
         <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -17,6 +17,8 @@ const VisitorRegistrationSuccessPage = () => {
                     <div className="flex items-center space-x-2 text-tertiary-100">
                         <h1 className="font-reynaldo text-2xl"><b>Registration Successful!</b></h1>
                     </div>
+
+                    <p className="mt-4 text-tertiary-90 text-lg">Event Pass: {eventPass}</p>
 
                     <p className="mt-4 text-tertiary-90 text-lg">
                     Congratulations! You've successfully registered as a visitor for our event. Thank you for choosing to be part of the excitement!
