@@ -7,7 +7,6 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import '../../static/css/VisitorRegistrationForm.css';
 import '../../static/css/Button.css';
-import { VisitorRegistrationSuccessPage } from './VisitorRegistrationSuccessPage';
 
 const VisitorRegistrationForm = () => {
     const { eventId } = useParams();
@@ -25,23 +24,6 @@ const VisitorRegistrationForm = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchEventPass = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/visitor/view-all/${eventId}`);
-                if (response.data && response.data.length > 0) {
-                    setEventPass(response.data.eventPass);
-                }
-            } catch (error) {
-                console.error('Error fetching event pass:', error.response || error.message);
-            }
-        };
-
-        if (eventId) {
-            fetchEventPass();
-        }
-    }, [eventId]);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -79,7 +61,7 @@ const VisitorRegistrationForm = () => {
         if (!age.trim()) {
             newErrors.age = 'Age cannot be empty';
         } else if (isNaN(age) || age <= 0) {
-            newErrors.age = 'Age must be a positive telephone';
+            newErrors.age = 'Age must be a positive number';
         }
 
         if (!gender.trim() || gender === 'Choose gender') {
@@ -116,8 +98,11 @@ const VisitorRegistrationForm = () => {
                 gender
             })
 
+            const eventPassValue = response.data.data.eventPass;
+            setEventPass(eventPassValue);
+            navigate(`/visitor-registration/success?eventPass=${eventPassValue}`);
+
             console.log('Visitor registered successfully:', response.data);
-            navigate('/visitor-registration/success');
         } catch (error) {
             console.error('Error registering visitor:', error.response || error.message);
             setErrors('Error registering visitor.');
@@ -335,10 +320,6 @@ const VisitorRegistrationForm = () => {
             <br></br>
 
             </form>
-
-            {eventPass && (
-                <VisitorRegistrationSuccessPage eventPass={eventPass} />
-            )}
         </main>
     );
 };
