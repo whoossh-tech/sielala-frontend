@@ -38,6 +38,7 @@ import EditDetailInvoice from "./pages/invoice/EditDetailInvoice";
 import TenantApplicant from "./pages/tenant/TenantApplicant";
 import TenantApplicantDetail from "./pages/tenant/TenantApplicantDetail";
 import EditSponsor from "./pages/Sponsor/EditSponsor";
+import EditTenant from "./pages/contact/EditTenant";
 import Emails from "./pages/email/Emails";
 import CreateEmail from "./pages/email/CreateEmail";
 import ChooseContact from "./pages/email/ChooseContact";
@@ -143,7 +144,9 @@ function App() {
                 <Route path="/invoice/edit-detail/:idInvoice" element={<EditDetailInvoice />} />
                 <Route path="/tenant-applicant" element={<TenantApplicant />} />
                 <Route path="/tenant-applicant/:idTenantApplicant" element={<TenantApplicantDetail />} />
+                <Route path="/tenant/edit/:idSTenant" element={<EditTenant />} /> 
                 <Route path="/sponsor/edit/:idSponsor" element={<EditSponsor />} />              </>
+                
             )}
 
           {(role === 'FINANCE') && (

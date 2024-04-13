@@ -1,27 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import { useNavigate, useParams } from "react-router-dom";
 import { NavbarGuest } from "../../components/navbar/NavbarGuest";
+import { toast, Toaster } from "react-hot-toast";
 
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import "../../static/css/TenantRegistrationForm.css";
 import "../../static/css/Button.css";
+import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 
-const TenantRegistrationForm = () => {
+const EditTenant = () => {
   const { eventId } = useParams();
   const { idTenant } = useParams();
-  const [brandName, setBrandName] = useState("");
-  const [brandEmail, setBrandEmail] = useState("");
-  const [brandNumber, setBrandNumber] = useState("");
-  const [brandInstagram, setBrandInstagram] = useState("");
-  const [brandAddress, setBrandAddress] = useState("");
+  const url = 'http://localhost:8080';
+  const role = localStorage.getItem('role');
+
   const [picName, setPicName] = useState("");
-  const [brandCategory, setBrandCategory] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [brandNumber, setBrandNumber] = useState("");
+
+  const [brandInstagram, setBrandInstagram] = useState("");
   const [brandDescription, setBrandDescription] = useState("");
   const [electricityAmount, setElectricityAmount] = useState("");
   const [brandPromo, setBrandPromo] = useState("");
+  const [brandCategory, setBrandCategory] = useState("");
   const [boothPreference, setBoothPreference] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -41,13 +49,13 @@ const TenantRegistrationForm = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!brandName.trim()) {
+    if (!name.trim()) {
       newErrors.brand_name = "Brand Name cannot be empty";
     }
 
-    if (!brandEmail.trim()) {
+    if (!email.trim()) {
       newErrors.brand_email = "Brand Email cannot be empty";
-    } else if (!/^\S+@\S+$/i.test(brandEmail)) {
+    } else if (!/^\S+@\S+$/i.test(email)) {
       newErrors.brand_email = "Email is not valid";
     }
 
@@ -59,7 +67,7 @@ const TenantRegistrationForm = () => {
       newErrors.brand_instagram = "Brand Instagram cannot be empty";
     }
 
-    if (!brandAddress.trim()) {
+    if (!address.trim()) {
       newErrors.brand_address = "Brand Address cannot be empty";
     }
 
@@ -94,7 +102,7 @@ const TenantRegistrationForm = () => {
   };
 
   useEffect(() => {
-    const fetchTenantApplicantData = async () => {
+    const fetchTenantData = async () => {
       try {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -103,21 +111,25 @@ const TenantRegistrationForm = () => {
         const tenantData = response.data.tenantData;
         console.log(tenantData);
 
-        setBrandName(tenantData.brandName);
-        setBrandEmail(tenantData.brandEmail);
+        setPicName(tenantData.picName);
+        setName(tenantData.name);
+        setAddress(tenantData.address);
+        setEmail(tenantData.email);
         setBrandNumber(tenantData.brandNumber);
+
         setBrandInstagram(tenantData.brandInstagram);
-        setBrandAddress(tenantData.event.eventName);
-        setIdEvent(tenantData.event.idEvent);
-        setDay(tenantData.event.dayStatus);
-        setCountDays(response.data.daysRange);
-        console.log(day);
+        setBrandDescription(tenantData.brandDescription);
+        setElectricityAmount(tenantData.electricityAmount);
+        setBrandPromo(tenantData.setBrandPromo);
+        setBrandCategory(tenantData.brandCategory);
+        setBoothPreference(tenantData.boothPreference);
+
       } catch (error) {
         console.error("Error fetching tenant data:", error);
       }
     };
 
-    fetchTenantApplicantData();
+    fetchTenantData();
   }, []);
 
   const onRegister = async (e) => {
@@ -130,19 +142,18 @@ const TenantRegistrationForm = () => {
     }
   };
 
-  const confirmRegistration = async (e) => {
+  const confirmEditTenant = async (e) => {
     closeModal();
-    setIsLoading(true);
 
     try {
       const response = await axios.put(` http://localhost:8080/api/tenant/edit/${idTenant}`, {
         eventId,
         picName,
-        address: brandAddress,
-        brandName,
-        brandEmail,
+        address: address,
+        name,
+        email,
         brandInstagram,
-        brandTelephone: brandNumber,
+        telephone: brandNumber,
         brandDescription,
         electricityAmount: parseInt(electricityAmount),
         brandPromo,
@@ -152,20 +163,22 @@ const TenantRegistrationForm = () => {
 
       console.log("Tenant Edited successfully:", response.data);
       // Harusnya ke tenant list/ conatct list
-      navigate("/tenant");
+      navigate("/contact");
 
       await new Promise((resolve) => setTimeout(resolve, 500));
       toast.success("Reward edited successfully");
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Cannot edit reward");
+      toast.error("Cannot edit Tenant");
     }
   };
 
   return (
     <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarGuest />
+      {role === "PARTENRSHIP" && <NavbarPartnership style={{ zIndex: 999 }} />}
+
+      {role === "ADMIN" && <NavbarAdmin style={{ zIndex: 999 }} />}
 
       <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
         <div>
@@ -190,7 +203,7 @@ const TenantRegistrationForm = () => {
               </label>
 
               <div className={`overflow-clip border border-neutral-40 rounded-lg ${errors.brand_name && "border-danger"}`}>
-                <input id="brand_name" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Lala Market" value={brandName} onChange={(e) => setBrandName(e.target.value)} />
+                <input id="brand_name" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Lala Market" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
 
               {errors.brand_name && <span className="mt-0.5 text-danger text-xs">{errors.brand_name}</span>}
@@ -203,7 +216,7 @@ const TenantRegistrationForm = () => {
               </label>
 
               <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_email && "border-danger"}`}>
-                <input id="brand_email" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. jane.doe@gmail.com" value={brandEmail} onChange={(e) => setBrandEmail(e.target.value)} />
+                <input id="brand_email" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. jane.doe@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
 
               {errors.brand_email && <span className="mt-0.5 text-danger text-xs">{errors.brand_email}</span>}
@@ -243,7 +256,7 @@ const TenantRegistrationForm = () => {
               </label>
 
               <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_address && "border-danger"}`}>
-                <input id="brand_address" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Margonda, Kukusan Depok" value={brandAddress} onChange={(e) => setBrandAddress(e.target.value)} />
+                <input id="brand_address" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Margonda, Kukusan Depok" value={address} onChange={(e) => setAddress(e.target.value)} />
               </div>
 
               {errors.brand_address && <span className="mt-0.5 text-danger text-xs">{errors.brand_address}</span>}
@@ -361,7 +374,7 @@ const TenantRegistrationForm = () => {
           <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Registration</h2>
           <p className="text-center text-gray-700">Are you sure you want to register?</p>
           <br></br>
-          <button className="button-green text-center" onClick={confirmRegistration}>
+          <button className="button-green text-center" onClick={confirmEditTenant}>
             Confirm
           </button>
           <button className="button-pink text-center" onClick={closeModal}>
@@ -374,3 +387,5 @@ const TenantRegistrationForm = () => {
     </main>
   );
 };
+
+export default EditTenant;

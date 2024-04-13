@@ -27,6 +27,8 @@ const InvoiceDetail = () => {
   const [file, setFile] = useState(null);
   const [paymentImage, setPaymentImage] = useState(null);
   const [paymentImageUrl, setPaymentImageUrl] = useState("");
+  const [isValidated, setIsValidated] = useState(false);
+  const [isDeclined, setIsDeclined] = useState(false);
 
   const role = localStorage.getItem("role");
 
@@ -68,14 +70,34 @@ const InvoiceDetail = () => {
     try {
       const response = await axios.post(`${url}/api/invoice/upload-payment-image/${idInvoice}`, formData);
       toast.success("Payment proof uploaded successfully");
+      setPaymentImageUrl(response.data.imageUrl); // Memperbarui URL gambar
+      setIsValidated(true); // Mengatur status validasi gambar menjadi true
     } catch (error) {
       console.error(error);
       toast.error("Error uploading payment proof");
     }
   };
 
-  const onFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleValidate = async () => {
+    try {
+      const response = await axios.put(`${url}/api/invoice/validate-payment-proof/${idInvoice}`);
+      toast.success("Payment proof validated successfully");
+      setIsValidated(true); // Mengatur status validasi gambar menjadi true
+    } catch (error) {
+      console.error(error);
+      toast.error("Error validating payment proof");
+    }
+  };
+
+  const handleDecline = async () => {
+    try {
+      const response = await axios.put(`${url}/api/invoice/decline-payment-proof/${idInvoice}`);
+      toast.success("Payment proof declined successfully");
+      setIsDeclined(true); // Mengatur status penolakan gambar menjadi true
+    } catch (error) {
+      console.error(error);
+      toast.error("Error declining payment proof");
+    }
   };
 
   const handleNotify = async (e) => {
@@ -262,35 +284,36 @@ const InvoiceDetail = () => {
         <p>Loading...</p>
       )}
 
-        {/* <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
+      {/* Payment Proof Section */}
+      <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
+        <h2 className="text-xl font-bold mb-4">Payment Proof</h2>
 
-            <div>
-              <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-              <button className="button-green" onClick={() => uploadPaymentImage(idInvoice, paymentImage)} disabled={!paymentImage}>
-                Submit Payment Proof
-              </button>
-              <br></br>
-              {paymentImageUrl && <img src={paymentImageUrl} alt="Payment proof" className="payment-proof-image" />}
-            </div>
-      </div> */}
+        <div className="flex items-center mb-4">
+          <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
+          <button className="button-green ml-2" onClick={() => uploadPaymentImage(idInvoice, paymentImage)} disabled={!paymentImage}>
+            Submit Payment Proof
+          </button>
+        </div>
 
-<div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
-  <h2 className="text-xl font-bold mb-4">Payment Proof</h2>
+        {/* Tampilkan gambar pembayaran jika ada */}
+        {paymentImageUrl && (
+          <div className="w-full">
+            <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" />
+          </div>
+        )}
 
-  <div className="flex items-center mb-4">
-    <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-    <button className="button-green ml-2" onClick={() => uploadPaymentImage(idInvoice, paymentImage)} disabled={!paymentImage}>
-      Submit Payment Proof
-    </button>
-  </div>
-
-  {paymentImageUrl && (
-    <div className="w-full">
-      <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" />
-    </div>
-  )}
-</div>
-
+        {/* Tombol validasi dan penolakan hanya ditampilkan jika gambar telah diunggah */}
+        {paymentImageUrl && (
+          <div className="flex justify-center mt-4">
+            <button className="button-blue mr-2" onClick={handleValidate} disabled={isValidated || isDeclined}>
+              Validate
+            </button>
+            <button className="button-red" onClick={handleDecline} disabled={isValidated || isDeclined}>
+              Decline
+            </button>
+          </div>
+        )}
+      </div>
 
       <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>

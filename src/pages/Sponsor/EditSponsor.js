@@ -13,10 +13,10 @@ import cors from 'cors';
 
 const EditSponsor = () => {
   const [picName, setPicName] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [companyAddress, setCompanyAddress] = useState("");
-  const [companyEmail, setCompanyEmail] = useState("");
-  const [companyTelephone, setCompanyTelephone] = useState("");
+  const [name, setname] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
 
   const [errors, setErrors] = useState({});
   const { idEvent } = useParams();
@@ -46,11 +46,11 @@ const EditSponsor = () => {
         const sponsorData = response.data.data;
         console.log(sponsorData);
 
-        setCompanyName(sponsorData.companyName);
+        setname(sponsorData.name);
         setPicName(sponsorData.picName);
-        setCompanyAddress(sponsorData.companyAddress);
-        setCompanyEmail(sponsorData.companyEmail);
-        setCompanyTelephone(sponsorData.companyTelephone);
+        setAddress(sponsorData.address);
+        setEmail(sponsorData.email);
+        setTelephone(sponsorData.telephone);
         setEventName(sponsorData.event.eventName);
       } catch (error) {
         console.error("Error fetching sponsor data:", error);
@@ -63,11 +63,11 @@ const EditSponsor = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!companyName.trim()) {
+    if (!name.trim()) {
       newErrors.company_name = "Company Name cannot be empty";
     }
 
-    if (!companyAddress.trim()) {
+    if (!address.trim()) {
       newErrors.company_address = "Company Address cannot be empty";
     }
 
@@ -75,13 +75,13 @@ const EditSponsor = () => {
       newErrors.pic_name = "PIC Name cannot be empty";
     }
 
-    if (!companyEmail.trim()) {
+    if (!email.trim()) {
       newErrors.company_email = "Company Email cannot be empty";
-    } else if (!/^\S+@\S+$/i.test(companyEmail)) {
+    } else if (!/^\S+@\S+$/i.test(email)) {
       newErrors.company_email = "Email is not valid";
     }
 
-    if (!companyTelephone.trim()) {
+    if (!telephone.trim()) {
       newErrors.company_telephone = "Company Telephone Number cannot be empty";
     }
 
@@ -105,10 +105,10 @@ const EditSponsor = () => {
     try {
       const response = await axios.put(`http://localhost:8080/api/sponsor/edit/${idSponsor}`, {
         picName,
-        companyName,
-        companyAddress,
-        companyEmail,
-        companyTelephone,
+        name,
+        address,
+        email,
+        telephone,
       });
       // Untuk pre-filled dropdown event
       localStorage.setItem("idSelectedEvent", idEvent);
@@ -161,7 +161,7 @@ const EditSponsor = () => {
             </label>
 
             <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.company_name && "border-danger"}`}>
-              <input id="company_name" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Lala Market" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+              <input id="company_name" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Lala Market" value={name} onChange={(e) => setname(e.target.value)} />
             </div>
 
             {errors.company_name && <span className="mt-0.5 text-danger text-xs">{errors.company_name}</span>}
@@ -187,7 +187,7 @@ const EditSponsor = () => {
             </label>
 
             <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.company_address && "border-danger"}`}>
-              <input id="company_address" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Kemang Raya No. 12" value={companyAddress} onChange={(e) => setCompanyAddress(e.target.value)} />
+              <input id="company_address" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Kemang Raya No. 12" value={address} onChange={(e) => setAddress(e.target.value)} />
             </div>
 
             {errors.company_address && <span className="mt-0.5 text-danger text-xs">{errors.company_address}</span>}
@@ -200,7 +200,7 @@ const EditSponsor = () => {
             </label>
 
             <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.company_email && "border-danger"}`}>
-              <input id="company_email" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. amanda@lalamarket.com" value={companyEmail} onChange={(e) => setCompanyEmail(e.target.value)} />
+              <input id="company_email" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. amanda@lalamarket.com" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
 
             {errors.company_email && <span className="mt-0.5 text-danger text-xs">{errors.company_email}</span>}
@@ -214,7 +214,7 @@ const EditSponsor = () => {
 
             <div className={`overflow-clip flex items-stretch w-full border border-neutral-40 rounded-lg ${errors.company_telephone && "border-danger"}`}>
               <div className="flex items-center justify-center px-3 bg-cyan-50">+62</div>
-              <input id="company_telephone" type="tel" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. 812xxxx..." value={companyTelephone} onChange={(e) => setCompanyTelephone(e.target.value)} />
+              <input id="company_telephone" type="tel" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. 812xxxx..." value={telephone} onChange={(e) => setTelephone(e.target.value)} />
             </div>
 
             {errors.company_telephone && <span className="mt-0.5 text-danger text-xs">{errors.company_telephone}</span>}
