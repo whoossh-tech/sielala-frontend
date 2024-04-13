@@ -29,6 +29,7 @@ const InvoiceDetail = () => {
   const [paymentImageUrl, setPaymentImageUrl] = useState("");
   const [isValidated, setIsValidated] = useState(false);
   const [isDeclined, setIsDeclined] = useState(false);
+  const [trackingStatus, setTrackingStatus] = useState("");
 
   const role = localStorage.getItem("role");
 
@@ -70,11 +71,24 @@ const InvoiceDetail = () => {
     try {
       const response = await axios.post(`${url}/api/invoice/upload-payment-image/${idInvoice}`, formData);
       toast.success("Payment proof uploaded successfully");
-      setPaymentImageUrl(response.data.imageUrl); // Memperbarui URL gambar
+      setPaymentImageUrl(response.data.paymentImageUrl); // Memperbarui URL gambar
+      console.log(paymentImageUrl);
       setIsValidated(true); // Mengatur status validasi gambar menjadi true
     } catch (error) {
       console.error(error);
       toast.error("Error uploading payment proof");
+    }
+  };
+
+  const handleTrackingStatusChange = async (e) => {
+    const selectedStatus = e.target.value;
+    try {
+      await axios.put(`${url}/api/invoice/${idInvoice}/update-tracking-status`, { trackingStatus: selectedStatus });
+      setTrackingStatus(selectedStatus);
+      toast.success("Tracking status updated successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update tracking status");
     }
   };
 
@@ -182,6 +196,22 @@ const InvoiceDetail = () => {
 
       <br></br>
 
+      <div className="each-invoice">
+  <p className="invoice-text-title">Tracking Status:</p>
+  {role === "ADMIN" && (
+    <div className="dropdown-container">
+      <select value={trackingStatus} onChange={handleTrackingStatusChange} className="dropdown">
+        <option value="">Select Status</option>
+        <option value="Issued">Issued</option>
+        <option value="Pending">Pending</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
+  )}
+  {role !== "ADMIN" && <p className="invoice-text">{invoiceData.trackingStatus}</p>}
+</div>
+
       {invoiceData ? (
         <>
           <br></br>
@@ -285,7 +315,7 @@ const InvoiceDetail = () => {
       )}
 
       {/* Payment Proof Section */}
-      <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
+      <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
         <h2 className="text-xl font-bold mb-4">Payment Proof</h2>
 
         <div className="flex items-center mb-4">

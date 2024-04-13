@@ -161,3 +161,14 @@ th {
 #page-title {
     font-size: xx-large;
 }
+
+.dropdown-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+  }
+  
+  .dropdown {
+    margin-left: 10px; /* Atur jarak antara teks dan dropdown jika diperlukan */
+  }
