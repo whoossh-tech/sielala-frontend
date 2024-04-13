@@ -36,7 +36,7 @@ export function NavbarFinance() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="*" className="flex items-center text-md text-neutral-80">
+        <a href="/invoice" className="flex items-center text-md text-neutral-80">
           <b>Invoice Management</b>
         </a>
       </Typography>

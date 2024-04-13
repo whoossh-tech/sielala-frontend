@@ -41,6 +41,13 @@ import CreateEmail from './pages/email/CreateEmail';
 import ChooseContact from './pages/email/ChooseContact';
 import EmailDetail from './pages/email/EmailDetail';
 
+import {VisitorRegistrationForm} from './pages/Visitor/VisitorRegistrationForm';
+import { VisitorRegistrationSuccessPage } from './pages/Visitor/VisitorRegistrationSuccessPage';
+import { VisitorRegistrationFailPage } from './pages/Visitor/VisitorRegistrationFailPage';
+import Visitor from "./pages/Visitor/Visitor";
+import Contacts from './pages/contact/Contacts';
+import TenantDetail from './pages/contact/TenantDetail';
+
 function App() {
   const role = localStorage.getItem('role');
 
@@ -55,6 +62,9 @@ function App() {
           <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm/>}></Route>
           <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
           <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
+          <Route path="/visitor-registration/:eventId" element={<VisitorRegistrationForm/>}></Route>
+          <Route path="/visitor-registration/success" element={<VisitorRegistrationSuccessPage />} />
+          <Route path="/visitor-registration/fail" element={<VisitorRegistrationFailPage />} />
 
           {/* ROLE: PARTNERHSIP */}
           {role === 'PARTNERSHIP' && (
@@ -111,6 +121,7 @@ function App() {
               <Route path="/event" element={<Event />} />
               <Route path="/event/create" element={<CreateEvent />} />
               <Route path="/event/detail/:idEvent" element={<DetailEvent />} />
+              <Route path="/visitor" element={<Visitor />} />
               <Route path="/event/edit/:idEvent" element={<EditEvent />} />
             </>
           )}
@@ -118,16 +129,16 @@ function App() {
           {/* ROLE: PARTNERSHIP and ADMIN */}
           {(role === 'PARTNERSHIP' || role === 'ADMIN') && (
             <>
-              <Route path="/sponsor" element={<Sponsor />} />
-              <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
+              <Route path="/contact" element={<Contacts />} />
+              <Route path="/tenant/detail/:idTenant" element={<TenantDetail />} />
               <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
+              <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
               <Route path="/invoice/create/:idContact" element={<CreateInvoice />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/invoice/detail/:idInvoice" element={<InvoiceDetail />} />
               <Route path="/invoice/edit-detail/:idInvoice" element={<EditDetailInvoice />} />
               <Route path="/tenant-applicant" element={<TenantApplicant />} />
               <Route path="/tenant-applicant/:idTenantApplicant" element={<TenantApplicantDetail />} />
-
             </>
           )}
 
