@@ -17,7 +17,7 @@ import { subDays, format } from "date-fns";
 
 const EditEvent = () => {
     const { idEvent } = useParams();
-    const url = 'http://localhost:8080';
+    const url = 'https://sielala-backend-production.up.railway.app';
     const navigate = useNavigate();
     const role = localStorage.getItem('role');
 

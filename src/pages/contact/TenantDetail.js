@@ -24,14 +24,14 @@ const TenantDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/contact/detail/tenant/${idTenant}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/contact/detail/tenant/${idTenant}`)
       .then((res) => {
         setTenant(res.data.data);
       })
       .catch((err) => console.log(err));
 
       axios
-      .get(`http://localhost:8080/api/invoice/invoice-status/${idTenant}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/invoice/invoice-status/${idTenant}`)
       .then((res) => {
         setStatusInvoice(res.data.statusInvoice);
         if (res.data.statusInvoice != "null") {

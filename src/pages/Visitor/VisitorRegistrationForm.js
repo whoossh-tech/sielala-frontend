@@ -88,7 +88,7 @@ const VisitorRegistrationForm = () => {
 
         try {
             
-            const response = await axios.post('http://localhost:8080/api/visitor/register', {
+            const response = await axios.post('https://sielala-backend-production.up.railway.app/api/visitor/register', {
                 eventId,
                 name,
                 email,

@@ -21,7 +21,7 @@ const EmailDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/email/${idEmail}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/email/${idEmail}`)
       .then((res) => {
         setEmailDetail(res.data.data);
         console.log("email detail:")

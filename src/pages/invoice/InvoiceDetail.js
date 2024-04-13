@@ -15,7 +15,7 @@ import { NavbarFinance } from '../../components/navbar/NavbarFinance';
 
 const InvoiceDetail = () => {
     const { idInvoice } = useParams();
-    const url = 'http://localhost:8080';
+    const url = 'https://sielala-backend-production.up.railway.app';
 
     const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ const InvoiceDetail = () => {
     const token = localStorage.getItem('token');
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    axios.get(`http://localhost:8080/api/invoice/detail/${idInvoice}`)
+    axios.get(`https://sielala-backend-production.up.railway.app/api/invoice/detail/${idInvoice}`)
         .then(res => {
             setInvoiceData(res.data.data)
             setIdEvent(res.data.data.event.idEvent)

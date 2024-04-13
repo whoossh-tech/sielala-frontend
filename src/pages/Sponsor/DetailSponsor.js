@@ -25,7 +25,7 @@ const DetailSponsor = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/sponsor/detail/${idSponsor}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/sponsor/detail/${idSponsor}`)
       .then((res) => {
         setSponsorData(res.data.data);
         // setIdInvoice(res.data.data.idInvoice)
@@ -34,7 +34,7 @@ const DetailSponsor = () => {
       .catch((err) => console.log(err));
 
       axios
-      .get(`http://localhost:8080/api/invoice/invoice-status/${idSponsor}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/invoice/invoice-status/${idSponsor}`)
       .then((res) => {
         setStatusInvoice(res.data.statusInvoice);
 

@@ -66,7 +66,7 @@ const ChooseContact = () => {
 
         if (selectedEvent) {
             axios
-            .get(`http://localhost:8080/api/email/contacts/${selectedEvent}`)
+            .get(`https://sielala-backend-production.up.railway.app/api/email/contacts/${selectedEvent}`)
             .then((res) => {
                 setContacts(res.data.data);
                 console.log(res.data.data);
@@ -77,7 +77,7 @@ const ChooseContact = () => {
         }
 
         axios
-          .get("http://localhost:8080/api/event/view-all")
+          .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
           .then((res) => {
             setEventData(res.data.data);
           })
@@ -153,7 +153,7 @@ const ChooseContact = () => {
       setIsLoading(true);
       
       try {
-        const response = await axios.post('http://localhost:8080/api/email/send', {
+        const response = await axios.post('https://sielala-backend-production.up.railway.app/api/email/send', {
             subject,
             body,
             contacts: selectedContact
