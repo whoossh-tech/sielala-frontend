@@ -8,11 +8,13 @@ import '../../static/css/Button.css';
 import backgroundPhoto from '../../assets/bg-cover.png';
 import { useState, useEffect, useHistory} from "react";
 import { NavbarOperation } from '../../components/navbar/NavbarOperation';
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import {toast, Toaster} from 'react-hot-toast';
 import { Link, useNavigate } from "react-router-dom";
 
 const RewardRedemptionHistory = () => {
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
     const [rewardRedeemedList, setRewardRedeemedList] = useState([]);
     const [countdays, setCountDays] = useState(0);
@@ -87,7 +89,13 @@ const RewardRedemptionHistory = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation style={{ zIndex: 999 }}/>
+            {( role === 'OPERATION' ) && (
+                <NavbarOperation style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>
