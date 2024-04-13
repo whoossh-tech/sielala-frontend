@@ -42,6 +42,8 @@ const AddRewardRedemptionData = () => {
     const [mustSpin, setMustSpin] = useState(false);
     const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
     const [stringRewardPicked, setStringRewardPicked] = useState('');
+    const [isCat1, setIsCat1] = useState(false);
+    const [isCat2, setIsCat2] = useState(false);
 
     const currentDate = new Date();
 
@@ -136,12 +138,13 @@ const AddRewardRedemptionData = () => {
             newErrors.points = 'Points to Redeem must be a positive number';
         }
 
-        // if (rouletteDataCat1.length == 0) {
-        //     newErrors.roulette = 'Cannot redeem because there is no reward';
-        // }
-        // if (rouletteDataCat2.length == 0) {
-        //     newErrors.roulette = 'Cannot redeem because there is no reward';
-        // }
+        if (isCat1 && rouletteDataCat1.length == 0) {
+            newErrors.roulette = 'Cannot redeem because there is no reward';
+        }
+
+        if (isCat2 && rouletteDataCat2.length == 0) {
+            newErrors.roulette = 'Cannot redeem because there is no reward';
+        }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -200,6 +203,9 @@ const AddRewardRedemptionData = () => {
         setRedeemDate(formatDate(currentDate));
 
         if (e.target.value < 1500){
+            setIsCat1(true);
+            setIsCat2(false);
+
             if (rouletteDataCat1.length > 0){
                 const newPrizeNumber = Math.floor(Math.random() * rouletteDataCat1.length);
                 setPrizeNumber(newPrizeNumber);
@@ -207,6 +213,9 @@ const AddRewardRedemptionData = () => {
                 setStringRewardPicked(rouletteDataCat1[newPrizeNumber].option);
             }
         } else {
+            setIsCat2(true);
+            setIsCat1(false);
+            
             if (rouletteDataCat2.length > 0){
                 const newPrizeNumber = Math.floor(Math.random() * rouletteDataCat2.length);
                 setPrizeNumber(newPrizeNumber);

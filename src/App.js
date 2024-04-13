@@ -46,6 +46,8 @@ import { VisitorRegistrationForm } from "./pages/Visitor/VisitorRegistrationForm
 import { VisitorRegistrationSuccessPage } from "./pages/Visitor/VisitorRegistrationSuccessPage";
 import { VisitorRegistrationFailPage } from "./pages/Visitor/VisitorRegistrationFailPage";
 import Visitor from "./pages/Visitor/Visitor";
+import Contacts from './pages/contact/Contacts';
+import TenantDetail from './pages/contact/TenantDetail';
 
 function App() {
   const role = localStorage.getItem("role");
@@ -129,17 +131,17 @@ function App() {
             {/* ROLE: PARTNERSHIP and ADMIN */}
             {(role === "PARTNERSHIP" || role === "ADMIN") && (
               <>
-                <Route path="/sponsor" element={<Sponsor />} />
-                <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
+              <Route path="/contact" element={<Contacts />} />
+              <Route path="/tenant/detail/:idTenant" element={<TenantDetail />} />
                 <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
-                <Route path="/invoice/create/:idContact" element={<CreateInvoice />} />
+                <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
+                  <Route path="/invoice/create/:idContact" element={<CreateInvoice />} />
                 <Route path="/invoice" element={<Invoice />} />
                 <Route path="/invoice/detail/:idInvoice" element={<InvoiceDetail />} />
                 <Route path="/invoice/edit-detail/:idInvoice" element={<EditDetailInvoice />} />
                 <Route path="/tenant-applicant" element={<TenantApplicant />} />
                 <Route path="/tenant-applicant/:idTenantApplicant" element={<TenantApplicantDetail />} />
-                <Route path="/sponsor/edit/:idSponsor" element={<EditSponsor />} />
-              </>
+                <Route path="/sponsor/edit/:idSponsor" element={<EditSponsor />} />              </>
             )}
 
             {/* ROLE: PARTNERSHIP, BISDEV, and ADMIN */}

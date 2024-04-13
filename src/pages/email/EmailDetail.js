@@ -75,25 +75,25 @@ const EmailDetail = () => {
 
         {emailDetail ? (
             <div className="bg-white p-6 rounded-lg shadow-md mb-4" style={{ textAlign: "left", marginLeft: 50, marginRight: 50 }}>
-            <h1 style={{ fontWeight: "bold", textAlign: "left" }} className="mx-8">{emailDetail.subject}</h1>
-            <div style={{ alignContent: "left" }}>
-                <button className="button-grey mx-8 text-md" onClick={toggleRecipient} style={{ alignContent: "left" }}>
-                {showRecipient ? "▽" : "△"}
+              <div style={{ display: "flex", alignItems: "left", justifyContent: "space-between" }}>
+                <h1 className="mx-8" style={{ fontWeight: "bold", textAlign: "left", marginLeft: 30 }}>{emailDetail.subject}</h1>
+                <button className="button-grey text-md" onClick={toggleRecipient} style={{ padding: "4px 8px", fontSize: "12px", alignContent: "left" }}>
+                  {showRecipient ? "▽" : "△"}
                 </button>
-                <br></br>
+              </div>
+              <div style={{ alignContent: "left" }}>
                 {showRecipient && (
-                <div className="mx-8 text-neutral-80">
+                  <div className="mx-8 text-neutral-60">
                     {emailDetail.addresses.map((address, index) => (
-                    <p key={index} className="mb-1">▪ {address}</p>
+                      <p key={index} className="mb-1">▪ {address}</p>
                     ))}
-                </div>
+                  </div>
                 )}
-            </div>
-            <br></br>
-            <br></br>
-            <p className="text-md mx-8 text-neutral-80" style={{ textAlign: "left" }}>
-                {emailDetail.body}
-            </p>
+              </div>
+              <br></br>
+              <p className="text-md mx-8 text-neutral-80" style={{ textAlign: "left" }}>
+                  {emailDetail.body}
+              </p>
             </div>
         ) : (
             <p>Retrieving your email...</p>
