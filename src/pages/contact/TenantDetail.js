@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
@@ -13,6 +13,8 @@ const TenantDetail = () => {
   const { idTenant } = useParams();
   const [tenant, setTenant] = useState();
   const [eventData, setEventData] = useState();
+  const [invoiceData, setInvoiceData] = useState();
+  const [statusInvoice, setStatusInvoice] = useState('');
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const role = localStorage.getItem('role');
@@ -25,9 +27,19 @@ const TenantDetail = () => {
       .get(`http://localhost:8080/api/contact/detail/tenant/${idTenant}`)
       .then((res) => {
         setTenant(res.data.data);
-        // console.log(res.data.data);
       })
       .catch((err) => console.log(err));
+
+      axios
+      .get(`http://localhost:8080/api/invoice/invoice-status/${idTenant}`)
+      .then((res) => {
+        setStatusInvoice(res.data.statusInvoice);
+        if (res.data.statusInvoice != "null") {
+            setInvoiceData(res.data.invoice)
+          }
+      })
+      .catch((err) => console.log(err));
+
   });
 
   const handleBack = () => {
@@ -123,36 +135,62 @@ const TenantDetail = () => {
                 </div>
             </div>
 
-            <br></br>
+            {/* <div>
+                <div className="button-field">
+                    <Link to={`/invoice/create/${idTenant}`}>
+                        <button className="button-green">Create Invoice</button>
+                    </Link>
+                </div>
+            </div> */}
 
-            <h1 className="text-2xl font-semibold mb-4 text-center">List Invoice</h1>
+            {( role === 'PARTNERSHIP' || role === 'ADMIN' ) && (statusInvoice == "null") && (
+                <div className="container mx-auto py-8 text-left">
+                    {/* Your existing code */}
+                    
+                    <div className="button-field text-center"> {/* Added text-center class */}
+                        <Link to={`/invoice/create/${idTenant}`}>
+                            <button className="button-green">Create Invoice</button>
+                        </Link>
+                    </div>
+
+                    {/* Your existing code */}
+                </div>
+            )}
+
+            <h1 className="text-2xl font-semibold mb-4 text-center">Invoice Data</h1>
             <div className="bg-white p-6 rounded-lg shadow-md mb-4">
                 <table className="Invoice-table w-full">
                     <thead>
-                    <tr>
-                        <th style={{ width: "20%", textAlign: "center"}}>ID</th>
-                        <th style={{ width: "20%", textAlign: "center"}}>Tracking Status</th>
-                        <th style={{ width: "20%", textAlign: "center"}}>Payment Validation</th>
-                        <th style={{ width: "20%", textAlign: "center"}}>Action</th>
-                    </tr>
+                        <tr>
+                            <th style={{ width: "20%", textAlign: "center"}}>Invoice ID</th>
+                            <th style={{ width: "20%", textAlign: "center"}}>Company</th>
+                            <th style={{ width: "20%", textAlign: "center"}}>Type</th>
+                            <th style={{ width: "20%", textAlign: "center"}}>Tracking Status</th>
+                            <th style={{ width: "20%", textAlign: "center"}}>Payment Validation</th>
+                            <th style={{ width: "20%", textAlign: "center"}}>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {eventData?.listInvoice && eventData.listInvoice.length > 0 ? (
-                        eventData.listInvoice.map((invoice, i) => (
-                        <tr key={i}>
-                            <td>{invoice.brandName}</td>
-                            <td>{invoice.picName}</td>
-                            <td>{invoice.brandEmail}</td>
-                            <td>{invoice.brandTelephone}</td>
+                    {invoiceData ? (
+                        <tr>
+                            <td>{invoiceData.idInvoice}</td>
+                            <td>{invoiceData.companyName}</td>
+                            <td>{invoiceData.type}</td>
+                            <td>{invoiceData.trackingStatus}</td>
+                            <td>{invoiceData.paymentStatus}</td>
+                            <td>
+                                <Link to={`/invoice/detail/${invoiceData.idInvoice}`}>
+                                    <button className="button-green-invoice">Detail</button>
+                                </Link>
+                            </td>
                         </tr>
-                        ))
                     ) : (
                         <tr>
-                        <td colSpan="5">No invoiceData available</td>
+                            <td colSpan="5">No invoice Data available</td>
                         </tr>
                     )}
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
             </div>
 
         </div>

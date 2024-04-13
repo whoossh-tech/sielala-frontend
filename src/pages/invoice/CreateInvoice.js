@@ -8,7 +8,9 @@ import '../../static/css/Button.css';
 import '../../static/css/invoice/FormCreateInvoice.css';
 import '../../static/css/Modal.css';
 import backgroundPhoto from '../../assets/bg-cover.png';
-import { NavbarOperation } from '../../components/navbar/NavbarOperation';
+import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
+import { NavbarFinance } from '../../components/navbar/NavbarFinance';
 import Sponsor from '../Sponsor/Sponsor';
 
 const CreateInvoice = () => {
@@ -22,6 +24,7 @@ const CreateInvoice = () => {
     const [listInvoiceItem, setInvoiceItems] = useState([{ item: '', quantity: '', rate: '' }]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [errors, setErrors] = useState('');
+    const role = localStorage.getItem('role');
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -129,7 +132,9 @@ const CreateInvoice = () => {
             });
 
             console.log('Invoice Created successfully:', response.data);
-            navigate('/reward-inventory');
+
+            navigate(`/invoice/detail/${response.data.idInvoice}`);
+            // navigate('/reward-inventory');
 
             await new Promise((resolve) => setTimeout(resolve, 500))
             toast.success("Invoice Created Successfully");
@@ -162,7 +167,13 @@ const CreateInvoice = () => {
 
     return (
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation />
+            {( role === 'PARTNERSHIP' ) && (
+            <NavbarPartnership style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>

@@ -10,6 +10,9 @@ import { useState, useEffect, useHistory} from "react";
 import { NavbarOperation } from '../../components/navbar/NavbarOperation';
 import {toast, Toaster} from 'react-hot-toast';
 import { Link, useNavigate } from "react-router-dom";
+import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
+import { NavbarFinance } from '../../components/navbar/NavbarFinance';
 
 const Invoice = () => {
     const navigate = useNavigate();
@@ -17,6 +20,7 @@ const Invoice = () => {
     const [invoiceData, setInvoiceData] = useState([]);
     const [eventData, setEventData] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState('');
+    const role = localStorage.getItem('role');
 
     useEffect(() => {
 
@@ -57,7 +61,17 @@ const Invoice = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation style={{ zIndex: 999 }}/>
+            {( role === 'PARTNERSHIP' ) && (
+            <NavbarPartnership style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'FINANCE' ) && (
+                <NavbarFinance style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>

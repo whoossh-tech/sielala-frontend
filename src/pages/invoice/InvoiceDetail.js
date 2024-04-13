@@ -9,6 +9,9 @@ import '../../App.css';
 import '../../static/css/invoice/DetailInvoice.css';
 import '../../static/css/Button.css';
 import backgroundPhoto from '../../assets/bg-cover.png';
+import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
+import { NavbarFinance } from '../../components/navbar/NavbarFinance';
 
 const InvoiceDetail = () => {
     const { idInvoice } = useParams();
@@ -21,6 +24,8 @@ const InvoiceDetail = () => {
     const [idEvent, setIdEvent] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    const role = localStorage.getItem('role');
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -65,32 +70,33 @@ const InvoiceDetail = () => {
 
     const handleGenerate = async (e) => {
         try {
-            // const response = await axios.get(`${url}/api/invoice/generate-pdf/invoice/${idInvoice}`, {
-            //     responseType: 'blob'
-            // });
-    
-            // const file = new Blob([response.data], { type: 'application/pdf' });
-            // const fileURL = URL.createObjectURL(file);
-    
-            // window.open(fileURL, '_blank');
             const response = await axios.get(`${url}/api/invoice/generate-pdf/invoice/${idInvoice}`, {
                 responseType: 'blob'
             });
     
-            // Membuat objek URL untuk blob
-            const fileURL = URL.createObjectURL(new Blob([response.data]));
+            const file = new Blob([response.data], { type: 'application/pdf' });
+            const fileURL = URL.createObjectURL(file);
     
-            // Membuat elemen <a> untuk men-download file
-            const link = document.createElement('a');
-            link.href = fileURL;
-            link.setAttribute('download', `SIELALA_INVOICE_${invoiceData.companyName}.pdf`);
+            window.open(fileURL, '_blank');
+
+            // const response = await axios.get(`${url}/api/invoice/generate-pdf/invoice/${idInvoice}`, {
+            //     responseType: 'blob'
+            // });
     
-            // Menambahkan elemen <a> ke dokumen dan memicu klik pada elemen tersebut
-            document.body.appendChild(link);
-            link.click();
+            // // Membuat objek URL untuk blob
+            // const fileURL = URL.createObjectURL(new Blob([response.data]));
+    
+            // // Membuat elemen <a> untuk men-download file
+            // const link = document.createElement('a');
+            // link.href = fileURL;
+            // link.setAttribute('download', `SIELALA_INVOICE_${invoiceData.companyName}.pdf`);
+    
+            // // Menambahkan elemen <a> ke dokumen dan memicu klik pada elemen tersebut
+            // document.body.appendChild(link);
+            // link.click();
     
             // Menghapus elemen <a> setelah proses download selesai
-            document.body.removeChild(link);
+            // document.body.removeChild(link);
         } catch (error) {
             console.error('Error:', error);
             toast.error("Cannot generate invoice");
@@ -108,7 +114,17 @@ const InvoiceDetail = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation />
+            {( role === 'PARTNERSHIP' ) && (
+            <NavbarPartnership style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'FINANCE' ) && (
+                <NavbarFinance style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>
@@ -174,9 +190,13 @@ const InvoiceDetail = () => {
             <div>
                 <div className="button-field">
                     <button className="button-green" onClick={handleBack}>Back</button>
-                    <Link to={`/invoice/edit-detail/${idInvoice}`}>
-                        <button className="button-pink">Edit Invoice</button>
-                    </Link>
+
+                    {( role === 'PARTNERSHIP' || role === 'ADMIN' ) && (
+                        <Link to={`/invoice/edit-detail/${idInvoice}`}>
+                            <button className="button-pink">Edit Invoice</button>
+                        </Link>
+                    )}
+
                     <button className="button-brown" onClick={handleGenerate}>Generate to PDF</button>
 
                     { (invoiceData.trackingStatus === 'Issued' || invoiceData.trackingStatus === 'Pending') && (
