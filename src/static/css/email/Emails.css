@@ -1,0 +1,14 @@
+.email-table {
+    border-collapse: collapse;
+  }
+  
+.email-table td, .email-table th {
+  border-top: 1px solid grey; /* Horizontal border */
+  border-bottom: 1px solid grey; /* Horizontal border */
+  border-left: none; /* Hide vertical border */
+  border-right: none; /* Hide vertical border */
+  padding: 12px; /* Adjust padding as needed */
+  padding-bottom: 18px;
+  padding-top: 18px;
+  height: 50px !important;
+}

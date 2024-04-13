@@ -14,6 +14,7 @@ const RegisterStaffForm = () => {
     const [role, setRole] = useState('');
     const[errors, setErrors] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const openModal = () => {
@@ -57,6 +58,7 @@ const RegisterStaffForm = () => {
 
     const confirmRegistration = async (e) => {
         closeModal();
+        setIsLoading(true);
 
         try {
             const token = localStorage.getItem('token');
@@ -75,6 +77,8 @@ const RegisterStaffForm = () => {
             console.error('Error registering staff:', error.response || error.message);
             setErrors('Error registering staff.');
             toast.error("Error registering staff: Email has already been used");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -186,7 +190,9 @@ const RegisterStaffForm = () => {
             <br></br>
             <div>
                 <button className="button-green" onClick={() => navigate(-1)}>Back</button>
-                <button className="button-pink" type="submit">Add Staff Account</button>
+                <button className="button-pink" type="submit" disabled={isLoading}>
+                    {isLoading ? 'Adding...' : 'Add Staff Account'}
+                </button>
             </div>
 
             <Modal

@@ -9,11 +9,13 @@ import '../../static/css/FormRewardInventory.css';
 import '../../static/css/Modal.css';
 import backgroundPhoto from '../../assets/bg-cover.png';
 import { NavbarOperation } from '../../components/navbar/NavbarOperation';
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 
 const EditRewardInventory = () => {
     const { idReward } = useParams();
     const url = 'https://sielala-backend-production.up.railway.app';
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
     const [productName, setProductName] = useState('');
     const [brandName, setBrandName] = useState('');
@@ -77,6 +79,10 @@ const EditRewardInventory = () => {
             newErrors.category = 'Category cannot be empty';
         }
         
+        if (!category || isNaN(category)) {
+            newErrors.category = 'Category cannot be empty';
+        }
+        
         const allStocksEmpty = listDayReward.every(day => day.stokAwal === 0 || day.stokAwal === null || day.stokAwal === undefined || Number.isNaN(day.stokAwal));
         if (allStocksEmpty) {
             newErrors.listDayReward = 'Fill at least one Initial Stock';
@@ -109,7 +115,7 @@ const EditRewardInventory = () => {
             localStorage.setItem('idSelectedEvent', idEvent);
 
             console.log('Reward edited successfully:', response.data);
-            navigate('/reward-inventory');
+            navigate(`/reward-inventory/detail/${idReward}`);
 
             await new Promise((resolve) => setTimeout(resolve, 500))
             toast.success("Reward edited successfully");
@@ -155,7 +161,13 @@ const EditRewardInventory = () => {
 
     return (
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation />
+            {( role === 'OPERATION' ) && (
+                <NavbarOperation style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>
@@ -274,7 +286,7 @@ const EditRewardInventory = () => {
             <label className="input-label font-reynaldo text-left" htmlFor="category">
                 Stock<span className="text-danger">*</span>
             </label>
-            <table>
+            <table className="max-w-lg">
                 <thead>
                     <tr>
                         <th>Day</th>

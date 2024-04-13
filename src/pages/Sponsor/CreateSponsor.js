@@ -8,9 +8,11 @@ import "../../static/css/sponsor/CreateSponsor.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
 
 const CreateSponsor = () => {
+
   const [picName, setPicName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
@@ -23,6 +25,7 @@ const CreateSponsor = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const role = localStorage.getItem('role');
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -65,13 +68,13 @@ const CreateSponsor = () => {
 
       const response = await axios.post(`https://sielala-backend-production.up.railway.app/api/sponsor/create/${idEvent}`, {
         picName,
-        companyName,
-        companyAddress,
-        companyEmail,
-        companyTelephone,
+        name: companyName,
+        address: companyAddress,
+        email: companyEmail,
+        telephone: companyTelephone,
       });
       console.log("Sponsor created successfully:", response.data);
-      navigate("/Sponsor");
+      navigate("/contact");
 
       await new Promise((resolve) => setTimeout(resolve, 500));
       toast.success("Sponsor added successfully");
@@ -113,7 +116,13 @@ const CreateSponsor = () => {
   return (
     <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarPartnership style={{ zIndex: 99999 }}  />
+      {( role === 'PARTNERSHIP' ) && (
+        <NavbarPartnership style={{ zIndex: 999 }} />
+      )}
+
+      {( role === 'ADMIN' ) && (
+        <NavbarAdmin style={{ zIndex: 999 }} />
+      )}
 
       <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
         <div>

@@ -5,6 +5,7 @@ import { useState, useEffect} from "react";
 import {toast, Toaster} from 'react-hot-toast';
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { NavbarOperation } from '../../components/navbar/NavbarOperation';
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import '../../App.css';
 import '../../static/css/RewardInventory.css';
 import '../../static/css/Button.css';
@@ -13,6 +14,7 @@ import backgroundPhoto from '../../assets/bg-cover.png';
 const RewardDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
     const [rewardData, setRewardData] = useState();
     const [countdays, setCountDays] = useState(0);
@@ -50,6 +52,9 @@ const RewardDetail = () => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         const response = await axios.delete(`https://sielala-backend-production.up.railway.app/api/reward/delete/${id}`);
+
+        // Untuk pre-filled dropdown event
+        localStorage.setItem('idSelectedEvent', idEvent);
         console.log('Reward deleted successfully:', response.data);
         localStorage.setItem('idSelectedEvent', idEvent);
         navigate('/reward-inventory');
@@ -69,7 +74,13 @@ const RewardDetail = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation />
+            {( role === 'OPERATION' ) && (
+                <NavbarOperation style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>
@@ -116,20 +127,20 @@ const RewardDetail = () => {
             <br></br>
 
             <div>
-                {rewardData.rewardRedeemed.length === 0 ? (
-                <div className="button-field">
-                    <button className="button-green" onClick={handleBack}>Back</button>
-                    <Link to={`/edit-reward/${id}`}>
-                        <button className="button-pink">Edit Reward</button>
-                    </Link>
-                    <button className="button-red" onClick={openModal}>Delete Reward</button>
-                </div>
-                    ) : (
-                <div className="button-field">
-                    <button className="button-green" onClick={handleBack}>Back</button>
-                    <button className="button-pink" disabled>Edit Reward</button>
-                    <button className="button-red" disabled>Delete Reward</button>
-                </div>
+                {rewardData.redeemed ? (
+                    <div className="button-field">
+                        <button className="button-green" onClick={handleBack}>Back</button>
+                        <button className="button-pink" disabled>Edit Reward</button>
+                        <button className="button-red" disabled>Delete Reward</button>
+                    </div>
+                ) : (
+                    <div className="button-field">
+                        <button className="button-green" onClick={handleBack}>Back</button>
+                        <Link to={`/edit-reward/${id}`}>
+                            <button className="button-pink">Edit Reward</button>
+                        </Link>
+                        <button className="button-red" onClick={openModal}>Delete Reward</button>
+                    </div>
                 )}
             </div>
 

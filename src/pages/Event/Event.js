@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 // import { EventCard } from "../../components/EventCard";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../static/css/Modal.css";
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import "../../static/css/event/Event.css";
 
 const Event = () => {
@@ -20,9 +21,11 @@ const Event = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
+  const role = localStorage.getItem('role');
 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
   useEffect(() => {
     axios
       .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
@@ -30,9 +33,10 @@ const Event = () => {
         setEvents(res.data.data);
         // console.log(res.data.data); // Make sure that res.data is an array
       })
-      .catch((error) => {
-        toast.error("Failed to fetch events");
-      });
+      .catch(
+        err => 
+        console.log(err)
+    )
   }, [events]);
 
   const handleCreateButton = () => {
@@ -42,7 +46,13 @@ const Event = () => {
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarBisdev style={{ zIndex: 999 }} />
+      {( role === 'BISDEV' ) && (
+          <NavbarBisdev style={{ zIndex: 999 }} />
+      )}
+
+      {( role === 'ADMIN' ) && (
+          <NavbarAdmin style={{ zIndex: 999 }} />
+      )}
 
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>
@@ -53,6 +63,11 @@ const Event = () => {
               </div>
           </div>
       </div>
+      
+      <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
 
       <br></br>
 

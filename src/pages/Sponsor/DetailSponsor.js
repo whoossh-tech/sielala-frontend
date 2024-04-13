@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { reynaldoStyles } from "../../assets/fonts/fonts";
 import "../../static/css/sponsor/DetailSponsor.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 
@@ -15,8 +15,10 @@ const DetailSponsor = () => {
   const navigate = useNavigate();
   const { idSponsor } = useParams();
   const [sponsorData, setSponsorData] = useState();
+  const [invoiceData, setInvoiceData] = useState();
+  const [statusInvoice, setStatusInvoice] = useState('');
   const [eventData, setEventData] = useState();
-//   const [tenantData, setTenantData] = useState();
+  const role = localStorage.getItem('role');
 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -26,8 +28,22 @@ const DetailSponsor = () => {
       .get(`https://sielala-backend-production.up.railway.app/api/sponsor/detail/${idSponsor}`)
       .then((res) => {
         setSponsorData(res.data.data);
+        // setIdInvoice(res.data.data.idInvoice)
+        // console.log(res.data.data);
       })
       .catch((err) => console.log(err));
+
+      axios
+      .get(`https://sielala-backend-production.up.railway.app/api/invoice/invoice-status/${idSponsor}`)
+      .then((res) => {
+        setStatusInvoice(res.data.statusInvoice);
+
+        if (res.data.statusInvoice != "null") {
+          setInvoiceData(res.data.invoice)
+        }
+      })
+      .catch((err) => console.log(err));
+
   });
 
   const handleBack = () => {
@@ -36,7 +52,13 @@ const DetailSponsor = () => {
 
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      <NavbarPartnership />
+      {( role === 'PARTNERSHIP' ) && (
+            <NavbarPartnership style={{ zIndex: 999 }} />
+        )}
+
+        {( role === 'ADMIN' ) && (
+            <NavbarAdmin style={{ zIndex: 999 }} />
+        )}
 
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>
@@ -50,26 +72,24 @@ const DetailSponsor = () => {
 
       <br></br>
       <Toaster
-                    position="top-center"
-                    reverseOrder={false}
-            />
-
-      <br></br>
+        position="top-center"
+        reverseOrder={false}
+      />
 
       <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-4">
-          <button className="button-green" onClick={handleBack}>
-            Back
-          </button>
-          <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: '-6%' }}>Sponsor Detail</h1>
-          <div></div>
-        </div>
+        <button className="button-green" onClick={handleBack}>
+          Back
+        </button>
+        <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: '-6%' }}>Sponsor Detail</h1>
+        <div></div>
+      </div>
       <br></br>
 
         <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">Company Name :</p>
-                        <p className="sponsor-text">{sponsorData?.companyName}</p>
+                        <p className="sponsor-text">{sponsorData?.name}</p>
                 </div>
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">PIC Name :</p>
@@ -77,48 +97,63 @@ const DetailSponsor = () => {
                 </div>
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">Company Address :</p>
-                        <p className="sponsor-text">{sponsorData?.companyAddress}</p>
+                        <p className="sponsor-text">{sponsorData?.address}</p>
                 </div>
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">Company Email :</p>
-                        <p className="sponsor-text">{sponsorData?.companyEmail}</p>
+                        <p className="sponsor-text">{sponsorData?.email}</p>
                 </div>
                 <div className="each-sponsor">
                         <p className="sponsor-text-title">Company Telephone :</p>
-                        <p className="sponsor-text">{sponsorData?.companyTelephone}</p>
+                        <p className="sponsor-text">{sponsorData?.telephone}</p>
                 </div>
             </div>
 
             <br></br>
+
+            {( role === 'PARTNERSHIP' ||  role === 'ADMIN' ) && (statusInvoice == "null") && (
+                  <div className="button-field">
+                      <Link to={`/invoice/create/${idSponsor}`}>
+                          <button className="button-green">Create Invoice</button>
+                      </Link>
+                  </div>
+            )}
+
             <br></br>
 
-        <h1 className="text-2xl font-semibold mb-4">List Invoice</h1>
+        <h1 className="text-2xl font-semibold mb-4">Invoice</h1>
         <div className="bg-white p-6 rounded-lg shadow-md mb-4">
           <table className="Invoice-table w-full">
             <thead>
               <tr>
-                <th style={{ width: "20%", textAlign: "center"}}>ID</th>
+                <th style={{ width: "20%", textAlign: "center"}}>Invoice ID</th>
+                <th style={{ width: "20%", textAlign: "center"}}>Company</th>
+                <th style={{ width: "20%", textAlign: "center"}}>Type</th>
                 <th style={{ width: "20%", textAlign: "center"}}>Tracking Status</th>
                 <th style={{ width: "20%", textAlign: "center"}}>Payment Validation</th>
                 <th style={{ width: "20%", textAlign: "center"}}>Action</th>
               </tr>
             </thead>
             <tbody>
-              {eventData?.listInvoice && eventData.listInvoice.length > 0 ? (
-                eventData.listInvoice.map((invoice, i) => (
-                  <tr key={i}>
-                    <td>{invoice.brandName}</td>
-                    <td>{invoice.picName}</td>
-                    <td>{invoice.brandEmail}</td>
-                    <td>{invoice.brandTelephone}</td>
+              {invoiceData ? (
+                  <tr>
+                      <td>{invoiceData.idInvoice}</td>
+                      <td>{invoiceData.companyName}</td>
+                      <td>{invoiceData.type}</td>
+                      <td>{invoiceData.trackingStatus}</td>
+                      <td>{invoiceData.paymentStatus}</td>
+                      <td>
+                          <Link to={`/invoice/detail/${invoiceData.idInvoice}`}>
+                              <button className="button-green-invoice">Detail</button>
+                          </Link>
+                      </td>
                   </tr>
-                ))
               ) : (
-                <tr>
-                  <td colSpan="5">No invoiceData available</td>
-                </tr>
+                  <tr>
+                      <td colSpan="5">No invoice Data available</td>
+                  </tr>
               )}
-            </tbody>
+          </tbody>
           </table>
         </div>
       </div>
