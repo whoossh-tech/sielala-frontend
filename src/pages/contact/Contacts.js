@@ -30,7 +30,7 @@ const Contacts = () => {
           console.log(res.data.data);
         })
         .catch((error) => {
-          toast.error("Failed to fetch contacts");
+          setContacts([]);
         });
     }
 
