@@ -10,6 +10,7 @@ import "../../static/css/event/CreateEvent.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
 import { subDays } from "date-fns";
 
@@ -24,6 +25,7 @@ const CreateEvent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
+  const role = localStorage.getItem('role');
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -99,7 +101,13 @@ const CreateEvent = () => {
   return (
     <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarBisdev style={{ zIndex: 20 }}  />
+      {( role === 'BISDEV' ) && (
+          <NavbarBisdev style={{ zIndex: 999 }} />
+      )}
+
+      {( role === 'ADMIN' ) && (
+          <NavbarAdmin style={{ zIndex: 999 }} />
+      )}
 
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>
@@ -181,9 +189,9 @@ const CreateEvent = () => {
 
           <br></br>
 
-          <div className="input-form flex flex-col space-y-1">
+          <div className="input-form flex flex-col space-y-1 items-center">
             <button
-              className="button-pink montserrat w-full" // Add 'w-full' class to make the button full width
+              className="button-pink montserrat w-48"
               type="submit"
             >
               Create

@@ -7,6 +7,7 @@ import Modal from "../../static/css/Modal.css";
 import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import "../../static/css/event/Event.css";
 
 const Event = () => {
@@ -20,6 +21,7 @@ const Event = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
+  const role = localStorage.getItem('role');
 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -44,7 +46,13 @@ const Event = () => {
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarBisdev style={{ zIndex: 999 }} />
+      {( role === 'BISDEV' ) && (
+          <NavbarBisdev style={{ zIndex: 999 }} />
+      )}
+
+      {( role === 'ADMIN' ) && (
+          <NavbarAdmin style={{ zIndex: 999 }} />
+      )}
 
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>
