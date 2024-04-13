@@ -142,6 +142,13 @@ function App() {
             </>
           )}
 
+          {(role === 'FINANCE') && (
+            <>
+              <Route path="/invoice" element={<Invoice />} />
+              <Route path="/invoice/detail/:idInvoice" element={<InvoiceDetail />} />
+            </>
+          )}
+
           {/* ROLE: PARTNERSHIP, BISDEV, and ADMIN */}
           {(role === 'PARTNERSHIP' || role === 'ADMIN' || role === 'BISDEV') && (
             <>
