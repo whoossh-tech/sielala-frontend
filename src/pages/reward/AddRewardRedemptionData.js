@@ -138,6 +138,8 @@ const AddRewardRedemptionData = () => {
             newErrors.points = 'Points to Redeem cannot be empty';
         } else if (isNaN(points) || points <= 0) {
             newErrors.points = 'Points to Redeem must be a positive number';
+        } else if (points < 500){
+            newErrors.points = 'Insufficient points for reward redemption';
         }
 
         if (isCat1 && rouletteDataCat1.length == 0) {
