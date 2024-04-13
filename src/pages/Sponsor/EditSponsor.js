@@ -9,6 +9,7 @@ import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { toast, Toaster } from "react-hot-toast";
+import cors from 'cors';
 
 const EditSponsor = () => {
   const [picName, setPicName] = useState("");
@@ -34,12 +35,13 @@ const EditSponsor = () => {
     setIsModalOpen(false);
   };
 
+
   useEffect(() => {
     const fetchSponsorData = async () => {
       try {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
+        app.use(cors());
         const response = await axios.get(`http://localhost:8080/api/sponsor/edit/${idSponsor}`);
         const sponsorData = response.data.sponsorData;
         console.log(sponsorData);
