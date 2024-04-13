@@ -81,6 +81,7 @@ const EmailDetail = () => {
                   {showRecipient ? "▽" : "△"}
                 </button>
               </div>
+              <p style={{ marginLeft: 30 }} className="text-neutral-60">{emailDetail.dateFormatted}</p>
               <div style={{ alignContent: "left" }}>
                 {showRecipient && (
                   <div className="mx-8 text-neutral-60">

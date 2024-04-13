@@ -17,6 +17,7 @@ const ChooseContact = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({});
+    const [selectAll, setSelectAll] = useState(false);
 
     const [selectedContact, setSelectedContact] = useState([]);
     const [subject, setSubject] = useState("");
@@ -100,6 +101,22 @@ const ChooseContact = () => {
       }
 
       localStorage.setItem('selectedContacts', JSON.stringify(selectedContact));
+    };
+
+    const handleSelectAll = () => {
+      
+      if (contacts && contacts.length > 0) {
+        setSelectAll(!selectAll);
+        if (!selectAll) {
+          setSelectedContact(contacts.map(contact => contact.idContact));
+        } else {
+          setSelectedContact([]);
+        }
+      } else if (!selectedEvent) {
+        toast.error("Select event first!")
+      } else {
+        toast.error("Choose event with contact")
+      }
     };
 
     // handle back button
@@ -211,6 +228,9 @@ const ChooseContact = () => {
               >
                   {isLoading ? 'Sending...' : 'Send Email'}
               </button>
+              <button className="button-brown" onClick={handleSelectAll}>
+                {selectAll ? "Deselect All" : "Select All"}
+              </button>
             </div>
 
             <div style={{marginBottom: '10px'}}>
@@ -294,6 +314,7 @@ const ChooseContact = () => {
                               id={`checkbox-${i}`} 
                               name={`checkbox-${i}`} 
                               onChange={(e) => handleCheckboxChange(e, contact.idContact)}
+                              checked={selectedContact.includes(contact.idContact)}
                             />
                           </td>
                           <td>{contact.name}</td>
