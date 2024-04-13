@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast, Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import '../../static/css/RegisterStaffForm.css';
 import '../../static/css/Button.css';
@@ -28,14 +29,17 @@ const ForgotPasswordForm = () => {
             })
       
       console.log('Form submitted successfully:', response.data);
+      toast.success('Reset Password Success: Check your email for new login credentials!');
       // navigate('/forgot-password-success');
     } catch (error) {
       console.error('Error resetting password:', error.message);
+      toast.error('Reset Password Failed: Please make sure your username and email has been registered');
     }
   };
 
   return (
     <div className="object-cover-login absolute inset-0 flex justify-center items-center" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh' }}>
+       <Toaster position="top-center" reverseOrder={false} />
       <div className="card bg-white shadow-lg rounded-md p-8">
         <h2 className="text-2xl font-bold mb-3">Forgot Password</h2>
         <form
