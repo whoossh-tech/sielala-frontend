@@ -20,6 +20,7 @@ import { DashboardAdmin } from './pages/dashboard/DashboardAdmin';
 import { DashboardBisdev } from './pages/dashboard/DashboardBisdev';
 import { DashboardFinance } from './pages/dashboard/DashboardFinance';
 import Login from './pages/auth/Login';
+import ForgotPasswordForm from './pages/auth/ForgotPasswordForm';
 import RegisterStaffForm from './pages/auth/RegisterStaffForm';
 import UserList from './pages/auth/UserList';
 import Sponsor from "./pages/Sponsor/Sponsor";
@@ -59,6 +60,7 @@ function App() {
           {/* PUBLIC ROUTES */}
           <Route path="/" element={<DashboardGuest />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPasswordForm/>} />
           <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm/>}></Route>
           <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
           <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />

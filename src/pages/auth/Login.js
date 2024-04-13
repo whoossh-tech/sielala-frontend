@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { toast, Toaster } from 'react-hot-toast';
 import '../../static/css/RegisterStaffForm.css';
@@ -118,6 +118,8 @@ const Login = () => {
           >
             Login
           </button>
+
+          <Link to="/forgot-password" className="text-sm mt-2 text-neutral-100 hover:underline">Forgot Password?</Link>
         </form>
       </div>
     </div>
