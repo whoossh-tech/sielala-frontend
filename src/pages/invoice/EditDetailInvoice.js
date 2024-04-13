@@ -8,12 +8,15 @@ import "../../static/css/Button.css";
 import "../../static/css/FormRewardInventory.css";
 import "../../static/css/Modal.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
-import { NavbarOperation } from "../../components/navbar/NavbarOperation";
+import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
+import { NavbarFinance } from "../../components/navbar/NavbarFinance";
 
 const EditDetailInvoice = () => {
   const { idInvoice } = useParams();
   const url = "http://localhost:8080";
   const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
   const [listInvoiceItem, setInvoiceItems] = useState([]);
 
@@ -164,7 +167,13 @@ const EditDetailInvoice = () => {
 
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      <NavbarOperation />
+            {( role === 'PARTNERSHIP' ) && (
+      <NavbarPartnership style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
       <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
         <div>

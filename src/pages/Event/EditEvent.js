@@ -11,6 +11,7 @@ import "../../static/css/event/CreateEvent.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { subDays, format } from "date-fns";
 
 
@@ -18,6 +19,7 @@ const EditEvent = () => {
     const { idEvent } = useParams();
     const url = 'http://localhost:8080';
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
     const [eventName, setEventName] = useState("");
     const [startDate, setStartDate] = useState(new Date());
@@ -111,7 +113,13 @@ const EditEvent = () => {
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarBisdev style={{ zIndex: 20 }}  />
+      {( role === 'BISDEV' ) && (
+          <NavbarBisdev style={{ zIndex: 999 }} />
+      )}
+
+      {( role === 'ADMIN' ) && (
+          <NavbarAdmin style={{ zIndex: 999 }} />
+      )}
 
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>
@@ -196,9 +204,9 @@ const EditEvent = () => {
 
           <br></br>
 
-          <div className="input-form flex flex-col space-y-1">
+          <div className="input-form flex flex-col space-y-1 items-center">
             <button
-              className="button-pink montserrat w-full" // Add 'w-full' class to make the button full width
+              className="button-pink montserrat w-48" // Add 'w-full' class to make the button full width
               type="submit"
             >
               Edit
