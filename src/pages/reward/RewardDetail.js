@@ -5,6 +5,7 @@ import { useState, useEffect} from "react";
 import {toast, Toaster} from 'react-hot-toast';
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { NavbarOperation } from '../../components/navbar/NavbarOperation';
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import '../../App.css';
 import '../../static/css/RewardInventory.css';
 import '../../static/css/Button.css';
@@ -13,6 +14,7 @@ import backgroundPhoto from '../../assets/bg-cover.png';
 const RewardDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
     const [rewardData, setRewardData] = useState();
     const [countdays, setCountDays] = useState(0);
@@ -73,7 +75,13 @@ const RewardDetail = () => {
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation />
+            {( role === 'OPERATION' ) && (
+                <NavbarOperation style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>

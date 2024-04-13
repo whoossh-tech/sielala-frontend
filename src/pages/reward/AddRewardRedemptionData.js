@@ -10,12 +10,14 @@ import '../../static/css/FormRewardInventory.css';
 import '../../static/css/Modal.css';
 import backgroundPhoto from '../../assets/bg-cover.png';
 import { NavbarOperation } from '../../components/navbar/NavbarOperation';
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { Wheel } from 'react-custom-roulette';
 
 const AddRewardRedemptionData = () => {
     const { idEvent } = useParams();
     const url = 'http://localhost:8080';
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
     // data untuk dipost
     const [points, setPoints] = useState('');
@@ -260,7 +262,13 @@ const AddRewardRedemptionData = () => {
     return (
 
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <NavbarOperation />
+            {( role === 'OPERATION' ) && (
+                <NavbarOperation style={{ zIndex: 999 }} />
+            )}
+
+            {( role === 'ADMIN' ) && (
+                <NavbarAdmin style={{ zIndex: 999 }} />
+            )}
 
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>
