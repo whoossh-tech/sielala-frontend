@@ -286,7 +286,7 @@ const EditRewardInventory = () => {
             <label className="input-label font-reynaldo text-left" htmlFor="category">
                 Stock<span className="text-danger">*</span>
             </label>
-            <table>
+            <table className="max-w-lg">
                 <thead>
                     <tr>
                         <th>Day</th>
