@@ -55,7 +55,6 @@ const RewardDetail = () => {
 
         // Untuk pre-filled dropdown event
         localStorage.setItem('idSelectedEvent', idEvent);
-    
         console.log('Reward deleted successfully:', response.data);
         localStorage.setItem('idSelectedEvent', idEvent);
         navigate('/reward-inventory');

@@ -107,6 +107,7 @@ const TenantRegistrationForm = () => {
         setIsLoading(true);
 
         try {
+
             const response = await axios.post('https://sielala-backend-production.up.railway.app/api/tenant/register', {
                 eventId,
                 picName,
