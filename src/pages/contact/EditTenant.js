@@ -107,7 +107,7 @@ const EditTenant = () => {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-        const response = await axios.get(`${url}/api/tenant/edit/${idTenant}`);
+        const response = await axios.get(`${url}/api/tenant/update/${idTenant}`);
         const tenantData = response.data.tenantData;
         console.log(tenantData);
 
@@ -146,7 +146,7 @@ const EditTenant = () => {
     closeModal();
 
     try {
-      const response = await axios.put(` http://localhost:8080/api/tenant/edit/${idTenant}`, {
+      const response = await axios.put(` http://localhost:8080/api/tenant/update/${idTenant}`, {
         eventId,
         picName,
         address: address,

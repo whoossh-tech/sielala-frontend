@@ -42,7 +42,7 @@ const EditSponsor = () => {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         // app.use(cors());
-        const response = await axios.get(`http://localhost:8080/api/sponsor/edit/${idSponsor}`);
+        const response = await axios.get(`http://localhost:8080/api/sponsor/update/${idSponsor}`);
         const sponsorData = response.data.data;
         console.log(sponsorData);
 

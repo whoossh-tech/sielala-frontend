@@ -196,21 +196,21 @@ const InvoiceDetail = () => {
 
       <br></br>
 
-      <div className="each-invoice">
-  <p className="invoice-text-title">Tracking Status:</p>
-  {role === "ADMIN" && (
-    <div className="dropdown-container">
-      <select value={trackingStatus} onChange={handleTrackingStatusChange} className="dropdown">
-        <option value="">Select Status</option>
-        <option value="Issued">Issued</option>
-        <option value="Pending">Pending</option>
-        <option value="Confirmed">Confirmed</option>
-        <option value="Completed">Completed</option>
-      </select>
-    </div>
-  )}
-  {role !== "ADMIN" && <p className="invoice-text">{invoiceData.trackingStatus}</p>}
-</div>
+      <div className="each-invoice" style={{ textAlign: "center" }}>
+        <p className="invoice-text-title">Tracking Status:</p>
+        {role === "ADMIN" && (
+          <div className="dropdown-container">
+            <select value={trackingStatus} onChange={handleTrackingStatusChange} className="dropdown">
+              <option value="">Select Status</option>
+              <option value="Issued">Issued</option>
+              <option value="Pending">Pending</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+        )}
+        {role !== "ADMIN" && <p className="invoice-text">{invoiceData.trackingStatus}</p>}
+      </div>
 
       {invoiceData ? (
         <>
@@ -333,16 +333,16 @@ const InvoiceDetail = () => {
         )}
 
         {/* Tombol validasi dan penolakan hanya ditampilkan jika gambar telah diunggah */}
-        {paymentImageUrl && (
-          <div className="flex justify-center mt-4">
-            <button className="button-blue mr-2" onClick={handleValidate} disabled={isValidated || isDeclined}>
-              Validate
-            </button>
-            <button className="button-red" onClick={handleDecline} disabled={isValidated || isDeclined}>
-              Decline
-            </button>
-          </div>
-        )}
+
+        {/* Tombol validasi dan penolakan selalu ditampilkan, tetapi dinonaktifkan ketika gambar belum diunggah */}
+        <div className="flex justify-center mt-4">
+          <button className="button-pink mr-2" onClick={handleValidate} disabled={!paymentImageUrl || isValidated || isDeclined}>
+            Validate
+          </button>
+          <button className="button-red" onClick={handleDecline} disabled={!paymentImageUrl || isValidated || isDeclined}>
+            Decline
+          </button>
+        </div>
       </div>
 
       <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
