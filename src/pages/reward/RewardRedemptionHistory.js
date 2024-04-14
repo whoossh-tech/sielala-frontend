@@ -230,8 +230,8 @@ const RewardRedemptionHistory = () => {
                                 <th>Points</th>
                                 <th>Event Pass</th>
                                 <th>Visitor Name</th>
+                                <th>Email</th>
                                 <th>Reward</th>
-                                <th>Brand</th>
                                 <th>Date Redeemed</th>
                             </tr>
                         </thead>
@@ -242,8 +242,8 @@ const RewardRedemptionHistory = () => {
                                         <td>{rewardRedeemed.pointsRedeemed}</td>
                                         <td>{rewardRedeemed.visitor.eventPass}</td>
                                         <td>{rewardRedeemed.visitor.name}</td>
-                                        <td>{rewardRedeemed.reward.productName}</td>
-                                        <td>{rewardRedeemed.reward.brandName}</td>
+                                        <td>{rewardRedeemed.visitor.email}</td>
+                                        <td>{rewardRedeemed.reward.productName} {rewardRedeemed.reward.brandName}</td>
                                         <td>{formatingDate(rewardRedeemed.redeemDate)}</td>
                                     </tr>
                                 ))
