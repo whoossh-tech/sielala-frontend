@@ -313,8 +313,8 @@ const VisitorRegistrationForm = () => {
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Registration</h2>
                 <p className="text-center text-gray-700">Are you sure you want to register?</p>
                 <br></br>
+                <button className="button-red text-center" onClick={closeModal}>Cancel</button>
                 <button className="button-green text-center" onClick={confirmRegistration}>Confirm</button>
-                <button className="button-pink text-center" onClick={closeModal}>Cancel</button>
             </Modal>
 
             <br></br>

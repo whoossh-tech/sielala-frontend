@@ -14,7 +14,7 @@ const EmailDetail = () => {
 
   const { idEmail } = useParams();
   const [emailDetail, setEmailDetail] = useState();
-  const [showRecipient, setShowRecipient] = useState(false);
+  const [showRecipient, setShowRecipient] = useState(true);
 
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -82,9 +82,11 @@ const EmailDetail = () => {
                 </button>
               </div>
               <p style={{ marginLeft: 30 }} className="text-neutral-60">{emailDetail.dateFormatted}</p>
+              <br></br>
               <div style={{ alignContent: "left" }}>
                 {showRecipient && (
-                  <div className="mx-8 text-neutral-60">
+                  <div className="mx-8 text-neutral-80">
+                    <p>Recipient:</p>
                     {emailDetail.addresses.map((address, index) => (
                       <p key={index} className="mb-1">▪ {address}</p>
                     ))}
@@ -92,7 +94,7 @@ const EmailDetail = () => {
                 )}
               </div>
               <br></br>
-              <p className="text-md mx-8 text-neutral-80" style={{ textAlign: "left" }}>
+              <p className="text-lg mx-8 text-black" style={{ textAlign: "left" }}>
                   {emailDetail.body}
               </p>
             </div>
