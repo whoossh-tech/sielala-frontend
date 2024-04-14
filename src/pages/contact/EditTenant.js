@@ -106,10 +106,8 @@ const EditTenant = () => {
       try {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        console.log("contact id:" + idTenant );
         const response = await axios.get(`http://localhost:8080/api/contact/detail/tenant/${idTenant}`);
         const tenantData = response.data.data;
-        console.log(response.data);
 
         setPicName(tenantData.picName);
         setName(tenantData.name);
