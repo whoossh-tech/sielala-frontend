@@ -84,64 +84,54 @@ const TenantDetail = () => {
         </div>
 
         <div className="container mx-auto py-8 text-left">
-            <div className="grid grid-cols-2 gap-4 text-left">
-                <div className="first-column">
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Brand Name :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.name}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Brand Email :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.email}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Brand Telephone Number :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>+62 {tenant?.telephone}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Brand Instagram :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.brandInstagram}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Brand Address :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.address}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Brand Description :</p>
-                        <p className="text-tertiary-90">{tenant?.brandDescription}</p>
-                    </div>
-                </div>
-                <div className="second-column">
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>PIC Name :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.picName}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Amount of Electricity :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.electricityAmount}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Brand Promo :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.brandPromo}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Product Category :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.category}</p>
-                    </div>
-                    <div className="mb-3">
-                        <p style={{ display: "inline-block", marginRight: "10px", fontWeight: "bold" }}>Booth Preference :</p>
-                        <p className="text-tertiary-90" style={{ display: "inline-block" }}>{tenant?.boothPreference}</p>
-                    </div>
-                </div>
-            </div>
-
-            {/* <div>
-                <div className="button-field">
-                    <Link to={`/invoice/create/${idTenant}`}>
-                        <button className="button-green">Create Invoice</button>
-                    </Link>
-                </div>
-            </div> */}
+        <table style={{ marginLeft: 80, marginRight: 80, borderCollapse: "collapse", width: 1100, alignItems: "center" }}>
+            <tbody>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white", width: "20%" }}>Brand Name :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20, width: "30%" }}>{tenant?.name}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Email :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.email}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Telephone Number :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>+62 {tenant?.telephone}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Instagram :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.brandInstagram}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Address :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.address}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Description :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.brandDescription}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>PIC Name :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.picName}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Amount of Electricity :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.electricityAmount}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Promo :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.brandPromo}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Product Category :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.category}</td>
+                </tr>
+                <tr>
+                    <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Booth Preference :</td>
+                    <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenant?.boothPreference}</td>
+                </tr>
+            </tbody>
+        </table>
 
             {( role === 'PARTNERSHIP' || role === 'ADMIN' ) && (statusInvoice == "null") && (
                 <div className="container mx-auto py-8 text-left">
