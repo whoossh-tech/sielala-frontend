@@ -215,7 +215,7 @@ const RewardRedemptionHistory = () => {
                             {/* Column headers */}
                             <tr>
                                 <th>Points</th>
-                                <th>Visitor ID</th>
+                                <th>Event Pass</th>
                                 <th>Visitor Name</th>
                                 <th>Reward</th>
                                 <th>Brand</th>
@@ -227,7 +227,7 @@ const RewardRedemptionHistory = () => {
                                 rewardRedeemedList.map((rewardRedeemed, i) => (
                                     <tr key={i}>
                                         <td>{rewardRedeemed.pointsRedeemed}</td>
-                                        <td>{rewardRedeemed.visitor.idVisitor}</td>
+                                        <td>{rewardRedeemed.visitor.eventPass}</td>
                                         <td>{rewardRedeemed.visitor.name}</td>
                                         <td>{rewardRedeemed.reward.productName}</td>
                                         <td>{rewardRedeemed.reward.brandName}</td>
