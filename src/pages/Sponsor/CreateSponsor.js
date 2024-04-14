@@ -247,7 +247,7 @@ const CreateSponsor = () => {
             <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Add Sponsor</h2>
             <p className="text-center text-gray-700">Are you sure you want to Add Sponsor?</p>
             <br></br>
-            <button className="button-green text-center" onClick={closeModal}>
+            <button className="button-red text-center" onClick={closeModal}>
               Cancel
             </button>
             <button className="button-pink text-center" onClick={confirmCreateSponsor}>
