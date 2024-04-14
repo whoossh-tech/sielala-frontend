@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "../../static/css/Button.css";
+import "../../static/css/DetailTenant.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
@@ -11,7 +12,7 @@ import { useParams } from "react-router-dom";
 const TenantDetail = () => {
   const navigate = useNavigate();
   const { idTenant } = useParams();
-  const [idEvent,setIdEvent] = useState("");
+  const [idEvent, setIdEvent] = useState("");
   const [tenant, setTenant] = useState();
   const [eventData, setEventData] = useState();
   const [invoiceData, setInvoiceData] = useState();
@@ -45,7 +46,7 @@ const TenantDetail = () => {
 
   const handleBack = () => {
     // Untuk pre-filled dropdown event
-    localStorage.setItem('idSelectedEvent', idEvent);
+    localStorage.setItem("idSelectedEvent", idEvent);
     navigate("/contact");
   };
 
@@ -71,15 +72,8 @@ const TenantDetail = () => {
 
       <br></br>
 
-      <div className="flex justify-between items-center mb-4 mx-8">
-        <button className="button-green" onClick={handleBack}>
-          Back
-        </button>
-        <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: "-6%" }}>
-          Tenant Detail
-        </h1>
-        <div></div>
-      </div>
+
+      <h1 className="text-2xl font-semibold mb-4 text-center">Detai Tenant</h1>
 
       <div className="container mx-auto py-8 text-left">
         <div className="grid grid-cols-2 gap-4 text-left">

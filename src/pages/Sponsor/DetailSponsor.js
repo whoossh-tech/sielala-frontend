@@ -81,13 +81,7 @@ const DetailSponsor = () => {
       />
 
       <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-4">
-        <button className="button-green" onClick={handleBack}>
-          Back
-        </button>
-        <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: '-6%' }}>Sponsor Detail</h1>
-        <div></div>
-      </div>
+      <h1 className="text-2xl font-semibold mb-4 text-center">Sponsor Detail</h1>
       <br></br>
 
         <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">

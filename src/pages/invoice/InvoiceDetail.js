@@ -59,21 +59,26 @@ const InvoiceDetail = () => {
     navigate(-1);
   };
 
-  const uploadPaymentImage = async (idInvoice, file) => {
+  const uploadPaymentProof = async (idInvoice, file) => {
     if (!file) {
-      alert("Please select a payment proof image");
+      toast.alert("Please select a payment proof image");
       return;
     }
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file); // menggunakan "file" sebagai kunci
 
     try {
-      const response = await axios.post(`${url}/api/invoice/upload-payment-image/${idInvoice}`, formData);
+      const response = await axios.post(`${url}/api/invoice/upload-payment-proof/${idInvoice}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // menentukan tipe konten sebagai form-data
+        },
+      });
       toast.success("Payment proof uploaded successfully");
+      
       setPaymentImageUrl(response.data.paymentImageUrl); // Memperbarui URL gambar
-      console.log(paymentImageUrl);
-      setIsValidated(true); // Mengatur status validasi gambar menjadi true
+      // setIsValidated(true); // Mengatur status validasi gambar menjadi true
+      console.log("Payment image URL:", response.data.paymentImageUrl);
     } catch (error) {
       console.error(error);
       toast.error("Error uploading payment proof");
@@ -195,8 +200,11 @@ const InvoiceDetail = () => {
       <Toaster position="top-center" reverseOrder={false} />
 
       <br></br>
+      <br></br>
 
-      <div className="each-invoice" style={{ textAlign: "center" }}>
+      <h1 className="text-2xl font-semibold mb-4 text-center">Invoice Detail</h1>
+
+      {/* <div className="each-invoice" style={{ textAlign: "center" }}>
         <p className="invoice-text-title">Tracking Status:</p>
         {role === "ADMIN" && (
           <div className="dropdown-container">
@@ -210,7 +218,7 @@ const InvoiceDetail = () => {
           </div>
         )}
         {role !== "ADMIN" && <p className="invoice-text">{invoiceData.trackingStatus}</p>}
-      </div>
+      </div> */}
 
       {invoiceData ? (
         <>
@@ -316,25 +324,21 @@ const InvoiceDetail = () => {
 
       {/* Payment Proof Section */}
       <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
-        <h2 className="text-xl font-bold mb-4">Payment Proof</h2>
+        <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
         <div className="flex items-center mb-4">
           <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-          <button className="button-green ml-2" onClick={() => uploadPaymentImage(idInvoice, paymentImage)} disabled={!paymentImage}>
+          <button className="button-green ml-2" onClick={() => uploadPaymentProof(idInvoice, paymentImage)} disabled={!paymentImage}>
             Submit Payment Proof
           </button>
         </div>
 
-        {/* Tampilkan gambar pembayaran jika ada */}
         {paymentImageUrl && (
           <div className="w-full">
             <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" />
           </div>
         )}
 
-        {/* Tombol validasi dan penolakan hanya ditampilkan jika gambar telah diunggah */}
-
-        {/* Tombol validasi dan penolakan selalu ditampilkan, tetapi dinonaktifkan ketika gambar belum diunggah */}
         <div className="flex justify-center mt-4">
           <button className="button-pink mr-2" onClick={handleValidate} disabled={!paymentImageUrl || isValidated || isDeclined}>
             Validate
