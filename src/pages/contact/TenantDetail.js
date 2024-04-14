@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 const TenantDetail = () => {
   const navigate = useNavigate();
   const { idTenant } = useParams();
+  const [idEvent,setIdEvent] = useState("");
   const [tenant, setTenant] = useState();
   const [eventData, setEventData] = useState();
   const [invoiceData, setInvoiceData] = useState();
@@ -27,6 +28,7 @@ const TenantDetail = () => {
       .get(`http://localhost:8080/api/contact/detail/tenant/${idTenant}`)
       .then((res) => {
         setTenant(res.data.data);
+        setIdEvent(res.data.idEvent);
       })
       .catch((err) => console.log(err));
 
@@ -42,7 +44,9 @@ const TenantDetail = () => {
   });
 
   const handleBack = () => {
-    navigate(-1);
+    // Untuk pre-filled dropdown event
+    localStorage.setItem('idSelectedEvent', idEvent);
+    navigate("/contact");
   };
 
   return (

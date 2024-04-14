@@ -144,7 +144,7 @@ function App() {
                 <Route path="/invoice/edit-detail/:idInvoice" element={<EditDetailInvoice />} />
                 <Route path="/tenant-applicant" element={<TenantApplicant />} />
                 <Route path="/tenant-applicant/:idTenantApplicant" element={<TenantApplicantDetail />} />
-                <Route path="/tenant/edit/:idSTenant" element={<EditTenant />} /> 
+                <Route path="/tenant/edit/:idTenant" element={<EditTenant />} /> 
                 <Route path="/sponsor/edit/:idSponsor" element={<EditSponsor />} />              </>
                 
             )}

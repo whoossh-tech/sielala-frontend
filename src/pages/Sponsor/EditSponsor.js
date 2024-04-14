@@ -8,8 +8,8 @@ import "../../static/css/sponsor/CreateSponsor.css";
 import "../../static/css/Button.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
+import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
-import cors from 'cors';
 
 const EditSponsor = () => {
   const [picName, setPicName] = useState("");
@@ -19,13 +19,14 @@ const EditSponsor = () => {
   const [telephone, setTelephone] = useState("");
 
   const [errors, setErrors] = useState({});
-  const { idEvent } = useParams();
-  const [eventName, setEventName]  = useState('');
+  // const { idEvent } = useParams();
+  // const [eventName, setEventName]  = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState("");
 
   const { idSponsor } = useParams();
   const navigate = useNavigate();
+  const role = localStorage.getItem('role');
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -42,7 +43,7 @@ const EditSponsor = () => {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         // app.use(cors());
-        const response = await axios.get(`http://localhost:8080/api/sponsor/edit/${idSponsor}`);
+        const response = await axios.get(`http://localhost:8080/api/sponsor/detail/${idSponsor}`);
         const sponsorData = response.data.data;
         console.log(sponsorData);
 
@@ -51,7 +52,8 @@ const EditSponsor = () => {
         setAddress(sponsorData.address);
         setEmail(sponsorData.email);
         setTelephone(sponsorData.telephone);
-        setEventName(sponsorData.event.eventName);
+        // setEventName(sponsorData.event.eventName);
+
       } catch (error) {
         console.error("Error fetching sponsor data:", error);
       }
@@ -103,7 +105,11 @@ const EditSponsor = () => {
     closeModal();
 
     try {
-      const response = await axios.put(`http://localhost:8080/api/sponsor/edit/${idSponsor}`, {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axios.defaults.mode = 'cors';
+
+      const response = await axios.put(`http://localhost:8080/api/sponsor/update/${idSponsor}`, {
         picName,
         name,
         address,
@@ -111,10 +117,10 @@ const EditSponsor = () => {
         telephone,
       });
       // Untuk pre-filled dropdown event
-      localStorage.setItem("idSelectedEvent", idEvent);
+      // localStorage.setItem("idSelectedEvent", idEvent);
 
       console.log("Sponsor edited successfully:", response.data);
-      navigate("/sponsor");
+      navigate(`/sponsor/detail/${idSponsor}`);
 
       await new Promise((resolve) => setTimeout(resolve, 500));
       toast.success("Sponsor edited successfully");
@@ -127,7 +133,13 @@ const EditSponsor = () => {
   return (
     <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       <style>{reynaldoStyles}</style>
-      <NavbarPartnership style={{ zIndex: 99999 }} />
+      {( role === 'PARTNERSHIP' ) && (
+          <NavbarPartnership style={{ zIndex: 999 }} />
+      )}
+
+      {( role === 'ADMIN' ) && (
+          <NavbarAdmin style={{ zIndex: 999 }} />
+      )}
 
       <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
         <div>
@@ -144,16 +156,7 @@ const EditSponsor = () => {
 
       <form className="flex flex-col items-center px-4 pt-8 pb-6 mt-3 w-full text-neutral-100 bg-white rounded-2xl shadow-lg" onSubmit={(e) => onSubmit(e)}>
         <div className="flex flex-col items-stretch space-y-4 mt-3 w-full">
-          {/* event */}
-          <div className="input-form flex flex-col">
-            <label className="input-label font-reynaldo text-left" htmlFor="event">
-              Event
-            </label>
 
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
-              <input id="event" className="px-4 py-3 w-full focus:outline-none bg-gray-100" value={eventName} readOnly />
-            </div>
-          </div>
           {/* Company name */}
           <div className="input-form flex flex-col space-y-1">
             <label className="input-label font-reynaldo text-left" htmlFor="company_name">
@@ -222,23 +225,19 @@ const EditSponsor = () => {
 
           <br></br>
 
-          <div className="input-form flex flex-col space-y-1">
-            <button
-              className="button-pink montserrat w-full" // Add 'w-full' class to make the button full width
-              type="submit"
-            >
-              Edit
-            </button>
-          </div>
+          {/* <div className="input-form flex flex-col space-y-1"> */}
+          <div>
+            <button className="button-green" onClick={() => navigate(-1)}>Cancel</button>
+            <button className="button-pink" type="submit">Save Sponsor</button>
+        </div>
+          {/* </div> */}
 
           <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
             <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Edit Sponsor</h2>
             <p className="text-center text-gray-700">Are you sure you want to Edit Sponsor?</p>
             <br></br>
-            <button className="button-green text-center" onClick={closeModal}>
-              Cancel
-            </button>
-            <button className="button-pink text-center" onClick={confirmSubmit}>
+            <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+            <button className="button-green text-center" onClick={confirmSubmit}>
               Confirm
             </button>
           </Modal>

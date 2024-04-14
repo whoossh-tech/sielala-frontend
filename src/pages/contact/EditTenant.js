@@ -13,7 +13,7 @@ import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 
 const EditTenant = () => {
-  const { eventId } = useParams();
+  // const { eventId } = useParams();
   const { idTenant } = useParams();
   const url = 'http://localhost:8080';
   const role = localStorage.getItem('role');
@@ -23,13 +23,13 @@ const EditTenant = () => {
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [telephone, setTelephone] = useState("");
-  const [brandNumber, setBrandNumber] = useState("");
+  // const [brandNumber, setBrandNumber] = useState("");
 
   const [brandInstagram, setBrandInstagram] = useState("");
   const [brandDescription, setBrandDescription] = useState("");
   const [electricityAmount, setElectricityAmount] = useState("");
   const [brandPromo, setBrandPromo] = useState("");
-  const [brandCategory, setBrandCategory] = useState("");
+  const [category, setCategory] = useState("");
   const [boothPreference, setBoothPreference] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -59,7 +59,7 @@ const EditTenant = () => {
       newErrors.brand_email = "Email is not valid";
     }
 
-    if (!brandNumber.trim()) {
+    if (!telephone.trim()) {
       newErrors.brand_number = "Brand Telephone Number cannot be empty";
     }
 
@@ -75,7 +75,7 @@ const EditTenant = () => {
       newErrors.pic_name = "Person in Charge Name cannot be empty";
     }
 
-    if (!brandCategory.trim() || brandCategory === "Choose category") {
+    if (!category.trim() || category === "Choose category") {
       newErrors.brand_category = "Brand Category cannot be empty";
     }
 
@@ -83,7 +83,7 @@ const EditTenant = () => {
       newErrors.brand_description = "Brand Description cannot be empty";
     }
 
-    if (!electricityAmount.trim()) {
+    if (electricityAmount === 0 || electricityAmount === null || electricityAmount === undefined) {
       newErrors.electricity_amount = "Amount of Electricity Needed cannot be empty";
     } else if (isNaN(electricityAmount) || electricityAmount <= 0) {
       newErrors.electricity_amount = "Electricity Amount must be a positive number";
@@ -106,22 +106,23 @@ const EditTenant = () => {
       try {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-        const response = await axios.get(`${url}/api/tenant/edit/${idTenant}`);
-        const tenantData = response.data.tenantData;
-        console.log(tenantData);
+        console.log("contact id:" + idTenant );
+        const response = await axios.get(`http://localhost:8080/api/contact/detail/tenant/${idTenant}`);
+        const tenantData = response.data.data;
+        console.log(response.data);
 
         setPicName(tenantData.picName);
         setName(tenantData.name);
         setAddress(tenantData.address);
         setEmail(tenantData.email);
-        setBrandNumber(tenantData.brandNumber);
+        setTelephone(tenantData.telephone);
 
         setBrandInstagram(tenantData.brandInstagram);
         setBrandDescription(tenantData.brandDescription);
-        setElectricityAmount(tenantData.electricityAmount);
-        setBrandPromo(tenantData.setBrandPromo);
-        setBrandCategory(tenantData.brandCategory);
+        setElectricityAmount(parseInt(tenantData.electricityAmount));
+        console.log(tenantData.electricityAmount)
+        setBrandPromo(tenantData.brandPromo);
+        setCategory(tenantData.category);
         setBoothPreference(tenantData.boothPreference);
 
       } catch (error) {
@@ -146,27 +147,27 @@ const EditTenant = () => {
     closeModal();
 
     try {
-      const response = await axios.put(` http://localhost:8080/api/tenant/edit/${idTenant}`, {
-        eventId,
+      const response = await axios.put(` http://localhost:8080/api/tenant/update/${idTenant}`, {
+        // eventId,
         picName,
         address: address,
         name,
         email,
         brandInstagram,
-        telephone: brandNumber,
+        telephone,
         brandDescription,
         electricityAmount: parseInt(electricityAmount),
         brandPromo,
-        category: brandCategory,
+        category,
         boothPreference,
       });
 
       console.log("Tenant Edited successfully:", response.data);
       // Harusnya ke tenant list/ conatct list
-      navigate("/contact");
+      navigate(`/tenant/detail/${idTenant}`);
 
       await new Promise((resolve) => setTimeout(resolve, 500));
-      toast.success("Reward edited successfully");
+      toast.success("Tenant edited successfully");
     } catch (error) {
       console.error("Error:", error);
       toast.error("Cannot edit Tenant");
@@ -230,7 +231,7 @@ const EditTenant = () => {
 
               <div className={`overflow-clip flex items-stretch w-full border border-neutral-40 rounded-lg ${errors.brand_number && "border-danger"}`}>
                 <div className="flex items-center justify-center px-3 bg-cyan-50">+62</div>
-                <input id="brand_number" type="tel" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. 812xxxx..." value={brandNumber} onChange={(e) => setBrandNumber(e.target.value)} />
+                <input id="telephone" type="tel" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. 812xxxx..." value={telephone} onChange={(e) => setTelephone(e.target.value)} />
               </div>
 
               {errors.brand_number && <span className="mt-0.5 text-danger text-xs">{errors.brand_number}</span>}
@@ -284,7 +285,7 @@ const EditTenant = () => {
               </label>
 
               <div className={`relative overflow-clip w-full border border-neutral-40 rounded-lg ${errors.brand_category && "border-danger"}`}>
-                <select id="brand_category" className="appearance-none px-4 py-3 w-full focus:outline-none" placeholder="Choose category" value={brandCategory} onChange={(e) => setBrandCategory(e.target.value)}>
+                <select id="brand_category" className="appearance-none px-4 py-3 w-full focus:outline-none" placeholder="Choose category" value={category} onChange={(e) => setCategory(e.target.value)}>
                   <option>Choose category</option>
                   <option value="Apparel">Apparel</option>
                   <option value="Bag">Bag</option>
@@ -361,24 +362,18 @@ const EditTenant = () => {
 
         <br></br>
 
-        <button
-          className="button-pink montserrat"
-          type="submit"
-          disabled={isLoading}
-          // disabled={isRegisterLoading}
-        >
-          {isLoading ? "Loading..." : "Apply for Tenant"}
-        </button>
+        <div>
+            <button className="button-green" onClick={() => navigate(-1)}>Cancel</button>
+            <button className="button-pink" type="submit">Save Tenant</button>
+        </div>
 
         <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
-          <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Registration</h2>
-          <p className="text-center text-gray-700">Are you sure you want to register?</p>
+          <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Edit Tenant</h2>
+          <p className="text-center text-gray-700">Are you sure you want to edit Tenant?</p>
           <br></br>
+          <button className="button-red text-center" onClick={closeModal}>Cancel</button>
           <button className="button-green text-center" onClick={confirmEditTenant}>
             Confirm
-          </button>
-          <button className="button-pink text-center" onClick={closeModal}>
-            Cancel
           </button>
         </Modal>
 
