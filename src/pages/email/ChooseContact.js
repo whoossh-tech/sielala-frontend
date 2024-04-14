@@ -224,7 +224,6 @@ const ChooseContact = () => {
                 type="submit"
                 disabled={isLoading}
                 onClick={sendEmailConfirmation}
-                // disabled={isRegisterLoading}
               >
                   {isLoading ? 'Sending...' : 'Send Email'}
               </button>

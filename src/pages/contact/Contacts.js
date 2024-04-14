@@ -80,6 +80,12 @@ const Contacts = () => {
 
       <br></br>
 
+      {(!selectedEvent) && (
+        <div className="text-center text-red-500 font-bold mb-4">
+            Event is not selected, please select event on the dropdown.
+        </div>
+      )}
+
       <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
         <select
           className="appearance-none px-4 py-3 w-full focus:outline-none"
