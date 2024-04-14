@@ -472,7 +472,7 @@ const AddRewardRedemptionData = () => {
             id="modal-confirmation"
         >
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-                <p className="text-center text-gray-700">Are you sure you want to add reward?</p>
+                <p className="text-center text-gray-700">Are you sure you want Redeem Reward?</p>
                 <br></br>
                 <div>
                     <button className="button-red text-center" onClick={closeConfirmationModal}>Cancel</button>
