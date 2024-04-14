@@ -21,7 +21,7 @@ const RewardRedemptionHistory = () => {
     const [eventData, setEventData] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState('');
     const dayRangeCount = Array.from({ length: countdays });
-    const [day, setDay] = useState(0);
+    // const [day, setDay] = useState(0);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,13 +42,13 @@ const RewardRedemptionHistory = () => {
     const disableRedeemRewardButton = !selectedEvent || currentDate < eventStartDate || currentDate > eventEndDate;
 
     useEffect(() => {
-
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         // Pre-filled dropdown event
         const storedEvent = localStorage.getItem('idSelectedEvent');
         if (storedEvent) {
+            
             setSelectedEvent(storedEvent);
             localStorage.removeItem('idSelectedEvent'); 
         }
@@ -59,8 +59,6 @@ const RewardRedemptionHistory = () => {
                 setRewardRedeemedList(res.data.data)
                 // setCountDays(res.data.dayRange)
                 // setDay(res.data.newDay);
-                setDay(daysDiff);
-                console.log(currentDate<eventStartDate);
             }).catch(err => 
                 console.log(err)
             )
@@ -186,7 +184,7 @@ const RewardRedemptionHistory = () => {
                     ) : ( currentDate.getTime() > eventEndDate.getTime() ? (
                         <p style={{color: '#7D512D'}}><b>Event has already passed</b></p>
                     ) : (
-                    <p style={{color: '#7D512D'}}><b>Day {day}</b></p>
+                    <p style={{color: '#7D512D'}}><b>Day {daysDiff}</b></p>
                     ))}
 
                 </div>
