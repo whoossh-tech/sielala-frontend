@@ -69,7 +69,7 @@ const RewardDetail = () => {
 
     const handleBack = () => {
         localStorage.setItem('idSelectedEvent', idEvent);
-        navigate(-1); // Redirect back to the previous page
+        navigate('/reward-inventory'); // Redirect back to the previous page
     };
 
     return (  
@@ -189,7 +189,7 @@ const RewardDetail = () => {
             <Modal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
-                id="modal-confirmation"
+                id="modal-confirmation-form"
             >
             
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>

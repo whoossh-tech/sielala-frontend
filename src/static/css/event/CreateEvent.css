@@ -23,10 +23,10 @@
 
 #modal-confirmation {
   position: fixed;
-  top: 10%; /* Menempatkan modal tepat di tengah secara vertikal */
+  top: 10%; /* Menempatkan modal 10% dari atas layar */
   left: 50%; /* Menempatkan modal tepat di tengah secara horizontal */
-  transform: translate(180%, 90%); /* Menggeser modal agar posisinya tepat di tengah halaman */
-  width: 80%;
+  transform: translate(135%, 80%); /* Menggeser modal agar posisinya tepat di tengah vertikal dan 80% dari bawah layar */
+  width: 30%;
   max-width: 400px;
   height: 60%;
   max-height: 200px;
@@ -35,9 +35,7 @@
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000; /* Mengatur z-index agar modal berada di atas elemen lain */
+  z-index: 10000;
 }
 
 .title {

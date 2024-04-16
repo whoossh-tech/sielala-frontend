@@ -62,6 +62,7 @@ const ChooseContact = () => {
 
         if (storedSelectedContacts) {
           setSelectedContact(storedSelectedContacts);
+          localStorage.removeItem('selectedContacts');
         }
 
         if (selectedEvent) {
@@ -69,7 +70,7 @@ const ChooseContact = () => {
             .get(`https://sielala-backend-production.up.railway.app/api/email/contacts/${selectedEvent}`)
             .then((res) => {
                 setContacts(res.data.data);
-                console.log(res.data.data);
+                // console.log(res.data.data);
             })
             .catch((error) => {
                 toast.error("Failed to fetch contacts");
@@ -224,7 +225,6 @@ const ChooseContact = () => {
                 type="submit"
                 disabled={isLoading}
                 onClick={sendEmailConfirmation}
-                // disabled={isRegisterLoading}
               >
                   {isLoading ? 'Sending...' : 'Send Email'}
               </button>
@@ -348,7 +348,7 @@ const ChooseContact = () => {
               <Modal
                   isOpen={isModalOpen}
                   onRequestClose={closeModal}
-                  id="modal-confirmation"
+                  id="modal-confirmation-form"
               >
                   <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
                   <p className="text-center text-gray-700">Are you sure you want to send the email?</p>
