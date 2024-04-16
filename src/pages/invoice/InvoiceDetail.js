@@ -36,11 +36,8 @@ const InvoiceDetail = () => {
   const [paymentImageUrl, setPaymentImageUrl] = useState("");
   const [isValidated, setIsValidated] = useState(false);
   const [isDeclined, setIsDeclined] = useState(false);
-  const [trackingStatus, setTrackingStatus] = useState("");
-  const [deliveryStatus, setDeliveryStatus] = useState("");
-  const [isEditDisabled, setIsEditDisabled] = useState(false);  
-  const [selectedStatus, setSelectedStatus] = useState("");
-  
+  const [isEditDisabled, setIsEditDisabled] = useState(false);
+  const [isMarkAsDeliveredVisible, setIsMarkAsDeliveredVisible] = useState(true);
 
   const role = localStorage.getItem("role");
 
@@ -153,6 +150,7 @@ const InvoiceDetail = () => {
     try {
       const response = await axios.put(`http://localhost:8080/api/invoice/validate-payment-proof/${idInvoice}`);
       console.log("Payment validated :", response.data);
+      setIsValidated(true);
 
       toast.success("Payment proof validated successfully");
     } catch (error) {
@@ -234,6 +232,30 @@ const InvoiceDetail = () => {
     return formatter.format(angka);
   }
 
+  const handleDeliveredButtonClick = async () => {
+    try {
+      // Mengirim permintaan untuk mengubah trackingStatus menjadi "delivered"
+      await axios.put(`http://localhost:8080/api/invoice/mark-as-delivered/${idInvoice}`, {
+        trackingStatus: "Delivered",
+      });
+
+      // Menonaktifkan tombol "edit invoice" setelah berhasil mengubah status
+      setIsEditDisabled(true);
+
+      // Menampilkan pesan sukses
+      toast.success("Tracking status changed to Delivered");
+      setIsMarkAsDeliveredVisible(false);
+
+      setInvoiceData((prevData) => ({
+        ...prevData,
+        trackingStatus: "Delivered",
+      }));
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to change tracking status");
+    }
+  };
+
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
       {role === "PARTNERSHIP" && <NavbarPartnership style={{ zIndex: 999 }} />}
@@ -312,7 +334,9 @@ const InvoiceDetail = () => {
 
               {(role === "PARTNERSHIP" || role === "ADMIN") && (
                 <Link to={`/invoice/edit-detail/${idInvoice}`}>
-                  <button className="button-pink" disabled={isEditDisabled}>Edit Invoice</button>
+                  <button className="button-pink" disabled={isEditDisabled}>
+                    Edit Invoice
+                  </button>
                 </Link>
               )}
 
@@ -323,6 +347,13 @@ const InvoiceDetail = () => {
               {(invoiceData.trackingStatus === "Issued" || invoiceData.trackingStatus === "Pending") && (
                 <button className="button-green" onClick={openModal} disabled={isLoading}>
                   {isLoading ? "Sending..." : "Notify Client"}
+                </button>
+              )}
+
+              {/* Tombol untuk mengubah status menjadi "delivered" */}
+              {invoiceData.trackingStatus !== "Delivered" && (
+                <button className="button-green" onClick={handleDeliveredButtonClick}>
+                  Mark as Delivered
                 </button>
               )}
             </div>
@@ -362,8 +393,8 @@ const InvoiceDetail = () => {
         <p>Loading...</p>
       )}
 
-      {/* Payment Proof Section */}
-      <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
+            {/* Payment Proof Section */}
+            <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
         <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
         <div className="flex items-center mb-4">

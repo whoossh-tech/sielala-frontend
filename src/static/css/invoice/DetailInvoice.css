@@ -140,9 +140,9 @@ th {
 
 #modal-confirmation {
     position: fixed;
-    top: 10%; /* Menempatkan modal 10% dari atas layar */
-    left: 50%; /* Menempatkan modal tepat di tengah secara horizontal */
-    transform: translate(135%, 80%); /* Menggeser modal agar posisinya tepat di tengah vertikal dan 80% dari bawah layar */
+    top: 0%; /* Menempatkan modal 10% dari atas layar */
+    left: 0%; /* Menempatkan modal tepat di tengah secara horizontal */
+    transform: translate(100%, 80%); /* Menggeser modal agar posisinya tepat di tengah vertikal dan 80% dari bawah layar */
     width: 30%;
     max-width: 400px;
     height: 60%;
@@ -154,10 +154,6 @@ th {
     text-align: center;
     z-index: 10000;
 }
-
-
-
-
 
 
 #page-title {

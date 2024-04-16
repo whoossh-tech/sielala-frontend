@@ -23,7 +23,7 @@ const EditDetailInvoice = () => {
   const [picName, setPicName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
-  const [trackingStatus, setTrackingStatus] = useState("");
+  // const [trackingStatus, setTrackingStatus] = useState("");
 
   const [idEvent, setIdEvent] = useState("");
   const [errors, setErrors] = useState("");
@@ -52,7 +52,7 @@ const EditDetailInvoice = () => {
         setCompanyAddress(invoiceData.companyAddress);
         setPicName(invoiceData.picName);
         setInvoiceItems(invoiceData.listInvoiceItem);
-        setTrackingStatus(invoiceData.trackingStatus);
+        // setTrackingStatus(invoiceData.trackingStatus);
       } catch (error) {
         console.error("Error fetching invoice data:", error);
       }
@@ -129,7 +129,7 @@ const EditDetailInvoice = () => {
         companyAddress,
         picName,
         listInvoiceItem,
-        trackingStatus
+        // trackingStatus
       });
 
       localStorage.setItem("idSelectedEvent", idEvent);
@@ -189,17 +189,17 @@ const EditDetailInvoice = () => {
       <Toaster position="top-center" reverseOrder={false} />
 
       <form className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg" onSubmit={(e) => onSubmit(e)}>
-        <div className="input-form flex flex-col space-y-1">
+        {/* <div className="input-form flex flex-col space-y-1">
           <label className="input-label font-reynaldo text-left" htmlFor="tracking_status">
             Tracking Status
           </label>
-          <select id="tracking_status" className="px-4 py-3 w-full focus:outline-none" value={trackingStatus} onChange={(e) => setTrackingStatus(e.target.value)}>
+          {/* <select id="tracking_status" className="px-4 py-3 w-full focus:outline-none" value={trackingStatus} onChange={(e) => setTrackingStatus(e.target.value)}>
             <option value="Pending">Pending</option>
             <option value="In Progress">In Progress</option>
             <option value="Delivered">Delivered</option>
             <option value="Cancelled">Cancelled</option>
-          </select>
-        </div>
+          </select> */}
+        {/* </div> */}
 
         <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
           <div className="input-form flex flex-col">
