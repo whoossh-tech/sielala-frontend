@@ -99,7 +99,7 @@ const EditEvent = () => {
                 location,
             });
             console.log("Event edited successfully:", response.data);
-            navigate("/Event");
+            navigate(`/event/detail/${idEvent}`);
 
             await new Promise((resolve) => setTimeout(resolve, 500))
             toast.success("Event edited successfully");

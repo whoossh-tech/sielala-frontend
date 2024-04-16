@@ -38,6 +38,8 @@ const VisitorRegistrationSuccessPage = () => {
                     <Link to="/" className="button-green text-center">Back to Dashboard</Link>
                 </div>
             </div>
+            <br></br>
+            <br></br>
         </main>
     )
 }
