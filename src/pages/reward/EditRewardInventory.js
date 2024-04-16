@@ -115,7 +115,7 @@ const EditRewardInventory = () => {
             localStorage.setItem('idSelectedEvent', idEvent);
 
             console.log('Reward edited successfully:', response.data);
-            navigate('/reward-inventory');
+            navigate(`/reward-inventory/detail/${idReward}`);
 
             await new Promise((resolve) => setTimeout(resolve, 500))
             toast.success("Reward edited successfully");

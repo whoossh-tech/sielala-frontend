@@ -131,7 +131,7 @@ const Visitor = () => {
         });
 
         setAttendanceData({ data: updatedAttendanceData });
-  
+
         console.log(res.data);
       })
       .catch(error => {
@@ -275,16 +275,16 @@ const Visitor = () => {
 
       {selectedEvent && eventData.length > 0 && (
         <div style={{ marginBottom: '10px' }}>
-          {day <= countDays ? (
+          {currentDate < eventStartDate ? (
             <React.Fragment>
               <p>
                 <b>Current Event Day:</b>
               </p>
               <p style={{ color: '#7D512D' }}>
-                <b>Day {day}</b>
+                <b>Event has not started</b>
               </p>
             </React.Fragment>
-          ) : (
+          ) : currentDate > eventEndDate ? (
             <React.Fragment>
               <p>
                 <b>Current Event Day:</b>
@@ -293,11 +293,18 @@ const Visitor = () => {
                 <b>Event has already passed</b>
               </p>
             </React.Fragment>
-
+          ) : (
+            <React.Fragment>
+              <p>
+                <b>Current Event Day:</b>
+              </p>
+              <p style={{ color: '#7D512D' }}>
+                <b>Day {day}</b>
+              </p>
+            </React.Fragment>
           )}
         </div>
       )}
-
 
       {(selectedEvent && eventData.length > 0) && (
 
@@ -320,7 +327,7 @@ const Visitor = () => {
               {/* Row headers  */}
               <tr>
                 <th style={{ borderRight: '1px solid #E3E2E6' }} colSpan="4"> VISITOR </th>
-                <th style={{ borderRight: '1px solid #E3E2E6' }} colSpan="4"> ATTENDANCE</th>
+                <th style={{ borderRight: '1px solid #E3E2E6' }} colSpan={countDays}> ATTENDANCE</th>
               </tr>
             </thead>
             <thead>

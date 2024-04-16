@@ -29,6 +29,11 @@
     transition: ease background-color 250ms;
 }
 
+.button-green:hover {
+    background-color: #D3DA80;
+    color: white;
+}
+
 .button-green-invoice {
     background-color: #A9B245;
     color: white;

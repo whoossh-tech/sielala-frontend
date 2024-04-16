@@ -70,7 +70,7 @@ const RewardDetail = () => {
 
     const handleBack = () => {
         localStorage.setItem('idSelectedEvent', idEvent);
-        navigate(-1); // Redirect back to the previous page
+        navigate('/reward-inventory'); // Redirect back to the previous page
     };
 
     return (  

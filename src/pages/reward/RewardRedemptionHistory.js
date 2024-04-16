@@ -21,7 +21,7 @@ const RewardRedemptionHistory = () => {
     const [eventData, setEventData] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState('');
     const dayRangeCount = Array.from({ length: countdays });
-    const [day, setDay] = useState(0);
+    // const [day, setDay] = useState(0);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,19 +33,22 @@ const RewardRedemptionHistory = () => {
     const eventEndDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.endDate);
     eventEndDate.setHours(23,59,59,999);
 
+    const timeDiff = Math.abs(currentDate.getTime() - eventStartDate.getTime());
+    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
     const formattedStartDate = new Date(eventStartDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     const formattedEndDate = new Date(eventEndDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
     const disableRedeemRewardButton = !selectedEvent || currentDate < eventStartDate || currentDate > eventEndDate;
 
     useEffect(() => {
-
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         // Pre-filled dropdown event
         const storedEvent = localStorage.getItem('idSelectedEvent');
         if (storedEvent) {
+            
             setSelectedEvent(storedEvent);
             localStorage.removeItem('idSelectedEvent'); 
         }
@@ -55,7 +58,7 @@ const RewardRedemptionHistory = () => {
             .then(res => {
                 setRewardRedeemedList(res.data.data)
                 // setCountDays(res.data.dayRange)
-                setDay(res.data.newDay);
+                // setDay(res.data.newDay);
             }).catch(err => 
                 console.log(err)
             )
@@ -174,8 +177,16 @@ const RewardRedemptionHistory = () => {
 
             {(selectedEvent && eventData.length > 0) && (
                 <div style={{marginBottom: '10px'}}>
-                    <p><b>Current Inventory Day Status:</b></p>
-                    <p style={{color: '#7D512D'}}><b>Day {day}</b></p>
+                    <p><b>Current Event Day:</b></p>
+
+                    {currentDate.getTime() < eventStartDate.getTime() ? (
+                        <p style={{color: '#7D512D'}}><b>Event has not started</b></p>
+                    ) : ( currentDate.getTime() > eventEndDate.getTime() ? (
+                        <p style={{color: '#7D512D'}}><b>Event has already passed</b></p>
+                    ) : (
+                    <p style={{color: '#7D512D'}}><b>Day {daysDiff}</b></p>
+                    ))}
+
                 </div>
             )}
 
@@ -215,10 +226,10 @@ const RewardRedemptionHistory = () => {
                             {/* Column headers */}
                             <tr>
                                 <th>Points</th>
-                                <th>Visitor ID</th>
+                                <th>Event Pass</th>
                                 <th>Visitor Name</th>
+                                <th>Email</th>
                                 <th>Reward</th>
-                                <th>Brand</th>
                                 <th>Date Redeemed</th>
                             </tr>
                         </thead>
@@ -227,16 +238,16 @@ const RewardRedemptionHistory = () => {
                                 rewardRedeemedList.map((rewardRedeemed, i) => (
                                     <tr key={i}>
                                         <td>{rewardRedeemed.pointsRedeemed}</td>
-                                        <td>{rewardRedeemed.visitor.idVisitor}</td>
+                                        <td>{rewardRedeemed.visitor.eventPass}</td>
                                         <td>{rewardRedeemed.visitor.name}</td>
-                                        <td>{rewardRedeemed.reward.productName}</td>
-                                        <td>{rewardRedeemed.reward.brandName}</td>
+                                        <td>{rewardRedeemed.visitor.email}</td>
+                                        <td>{rewardRedeemed.reward.productName} {rewardRedeemed.reward.brandName}</td>
                                         <td>{formatingDate(rewardRedeemed.redeemDate)}</td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td>No rewards available</td>
+                                    <td colSpan="6">Reward Redemption History is empty</td>
                                 </tr>
                             )}
                         </tbody>

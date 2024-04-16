@@ -131,13 +131,15 @@ const AddRewardRedemptionData = () => {
         const newErrors = {};
 
         if (!visitor.trim()) {
-            newErrors.visitor = 'Visitor ID cannot be empty';
+            newErrors.visitor = 'Event Pass cannot be empty';
         }
 
         if (!points.trim()) {
             newErrors.points = 'Points to Redeem cannot be empty';
         } else if (isNaN(points) || points <= 0) {
             newErrors.points = 'Points to Redeem must be a positive number';
+        } else if (points < 500){
+            newErrors.points = 'Insufficient points for reward redemption';
         }
 
         if (isCat1 && rouletteDataCat1.length == 0) {
@@ -175,7 +177,7 @@ const AddRewardRedemptionData = () => {
             
             const response = await axios.post(`${url}/api/reward/redeem-reward/${idEvent}`, {
                 idProduct: reward,
-                idVisitor: visitor,
+                eventPass: visitor,
                 pointsRedeemed: parseInt(points),
                 redeemDate
             });
@@ -244,18 +246,18 @@ const AddRewardRedemptionData = () => {
     // autosuggest
     function getSuggestions(value) { 
         return listVisitor.filter(visitor => 
-            visitor.idVisitor.toLowerCase().includes(value.trim().toLowerCase()) ||
+            visitor.eventPass.toLowerCase().includes(value.trim().toLowerCase()) ||
             visitor.name.toLowerCase().includes(value.trim().toLowerCase())
         );
     }
       
     function getSuggestionValue(suggestion) {
-        return suggestion.idVisitor;
+        return suggestion.eventPass;
     }
 
     function renderSuggestion(suggestion) {
         return (
-          <span>{suggestion.idVisitor} : {suggestion.name}</span>
+          <span>{suggestion.eventPass} : {suggestion.name}</span>
         );
     }
     
@@ -376,7 +378,7 @@ const AddRewardRedemptionData = () => {
             {/* visitor */}
             <div className="input-form flex flex-col space-y-1">
             <label className="input-label font-reynaldo text-left" htmlFor="visitor">
-                Visitor ID<span className="text-danger">*</span>
+                Event Pass<span className="text-danger">*</span>
             </label>
 
             <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.visitor && "border-danger"}`}>
@@ -397,7 +399,7 @@ const AddRewardRedemptionData = () => {
                     getSuggestionValue={getSuggestionValue}
                     renderSuggestion={renderSuggestion}
                     inputProps={{
-                        placeholder: "Insert Your Visitor ID",
+                        placeholder: "Insert Event Pass",
                         value: value,
                         className: "px-4 py-3 w-full focus:outline-none text-left",
                         // onChange: {(e) => setValue(e.target.value)}
@@ -470,7 +472,7 @@ const AddRewardRedemptionData = () => {
             id="modal-confirmation"
         >
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-                <p className="text-center text-gray-700">Are you sure you want to add reward?</p>
+                <p className="text-center text-gray-700">Are you sure you want Redeem Reward?</p>
                 <br></br>
                 <div>
                     <button className="button-red text-center" onClick={closeConfirmationModal}>Cancel</button>

@@ -39,7 +39,7 @@ const RewardInventory = () => {
 
     const disableCarryOutStockButton = !selectedEvent || currentDate < eventStartDate || currentDate > eventEndDate || currentDate === eventEndDate;
 
-    const disableAddRewardButton = !selectedEvent || currentDate < eventStartDate || currentDate > eventEndDate;
+    const disableAddRewardButton = !selectedEvent || currentDate > eventEndDate;
 
     
     const openModal = () => {
