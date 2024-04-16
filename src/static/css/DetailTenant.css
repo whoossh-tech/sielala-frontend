@@ -1,4 +1,4 @@
-.DetailInvoice {
+.DetailTenant {
     width: 100%;
     height: 50vh;
     display: flex;
@@ -20,7 +20,7 @@
     margin-bottom: 4px; /* Adjust as needed */
 }
 
-.detail-invoice{
+.detail-tenant{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,7 @@
     gap: 20px;
 }
 
-.invoice-text {
+.tenant-text {
     font-size: 16px;
     color: #A9B245;
     font-weight: bold;
@@ -39,7 +39,7 @@
     margin: 0;
 }
 
-.invoice-text-title {
+.tenant-text-title {
     font-size: 16px;
     color: #2F3033;
     font-weight: bold;
@@ -47,53 +47,14 @@
     text-align: left;
     margin-top: 0; /* Reset margin-top */
     margin: 0;
-    width: 180px;
+    width: 200px;
 }
 
-.each-invoice{
+.each-tenant{
     /* align-items: flex-start; */
     display: flex;
     align-items: center;
     gap: 44px;
-    width: 100%;
-}
-
-.detail-inventory{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 650px;
-    margin: 0 auto;
-    margin-bottom: 10px;
-    /* gap: 10px; */
-}
-
-.inventory-text {
-    font-size: 16px;
-    color: #A9B245;
-    font-weight: bold;
-    letter-spacing: 0.8px;
-    text-align: center;
-    margin-top: 0; /* Reset margin-top */
-    margin: 0;
-}
-
-.inventory-text-title {
-    font-size: 16px;
-    color: #2F3033;
-    font-weight: bold;
-    letter-spacing: 0.8px;
-    text-align: left;
-    margin-top: 0; /* Reset margin-top */
-    margin: 0;
-    /* width: 120px; */
-}
-
-.each-inventory{
-    /* align-items: flex-start; */
-    display: flex;
-    align-items: center;
-    gap: 10px;
     width: 100%;
 }
 
@@ -107,8 +68,6 @@
     left: 0;
     margin-left: 210px;
     margin-bottom: 30px
-    /* margin-top: 0; Reset margin-top */
-    /* margin: 0 5px; */
 }
 
 #page-title {
@@ -118,8 +77,7 @@
 .button-field {
     margin-bottom: 20px;
 }
-
-.table {
+table {
     border-collapse: collapse;
     width: 1200px;
     height: 200px;
@@ -137,13 +95,12 @@ th {
     color: white;
 }
 
-
 #modal-confirmation {
     position: fixed;
-    top: 0%; /* Menempatkan modal 10% dari atas layar */
-    left: 0%; /* Menempatkan modal tepat di tengah secara horizontal */
-    transform: translate(100%, 80%); /* Menggeser modal agar posisinya tepat di tengah vertikal dan 80% dari bawah layar */
-    width: 30%;
+    top: 10%; /* Menempatkan modal tepat di tengah secara vertikal */
+    left: 50%; /* Menempatkan modal tepat di tengah secara horizontal */
+    transform: translate(180%, 60%); /* Menggeser modal agar posisinya tepat di tengah halaman */
+    width: 80%;
     max-width: 400px;
     height: 60%;
     max-height: 200px;
@@ -152,21 +109,8 @@ th {
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    z-index: 10000;
-}
-
-
-#page-title {
-    font-size: xx-large;
-}
-
-.dropdown-container {
-    display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: green;
-  }
-  
-  .dropdown {
-    margin-left: 10px; /* Atur jarak antara teks dan dropdown jika diperlukan */
-  }
+    align-items: center;
+    z-index: 10000; /* Mengatur z-index agar modal berada di atas elemen lain */
+}
+
