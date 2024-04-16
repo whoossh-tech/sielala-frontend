@@ -93,36 +93,7 @@ const Contacts = () => {
             Event is not selected, please select event on the dropdown.
         </div>
       )}
-
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
-        <select
-          className="appearance-none px-4 py-3 w-full focus:outline-none"
-          onChange={handleChange}
-          style={{
-            backgroundColor: "#ffffff",
-            color: "#333333",
-            borderRadius: "0.375rem",
-            border: "1px solid #E3E2E6",
-            fontSize: "1rem",
-            lineHeight: "1.5",
-            padding: "0.5rem 1rem",
-            width: "200px",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <option>select event</option>
-          {eventData && eventData.length > 0 ? (
-            eventData.map((event, index) => (
-              <option key={index} value={event.idEvent}>
-                {event.eventName}
-              </option>
-            ))
-          ) : (
-            <option value="">No events available</option>
-          )}
-        </select>
-      </div> */}
+ 
       <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
                 <div style={{ position: 'relative' }}>
                     <select 
@@ -142,7 +113,7 @@ const Contacts = () => {
                         <option>select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
-                                <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
+                                <option key={index} value={event.idEvent}>{event.eventName}</option>
                             ))) : (
                                 <option value="">No events available</option>
                             )

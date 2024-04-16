@@ -115,20 +115,14 @@ const DetailSponsor = () => {
                     <Link to={`/sponsor/edit/${idSponsor}`}>
                         <button className="button-pink">Edit Sponsor</button>
                     </Link>
-                    {/* <button className="button-red" onClick={openModal}>Delete Reward</button> */}
+                    {( role === 'PARTNERSHIP' ||  role === 'ADMIN' ) && (statusInvoice == "null") && (
+                      <Link to={`/invoice/create/${idSponsor}`}>
+                          <button className="button-brown">Create Invoice</button>
+                      </Link>
+                    )}
                 </div>
             </div>
             
-          <br></br>
-
-            {( role === 'PARTNERSHIP' ||  role === 'ADMIN' ) && (statusInvoice == "null") && (
-                  <div className="button-field">
-                      <Link to={`/invoice/create/${idSponsor}`}>
-                          <button className="button-green">Create Invoice</button>
-                      </Link>
-                  </div>
-            )}
-
           <br></br>
 
         <h1 className="text-2xl font-semibold mb-4">Invoice</h1>

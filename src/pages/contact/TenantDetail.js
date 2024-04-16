@@ -70,9 +70,16 @@ const TenantDetail = () => {
       <br></br>
       <Toaster position="top-center" reverseOrder={false} />
 
-      <br></br>
+      {/* <div className="flex justify-between items-center mb-4 mx-8">
+        <button className="button-green" onClick={handleBack}>
+          Back
+        </button>
+      </div> */}
 
-        <div className="container mx-auto py-8 text-left">
+      <br></br>
+      <h1 style={{ textAlign: "left", marginLeft: 120 }}>{tenant?.name}</h1>
+
+        <div className="container mx-auto text-left">
         <table style={{ marginLeft: 80, marginRight: 80, borderCollapse: "collapse", width: 1100, alignItems: "center" }}>
             <tbody>
                 <tr>
@@ -122,7 +129,6 @@ const TenantDetail = () => {
             </tbody>
         </table>
 
-        {(role === "PARTNERSHIP" || role === "ADMIN") && statusInvoice == "null" && (
           <div className="container mx-auto py-8 text-center">
             <div className="button-field">
               <button className="button-green" onClick={handleBack}>
@@ -131,21 +137,13 @@ const TenantDetail = () => {
               <Link to={`/tenant/edit/${idTenant}`}>
                 <button className="button-pink">Edit Tenant</button>
               </Link>
-              {/* <button className="button-red" onClick={openModal}>Delete Reward</button> */}
+              {(role === "PARTNERSHIP" || role === "ADMIN") && statusInvoice == "null" && (
+                <Link to={`/invoice/create/${idTenant}`}>
+                  <button className="button-brown">Create Invoice</button>
+                </Link>
+              )}
             </div>
-            {/* Your existing code */}
-
-            <div className="button-field text-center">
-              {" "}
-              {/* Added text-center class */}
-              <Link to={`/invoice/create/${idTenant}`}>
-                <button className="button-green">Create Invoice</button>
-              </Link>
-            </div>
-
-            {/* Your existing code */}
           </div>
-        )}
 
         <h1 className="text-2xl font-semibold mb-4 text-center">Invoice Data</h1>
         <div className="bg-white p-6 rounded-lg shadow-md mb-4">
