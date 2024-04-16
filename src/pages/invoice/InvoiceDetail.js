@@ -17,7 +17,7 @@ import { FaceSmileIcon } from "@heroicons/react/24/solid";
 
 const InvoiceDetail = () => {
   const { idInvoice } = useParams();
-  const url = "http://localhost:8080";
+  const url = "https://sielala-backend-production.up.railway.app";
 
   const navigate = useNavigate();
 
@@ -86,7 +86,7 @@ const InvoiceDetail = () => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     axios
-      .get(`http://localhost:8080/api/invoice/detail/${idInvoice}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/invoice/detail/${idInvoice}`)
       .then((res) => {
         setInvoiceData(res.data.data);
         // console.log(res.data.data);
@@ -150,7 +150,7 @@ const InvoiceDetail = () => {
     closeValidateModal();
 
     try {
-      const response = await axios.put(`http://localhost:8080/api/invoice/validate-payment-proof/${idInvoice}`);
+      const response = await axios.put(`https://sielala-backend-production.up.railway.app/api/invoice/validate-payment-proof/${idInvoice}`);
       console.log("Payment validated :", response.data);
       setIsValidated(true);
 
@@ -165,7 +165,7 @@ const InvoiceDetail = () => {
     closeDeclineModal();
 
     try {
-      const response = await axios.put(`http://localhost:8080/api/invoice/decline-payment-proof/${idInvoice}`);
+      const response = await axios.put(`https://sielala-backend-production.up.railway.app/api/invoice/decline-payment-proof/${idInvoice}`);
       console.log("Payment validation declined :", response.data);
       toast.success("Payment proof declined successfully");
       setIsDeclined(true);
