@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   Typography,
-  Button,
+  Button
 } from "@material-tailwind/react";
 
 import logo from "../../assets/logo-sielala.png";
@@ -17,18 +17,7 @@ export function NavbarAdmin() {
   };
 
   const navList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="/admin" className="flex items-center text-md text-neutral-80">
-          <b>Dashboard</b>
-        </a>
-      </Typography>
-
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-5">
       <Typography
         as="li"
         variant="small"
@@ -58,7 +47,7 @@ export function NavbarAdmin() {
         className="p-1 font-normal"
       >
         <a href="/visitor" className="flex items-center text-md text-neutral-80">
-          <b>Visitor Data Report</b>
+          <b>Visitor</b>
         </a>
       </Typography>
 
@@ -137,12 +126,14 @@ export function NavbarAdmin() {
       <Navbar className="rounded-none sticky top-0 z-10 h-max bg-primary-60 px-4 py-2 lg:px-8 lg:py-4" style={{ border: 'none' }}>
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-4">
-            <img
-                src={logo} 
-                alt="SieLALA Logo"
-                className="cursor-pointer h-9 w-27 object-cover"
-                href="/"
+            <a href="/admin">
+              <img
+                  src={logo} 
+                  alt="SieLALA Logo"
+                  className="cursor-pointer h-9 w-28 object-cover"
+                  href="/"
               />
+            </a>
               <br></br>
             <div className="mr-4 hidden lg:block">{navList}</div>
           </div>

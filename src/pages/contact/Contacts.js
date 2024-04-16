@@ -22,6 +22,13 @@ const Contacts = () => {
   const role = localStorage.getItem('role');
 
   useEffect(() => {
+    // Pre-filled dropdown event
+    const storedEvent = localStorage.getItem('idSelectedEvent');
+    if (storedEvent) {
+        setSelectedEvent(storedEvent);
+        localStorage.removeItem('idSelectedEvent'); 
+    }
+
     if (selectedEvent) {
       axios
         .get(`https://sielala-backend-production.up.railway.app/api/contact/all/${selectedEvent}`)
@@ -38,6 +45,7 @@ const Contacts = () => {
       .get("https://sielala-backend-production.up.railway.app/api/sponsor/view-event-all")
       .then((res) => {
         setEventData(res.data.data);
+        console.log(res.data.data);
       })
       .catch((err) => console.log(err));
   }, [selectedEvent]);
@@ -80,35 +88,55 @@ const Contacts = () => {
 
       <br></br>
 
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
-        <select
-          className="appearance-none px-4 py-3 w-full focus:outline-none"
-          onChange={handleChange}
-          style={{
-            backgroundColor: "#ffffff",
-            color: "#333333",
-            borderRadius: "0.375rem",
-            border: "1px solid #E3E2E6",
-            fontSize: "1rem",
-            lineHeight: "1.5",
-            padding: "0.5rem 1rem",
-            width: "200px",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <option>select event</option>
-          {eventData && eventData.length > 0 ? (
-            eventData.map((event, index) => (
-              <option key={index} value={event.idEvent}>
-                {event.eventName}
-              </option>
-            ))
-          ) : (
-            <option value="">No events available</option>
-          )}
-        </select>
-      </div>
+      {(!selectedEvent) && (
+        <div className="text-center text-red-500 font-bold mb-4">
+            Event is not selected, please select event on the dropdown.
+        </div>
+      )}
+ 
+      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+                <div style={{ position: 'relative' }}>
+                    <select 
+                        className="appearance-none px-4 py-3 w-full focus:outline-none" 
+                        onChange={handleChange}
+                        value={selectedEvent}
+                        style={{
+                            backgroundColor: '#ffffff',
+                            color: '#333333',
+                            borderRadius: '0.375rem',
+                            fontSize: '1rem',
+                            lineHeight: '1.5',
+                            padding: '0.5rem 1rem',
+                            width: '300px',
+                        }}
+                    >
+                        <option>select event</option>
+                        {eventData && eventData.length > 0 ? 
+                            (eventData.map((event, index) => (
+                                <option key={index} value={event.idEvent}>{event.eventName}</option>
+                            ))) : (
+                                <option value="">No events available</option>
+                            )
+                        }
+                    </select>
+                    <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            width="24" 
+                            height="24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            className="feather feather-chevron-down"
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
 
       <br></br>
 

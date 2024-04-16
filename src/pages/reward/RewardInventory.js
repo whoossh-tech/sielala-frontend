@@ -39,7 +39,7 @@ const RewardInventory = () => {
 
     const disableCarryOutStockButton = !selectedEvent || currentDate < eventStartDate || currentDate > eventEndDate || currentDate === eventEndDate;
 
-    const disableAddRewardButton = !selectedEvent || currentDate < eventStartDate || currentDate > eventEndDate;
+    const disableAddRewardButton = !selectedEvent || currentDate > eventEndDate;
 
     
     const openModal = () => {
@@ -263,7 +263,7 @@ const RewardInventory = () => {
                 <Modal
                     isOpen={isModalOpen}
                     onRequestClose={closeModal}
-                    id="modal-confirmation"
+                    id="modal-confirmation-form"
                     
                 >
                     <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Carry Out Stock</h2>

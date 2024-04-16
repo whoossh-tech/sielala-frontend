@@ -25,7 +25,7 @@
     position: fixed;
     top: 10%; /* Menempatkan modal tepat di tengah secara vertikal */
     left: 50%; /* Menempatkan modal tepat di tengah secara horizontal */
-    transform: translate(180%, 60%); /* Menggeser modal agar posisinya tepat di tengah halaman */
+    transform: translate(0%, 80%); /* Menggeser modal agar posisinya tepat di tengah halaman */
     width: 80%;
     max-width: 400px;
     height: 60%;
