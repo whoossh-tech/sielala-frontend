@@ -45,6 +45,7 @@ const Contacts = () => {
       .get("http://localhost:8080/api/sponsor/view-event-all")
       .then((res) => {
         setEventData(res.data.data);
+        console.log(res.data.data);
       })
       .catch((err) => console.log(err));
   }, [selectedEvent]);

@@ -8,10 +8,12 @@ import { NavbarOperation } from "../../components/navbar/NavbarOperation";
 import "../../App.css";
 import "../../static/css/invoice/DetailInvoice.css";
 import "../../static/css/Button.css";
+import "../../static/css/Modal.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { NavbarFinance } from "../../components/navbar/NavbarFinance";
+import { FaceSmileIcon } from "@heroicons/react/24/solid";
 
 const InvoiceDetail = () => {
   const { idInvoice } = useParams();
@@ -22,8 +24,12 @@ const InvoiceDetail = () => {
   const [invoiceData, setInvoiceData] = useState();
   const [countdays, setCountDays] = useState(0);
   const [idEvent, setIdEvent] = useState("");
+  // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
+  const [isValidateModalOpen, setIsValidateModalOpen] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [paymentImage, setPaymentImage] = useState(null);
@@ -31,6 +37,10 @@ const InvoiceDetail = () => {
   const [isValidated, setIsValidated] = useState(false);
   const [isDeclined, setIsDeclined] = useState(false);
   const [trackingStatus, setTrackingStatus] = useState("");
+  const [deliveryStatus, setDeliveryStatus] = useState("");
+  const [isEditDisabled, setIsEditDisabled] = useState(false);  
+  const [selectedStatus, setSelectedStatus] = useState("");
+  
 
   const role = localStorage.getItem("role");
 
@@ -50,10 +60,34 @@ const InvoiceDetail = () => {
     setIsUploadModalOpen(false);
   };
 
+  const handleValidateButton = () => {
+    openValidateModal();
+  };
+
+  const openValidateModal = () => {
+    setIsValidateModalOpen(true);
+  };
+
+  const closeValidateModal = () => {
+    setIsValidateModalOpen(false);
+  };
+
+  const handleDeclineButton = () => {
+    openDeclineModal();
+  };
+
+  const openDeclineModal = () => {
+    setIsDeclineModalOpen(true);
+  };
+
+  const closeDeclineModal = () => {
+    setIsDeclineModalOpen(false);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  
+
     axios
       .get(`http://localhost:8080/api/invoice/detail/${idInvoice}`)
       .then((res) => {
@@ -64,11 +98,11 @@ const InvoiceDetail = () => {
           setPaymentImageUrl(storedPaymentImageUrl);
         } else {
           setPaymentImageUrl(res.data.data.paymentImageUrl);
+          localStorage.setItem("paymentImageUrl", res.data.data.paymentImageUrl);
         }
       })
       .catch((err) => console.log(err));
   }, [idInvoice]);
-  
 
   const handleBack = () => {
     localStorage.setItem("idSelectedEvent", idEvent);
@@ -113,34 +147,28 @@ const InvoiceDetail = () => {
     }
   };
 
-  const handleTrackingStatusChange = async (e) => {
-    const selectedStatus = e.target.value;
-    try {
-      await axios.put(`${url}/api/invoice/${idInvoice}/update-tracking-status`, { trackingStatus: selectedStatus });
-      setTrackingStatus(selectedStatus);
-      toast.success("Tracking status updated successfully");
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to update tracking status");
-    }
-  };
+  const confirmValidate = async () => {
+    closeValidateModal();
 
-  const handleValidate = async () => {
     try {
-      const response = await axios.put(`${url}/api/invoice/validate-payment-proof/${idInvoice}`);
+      const response = await axios.put(`http://localhost:8080/api/invoice/validate-payment-proof/${idInvoice}`);
+      console.log("Payment validated :", response.data);
+
       toast.success("Payment proof validated successfully");
-      setIsValidated(true); // Mengatur status validasi gambar menjadi true
     } catch (error) {
       console.error(error);
       toast.error("Error validating payment proof");
     }
   };
 
-  const handleDecline = async () => {
+  const confirmDecline = async () => {
+    closeDeclineModal();
+
     try {
-      const response = await axios.put(`${url}/api/invoice/decline-payment-proof/${idInvoice}`);
+      const response = await axios.put(`http://localhost:8080/api/invoice/decline-payment-proof/${idInvoice}`);
+      console.log("Payment validation declined :", response.data);
       toast.success("Payment proof declined successfully");
-      setIsDeclined(true); // Mengatur status penolakan gambar menjadi true
+      setIsDeclined(true);
     } catch (error) {
       console.error(error);
       toast.error("Error declining payment proof");
@@ -232,22 +260,6 @@ const InvoiceDetail = () => {
 
       <h1 className="text-2xl font-semibold mb-4 text-center">Invoice Detail</h1>
 
-      {/* <div className="each-invoice" style={{ textAlign: "center" }}>
-        <p className="invoice-text-title">Tracking Status:</p>
-        {role === "ADMIN" && (
-          <div className="dropdown-container">
-            <select value={trackingStatus} onChange={handleTrackingStatusChange} className="dropdown">
-              <option value="">Select Status</option>
-              <option value="Issued">Issued</option>
-              <option value="Pending">Pending</option>
-              <option value="Confirmed">Confirmed</option>
-              <option value="Completed">Completed</option>
-            </select>
-          </div>
-        )}
-        {role !== "ADMIN" && <p className="invoice-text">{invoiceData.trackingStatus}</p>}
-      </div> */}
-
       {invoiceData ? (
         <>
           <br></br>
@@ -300,7 +312,7 @@ const InvoiceDetail = () => {
 
               {(role === "PARTNERSHIP" || role === "ADMIN") && (
                 <Link to={`/invoice/edit-detail/${idInvoice}`}>
-                  <button className="button-pink">Edit Invoice</button>
+                  <button className="button-pink" disabled={isEditDisabled}>Edit Invoice</button>
                 </Link>
               )}
 
@@ -355,17 +367,11 @@ const InvoiceDetail = () => {
         <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
         <div className="flex items-center mb-4">
-  <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-  <button
-    className="button-green ml-2"
-    onClick={openUploadModal}
-    disabled={!paymentImage}
-  >
-    Submit Payment Proof
-  </button>
-</div>
-
-
+          <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
+          <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
+            Submit Payment Proof
+          </button>
+        </div>
         {paymentImageUrl && (
           <div className="w-full flex justify-center items-center">
             <img
@@ -377,11 +383,11 @@ const InvoiceDetail = () => {
           </div>
         )}
 
-        <div className="flex justify-center mt-4">
-          <button className="button-pink mr-2" onClick={handleValidate} disabled={!paymentImageUrl || isValidated || isDeclined}>
+        <div className="w-full flex justify-center items-center">
+          <button className="button-green" onClick={handleValidateButton}>
             Validate
           </button>
-          <button className="button-red" onClick={handleDecline} disabled={!paymentImageUrl || isValidated || isDeclined}>
+          <button className="button-red" onClick={handleDeclineButton}>
             Decline
           </button>
         </div>
@@ -420,6 +426,35 @@ const InvoiceDetail = () => {
           </button>
         </div>
       </Modal>
+
+      <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation">
+        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+        <p className="text-center text-gray-700">Are you sure you want to validate this payment proof?</p>
+        <br></br>
+        <div>
+          <button className="button-red text-center" onClick={closeValidateModal}>
+            Cancel
+          </button>
+          <button className="button-green text-center" onClick={confirmValidate}>
+            Confirm
+          </button>
+        </div>
+      </Modal>
+
+      <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation">
+        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+        <p className="text-center text-gray-700">Are you sure you want to decline this payment proof?</p>
+        <br></br>
+        <div>
+          <button className="button-red text-center" onClick={closeDeclineModal}>
+            Cancel
+          </button>
+          <button className="button-green text-center" onClick={confirmDecline}>
+            Confirm
+          </button>
+        </div>
+      </Modal>
+
       <br></br>
     </div>
   );
