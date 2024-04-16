@@ -23,6 +23,7 @@ const InvoiceDetail = () => {
   const [countdays, setCountDays] = useState(0);
   const [idEvent, setIdEvent] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [paymentImage, setPaymentImage] = useState(null);
@@ -41,18 +42,33 @@ const InvoiceDetail = () => {
     setIsModalOpen(false);
   };
 
+  const openUploadModal = () => {
+    setIsUploadModalOpen(true);
+  };
+
+  const closeUploadModal = () => {
+    setIsUploadModalOpen(false);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
+  
     axios
       .get(`http://localhost:8080/api/invoice/detail/${idInvoice}`)
       .then((res) => {
         setInvoiceData(res.data.data);
         setIdEvent(res.data.data.event.idEvent);
+        const storedPaymentImageUrl = localStorage.getItem("paymentImageUrl");
+        if (storedPaymentImageUrl) {
+          setPaymentImageUrl(storedPaymentImageUrl);
+        } else {
+          setPaymentImageUrl(res.data.data.paymentImageUrl);
+        }
       })
       .catch((err) => console.log(err));
-  });
+  }, [idInvoice]);
+  
 
   const handleBack = () => {
     localStorage.setItem("idSelectedEvent", idEvent);
@@ -74,11 +90,23 @@ const InvoiceDetail = () => {
           "Content-Type": "multipart/form-data", // menentukan tipe konten sebagai form-data
         },
       });
-      toast.success("Payment proof uploaded successfully");
-      
-      setPaymentImageUrl(response.data.paymentImageUrl); // Memperbarui URL gambar
-      // setIsValidated(true); // Mengatur status validasi gambar menjadi true
-      console.log("Payment image URL:", response.data.paymentImageUrl);
+
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64Data = reader.result;
+        toast.success("Payment proof uploaded successfully");
+
+        setPaymentImageUrl(base64Data);
+        localStorage.setItem("paymentImageUrl", base64Data); // Memperbarui URL gambar
+        // setIsValidated(true); // Mengatur status validasi gambar menjadi true
+        console.log("Payment image URL (base64):", base64Data);
+      };
+      reader.onerror = (error) => {
+        console.error(error);
+        toast.error("Error converting payment proof to base64");
+      };
     } catch (error) {
       console.error(error);
       toast.error("Error uploading payment proof");
@@ -327,15 +355,25 @@ const InvoiceDetail = () => {
         <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
         <div className="flex items-center mb-4">
-          <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-          <button className="button-green ml-2" onClick={() => uploadPaymentProof(idInvoice, paymentImage)} disabled={!paymentImage}>
-            Submit Payment Proof
-          </button>
-        </div>
+  <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
+  <button
+    className="button-green ml-2"
+    onClick={openUploadModal}
+    disabled={!paymentImage}
+  >
+    Submit Payment Proof
+  </button>
+</div>
+
 
         {paymentImageUrl && (
-          <div className="w-full">
-            <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" />
+          <div className="w-full flex justify-center items-center">
+            <img
+              src={paymentImageUrl}
+              alt="Payment proof"
+              className="w-full rounded-lg shadow-md"
+              style={{ width: "200px", height: "auto" }} // Atur lebar gambar di sini, tinggi disesuaikan secara otomatis
+            />
           </div>
         )}
 
@@ -358,6 +396,26 @@ const InvoiceDetail = () => {
             Cancel
           </button>
           <button className="button-green text-center" onClick={handleNotify}>
+            Confirm
+          </button>
+        </div>
+      </Modal>
+
+      <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation">
+        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+        <p className="text-center text-gray-700">Are you sure you want to upload this payment proof?</p>
+        <br></br>
+        <div>
+          <button className="button-red text-center" onClick={closeUploadModal}>
+            Cancel
+          </button>
+          <button
+            className="button-green text-center"
+            onClick={() => {
+              uploadPaymentProof(idInvoice, paymentImage);
+              closeUploadModal();
+            }}
+          >
             Confirm
           </button>
         </div>

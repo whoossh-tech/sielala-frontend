@@ -142,7 +142,7 @@ th {
     position: fixed;
     top: 0;
     left: 0;
-    /* transform: translate(-50%, -50%); */
+    transform: translate(135%, 80%);
     width: 80%;
     height: 60%;
     max-width: 400px;
