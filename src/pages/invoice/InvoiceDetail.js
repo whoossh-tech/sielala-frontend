@@ -237,7 +237,7 @@ const InvoiceDetail = () => {
   const handleDeliveredButtonClick = async () => {
     try {
       // Mengirim permintaan untuk mengubah trackingStatus menjadi "delivered"
-      await axios.put(`http://localhost:8080/api/invoice/mark-as-delivered/${idInvoice}`, {
+      await axios.put(`https://sielala-backend-production.up.railway.app/api/invoice/mark-as-delivered/${idInvoice}`, {
         trackingStatus: "Delivered",
       });
 
