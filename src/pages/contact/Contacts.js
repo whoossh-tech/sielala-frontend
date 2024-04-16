@@ -122,7 +122,7 @@ const Contacts = () => {
             <option value="">No events available</option>
           )}
         </select>
-      </div> */}
+      </div>
       <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
                 <div style={{ position: 'relative' }}>
                     <select 

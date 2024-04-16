@@ -72,9 +72,6 @@ const TenantDetail = () => {
 
       <br></br>
 
-
-      <h1 className="text-2xl font-semibold mb-4 text-center">Detai Tenant</h1>
-
         <div className="container mx-auto py-8 text-left">
         <table style={{ marginLeft: 80, marginRight: 80, borderCollapse: "collapse", width: 1100, alignItems: "center" }}>
             <tbody>
