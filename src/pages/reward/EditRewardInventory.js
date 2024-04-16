@@ -319,7 +319,7 @@ const EditRewardInventory = () => {
         <Modal
             isOpen={isModalOpen}
             onRequestClose={closeModal}
-            id="modal-confirmation"
+            id="modal-confirmation-form"
         >
         {/* <div className='modalBackground'>
             <div className="modalContainer"> */}

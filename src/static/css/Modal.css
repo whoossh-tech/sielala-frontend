@@ -68,3 +68,13 @@
 #cancelBtn {
   background-color: crimson;
 }
+
+#modal-confirmation-form {
+  height: 200px;
+  width: 400px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 180px;
+  margin-left: 420px;
+}

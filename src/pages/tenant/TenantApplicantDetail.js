@@ -225,7 +225,7 @@ const TenantApplicantDetail = () => {
             <Modal
                 isOpen={isAcceptModalOpen}
                 onRequestClose={closeAcceptModal}
-                id="modal-accept-tenant"
+                id="modal-confirmation-form"
             >
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
                 <p className="text-center text-gray-700">Are you sure you want accept Tenant Applicant?</p>
@@ -239,7 +239,7 @@ const TenantApplicantDetail = () => {
             <Modal
                 isOpen={isRejectModalOpen}
                 onRequestClose={closeRejectModal}
-                id="modal-reject-tenant"
+                id="modal-confirmation-form"
             >
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
                 <p className="text-center text-gray-700">Are you sure you want reject Tenant Applicant?</p>

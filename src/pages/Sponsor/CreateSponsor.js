@@ -243,7 +243,7 @@ const CreateSponsor = () => {
             </button>
           </div>
 
-          <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
+          <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
             <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Add Sponsor</h2>
             <p className="text-center text-gray-700">Are you sure you want to Add Sponsor?</p>
             <br></br>

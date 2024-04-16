@@ -36,19 +36,19 @@
 }
 
 #modal-confirmation {
-    position: fixed;
+    /* position: fixed;
     top: 0;
     left: 0;
-    /* transform: translate(-50%, -50%); */
+    transform: translate(-50%, -50%);
     width: 80%;
     height: 60%;
     max-width: 400px;
-    max-height: 200px;
+    max-height: 200px; */
     background-color: white;
-    padding: 20px;
+    /* padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: center; */
     justify-content: center;
     align-items: center;
 }

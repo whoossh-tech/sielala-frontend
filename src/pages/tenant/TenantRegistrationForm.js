@@ -8,6 +8,7 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import '../../static/css/TenantRegistrationForm.css';
 import '../../static/css/Button.css';
+import '../../static/css/Modal.css';
 
 const TenantRegistrationForm = () => {
     const { eventId } = useParams();
@@ -448,7 +449,7 @@ const TenantRegistrationForm = () => {
             <Modal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
-                id="modal-confirmation"
+                id="modal-confirmation-form"
             >
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Registration</h2>
                 <p className="text-center text-gray-700">Are you sure you want to register?</p>

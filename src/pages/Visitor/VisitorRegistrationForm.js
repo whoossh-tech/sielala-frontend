@@ -366,7 +366,7 @@ const VisitorRegistrationForm = () => {
                 <Modal
                     isOpen={isModalOpen}
                     onRequestClose={closeModal}
-                    id="modal-confirmation"
+                    id="modal-confirmation-form"
                 >
                     <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Registration</h2>
                     <p className="text-center text-gray-700">Are you sure you want to register?</p>
