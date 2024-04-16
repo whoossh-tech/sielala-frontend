@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "../../static/css/Button.css";
+import "../../static/css/DetailTenant.css";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
@@ -11,77 +12,65 @@ import { useParams } from "react-router-dom";
 const TenantDetail = () => {
   const navigate = useNavigate();
   const { idTenant } = useParams();
+  const [idEvent, setIdEvent] = useState("");
   const [tenant, setTenant] = useState();
   const [eventData, setEventData] = useState();
   const [invoiceData, setInvoiceData] = useState();
-  const [statusInvoice, setStatusInvoice] = useState('');
+  const [statusInvoice, setStatusInvoice] = useState("");
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
 
-  const token = localStorage.getItem('token');
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  const token = localStorage.getItem("token");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   useEffect(() => {
     axios
       .get(`http://localhost:8080/api/contact/detail/tenant/${idTenant}`)
       .then((res) => {
         setTenant(res.data.data);
+        setIdEvent(res.data.idEvent);
       })
       .catch((err) => console.log(err));
 
-      axios
+    axios
       .get(`http://localhost:8080/api/invoice/invoice-status/${idTenant}`)
       .then((res) => {
         setStatusInvoice(res.data.statusInvoice);
         if (res.data.statusInvoice != "null") {
-            setInvoiceData(res.data.invoice)
-          }
+          setInvoiceData(res.data.invoice);
+        }
       })
       .catch((err) => console.log(err));
-
   });
 
   const handleBack = () => {
-    navigate(-1);
+    // Untuk pre-filled dropdown event
+    localStorage.setItem("idSelectedEvent", idEvent);
+    navigate("/contact");
   };
 
   return (
     <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+      {role === "PARTNERSHIP" && <NavbarPartnership style={{ zIndex: 999 }} />}
 
-        {( role === 'PARTNERSHIP' ) && (
-            <NavbarPartnership style={{ zIndex: 999 }} />
-        )}
+      {role === "ADMIN" && <NavbarAdmin style={{ zIndex: 999 }} />}
 
-        {( role === 'ADMIN' ) && (
-            <NavbarAdmin style={{ zIndex: 999 }} />
-        )}
-
-        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
-            <div>
-                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-                Tenant Detail</h1>
-                <div>
-                    <p className="subtitle">Manage and view tenant data here.</p>
-                </div>
-            </div>
+      <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
+        <div>
+          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
+            Tenant Detail
+          </h1>
+          <div>
+            <p className="subtitle">Manage and view tenant data here.</p>
+          </div>
         </div>
+      </div>
 
-        <br></br>
-        <Toaster
-            position="top-center"
-            reverseOrder={false}
-        />
+      <br></br>
+      <Toaster position="top-center" reverseOrder={false} />
 
-        <br></br>
-
-        <div className="flex justify-between items-center mb-4 mx-8">
-            <button className="button-green" onClick={handleBack}>
-            Back
-            </button>
-            <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: '-6%' }}>Tenant Detail</h1>
-            <div></div>
-        </div>
+      <br></br>
 
         <div className="container mx-auto py-8 text-left">
         <table style={{ marginLeft: 80, marginRight: 80, borderCollapse: "collapse", width: 1100, alignItems: "center" }}>
@@ -133,57 +122,67 @@ const TenantDetail = () => {
             </tbody>
         </table>
 
-            {( role === 'PARTNERSHIP' || role === 'ADMIN' ) && (statusInvoice == "null") && (
-                <div className="container mx-auto py-8 text-left">
-                    {/* Your existing code */}
-                    
-                    <div className="button-field text-center"> {/* Added text-center class */}
-                        <Link to={`/invoice/create/${idTenant}`}>
-                            <button className="button-green">Create Invoice</button>
-                        </Link>
-                    </div>
+        {(role === "PARTNERSHIP" || role === "ADMIN") && statusInvoice == "null" && (
+          <div className="container mx-auto py-8 text-center">
+            <div className="button-field">
+              <button className="button-green" onClick={handleBack}>
+                Back
+              </button>
+              <Link to={`/tenant/edit/${idTenant}`}>
+                <button className="button-pink">Edit Tenant</button>
+              </Link>
+              {/* <button className="button-red" onClick={openModal}>Delete Reward</button> */}
+            </div>
+            {/* Your existing code */}
 
-                    {/* Your existing code */}
-                </div>
-            )}
-
-            <h1 className="text-2xl font-semibold mb-4 text-center">Invoice Data</h1>
-            <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-                <table className="Invoice-table w-full">
-                    <thead>
-                        <tr>
-                            <th style={{ width: "20%", textAlign: "center"}}>Invoice ID</th>
-                            <th style={{ width: "20%", textAlign: "center"}}>Company</th>
-                            <th style={{ width: "20%", textAlign: "center"}}>Type</th>
-                            <th style={{ width: "20%", textAlign: "center"}}>Tracking Status</th>
-                            <th style={{ width: "20%", textAlign: "center"}}>Payment Validation</th>
-                            <th style={{ width: "20%", textAlign: "center"}}>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {invoiceData ? (
-                        <tr>
-                            <td>{invoiceData.idInvoice}</td>
-                            <td>{invoiceData.companyName}</td>
-                            <td>{invoiceData.type}</td>
-                            <td>{invoiceData.trackingStatus}</td>
-                            <td>{invoiceData.paymentStatus}</td>
-                            <td>
-                                <Link to={`/invoice/detail/${invoiceData.idInvoice}`}>
-                                    <button className="button-green-invoice">Detail</button>
-                                </Link>
-                            </td>
-                        </tr>
-                    ) : (
-                        <tr>
-                            <td colSpan="5">No invoice Data available</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+            <div className="button-field text-center">
+              {" "}
+              {/* Added text-center class */}
+              <Link to={`/invoice/create/${idTenant}`}>
+                <button className="button-green">Create Invoice</button>
+              </Link>
             </div>
 
+            {/* Your existing code */}
+          </div>
+        )}
+
+        <h1 className="text-2xl font-semibold mb-4 text-center">Invoice Data</h1>
+        <div className="bg-white p-6 rounded-lg shadow-md mb-4">
+          <table className="Invoice-table w-full">
+            <thead>
+              <tr>
+                <th style={{ width: "20%", textAlign: "center" }}>Invoice ID</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Company</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Type</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Tracking Status</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Payment Validation</th>
+                <th style={{ width: "20%", textAlign: "center" }}>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoiceData ? (
+                <tr>
+                  <td>{invoiceData.idInvoice}</td>
+                  <td>{invoiceData.companyName}</td>
+                  <td>{invoiceData.type}</td>
+                  <td>{invoiceData.trackingStatus}</td>
+                  <td>{invoiceData.paymentStatus}</td>
+                  <td>
+                    <Link to={`/invoice/detail/${invoiceData.idInvoice}`}>
+                      <button className="button-green-invoice">Detail</button>
+                    </Link>
+                  </td>
+                </tr>
+              ) : (
+                <tr>
+                  <td colSpan="5">No invoice Data available</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
   );
 };

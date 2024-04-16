@@ -14,6 +14,8 @@ import { useParams } from "react-router-dom";
 const DetailSponsor = () => {
   const navigate = useNavigate();
   const { idSponsor } = useParams();
+
+  const [idEvent,setIdEvent] = useState("");
   const [sponsorData, setSponsorData] = useState();
   const [invoiceData, setInvoiceData] = useState();
   const [statusInvoice, setStatusInvoice] = useState('');
@@ -28,6 +30,7 @@ const DetailSponsor = () => {
       .get(`http://localhost:8080/api/sponsor/detail/${idSponsor}`)
       .then((res) => {
         setSponsorData(res.data.data);
+        setIdEvent(res.data.idEvent);
         // setIdInvoice(res.data.data.idInvoice)
         // console.log(res.data.data);
       })
@@ -47,7 +50,8 @@ const DetailSponsor = () => {
   });
 
   const handleBack = () => {
-    navigate(-1);
+    localStorage.setItem('idSelectedEvent', idEvent);
+    navigate("/contact");
   };
 
   return (
@@ -77,13 +81,7 @@ const DetailSponsor = () => {
       />
 
       <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-4">
-        <button className="button-green" onClick={handleBack}>
-          Back
-        </button>
-        <h1 className="text-2xl font-semibold mb-4" style={{ marginLeft: '-6%' }}>Sponsor Detail</h1>
-        <div></div>
-      </div>
+      <h1 className="text-2xl font-semibold mb-4 text-center">Sponsor Detail</h1>
       <br></br>
 
         <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
@@ -111,6 +109,18 @@ const DetailSponsor = () => {
 
             <br></br>
 
+            <div>
+                <div className="button-field">
+                    <button className="button-green" onClick={handleBack}>Back</button>
+                    <Link to={`/sponsor/edit/${idSponsor}`}>
+                        <button className="button-pink">Edit Sponsor</button>
+                    </Link>
+                    {/* <button className="button-red" onClick={openModal}>Delete Reward</button> */}
+                </div>
+            </div>
+            
+          <br></br>
+
             {( role === 'PARTNERSHIP' ||  role === 'ADMIN' ) && (statusInvoice == "null") && (
                   <div className="button-field">
                       <Link to={`/invoice/create/${idSponsor}`}>
@@ -119,7 +129,7 @@ const DetailSponsor = () => {
                   </div>
             )}
 
-            <br></br>
+          <br></br>
 
         <h1 className="text-2xl font-semibold mb-4">Invoice</h1>
         <div className="bg-white p-6 rounded-lg shadow-md mb-4">
