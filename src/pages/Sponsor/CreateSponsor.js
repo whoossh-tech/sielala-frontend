@@ -252,7 +252,7 @@ const CreateSponsor = () => {
             <button className="button-red text-center" onClick={closeModal}>
               Cancel
             </button>
-            <button className="button-pink text-center" onClick={confirmCreateSponsor}>
+            <button className="button-green text-center" onClick={confirmCreateSponsor}>
               Confirm
             </button>
           </Modal>

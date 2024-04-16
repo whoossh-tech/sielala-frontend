@@ -89,6 +89,7 @@ const InvoiceDetail = () => {
       .get(`http://localhost:8080/api/invoice/detail/${idInvoice}`)
       .then((res) => {
         setInvoiceData(res.data.data);
+        // console.log(res.data.data);
         setIdEvent(res.data.data.event.idEvent);
         const storedPaymentImageUrl = localStorage.getItem("paymentImageUrl");
         if (storedPaymentImageUrl) {
@@ -103,6 +104,7 @@ const InvoiceDetail = () => {
 
   const handleBack = () => {
     localStorage.setItem("idSelectedEvent", idEvent);
+    // localStorage.removeItem("paymentImageUrl");
     navigate(-1);
   };
 
@@ -326,6 +328,8 @@ const InvoiceDetail = () => {
           <br></br>
           <br></br>
 
+          {/* <p>{invoiceData.paymentStatus}</p> */}
+
           <div>
             <div className="button-field">
               <button className="button-green" onClick={handleBack}>
@@ -393,23 +397,26 @@ const InvoiceDetail = () => {
         <p>Loading...</p>
       )}
 
-            {/* Payment Proof Section */}
-            <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
+        {/* Payment Proof Section */}
+        <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
         <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
-        <div className="flex items-center mb-4">
-          <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-          <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
-            Submit Payment Proof
-          </button>
-        </div>
+        {/* {(invoiceData.paymentStatus != "Approved") && ( */}
+          <div className="flex items-center mb-4">
+            <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
+            <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
+              Submit Payment Proof
+            </button>
+          </div>
+        {/* )} */}
+        
         {paymentImageUrl && (
           <div className="w-full flex justify-center items-center">
             <img
               src={paymentImageUrl}
               alt="Payment proof"
               className="w-full rounded-lg shadow-md"
-              style={{ width: "200px", height: "auto" }} // Atur lebar gambar di sini, tinggi disesuaikan secara otomatis
+              style={{ width: "500px", height: "auto" }} 
             />
           </div>
         )}
