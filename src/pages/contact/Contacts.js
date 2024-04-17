@@ -31,7 +31,7 @@ const Contacts = () => {
 
     if (selectedEvent) {
       axios
-        .get(`https://sielala-backend-production.up.railway.app/api/contact/all/${selectedEvent}`)
+        .get(`http://localhost:8080/api/contact/all/${selectedEvent}`)
         .then((res) => {
           setContacts(res.data.data);
           console.log(res.data.data);
@@ -42,7 +42,7 @@ const Contacts = () => {
     }
 
     axios
-      .get("https://sielala-backend-production.up.railway.app/api/sponsor/view-event-all")
+      .get("http://localhost:8080/api/sponsor/view-event-all")
       .then((res) => {
         setEventData(res.data.data);
         console.log(res.data.data);

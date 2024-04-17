@@ -25,7 +25,7 @@ const TenantApplicantDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`https://sielala-backend-production.up.railway.app/api/tenant/detail/${idTenantApplicant}`)
+      .get(`http://localhost:8080/api/tenant/detail/${idTenantApplicant}`)
       .then((res) => {
         setTenantApplicant(res.data.data);
         // console.log(res.data.data);
@@ -66,7 +66,7 @@ const TenantApplicantDetail = () => {
     closeAcceptModal();
 
     try {
-        const response = await axios.put(`https://sielala-backend-production.up.railway.app/api/tenant/${idTenantApplicant}/accept`);
+        const response = await axios.put(`http://localhost:8080/api/tenant/${idTenantApplicant}/accept`);
 
         // Untuk pre-filled dropdown event
         // localStorage.setItem('idSelectedEvent', idEvent);
@@ -84,7 +84,7 @@ const TenantApplicantDetail = () => {
     closeRejectModal();
 
     try {
-        const response = await axios.put(`https://sielala-backend-production.up.railway.app/api/tenant/${idTenantApplicant}/reject`);
+        const response = await axios.put(`http://localhost:8080/api/tenant/${idTenantApplicant}/reject`);
 
         // Untuk pre-filled dropdown event
         // localStorage.setItem('idSelectedEvent', idEvent);
