@@ -14,7 +14,7 @@ import { NavbarFinance } from "../../components/navbar/NavbarFinance";
 
 const EditDetailInvoice = () => {
     const { idInvoice } = useParams();
-    const url = 'https://sielala-backend-production.up.railway.app';
+    const url = 'http://localhost:8080';
     const navigate = useNavigate();
     const role = localStorage.getItem('role');
 

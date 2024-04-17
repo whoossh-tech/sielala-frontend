@@ -48,7 +48,7 @@ const Visitor = () => {
     }
 
     if (selectedEvent) {
-      axios.get(`https://sielala-backend-production.up.railway.app/api/visitor/view-all/${selectedEvent}`)
+      axios.get(`http://localhost:8080/api/visitor/view-all/${selectedEvent}`)
         .then(res => {
           setVisitors(res.data.data)
           setCountDays(res.data.dayRange)
@@ -59,7 +59,7 @@ const Visitor = () => {
         )
     }
 
-    axios.get('https://sielala-backend-production.up.railway.app/api/visitor/view-event-all')
+    axios.get('http://localhost:8080/api/visitor/view-event-all')
       .then(res => {
         setEventData(res.data.data)
       }).catch(
@@ -104,7 +104,7 @@ const Visitor = () => {
 
   useEffect(() => {
     if (selectedEvent) {
-      axios.get(`https://sielala-backend-production.up.railway.app/api/visitor/attendance/${selectedEvent}`)
+      axios.get(`http://localhost:8080/api/visitor/attendance/${selectedEvent}`)
         .then(res => {
           setAttendanceData(res.data);
           // console.log(res.data);
@@ -118,7 +118,7 @@ const Visitor = () => {
 
   function markAttendance(attendanceId, attended) {
     axios
-      .put(`https://sielala-backend-production.up.railway.app/api/visitor/attendance/update/${attendanceId}`, {
+      .put(`http://localhost:8080/api/visitor/attendance/update/${attendanceId}`, {
         attended: attended,
       })
       .then(res => {
