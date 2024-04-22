@@ -72,7 +72,7 @@ export function NavbarPartnership() {
       <Navbar className="rounded-none sticky top-0 z-10 h-max bg-primary-60 px-4 py-2 lg:px-8 lg:py-4" style={{ border: 'none' }}>
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-4">
-            <a href="/partnership">
+            <a href="/dashboard">
               <img
                   src={logo} 
                   alt="SieLALA Logo"
