@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast, Toaster } from "react-hot-toast";
+import { PieChart } from "@mui/x-charts/PieChart";
+import '../../static/css/Dashboard.css';
 
 import { NavbarAdmin } from '../../components/navbar/NavbarAdmin';
 import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
@@ -11,10 +12,24 @@ import { NavbarOperation } from '../../components/navbar/NavbarOperation';
 const DashboardStaff = () => {
     const [selectedEvent, setSelectedEvent] = useState("");
     const [eventData, setEventData] = useState([]);
+    const [event, setEvent] = useState();
 
     const role = localStorage.getItem('role');
+    const token = localStorage.getItem("token");
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     useEffect(() => {
+
+        if (selectedEvent) {
+            axios
+            .get(`http://localhost:8080/api/event/detail/${selectedEvent}`)
+            .then((res) => {
+                setEvent(res.data.data);
+                // console.log(res.data.data);
+            })
+            .catch((err) => console.log(err));
+        }
+
         axios
             .get("http://localhost:8080/api/event/view-all")
             .then((res) => {
@@ -25,6 +40,23 @@ const DashboardStaff = () => {
 
     const handleChange = (e) => {
         setSelectedEvent(e.target.value);
+    };
+
+    // visitor location
+    const generatePieChartData = () => {
+        if (!event || !event.listVisitor) return [];
+
+        const locations = event.listVisitor.map(visitor => visitor.location);
+        const locationCounts = locations.reduce((acc, location) => {
+            acc[location] = (acc[location] || 0) + 1;
+            return acc;
+        }, {});
+
+        return Object.entries(locationCounts).map(([location, count]) => ({
+            name: location,
+            value: count,
+            label: location
+        }));
     };
 
     return (
@@ -87,6 +119,17 @@ const DashboardStaff = () => {
             </div>
 
             {/* Event Charts */}
+            <div style={{ marginTop: '40px', marginLeft: '300px', marginRight: '100px', width: '500px' }}>
+                <h2><b>Visitor Location Distribution</b></h2>
+                <br></br>
+                <PieChart
+                    series={[{
+                        data: generatePieChartData()
+                    },]}
+                    height={200}
+                    width={400}
+                />
+            </div>
 
         </main>
     )
