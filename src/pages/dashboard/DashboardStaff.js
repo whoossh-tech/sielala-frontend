@@ -15,11 +15,6 @@ const DashboardStaff = () => {
     const role = localStorage.getItem('role');
 
     useEffect(() => {
-
-        if (selectedEvent) {
-            console.log(selectedEvent);
-        }
-
         axios
             .get("http://localhost:8080/api/event/view-all")
             .then((res) => {
