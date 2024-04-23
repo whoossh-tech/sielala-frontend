@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import backgroundPhoto from '../../assets/bg-cover.png';
 import { toast, Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { NavbarAdmin } from '../../components/navbar/NavbarAdmin';
 import '../../static/css/UserList.css';
+import '../../static/css/Button.css';
 
 const UserList = () => {
     const [users, setUserList] = useState([]);
@@ -30,10 +31,10 @@ const UserList = () => {
         fetchData();
     }, []);
 
-    const handleEditClick = (userId) => {
-        // Implement your edit functionality here
-        console.log(`Edit user with ID ${userId}`);
-    };
+    // const handleEditClick = (userId) => {
+    //     // Implement your edit functionality here
+    //     console.log(`Edit user with ID ${userId}`);
+    // };
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -80,9 +81,13 @@ const UserList = () => {
                         <td>{user.email}</td>
                         <td>{user.username}</td>
                         <td>
-                            <button onClick={() => handleEditClick(user.userId)}>
+                            {/* <button onClick={() => handleEditClick(user.userId)}>
                                 Edit
-                            </button>
+                            </button> */}
+                            <Link to={`/user/edit/${user.userId}`}>
+                                <button className="button-green">Edit</button>
+                            </Link>
+                            <button className="button-red">Delete</button>
                         </td>
                     </tr>
                 ))}

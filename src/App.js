@@ -23,6 +23,7 @@ import Login from "./pages/auth/Login";
 import ForgotPasswordForm from './pages/auth/ForgotPasswordForm';
 import RegisterStaffForm from "./pages/auth/RegisterStaffForm";
 import UserList from "./pages/auth/UserList";
+import EditUserForm from "./pages/auth/EditUserForm";
 import Sponsor from "./pages/Sponsor/Sponsor";
 import CreateSponsor from "./pages/Sponsor/CreateSponsor";
 import DetailSponsor from "./pages/Sponsor/DetailSponsor";
@@ -64,7 +65,7 @@ function App() {
             <Route path="/" element={<DashboardGuest />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPasswordForm/>} />
-          <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm />}></Route>
+            <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm />}></Route>
             <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
             <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
             <Route path="/visitor-registration/:eventId" element={<VisitorRegistrationForm />}></Route>
@@ -105,6 +106,7 @@ function App() {
                 <Route path="/admin" element={<DashboardAdmin />} />
                 <Route path="/staff-registration" element={<RegisterStaffForm />} />
                 <Route path="/user-list" element={<UserList />} />
+                <Route path="/user/edit/:idUser" element={<EditUserForm />} />
               </>
             )}
 
