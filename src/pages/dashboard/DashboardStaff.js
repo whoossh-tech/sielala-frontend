@@ -14,12 +14,13 @@ const DashboardStaff = () => {
     const [eventData, setEventData] = useState([]);
     const [event, setEvent] = useState();
 
+    const colors = ['#FDA7CB', '#A27D60', '#C3CB6B', '#E685AE', '#865C3A', '#A9B245', '#FFCDE5', '#DAC1AD', '#EBF0B0'];
+
     const role = localStorage.getItem('role');
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     useEffect(() => {
-
         if (selectedEvent) {
             axios
             .get(`http://localhost:8080/api/event/detail/${selectedEvent}`)
@@ -43,7 +44,7 @@ const DashboardStaff = () => {
     };
 
     // visitor location
-    const generatePieChartData = () => {
+    const generatePieChartDataLocation = () => {
         if (!event || !event.listVisitor) return [];
 
         const locations = event.listVisitor.map(visitor => visitor.location);
@@ -56,6 +57,23 @@ const DashboardStaff = () => {
             name: location,
             value: count,
             label: location
+        }));
+    };
+
+    // visitor gender
+    const generatePieChartDataGender = () => {
+        if (!event || !event.listVisitor) return [];
+
+        const gender = event.listVisitor.map(visitor => visitor.gender);
+        const genderCounts = gender.reduce((acc, gender) => {
+            acc[gender] = (acc[gender] || 0) + 1;
+            return acc;
+        }, {});
+
+        return Object.entries(genderCounts).map(([gender, count]) => ({
+            name: gender,
+            value: count,
+            label: gender
         }));
     };
 
@@ -119,16 +137,56 @@ const DashboardStaff = () => {
             </div>
 
             {/* Event Charts */}
-            <div style={{ marginTop: '40px', marginLeft: '300px', marginRight: '100px', width: '500px' }}>
-                <h2><b>Visitor Location Distribution</b></h2>
-                <br></br>
-                <PieChart
-                    series={[{
-                        data: generatePieChartData()
-                    },]}
-                    height={200}
-                    width={400}
-                />
+            <div className="columns-2">
+                <div className="first-column">
+                    <div className="bg-white p-6 rounded-lg shadow-md" 
+                        style={{ marginTop: '40px', marginLeft: '300px', marginRight: '100px', width: '500px' }}
+                    >
+                        <h2><b>Visitor Location Distribution</b></h2>
+                        <br></br>
+                        <PieChart
+                            colors={colors}
+                            series={[{
+                                data: generatePieChartDataLocation(),
+                                innerRadius: 20,
+                                outerRadius: 120,
+                                paddingAngle: 5,
+                                cornerRadius: 5,
+                                startAngle: -90,
+                                endAngle: 180,
+                                cx: 150,
+                                cy: 150,
+                            },]}
+                            height={200}
+                            width={400}
+                        />
+                    </div>
+                </div>
+
+                <div className="second-column">
+                    <div className="bg-white p-6 rounded-lg shadow-md" 
+                        style={{ marginTop: '40px', marginLeft: '300px', marginRight: '100px', width: '500px' }}
+                    >
+                        <h2><b>Visitor Gender Distribution</b></h2>
+                        <br></br>
+                        <PieChart
+                            colors={colors}
+                            series={[{
+                                data: generatePieChartDataGender(),
+                                innerRadius: 20,
+                                outerRadius: 120,
+                                paddingAngle: 5,
+                                cornerRadius: 5,
+                                startAngle: -90,
+                                endAngle: 180,
+                                cx: 150,
+                                cy: 150,
+                            },]}
+                            height={200}
+                            width={400}
+                        />
+                    </div>
+                </div>
             </div>
 
         </main>
