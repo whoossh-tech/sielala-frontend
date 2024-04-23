@@ -26,7 +26,6 @@ const DashboardStaff = () => {
             .get(`http://localhost:8080/api/event/detail/${selectedEvent}`)
             .then((res) => {
                 setEvent(res.data.data);
-                // console.log(res.data.data);
             })
             .catch((err) => console.log(err));
         }
@@ -136,14 +135,13 @@ const DashboardStaff = () => {
                 </div>
             </div>
 
-            {/* Event Charts */}
-            <div className="columns-2">
+            {/* Event Pie Charts */}
+            <div className="columns-2" style={{ marginLeft: '20px', marginRight: '20px', justifyContent: 'center', display: 'flex' }}>
                 <div className="first-column">
                     <div className="bg-white p-6 rounded-lg shadow-md" 
-                        style={{ marginTop: '40px', marginLeft: '300px', marginRight: '100px', width: '500px' }}
+                        style={{ marginTop: '40px', width: '300px' }}
                     >
                         <h2><b>Visitor Location Distribution</b></h2>
-                        <br></br>
                         <PieChart
                             colors={colors}
                             series={[{
@@ -152,23 +150,22 @@ const DashboardStaff = () => {
                                 outerRadius: 120,
                                 paddingAngle: 5,
                                 cornerRadius: 5,
-                                startAngle: -90,
-                                endAngle: 180,
+                                startAngle: 0,
+                                endAngle: 360,
                                 cx: 150,
                                 cy: 150,
                             },]}
                             height={200}
-                            width={400}
+                            width={200}
                         />
                     </div>
                 </div>
 
                 <div className="second-column">
                     <div className="bg-white p-6 rounded-lg shadow-md" 
-                        style={{ marginTop: '40px', marginLeft: '300px', marginRight: '100px', width: '500px' }}
+                        style={{ marginTop: '40px', width: '300px' }}
                     >
                         <h2><b>Visitor Gender Distribution</b></h2>
-                        <br></br>
                         <PieChart
                             colors={colors}
                             series={[{
@@ -177,18 +174,17 @@ const DashboardStaff = () => {
                                 outerRadius: 120,
                                 paddingAngle: 5,
                                 cornerRadius: 5,
-                                startAngle: -90,
-                                endAngle: 180,
+                                startAngle: 0,
+                                endAngle: 360,
                                 cx: 150,
                                 cy: 150,
                             },]}
                             height={200}
-                            width={400}
+                            width={200}
                         />
                     </div>
                 </div>
             </div>
-
         </main>
     )
 }
