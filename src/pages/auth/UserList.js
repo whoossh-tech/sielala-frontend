@@ -6,14 +6,25 @@ import { useNavigate, Link } from 'react-router-dom';
 import { NavbarAdmin } from '../../components/navbar/NavbarAdmin';
 import '../../static/css/UserList.css';
 import '../../static/css/Button.css';
+import Modal from 'react-modal';
 
 const UserList = () => {
     const [users, setUserList] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [idToBeDeleted, setIdToBeDeleted] = useState(false);
+    const [userDeleted, setUserDeleted] = useState('');
     const navigate = useNavigate();
 
     const redirectToStaffRegistration = () => {
         navigate('/staff-registration');
     }
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,12 +40,34 @@ const UserList = () => {
         };
 
         fetchData();
-    }, []);
+    }, [userDeleted]);
 
-    // const handleEditClick = (userId) => {
-    //     // Implement your edit functionality here
-    //     console.log(`Edit user with ID ${userId}`);
-    // };
+    const confirmDelete = async (e) => {
+        closeModal();
+
+        try {
+
+            const token = localStorage.getItem('token');
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            
+            const response = await axios.delete(`http://localhost:8080/admin/delete/${idToBeDeleted}`);
+
+            setUserDeleted(idToBeDeleted);
+            console.log('User deleted successfully:', response.data);
+
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            toast.success("User deleted successfully");
+            
+        } catch (error) {
+            console.error('Error:', error);
+            toast.error("Cannot delete user");
+        }
+    };
+
+    const handleDelete = (userId) => {
+        setIdToBeDeleted(userId);
+        openModal();
+    }
 
     return (  
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -87,12 +120,29 @@ const UserList = () => {
                             <Link to={`/user/edit/${user.userId}`}>
                                 <button className="button-green">Edit</button>
                             </Link>
-                            <button className="button-red">Delete</button>
+                            <button className="button-red" onClick={() => handleDelete(user.userId)}>Delete</button>
                         </td>
                     </tr>
                 ))}
                     </tbody>
                 </table>
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    id="modal-confirmation-form"
+                >
+                {/* <div className='modalBackground'>
+                    <div className="modalContainer"> */}
+                        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                        <p className="text-center text-gray-700">Are you sure you want to delete user?</p>
+                        <br></br>
+                        <div>
+                            <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+                            <button className="button-green text-center" onClick={confirmDelete}>Confirm</button>
+                        </div>
+                    {/* </div>
+                </div> */}
+                </Modal>
             </div>
         </div>
     );
