@@ -117,7 +117,7 @@ const DashboardStaff = () => {
             {( role === 'OPERATION' ) && ( <NavbarOperation style={{ zIndex: 999 }} />)}
             <br></br>
     
-            <div style={{ marginLeft: '70px', marginRight: '30px', marginBottom: '40px', marginTop: '20px' }}>
+            <div style={{ marginLeft: '70px', marginRight: '30px', marginBottom: '40px', marginTop: '10px' }}>
                 {/* Event Dropdown */}
                 <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
                     <select
