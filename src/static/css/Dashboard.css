@@ -17,3 +17,7 @@
     height: 50px;
     margin-top: 0px;
 }
+
+tspan {
+    font-size: 0.9rem;
+}

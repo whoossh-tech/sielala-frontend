@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PieChart } from "@mui/x-charts/PieChart";
+import { PieChart, BarChart } from "@mui/x-charts";
 import '../../static/css/Dashboard.css';
 
 import { NavbarAdmin } from '../../components/navbar/NavbarAdmin';
@@ -105,136 +105,142 @@ const DashboardStaff = () => {
             {( role === 'OPERATION' ) && ( <NavbarOperation style={{ zIndex: 999 }} />)}
             <br></br>
 
-            {/* Event Dropdown */}
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
-                <select
-                className="appearance-none px-4 py-3 w-full focus:outline-none"
-                onChange={handleChange}
-                value={selectedEvent}
-                style={{
-                    backgroundColor: "#ffffff",
-                    color: "#333333",
-                    borderRadius: "0.375rem",
-                    border: "1px solid #E3E2E6",
-                    fontSize: "1rem",
-                    lineHeight: "1.5",
-                    padding: "0.5rem 1rem",
-                    width: "100%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-                >
-                <option>select event</option>
-                {eventData && eventData.length > 0 ? (
-                    eventData.map((event, index) => (
-                    <option key={index} value={event.idEvent}>
-                        {event.eventName}
-                    </option>
-                    ))
-                ) : (
-                    <option value="">No events available</option>
-                )}
-                </select>
-                <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-                    <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        viewBox="0 0 24 24" 
-                        width="24" 
-                        height="24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        className="feather feather-chevron-down"
-                    >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-            </div>
+            <div style={{ marginLeft: '70px', marginRight: '30px', marginBottom: '40px' }}>
 
-            {/* Event Pie Charts */}
-            <div className="columns-2" style={{ marginLeft: '20px', marginRight: '20px', justifyContent: 'center', display: 'flex' }}>
-                <div className="first-column">
-                    <div className="bg-white p-6 rounded-lg shadow-md" 
-                        style={{ marginTop: '40px', width: '300px' }}
+                {/* Event Dropdown */}
+                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
+                    <select
+                    className="appearance-none px-4 py-3 w-full focus:outline-none"
+                    onChange={handleChange}
+                    value={selectedEvent}
+                    style={{
+                        backgroundColor: "#ffffff",
+                        color: "#333333",
+                        borderRadius: "0.375rem",
+                        border: "1px solid #E3E2E6",
+                        fontSize: "1rem",
+                        lineHeight: "1.5",
+                        padding: "0.5rem 1rem",
+                        width: "100%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
                     >
-                        <h2><b>Visitor Location Distribution</b></h2>
-                        <PieChart
-                            colors={colors}
-                            series={[{
-                                data: generatePieChartDataLocation(),
-                                innerRadius: 20,
-                                outerRadius: 120,
-                                paddingAngle: 5,
-                                cornerRadius: 5,
-                                startAngle: 0,
-                                endAngle: 360,
-                                cx: 150,
-                                cy: 150,
-                            },]}
-                            height={200}
-                            width={200}
-                        />
+                    <option>select event</option>
+                    {eventData && eventData.length > 0 ? (
+                        eventData.map((event, index) => (
+                        <option key={index} value={event.idEvent}>
+                            {event.eventName}
+                        </option>
+                        ))
+                    ) : (
+                        <option value="">No events available</option>
+                    )}
+                    </select>
+                    <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            width="24" 
+                            height="24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            className="feather feather-chevron-down"
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
                     </div>
                 </div>
 
-                <div className="second-column">
-                    <div className="bg-white p-6 rounded-lg shadow-md" 
-                        style={{ marginTop: '40px', width: '300px' }}
-                    >
-                        <h2><b>Visitor Gender Distribution</b></h2>
-                        <PieChart
-                            colors={colors}
-                            series={[{
-                                data: generatePieChartDataGender(),
-                                innerRadius: 20,
-                                outerRadius: 120,
-                                paddingAngle: 5,
-                                cornerRadius: 5,
-                                startAngle: 0,
-                                endAngle: 360,
-                                cx: 150,
-                                cy: 150,
-                            },]}
-                            height={200}
-                            width={200}
-                        />
+                {/* Event Pie Charts */}
+                <div className="columns-2" style={{ display: 'flex' }}>
+                    <div className="first-column">
+                        <div className="bg-white p-6 rounded-lg shadow-md" 
+                            style={{ marginTop: '40px', width: '415px' }}
+                        >
+                            <h2><b>Visitor Location Distribution</b></h2>
+                            <PieChart
+                                colors={colors}
+                                series={[{
+                                    data: generatePieChartDataLocation(),
+                                    innerRadius: 20,
+                                    outerRadius: 90,
+                                    paddingAngle: 5,
+                                    cornerRadius: 5,
+                                    startAngle: 0,
+                                    endAngle: 360,
+                                    cx: 100,
+                                    cy: 110,
+                                },]}
+                                height={210}
+                                width={390}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="second-column" style={{ marginLeft: '30px' }}>
+                        <div className="bg-white p-6 rounded-lg shadow-md" 
+                            style={{ marginTop: '40px', width: '350px' }}
+                        >
+                            <h2><b>Visitor Gender Distribution</b></h2>
+                            <PieChart
+                                colors={colors}
+                                series={[{
+                                    data: generatePieChartDataGender(),
+                                    innerRadius: 20,
+                                    outerRadius: 90,
+                                    paddingAngle: 5,
+                                    cornerRadius: 5,
+                                    startAngle: 0,
+                                    endAngle: 360,
+                                    cx: 100,
+                                    cy: 110,
+                                    fontSize: 15
+                                },]}
+                                height={210}
+                                width={320}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Age Distribution */}
-            <div className="columns-2" style={{ marginLeft: '20px', marginRight: '20px', justifyContent: 'center', display: 'flex' }}>
-                <div className="first-column">
-                    <div className="bg-white p-6 rounded-lg shadow-md" 
-                        style={{ marginTop: '40px', width: '300px' }}
-                    >
-                        <h2><b>Age Distribution - Female</b></h2>
-                        {/* Age Distribution Bar Chart for Female */}
-                        <BarChart
-                            colors={colors}
-                            xAxis={[{ scaleType: 'band', data: generateBarChartDataAge('Female').map(data => data.name) }]}
-                            series={[{ data: generateBarChartDataAge('Female').map(data => data.value) }]}
-                            width={350}
-                            height={200}
-                        />
+                {/* Age Distribution */}
+                <div className="columns-2">
+                    <div className="first-column">
+                        <div className="bg-white p-6 rounded-lg shadow-md" 
+                            style={{ marginTop: '40px', width: '450px' }}
+                        >
+                            <h2><b>Age Distribution - Female</b></h2>
+                            <BarChart
+                                colors={colors}
+                                xAxis={[{ scaleType: 'band', data: generateBarChartDataAge('Female').map(data => data.name) }]}
+                                series={[{ 
+                                    data: generateBarChartDataAge('Female').map(data => data.value), 
+                                }]}
+                                width={410}
+                                height={200}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <div className="second-column">
-                    <div className="bg-white p-6 rounded-lg shadow-md" 
-                        style={{ marginTop: '40px', width: '300px' }}
-                    >
-                        <h2><b>Age Distribution - Male</b></h2>
-                        {/* Age Distribution Bar Chart for Male */}
-                        <BarChart
-                            colors={colors}
-                            xAxis={[{ scaleType: 'band', data: generateBarChartDataAge('Male').map(data => data.name) }]}
-                            series={[{ data: generateBarChartDataAge('Male').map(data => data.value) }]}
-                            width={350}
-                            height={200}
-                        />
+                    <div className="second-column" style={{ marginLeft: '30px' }}>
+                        <div className="bg-white p-6 rounded-lg shadow-md" 
+                            style={{ marginTop: '40px', width: '450px' }}
+                        >
+                            <h2><b>Age Distribution - Male</b></h2>
+                            <BarChart
+                                colors={colors}
+                                xAxis={[{ scaleType: 'band', data: generateBarChartDataAge('Male').map(data => data.name) }]}
+                                series={[{ 
+                                    data: generateBarChartDataAge('Male').map(data => data.value),
+                                }]}
+                                width={410}
+                                height={200}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
