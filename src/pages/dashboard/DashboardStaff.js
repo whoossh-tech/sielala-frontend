@@ -14,7 +14,7 @@ const DashboardStaff = () => {
     const [eventData, setEventData] = useState([]);
     const [event, setEvent] = useState();
 
-    const colors = ['#FDA7CB', '#A27D60', '#C3CB6B', '#E685AE', '#865C3A', '#A9B245', '#FFCDE5', '#DAC1AD', '#EBF0B0'];
+    const colors = ['#FFCDE5', '#DAC1AD', '#EBF0B0', '#FDA7CB', '#A27D60', '#C3CB6B', '#E685AE', '#865C3A', '#A9B245'];
 
     const role = localStorage.getItem('role');
     const token = localStorage.getItem("token");
@@ -25,8 +25,6 @@ const DashboardStaff = () => {
             .get("http://localhost:8080/api/event/view-all")
             .then((res) => {
             setEventData(res.data.data);
-            console.log("event data");
-            console.log(res.data.data);
 
             if (!selectedEvent && res.data.data.length > 0) {
                 setSelectedEvent(res.data.data[0].idEvent);
@@ -40,7 +38,6 @@ const DashboardStaff = () => {
             .get(`http://localhost:8080/api/event/detail/${selectedEvent}`)
             .then((res) => {
                 setEvent(res.data.data);
-                console.log(res.data.data);
             })
             .catch((err) => console.log(err));
         }
@@ -49,9 +46,9 @@ const DashboardStaff = () => {
     const handleChange = (e) => {
         const selectedValue = e.target.value;
         if (selectedValue === "Select event") {
-        setSelectedEvent(""); // Reset selectedEvent to empty string
+            setSelectedEvent(""); 
         } else {
-        setSelectedEvent(selectedValue);
+            setSelectedEvent(selectedValue);
         }
     };
 
@@ -171,6 +168,7 @@ const DashboardStaff = () => {
                     <div>
                         {(event.listVisitor.length === 0) && ( 
                             <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                                {/* no registered visitors yet => won't show chart */}
                                 <b>There are currently no registered visitors for this event.</b>
                             </div>
                         )}
@@ -230,7 +228,7 @@ const DashboardStaff = () => {
                                     </div>
                                 </div>
             
-                                {/* Age Distribution */}
+                                {/* Age Distribution Bar Chart */}
                                 <div className="columns-2">
                                     <div className="first-column">
                                         <div className="bg-white p-6 rounded-lg shadow-md" 
@@ -239,7 +237,10 @@ const DashboardStaff = () => {
                                             <h2><b>Age Distribution - Female</b></h2>
                                             <BarChart
                                                 colors={colors}
-                                                xAxis={[{ scaleType: 'band', data: generateBarChartDataAge('Female').map(data => data.name) }]}
+                                                xAxis={[{ 
+                                                    scaleType: 'band', 
+                                                    data: generateBarChartDataAge('Female').map(data => data.name) 
+                                                }]}
                                                 series={[{ 
                                                     data: generateBarChartDataAge('Female').map(data => data.value), 
                                                 }]}
@@ -256,7 +257,10 @@ const DashboardStaff = () => {
                                             <h2><b>Age Distribution - Male</b></h2>
                                             <BarChart
                                                 colors={colors}
-                                                xAxis={[{ scaleType: 'band', data: generateBarChartDataAge('Male').map(data => data.name) }]}
+                                                xAxis={[{ 
+                                                    scaleType: 'band', 
+                                                    data: generateBarChartDataAge('Male').map(data => data.name) 
+                                                }]}
                                                 series={[{ 
                                                     data: generateBarChartDataAge('Male').map(data => data.value),
                                                 }]}
@@ -271,7 +275,7 @@ const DashboardStaff = () => {
                     </div>
                 ) : (
                     <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                        No events have been made.
+                        <b>No events have been made.</b>
                     </div>
 
                 )}
