@@ -67,7 +67,6 @@ const DashboardGuest = () => {
     };
 
     return (
-        // <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
         <main>
             <NavbarGuest />
             <style>{reynaldoStyles}</style>
@@ -76,50 +75,21 @@ const DashboardGuest = () => {
             <h1 className="text-7xl">Lala Market</h1>
             <h1 className="text-2xl">Sexiest, Hottest, Endless Sale</h1>
             <h2>A Fashion Curated Bazaar Featuring 50+ Brands with Discounts Up to 90%</h2>
-            {/* <br></br> */}
-
-            {/* <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                <div className="total-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5">
-                        <div className="flex justify-between">
-                            <div className='text-left'>
-                                <h1 className='text-2xl my-2'>tes q</h1>
-                                <p className="text-md mb-2 text-center">
-                                    📆 tes 2 | 📍 tes 3
-                                </p>
-                            </div>
-
-                            <div className="5 flex items-center gap-0 mx-3">
-                                <div className="flex space-x-4">
-                                    <button className="button-pink text-sm" >
-                                        Register as Visitor
-                                    </button>
-
-                                        <button className="button-green text-sm" >
-                                            Register as Tenant
-                                        </button>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div> */}
             
             <br>
             </br>
 
             <div className="mb-3" style={{ display: 'flex', justifyContent: 'center', marginBottom: "40px" }}>
                 <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#F59FC3' }}>
-                    {/* Konten total card pertama */}
                     <h1>{totalEvent}++</h1>
                     <h2>Events</h2>
                 </div>
                 <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#B2BA59' }}>
-                    {/* Konten total card kedua */}
                     <h1>{totalTenant}++</h1>
                     <h2>Brands</h2>
                 </div>
 
                 <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#8C6749' }}>
-                    {/* Konten total card ketiga */}
                     <h1>{totalVisitor}++</h1>
                     <h2>Visitors</h2>
                 </div>
@@ -165,27 +135,6 @@ const DashboardGuest = () => {
 
             <h1 className="text-lg upcoming-title font-bold text-left">PREVIOUS EVENT</h1>
 
-            {/* <div className="previous-event-cards-container"> */}
-            {/* <div className="mb-3" style={{ display: 'flex', justifyContent: 'start', marginBottom: "40px", marginLeft: "110px", marginRight: "110px" }}>
-                {events && events.length > 0 ? (
-                    events.map((event, i) => (
-                        <div key={i} className="previousevent-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5" style={{ backgroundColor: '#EBF0B0' }}>
-                            <h1 className='text-2xl my-2 text-start'>{event.eventName}</h1>
-                            <p className="text-md mb-2 text-start">
-                                📆 {event.startDateFormatted} - {event.endDateFormatted}
-                            </p>
-                            <p className="text-md mb-2 text-start">
-                                📍 {event.location}
-                            </p>
-                        </div>
-                    ))
-                ) : (
-                    <p><b>No Upcoming Events Available</b></p>
-                )}
-
-                
-            </div> */}
-
             <div className="previous-event-cards-container">
                 {endedEvents && endedEvents.length > 0 ? (
                     endedEvents.map((event, i) => (
@@ -220,7 +169,6 @@ const DashboardGuest = () => {
             </div>
             <br></br>
         </main>
-        // </div>
     )
 }
 

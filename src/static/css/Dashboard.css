@@ -3,36 +3,23 @@
 }
 
 .event-card {
-    /* margin-left: 120px;
-    margin-right: 120px; */
     margin: 0 120px;
     margin-top: 10px;
 }
 
 .total-card {
-    /* margin-left: auto;
-    margin-right: auto; */
     margin-top: 10px;
     margin: 0 120px;
-    /* max-width: 900px;  */
 }
 
 
 .square-card {
-    /* margin-left: auto;
-    margin-right: auto; */
     margin-top: 10px;
-    /* margin: 0 120px; */
-    /* max-width: 900px;  */
 }
 
 .detail-square-card {
-    /* margin-left: auto;
-    margin-right: auto; */
     margin-top: 10px;
     margin-bottom: 2px;
-    /* margin: 0 120px; */
-    /* max-width: 900px;  */
 }
 
 
@@ -46,7 +33,6 @@
 }
 
 .previousevent-card {
-    width: calc(25% - 20px); /* 25% width for 4 cards per row with some space between them */
-    /* Other styles */
+    width: calc(25% - 20px);
     margin-right: 20px;
 }
