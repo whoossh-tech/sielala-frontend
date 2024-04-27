@@ -34,6 +34,18 @@ const DashboardGuest = () => {
                 err => 
                 console.log(err)
             )
+
+            axios.get('http://localhost:8080/api/event/total')
+            .then(res => {
+                setTotalEvent(res.data.totalEvent)
+                setTotalTenant(res.data.totalTenant)
+                setTotalVisitor(res.data.totalVisitor)
+                console.log(res.data)
+            }).catch(
+                err => 
+                console.log(err)
+            )
+
     }, [])
 
     const visitorRegistrationClick = (eventId) => {
@@ -85,20 +97,20 @@ const DashboardGuest = () => {
             </br>
 
             <div className="mb-3" style={{ display: 'flex', justifyContent: 'center', marginBottom: "40px" }}>
-                <div className="square-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-3 mx-2" style={{ backgroundColor: '#F59FC3' }}>
+                <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#F59FC3' }}>
                     {/* Konten total card pertama */}
-                    <h1>20++</h1>
+                    <h1>{totalEvent}++</h1>
                     <h2>Events</h2>
                 </div>
-                <div className="square-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-3 mx-2" style={{ backgroundColor: '#B2BA59' }}>
+                <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#B2BA59' }}>
                     {/* Konten total card kedua */}
-                    <h1>100++</h1>
+                    <h1>{totalTenant}++</h1>
                     <h2>Brands</h2>
                 </div>
 
-                <div className="square-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-3 mx-2" style={{ backgroundColor: '#8C6749' }}>
+                <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#8C6749' }}>
                     {/* Konten total card ketiga */}
-                    <h1>130++</h1>
+                    <h1>{totalVisitor}++</h1>
                     <h2>Visitors</h2>
                 </div>
             </div>
@@ -139,6 +151,12 @@ const DashboardGuest = () => {
             )}
 
             <br></br>
+            <br></br>
+            
+            <h1 className="text-lg upcoming-title font-bold text-left">PREVIOUS EVENT</h1>
+
+            <br></br>
+
             <br></br>
         </main>
         // </div>
