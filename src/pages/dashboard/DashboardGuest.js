@@ -15,6 +15,7 @@ const DashboardGuest = () => {
     const [totalEvent, setTotalEvent] = useState(0);
     const [totalTenant, setTotalTenant] = useState(0);
     const [totalVisitor, setTotalVisitor] = useState(0);
+    const [endedEvents, setEndedEvents] = useState([]);
 
     useEffect(() => {
 
@@ -29,6 +30,15 @@ const DashboardGuest = () => {
         axios.get('http://localhost:8080/api/event/ongoing')
             .then(res => {
                 setEvents(res.data.data)
+                console.log(res.data.data)
+            }).catch(
+                err => 
+                console.log(err)
+            )
+
+            axios.get('http://localhost:8080/api/event/ended')
+            .then(res => {
+                setEndedEvents(res.data.data)
                 console.log(res.data.data)
             }).catch(
                 err => 
@@ -152,11 +162,62 @@ const DashboardGuest = () => {
 
             <br></br>
             <br></br>
-            
+
             <h1 className="text-lg upcoming-title font-bold text-left">PREVIOUS EVENT</h1>
 
-            <br></br>
+            {/* <div className="previous-event-cards-container"> */}
+            {/* <div className="mb-3" style={{ display: 'flex', justifyContent: 'start', marginBottom: "40px", marginLeft: "110px", marginRight: "110px" }}>
+                {events && events.length > 0 ? (
+                    events.map((event, i) => (
+                        <div key={i} className="previousevent-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5" style={{ backgroundColor: '#EBF0B0' }}>
+                            <h1 className='text-2xl my-2 text-start'>{event.eventName}</h1>
+                            <p className="text-md mb-2 text-start">
+                                📆 {event.startDateFormatted} - {event.endDateFormatted}
+                            </p>
+                            <p className="text-md mb-2 text-start">
+                                📍 {event.location}
+                            </p>
+                        </div>
+                    ))
+                ) : (
+                    <p><b>No Upcoming Events Available</b></p>
+                )}
 
+                
+            </div> */}
+
+            <div className="previous-event-cards-container">
+                {endedEvents && endedEvents.length > 0 ? (
+                    endedEvents.map((event, i) => (
+                        <div key={i} className="previousevent-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5" style={{ backgroundColor: '#EBF0B0' }}>
+                            <h1 className='text-2xl my-2 text-start'>{event.eventName}</h1>
+                            <p className="text-md mb-2 text-start">
+                                📆 {event.startDateFormatted} - {event.endDateFormatted}
+                            </p>
+                            <p className="text-md mb-2 text-start">
+                                📍 {event.location}
+                            </p>
+                            <p className="text-md mb-2 text-start">
+                                📍 {event.totalVisitor}
+                            </p>
+
+                            <div style={{ display: 'flex', justifyContent: 'center'}}>
+                                <div className="detail-square-card bg-primary-10 shadow-md rounded-lg py-1 px-6 my-14 mx-3" style={{ backgroundColor: '#F59FC3' }}>
+                                    <h1 style={{ fontSize: '20px' }}>{event.totalVisitor}</h1>
+                                    <h2>Visitors</h2>
+                                </div>
+
+                                <div className="detail-square-card bg-primary-10 shadow-md rounded-lg py-1 px-6 my-14 mx-3" style={{ backgroundColor: '#B2BA59' }}>
+                                    <h1 style={{ fontSize: '20px' }}>{event.totalTenant}</h1>
+                                    <h2>Tenants</h2>
+                                </div>
+                            </div>
+                            </div>
+                    ))
+                ) : (
+                    <p><b>No Previous Events Available</b></p>
+                )}
+            </div>
             <br></br>
         </main>
         // </div>
