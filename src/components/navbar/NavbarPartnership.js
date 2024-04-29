@@ -89,8 +89,8 @@ export function NavbarPartnership() {
               <span className="montserrat text-primary-70 text-md">Hi, { role }!</span>
             </Button>
 
-            <Button variant="gradient" size="sm" className="button-red hidden lg:inline-block" onClick={handleLogout}>
-              <span className="montserrat text-md">Log Out</span>
+            <Button variant="gradient" size="sm" className="bg-danger hidden lg:inline-block" onClick={handleLogout}>
+              <span className="montserrat text-white text-md">Log Out</span>
             </Button>
           </div>
         </div>

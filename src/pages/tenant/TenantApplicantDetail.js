@@ -108,12 +108,19 @@ const TenantApplicantDetail = () => {
             <NavbarAdmin style={{ zIndex: 999 }} />
         )}
 
-        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
+        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '210px' }}>
             <div>
                 <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
                 Tenant Applicant Detail</h1>
                 <div>
                     <p className="subtitle">Manage and view tenant applicant data here.</p>
+                </div>
+                <div>
+                    <p className="subtitle" style={{ marginBottom: '5px'}}>
+                        <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Home</a> / 
+                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Tenant Applicant List </a>
+                        / Detail
+                    </p>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ const DashboardStaff = () => {
     const [eventData, setEventData] = useState([]);
     const [event, setEvent] = useState();
 
-    const colors = ['#FFCDE5', '#DAC1AD', '#EBF0B0', '#FDA7CB', '#A27D60', '#C3CB6B', '#E685AE', '#865C3A', '#A9B245'];
+    const colors = ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834'];
 
     const role = localStorage.getItem('role');
     const token = localStorage.getItem("token");
@@ -239,7 +239,11 @@ const DashboardStaff = () => {
                                                 colors={colors}
                                                 xAxis={[{ 
                                                     scaleType: 'band', 
-                                                    data: generateBarChartDataAge('Female').map(data => data.name) 
+                                                    data: generateBarChartDataAge('Female').map(data => data.name),
+                                                    colorMap: {
+                                                        type: 'ordinal',
+                                                        colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                    }  
                                                 }]}
                                                 series={[{ 
                                                     data: generateBarChartDataAge('Female').map(data => data.value), 
@@ -259,7 +263,11 @@ const DashboardStaff = () => {
                                                 colors={colors}
                                                 xAxis={[{ 
                                                     scaleType: 'band', 
-                                                    data: generateBarChartDataAge('Male').map(data => data.name) 
+                                                    data: generateBarChartDataAge('Male').map(data => data.name),
+                                                    colorMap: {
+                                                        type: 'ordinal',
+                                                        colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                    } 
                                                 }]}
                                                 series={[{ 
                                                     data: generateBarChartDataAge('Male').map(data => data.value),
