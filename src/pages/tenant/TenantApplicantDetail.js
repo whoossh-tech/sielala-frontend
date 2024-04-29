@@ -117,7 +117,7 @@ const TenantApplicantDetail = () => {
                 </div> */}
                 <div>
                     <p className="subtitle">
-                        <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Home</a> / 
+                        <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
                         <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Tenant Applicant List </a>
                         / Detail
                     </p>
