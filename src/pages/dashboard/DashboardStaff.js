@@ -13,6 +13,9 @@ const DashboardStaff = () => {
     const [selectedEvent, setSelectedEvent] = useState("");
     const [eventData, setEventData] = useState([]);
     const [event, setEvent] = useState();
+    const [rewardRedeemedList, setRewardRedeemedList] = useState([]);
+    const [totalPointsRedeemed, setTotalPointsRedeemed] = useState(0);
+    const [totalTenantAccepted, setTotalTenantAccepted] = useState(0);
 
     const colors = ['#FFCDE5', '#DAC1AD', '#EBF0B0', '#FDA7CB', '#A27D60', '#C3CB6B', '#E685AE', '#865C3A', '#A9B245'];
 
@@ -38,10 +41,30 @@ const DashboardStaff = () => {
             .get(`http://localhost:8080/api/event/detail/${selectedEvent}`)
             .then((res) => {
                 setEvent(res.data.data);
+                const totalAccepted = res.data.data.listTenant.filter(tenant => tenant.accepted).length;
+                    setTotalTenantAccepted(totalAccepted);
             })
             .catch((err) => console.log(err));
+
+            axios
+                .get(`http://localhost:8080/api/reward/reward-redemption-history/${selectedEvent}`)
+                .then((res) => {
+                    setRewardRedeemedList(res.data.data);
+                })
+                .catch((err) => console.log(err));
         }
     }, [selectedEvent]);
+
+    useEffect(() => {
+        if (rewardRedeemedList.length > 0) {
+            const totalPoints = rewardRedeemedList.reduce((acc, redeemedItem) => {
+                return acc + redeemedItem.pointsRedeemed;
+            }, 0);
+            setTotalPointsRedeemed(totalPoints);
+        } else {
+            setTotalPointsRedeemed(0); 
+        }
+    }, [rewardRedeemedList]);
 
     const handleChange = (e) => {
         const selectedValue = e.target.value;
@@ -272,6 +295,21 @@ const DashboardStaff = () => {
                                 </div>
                             </div>
                         )}
+                        
+                        {/* show totals data */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '40px' }}>
+                            <div className="card">
+                                <p>Total Tenant Applicants: {event.listTenant ? event.listTenant.length : 0}</p>
+                                <p>Total Tenant Accepted: {totalTenantAccepted}</p>
+                            </div>
+                            <div className="card">
+                                <p>Total Reward Redeemed: {rewardRedeemedList.length}</p>
+                            </div>
+                            <div className="card">
+                                <p>Total Points Redeemed: {totalPointsRedeemed}</p>
+                            </div>
+                        </div>
+
                     </div>
                 ) : (
                     <div style={{ marginTop: '20px', textAlign: 'center' }}>
