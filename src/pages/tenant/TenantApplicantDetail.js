@@ -112,8 +112,15 @@ const TenantApplicantDetail = () => {
             <div>
                 <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
                 Tenant Applicant Detail</h1>
-                <div>
+                {/* <div>
                     <p className="subtitle">Manage and view tenant applicant data here.</p>
+                </div> */}
+                <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
+                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Tenant Applicant List </a>
+                        / Detail
+                    </p>
                 </div>
             </div>
         </div>
@@ -131,52 +138,52 @@ const TenantApplicantDetail = () => {
             <table style={{ marginLeft: 80, marginRight: 80, borderCollapse: "collapse", width: 1100, alignItems: "center" }}>
                 <tbody>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white", width: "20%" }}>Brand Name :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", width: "10%", textAlign: "left" }}>Brand Name :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20, width: "30%" }}>{tenantApplicant?.brandName}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Email :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Brand Email :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.brandEmail}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Telephone Number :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Brand Telephone Number :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>+62 {tenantApplicant?.brandTelephone}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Instagram :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Brand Instagram :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.brandInstagram}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Address :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Brand Address :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.address}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Description :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Brand Description :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.brandDescription}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>PIC Name :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>PIC Name :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.picName}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Amount of Electricity :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Amount of Electricity :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.electricityAmount}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Brand Promo :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Brand Promo :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.brandPromo}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Product Category :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Product Category :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.category}</td>
                     </tr>
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Booth Preference :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Booth Preference :</td>
                         <td style={{ color: "black", textAlign: "left", marginLeft: 20 }}>{tenantApplicant?.boothPreference}</td>
                     </tr>
 
                     <tr>
-                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#F59FC3", color: "white" }}>Acceptance Status :</td>
+                        <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Acceptance Status :</td>
 
                         { tenantApplicant?.selectionDone === false && (
                             // <p className="text-secondary-80" style={{ display: "inline-block" }}><b>Pending</b></p>

@@ -58,8 +58,15 @@ const EmailDetail = () => {
           <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
             Email Detail
           </h1>
-          <div>
+          {/* <div>
             <p className="subtitle">View your email details here</p>
+          </div> */}
+          <div>
+            <p className="subtitle">
+                <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
+                <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Bulk Email Management </a>
+                / Detail
+            </p>
           </div>
         </div>
       </div>

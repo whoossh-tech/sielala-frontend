@@ -7,3 +7,17 @@
     margin-right: 120px;
     margin-top: 10px;
 }
+
+.base-Popper-root {
+    width: 200px;
+}
+
+.MuiChartsTooltip-table {
+    width: 150px;
+    height: 50px;
+    margin-top: 0px;
+}
+
+tspan {
+    font-size: 0.9rem;
+}
