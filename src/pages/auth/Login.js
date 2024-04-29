@@ -37,32 +37,33 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       const role = localStorage.getItem('role');
-      switch (role) {
-      case 'ADMIN':
-        toast.success("Login successfully");
-        toast.loading('Redirecting to Admin Dashboard...');
-        window.location.replace('/admin');
-        break;
-      case 'PARTNERSHIP':
-        toast.loading('Redirecting to Partnerhsip Dashboard...');
-        window.location.replace('/partnership');
-        break;
-      case 'OPERATION':
-        toast.loading('Redirecting to Operations Dashboard...');
-        window.location.replace('/operation');
-        break;
-      case 'FINANCE':
-        toast.loading('Redirecting to Finance Dashboard...');
-        window.location.replace('/finance');
-        break;
-      case 'BISDEV':
-        toast.loading('Redirecting to Business Development Dashboard...');
-        window.location.replace('/bisdev');
-        break;
-      default:
-        toast.loading('Redirecting to Guest Dashboard...');
-        window.location.replace('/'); 
-    }
+      window.location.replace('/dashboard');
+    //   switch (role) {
+    //   case 'ADMIN':
+    //     toast.success("Login successfully");
+    //     toast.loading('Redirecting to Admin Dashboard...');
+    //     window.location.replace('/admin');
+    //     break;
+    //   case 'PARTNERSHIP':
+    //     toast.loading('Redirecting to Partnerhsip Dashboard...');
+    //     window.location.replace('/partnership');
+    //     break;
+    //   case 'OPERATION':
+    //     toast.loading('Redirecting to Operations Dashboard...');
+    //     window.location.replace('/operation');
+    //     break;
+    //   case 'FINANCE':
+    //     toast.loading('Redirecting to Finance Dashboard...');
+    //     window.location.replace('/finance');
+    //     break;
+    //   case 'BISDEV':
+    //     toast.loading('Redirecting to Business Development Dashboard...');
+    //     window.location.replace('/bisdev');
+    //     break;
+    //   default:
+    //     toast.loading('Redirecting to Guest Dashboard...');
+    //     window.location.replace('/'); 
+    // }
   }
   }, [isAuthenticated]);
 

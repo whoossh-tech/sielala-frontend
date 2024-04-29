@@ -49,8 +49,13 @@ const TenantApplicant = () => {
     }, [selectedEvent]);
 
     const handleChange = (e) => {
-        setSelectedEvent(e.target.value);
-      };
+        const selectedValue = e.target.value;
+        if (selectedValue === "Select event") {
+        setSelectedEvent(""); // Reset selectedEvent to empty string
+        } else {
+        setSelectedEvent(selectedValue);
+        }
+    };
 
     return (
         <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
@@ -103,7 +108,7 @@ const TenantApplicant = () => {
                     justifyContent: "center",
                 }}
                 >
-                <option>select event</option>
+                <option>Select event</option>
                 {eventData && eventData.length > 0 ? (
                     eventData.map((event, index) => (
                     <option key={index} value={event.idEvent}>
@@ -135,7 +140,7 @@ const TenantApplicant = () => {
             <br></br>
         
             <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
-                {selectedEvent ? (
+                { (selectedEvent) && (
                 <table className="event-table mx-8">
 
                     <thead>
@@ -182,8 +187,6 @@ const TenantApplicant = () => {
                     </tbody>
                 </table>
 
-                ) : (
-                <div className="text-center">Please select an event to view tenant applicant</div>
                 )}
 
             </div>
