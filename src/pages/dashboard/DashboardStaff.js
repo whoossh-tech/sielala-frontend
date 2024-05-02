@@ -1,13 +1,13 @@
+// DOKUMEN INI SEBAGAI BENCHMARK SIDEBAR
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { PieChart, BarChart } from "@mui/x-charts";
 import '../../static/css/Dashboard.css';
+import backgroundPhoto from "../../assets/bg-cover.png";
 
-import { NavbarAdmin } from '../../components/navbar/NavbarAdmin';
-import { NavbarPartnership } from '../../components/navbar/NavbarPartnership';
-import { NavbarBisdev } from '../../components/navbar/NavbarBisdev';
-import { NavbarFinance } from '../../components/navbar/NavbarFinance';
-import { NavbarOperation } from '../../components/navbar/NavbarOperation';
+import Sidebar from './Sidebar';
+import Navbar from './Navbar';
 
 const DashboardStaff = () => {
     const [selectedEvent, setSelectedEvent] = useState("");
@@ -25,7 +25,7 @@ const DashboardStaff = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:8080/api/event/view-all")
+            .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
             setEventData(res.data.data);
 
@@ -38,7 +38,7 @@ const DashboardStaff = () => {
 
         if (selectedEvent) {
             axios
-            .get(`http://localhost:8080/api/event/detail/${selectedEvent}`)
+            .get(`https://sielala-backend-production.up.railway.app/api/event/detail/${selectedEvent}`)
             .then((res) => {
                 setEvent(res.data.data);
                 const totalAccepted = res.data.data.listTenant.filter(tenant => tenant.accepted).length;
@@ -47,7 +47,7 @@ const DashboardStaff = () => {
             .catch((err) => console.log(err));
 
             axios
-                .get(`http://localhost:8080/api/reward/reward-redemption-history/${selectedEvent}`)
+                .get(`https://sielala-backend-production.up.railway.app/api/reward/reward-redemption-history/${selectedEvent}`)
                 .then((res) => {
                     setRewardRedeemedList(res.data.data);
                 })
@@ -127,19 +127,94 @@ const DashboardStaff = () => {
         }));
     };
 
+//BEGINI CARANYA
+    // <body>
+    //     <Sidebar />
+
+    //     <section id="content">
+    //         <main></main>
+    //     </section>
+    // </body>
+
     return (
-        <main>
+        <body>
+            {/* <section id="sidebar"> */}
+            <Sidebar /> 
+
+
+            {/* <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
+                <div>
+                    <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
+                    Event Management</h1>
+                    <div>
+                        <p className="subtitle">Manage your event here</p>
+                    </div>
+                </div>
+            </div> */}
+            {/* </section> */}
+
+            <section id="content">
+                {/* <nav>
+                    <a href="#" class="nav-link">Categories</a>
+                </nav> */}
+            <main>
+                <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
+                    <div>
+                        <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
+                        Event Management</h1>
+                        <div>
+                            <p className="subtitle">Manage your event here</p>
+                        </div>
+                    </div>
+                </div>
             {/* Navigation Bar */}
-            {( role === 'ADMIN' ) && ( <NavbarAdmin style={{ zIndex: 999 }} />)}
+            {/* {( role === 'ADMIN' ) && ( <NavbarAdmin style={{ zIndex: 999 }} />)}
             {( role === 'PARTNERSHIP' ) && ( <NavbarPartnership style={{ zIndex: 999 }} />)}
             {( role === 'BISDEV' ) && ( <NavbarBisdev style={{ zIndex: 999 }} />)}
             {( role === 'FINANCE' ) && ( <NavbarFinance style={{ zIndex: 999 }} />)}
-            {( role === 'OPERATION' ) && ( <NavbarOperation style={{ zIndex: 999 }} />)}
-            <br></br>
+            {( role === 'OPERATION' ) && ( <NavbarOperation style={{ zIndex: 999 }} />)} */}
+            {/* <nav>
+			<i class='bx bx-menu' ></i>
+			<a href="#" class="nav-link">Categories</a> */}
+			{/* <form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search..."></input
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i>
+				</div>
+			</form> */}
+			{/* <input type="checkbox" id="switch-mode" hidden></input>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">8</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="img/people.png"></img>
+			</a> */}
+		{/* </nav> */}
+            {/* <Sidebar />  */}
+            {/* <br /> */}
     
-            <div style={{ marginLeft: '70px', marginRight: '30px', marginBottom: '40px', marginTop: '10px' }}>
+            <div className="dashboard-container">
+                {/* <div class="left">
+					<h1>Dashboard</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div> */}
                 {/* Event Dropdown */}
-                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
+                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto"}}>
+
+                {/* <div class="head-title"> */}
+			
+			{/* </div> */}
+
                     <select
                     className="appearance-none px-4 py-3 w-full focus:outline-none"
                     onChange={handleChange}
@@ -318,8 +393,12 @@ const DashboardStaff = () => {
 
                 )}
             </div>
+             <script src="script.js"></script>  
         </main>
-    )    
+        </section>
+        </body>
+
+    )  
 }
 
 export { DashboardStaff };
