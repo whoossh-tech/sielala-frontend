@@ -5,6 +5,7 @@ import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import "../../static/css/Visitor.css";
+import { Link } from 'react-router-dom';
 
 const Visitor = () => {
   const [visitors, setVisitors] = useState([]);
@@ -347,7 +348,11 @@ const Visitor = () => {
             <tbody>
               {filterVisitors().map((visitor, visitorIndex) => (
                 <tr key={visitorIndex}>
-                  <td>{highlightSearchText(visitor.eventPass)}</td>
+                  <td>
+                    <Link to={`/visitor/detail/${visitor.idVisitor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
+                    {highlightSearchText(visitor.eventPass)}
+                    </Link>
+                  </td>
                   <td>{highlightSearchText(visitor.name)}</td>
                   <td>{highlightSearchText(visitor.email)}</td>
                   <td>{highlightSearchText(visitor.telephone)}</td>

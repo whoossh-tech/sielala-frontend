@@ -190,7 +190,7 @@ const RewardInventory = () => {
                             width: '300px',
                         }}
                     >
-                        <option>select event</option>
+                        <option disabled>select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
                                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
