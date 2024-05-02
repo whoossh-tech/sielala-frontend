@@ -52,10 +52,8 @@ const Emails = () => {
       <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
           <div>
               <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-              Bulk Email Management</h1>
-              {/* <div>
-                  <p className="subtitle">Manage your bulk mails here</p>
-              </div> */}
+                Bulk Email Management
+              </h1>
               <div>
                 <p className="subtitle">
                   <a href='/dashboard' style={{ textDecoration: 'none' }}>
