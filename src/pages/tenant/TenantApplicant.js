@@ -175,15 +175,35 @@ const TenantApplicant = () => {
                             <td>{tenant.picName}</td>
 
                             { tenant.selectionDone === false && (
-                                <td className="text-secondary-80"><b>Pending</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-secondary-70 text-sm"
+                                    >    
+                                        <b>Pending</b>
+                                    </div>
+                                </td>
                             ) }
 
                             { (tenant.accepted === true && tenant.selectionDone === true) && (
-                                <td className="text-tertiary-80"><b>Accepted</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-tertiary-70 text-sm"
+                                    >    
+                                        <b>Accepted</b>
+                                    </div>
+                                </td>
+                                // <td className="text-tertiary-80"><b>Accepted</b></td>
                             ) }
 
                             { (tenant.accepted === false && tenant.selectionDone === true) && (
-                                <td className="text-warning-DEFAULT"><b>Rejected</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-warning-DEFAULT text-sm"
+                                    >    
+                                        <b>Rejected</b>
+                                    </div>
+                                </td>
+                                // <td className="text-warning-DEFAULT"><b>Rejected</b></td>
                             ) } 
                         </tr>
                         ))
