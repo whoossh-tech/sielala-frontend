@@ -3,7 +3,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 
 import '../../App.css';
-import '../../static/css/RewardInventory.css';
+import '../../static/css/RewardRedemptionHistory.css';
 import '../../static/css/Button.css';
 import backgroundPhoto from '../../assets/bg-cover.png';
 import { useState, useEffect, useHistory} from "react";
@@ -68,9 +68,9 @@ const RewardRedemptionHistory = () => {
             .then(res => {
                 setEventData(res.data.data)
 
-                if (!selectedEvent && res.data.data.length > 0) {
-                    setSelectedEvent(res.data.data[0].idEvent);
-                }
+                // if (!selectedEvent && res.data.data.length > 0) {
+                //     setSelectedEvent(res.data.data[0].idEvent);
+                // }
             }).catch(
                 err => 
                 console.log(err)
@@ -149,7 +149,7 @@ const RewardRedemptionHistory = () => {
                             width: '350px',
                         }}
                     >
-                        <option disabled>Select event</option>
+                        <option value="">Select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
                                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -202,30 +202,30 @@ const RewardRedemptionHistory = () => {
                 </div> */}
 
             {(selectedEvent && eventData.length > 0) && (
-                
-                <div className="detail-inventory">
-                    {/* <div className="each-reward">
-                            <p className="reward-text-title">Event:</p>
-                            <p className="reward-text">{eventData.find(event => event.idEvent === selectedEvent)?.eventName}</p>
-                    </div> */}
-                    <div className="each-inventory">
-                            <p className="inventory-text-title">Start Date of Event:</p>
-                            <p className="inventory-text">{formattedStartDate}</p>
+                <React.Fragment>
+                    <div className="detail-inventory">
+                        {/* <div className="each-reward">
+                                <p className="reward-text-title">Event:</p>
+                                <p className="reward-text">{eventData.find(event => event.idEvent === selectedEvent)?.eventName}</p>
+                        </div> */}
+                        <div className="each-inventory">
+                                <p className="inventory-text-title">Start Date of Event:</p>
+                                <p className="inventory-text">{formattedStartDate}</p>
+                        </div>
+                        <div className="each-inventory">
+                                <p className="inventory-text-title">End Date of Event:</p>
+                                <p className="inventory-text">{formattedEndDate}</p>
+                        </div>
                     </div>
-                    <div className="each-inventory">
-                            <p className="inventory-text-title">End Date of Event:</p>
-                            <p className="inventory-text">{formattedEndDate}</p>
+                    <div className="button-field">
+                        <button className="button-pink" onClick={handleRedeemRewardButton} disabled={disableRedeemRewardButton}>Redeem Reward</button>
                     </div>
-                </div>
+                </React.Fragment>
             )}
             
-            <div className="button-field">
-                <button className="button-pink" onClick={handleRedeemRewardButton} disabled={disableRedeemRewardButton}>Redeem Reward</button>
-            </div>
-
             {(selectedEvent && eventData.length > 0) && (
                 <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <table>
+                    <table className="reward-table mx-8">
                         <thead>
                             {/* Column headers */}
                             <tr>
