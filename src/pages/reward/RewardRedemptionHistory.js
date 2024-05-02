@@ -104,9 +104,17 @@ const RewardRedemptionHistory = () => {
                 <div>
                     <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
                         Reward Redemption History</h1>
+                    {/* <div>
+                        <p className="subtitle">Manage and view reward redemption's data here.</p>
+                    </div> */}
                     <div>
-                            <p className="subtitle">Manage and view reward redemption's data here.</p>
-                    </div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Reward Redemption History
+                    </p>
+                </div>
                 </div>
             </div>
 
