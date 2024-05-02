@@ -79,9 +79,6 @@ const RewardInventory = () => {
             .then(res => {
                 setEventData(res.data.data)
 
-                if (!selectedEvent && res.data.data.length > 0) {
-                    setSelectedEvent(res.data.data[0].idEvent);
-                }
             }).catch(
                 err => 
                 console.log(err)
@@ -194,7 +191,7 @@ const RewardInventory = () => {
                             width: '350px',
                         }}
                     >
-                        <option disabled>Select event</option>
+                        <option value="">Select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
                                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -283,14 +280,18 @@ const RewardInventory = () => {
 
             {(selectedEvent && eventData.length > 0) && (
                 <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <table>
+                    <table className="reward-table mx-8">
                         <thead>
                             {/* Row headers */}
                             <tr>
-                                <th style={{borderRight: '1px solid #E3E2E6'}}colSpan="3"> </th>
+                                <th style={{borderRight: '1px solid #E3E2E6'}}> </th>
+                                <th style={{borderRight: '1px solid #E3E2E6'}}> </th>
+                                <th style={{borderRight: '1px solid #E3E2E6'}}> </th>
                                 {dayRangeCount.map((day, index) => (
                                     <React.Fragment key={index}>
-                                        <th style={{borderRight: '1px solid #E3E2E6'}} colSpan="3">Day {index + 1}</th>
+                                        <th style={{ textAlign: "center", borderRight: '1px solid #E3E2E6',borderBottom: '1px solid #E3E2E6'}} colSpan="3">
+                                            Day {index + 1}
+                                        </th>
                                     </React.Fragment>
                                 ))}
                             </tr>
@@ -298,14 +299,14 @@ const RewardInventory = () => {
                         <thead>
                             {/* Column headers */}
                             <tr>
-                                <th>Reward</th>
-                                <th>Brand</th>
-                                <th style={{borderRight: '1px solid #E3E2E6'}}>Category</th>
+                                <th style={{ borderRight: '1px solid #E3E2E6'}}>Reward</th>
+                                <th style={{ borderRight: '1px solid #E3E2E6'}}>Brand</th>
+                                <th style={{ borderRight: '1px solid #E3E2E6'}}>Category</th>
                                 {dayRangeCount.map((day, index) => (
                                     <React.Fragment key={index}>
-                                        <th>Initial</th>
-                                        <th>Redeemed</th>
-                                        <th style={{borderRight: '1px solid #E3E2E6'}}>Remaining</th>
+                                        <th style={{ width: "8%", borderRight: '1px solid #E3E2E6'}}>Initial</th>
+                                        <th style={{ width: "8%", borderRight: '1px solid #E3E2E6'}}>Redeemed</th>
+                                        <th style={{ width: "8%", borderRight: '1px solid #E3E2E6'}}>Remaining</th>
                                     </React.Fragment>
                                 ))}
                             </tr>

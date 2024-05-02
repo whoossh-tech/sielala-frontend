@@ -178,3 +178,33 @@ th {
 #page-title {
     font-size: xx-large;
 }
+
+.reward-table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 15px; 
+    overflow: hidden;
+}
+  
+.reward-table td {
+border: 1px solid #ddd;
+padding: 8px;
+}
+
+.reward-table th {
+text-align: center;
+}
+
+.reward-table th:first-child, .reward-table td:first-child {
+width: 20%; /* Set the width for the first column */
+}
+
+/* Set the width for other columns */
+.reward-table th:nth-child(2), .reward-table td:nth-child(2) {
+width: 20%;
+}
+
+.reward-table th:nth-child(3), .reward-table td:nth-child(3) {
+width: 10%;
+}
+
