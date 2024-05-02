@@ -95,15 +95,15 @@ const UserList = () => {
             </div>
 
             <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                <table>
+                <table className="user-table mx-8">
                     <thead>
                         {/* Column headers */}
                         <tr>
-                            <th>Role</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th>Action</th>
+                            <th style={{ textAlign: "center"}}>Role</th>
+                            <th style={{ textAlign: "center"}}>Name</th>
+                            <th style={{ textAlign: "center"}}>Email</th>
+                            <th style={{ textAlign: "center"}}>Username</th>
+                            <th style={{ textAlign: "center"}}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,9 +118,9 @@ const UserList = () => {
                                 Edit
                             </button> */}
                             <Link to={`/user/edit/${user.userId}`}>
-                                <button className="button-green">Edit</button>
+                                <button className="button-green w-32">Edit</button>
                             </Link>
-                            <button className="button-red" onClick={() => handleDelete(user.userId)}>Delete</button>
+                            <button className="button-red w-32" onClick={() => handleDelete(user.userId)}>Delete</button>
                         </td>
                     </tr>
                 ))}

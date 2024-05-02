@@ -116,7 +116,7 @@ const DashboardStaff = () => {
     
             <div style={{ marginLeft: '70px', marginRight: '30px', marginBottom: '40px', marginTop: '10px' }}>
                 {/* Event Dropdown */}
-                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
+                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "350px", margin: "0 auto" }}>
                     <select
                     className="appearance-none px-4 py-3 w-full focus:outline-none"
                     onChange={handleChange}
@@ -138,7 +138,7 @@ const DashboardStaff = () => {
                     {eventData.length > 0 ? (
                         eventData.map((event, index) => (
                         <option key={index} value={event.idEvent}>
-                            {event.eventName}
+                            {event.eventName}: {event.startDate}
                         </option>
                         ))
                     ) : (

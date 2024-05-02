@@ -7,7 +7,7 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
-// import "../../static/css/event/Event.css";
+// import "../../static/css/TenantApplicant.css";
 
 const TenantApplicant = () => {
     const [tenantApplicants, setTenantApplicants] = useState("");
@@ -44,9 +44,9 @@ const TenantApplicant = () => {
             .get("http://localhost:8080/api/event/view-all")
             .then((res) => {
                 setEventData(res.data.data);
-                if (!selectedEvent && res.data.data.length > 0) {
-                    setSelectedEvent(res.data.data[0].idEvent);
-                }
+                // if (!selectedEvent && res.data.data.length > 0) {
+                //     setSelectedEvent(res.data.data[0].idEvent);
+                // }
             })
             .catch((err) => console.log(err));
     }, [selectedEvent]);
@@ -111,7 +111,7 @@ const TenantApplicant = () => {
                     justifyContent: "center",
                 }}
                 >
-                <option disabled>Select event</option>
+                <option value="">Select event</option>
                 {eventData && eventData.length > 0 ? (
                     eventData.map((event, index) => (
                     <option key={index} value={event.idEvent}>
@@ -148,7 +148,7 @@ const TenantApplicant = () => {
 
                     <thead>
                         <tr>
-                            <th style={{ width: "28%", textAlign: "center" }}>Brand Name</th>
+                            <th style={{ width: "25%", textAlign: "center" }}>Brand Name</th>
                             <th style={{ width: "20%", textAlign: "center" }}>Email</th>
                             <th style={{ width: "20%", textAlign: "center" }}>Instagram</th>
                             <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>

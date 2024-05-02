@@ -60,9 +60,9 @@ const Visitor = () => {
       .then(res => {
         setEventData(res.data.data)
 
-        if (!selectedEvent && res.data.data.length > 0) {
-          setSelectedEvent(res.data.data[0].idEvent);
-        }
+        // if (!selectedEvent && res.data.data.length > 0) {
+        //   setSelectedEvent(res.data.data[0].idEvent);
+        // }
       }).catch(
         err =>
           console.log(err)
@@ -199,7 +199,7 @@ const Visitor = () => {
               width: '350px',
             }}
           >
-            <option disabled>Select event</option>
+            <option value="">Select event</option>
             {eventData && eventData.length > 0 ?
               (eventData.map((event, index) => (
                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -323,7 +323,7 @@ const Visitor = () => {
 
       {(selectedEvent && eventData.length > 0) && (
         <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-          <table>
+          <table className="visitor-table mx-8">
             <thead>
               {/* Row headers  */}
               <tr>

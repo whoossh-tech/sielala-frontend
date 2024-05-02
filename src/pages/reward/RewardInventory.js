@@ -236,7 +236,7 @@ const RewardInventory = () => {
                 </div> */}
 
             {(selectedEvent && eventData.length > 0) && (
-                
+                <React.Fragment>
                 <div className="detail-inventory">
                     {/* <div className="each-reward">
                             <p className="reward-text-title">Event:</p>
@@ -251,14 +251,15 @@ const RewardInventory = () => {
                             <p className="inventory-text">{formattedEndDate}</p>
                     </div>
                 </div>
+                <div className="button-field">
+                
+                    <button className="button-pink" onClick={handleAddRewardButton} disabled={disableAddRewardButton}>+ Add Reward</button>
+                    <button className="button-green" onClick={carryOutStockModal} disabled={disableCarryOutStockButton}>Carry Out Stock</button>
+
+                </div>
+                </React.Fragment>
             )}
             
-            <div className="button-field">
-                
-                <button className="button-pink" onClick={handleAddRewardButton} disabled={disableAddRewardButton}>+ Add Reward</button>
-                <button className="button-green" onClick={carryOutStockModal} disabled={disableCarryOutStockButton}>Carry Out Stock</button>
-
-            </div>
 
             <div>
                 <Modal

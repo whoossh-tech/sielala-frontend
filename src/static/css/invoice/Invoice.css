@@ -161,3 +161,44 @@ th {
 #page-title {
     font-size: xx-large;
 }
+
+.invoice-table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 15px; 
+    overflow: hidden;
+  }
+  
+  .invoice-table th, .invoice-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .invoice-table th {
+    text-align: center;
+  }
+  
+  .invoice-table th:first-child, .invoice-table td:first-child {
+    width: 20%; /* Set the width for the first column */
+  }
+  
+  /* Set the width for other columns */
+  .invoice-table th:nth-child(2), .invoice-table td:nth-child(2) {
+    width: 20%;
+  }
+  
+  .invoice-table th:nth-child(3), .invoice-table td:nth-child(3) {
+    width: 15%;
+  }
+  
+  .invoice-table th:nth-child(4), .invoice-table td:nth-child(4) {
+    width: 15%;
+  }
+  
+  .invoice-table th:nth-child(5), .invoice-table td:nth-child(5) {
+    width: 15%;
+  }
+  
+  .invoice-table th:nth-child(6), .invoice-table td:nth-child(6) {
+    width: 15%;
+  }

@@ -8,7 +8,7 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
-import "../../static/css/event/Event.css";
+import "../../static/css/Contact.css";
 
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -46,9 +46,9 @@ const Contacts = () => {
       .then((res) => {
         setEventData(res.data.data);
         
-        if (!selectedEvent && res.data.data.length > 0) {
-          setSelectedEvent(res.data.data[0].idEvent);
-        }
+        // if (!selectedEvent && res.data.data.length > 0) {
+        //   setSelectedEvent(res.data.data[0].idEvent);
+        // }
       })
       .catch((err) => console.log(err));
   }, [selectedEvent]);
@@ -113,7 +113,7 @@ const Contacts = () => {
                             width: '350px',
                         }}
                     >
-                        <option disabled>Select event</option>
+                        <option value="">Select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
                                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -143,6 +143,8 @@ const Contacts = () => {
 
       <br></br>
 
+      {(selectedEvent && eventData.length > 0) && (
+      <React.Fragment>
       <div className="button-field">
         <button className="button-pink" onClick={handleCreateButton}>
           + Add Sponsor
@@ -151,16 +153,16 @@ const Contacts = () => {
 
       <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
      
-          <table className="event-table mx-8">
+          <table className="contact-table mx-8">
             <thead>
               {/* Row headers */}
               <tr>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Name</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Pic Name</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Address</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Email</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Telephone</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Contact Type</th>
+                <th>Company Name</th>
+                <th>Pic Name</th>
+                <th>Company Address</th>
+                <th>Company Email</th>
+                <th>Company Telephone</th>
+                <th>Contact Type</th>
               </tr>
             </thead>
 
@@ -207,7 +209,8 @@ const Contacts = () => {
             </tbody>
           </table>
       </div>
-
+      </React.Fragment>
+    )}
       <br></br>
     </div>
   );
