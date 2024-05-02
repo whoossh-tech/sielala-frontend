@@ -66,7 +66,9 @@ const VisitorDetail = () => {
         {/* <h1 style={{ textAlign: "left", marginLeft: 120 }}>{tenantApplicant?.brandName}</h1> */}
 
         <div className="container mx-auto text-left">
-            <table style={{ marginLeft: 80, marginRight: 80, borderCollapse: "collapse", width: 1100, alignItems: "center" }}>
+
+        <div style={{ alignContent: "center", paddingLeft: "50px", paddingRight: "50px" }} className="mx-8">
+            <table style={{ borderCollapse: "collapse", width: "100%", alignItems: "center" }}>
                 <tbody>
                     <tr>
                         <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", width: "10%", textAlign: "left" }}>Name :</td>
@@ -99,14 +101,14 @@ const VisitorDetail = () => {
 
                 </tbody>
             </table>
-
             
-            <div className="button-list">
+            </div>
+
+            <div className="text-center">
                 <button className="button-pink" onClick={handleBack}>
                     Back
                 </button>     
             </div>
-        
         </div>
     </div>
   );
