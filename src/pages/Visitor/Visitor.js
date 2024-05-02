@@ -48,7 +48,7 @@ const Visitor = () => {
     }
 
     if (selectedEvent) {
-      axios.get(`http://localhost:8080/api/visitor/view-all/${selectedEvent}`)
+      axios.get(`https://sielala-backend-production.up.railway.app/api/visitor/view-all/${selectedEvent}`)
         .then(res => {
           setVisitors(res.data.data)
           setCountDays(res.data.dayRange)
@@ -59,7 +59,7 @@ const Visitor = () => {
         )
     }
 
-    axios.get('http://localhost:8080/api/visitor/view-event-all')
+    axios.get('https://sielala-backend-production.up.railway.app/api/visitor/view-event-all')
       .then(res => {
         setEventData(res.data.data)
       }).catch(
@@ -104,7 +104,7 @@ const Visitor = () => {
 
   useEffect(() => {
     if (selectedEvent) {
-      axios.get(`http://localhost:8080/api/visitor/attendance/${selectedEvent}`)
+      axios.get(`https://sielala-backend-production.up.railway.app/api/visitor/attendance/${selectedEvent}`)
         .then(res => {
           setAttendanceData(res.data);
           // console.log(res.data);
@@ -118,7 +118,7 @@ const Visitor = () => {
 
   function markAttendance(attendanceId, attended) {
     axios
-      .put(`http://localhost:8080/api/visitor/attendance/update/${attendanceId}`, {
+      .put(`https://sielala-backend-production.up.railway.app/api/visitor/attendance/update/${attendanceId}`, {
         attended: attended,
       })
       .then(res => {
@@ -163,8 +163,16 @@ const Visitor = () => {
         <div>
           <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
             Visitor Management</h1>
-          <div>
+          {/* <div>
             <p className="subtitle">Manage and view visitors data here.</p>
+          </div> */}
+          <div>
+            <p className="subtitle">
+              <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+              </a>                
+              / Visitor Management
+            </p>
           </div>
         </div>
       </div>

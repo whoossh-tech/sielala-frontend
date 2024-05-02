@@ -28,7 +28,7 @@ const Event = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/event/view-all")
+      .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
       .then((res) => {
         setEvents(res.data.data);
         // console.log(res.data.data); // Make sure that res.data is an array
@@ -58,8 +58,16 @@ const Event = () => {
           <div>
               <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
               Event Management</h1>
-              <div>
+              {/* <div>
                   <p className="subtitle">Manage your event here</p>
+              </div> */}
+              <div>
+                <p className="subtitle">
+                  <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                      <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                  </a>
+                  / Event Management
+                </p>
               </div>
           </div>
       </div>

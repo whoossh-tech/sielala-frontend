@@ -30,7 +30,7 @@ const TenantApplicant = () => {
 
         if (selectedEvent) {
             axios
-            .get(`http://localhost:8080/api/tenant/view-all/${selectedEvent}`)
+            .get(`https://sielala-backend-production.up.railway.app/api/tenant/view-all/${selectedEvent}`)
             .then((res) => {
                 setTenantApplicants(res.data.data);
                 console.log(res.data.data);
@@ -41,7 +41,7 @@ const TenantApplicant = () => {
         }
 
         axios
-            .get("http://localhost:8080/api/event/view-all")
+            .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
             setEventData(res.data.data);
             })
@@ -74,8 +74,16 @@ const TenantApplicant = () => {
                 <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
                     Tenant Applicant List
                 </h1>
-                <div>
+                {/* <div>
                     <p className="subtitle">Manage tenant applicants here</p>
+                </div> */}
+                <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Tenant Applicant List
+                    </p>
                 </div>
                 </div>
             </div>
