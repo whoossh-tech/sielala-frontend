@@ -207,9 +207,9 @@ const TenantApplicantDetail = () => {
 
             { tenantApplicant?.selectionDone ? (
                 <div className="button-list">
-                    <button className="button-pink" onClick={handleBack}>
+                    {/* <button className="button-pink" onClick={handleBack}>
                         Back to Applicant List
-                    </button>
+                    </button> */}
                     <button className="button-green" disabled>
                         Accept
                     </button>
@@ -219,9 +219,9 @@ const TenantApplicantDetail = () => {
                 </div>
             ) : ( 
                 <div className="button-list">
-                    <button className="button-pink" onClick={handleBack}>
+                    {/* <button className="button-pink" onClick={handleBack}>
                         Back to Applicant List
-                    </button>
+                    </button> */}
                     <button className="button-green" onClick={handleAcceptButton}>
                         Accept
                     </button>

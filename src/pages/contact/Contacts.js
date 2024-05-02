@@ -161,11 +161,11 @@ const Contacts = () => {
               {/* Row headers */}
               <tr>
                 <th style={{ width: "20%", textAlign: "center" }}>Company Name</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Pic Name</th>
+                <th style={{ width: "18%", textAlign: "center" }}>Pic Name</th>
                 <th style={{ width: "20%", textAlign: "center" }}>Company Address</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Email</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Telephone</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Contact Type</th>
+                <th style={{ width: "15%", textAlign: "center" }}>Company Email</th>
+                <th style={{ width: "12%", textAlign: "center" }}>Company Telephone</th>
+                <th style={{ width: "15%", textAlign: "center" }}>Contact Type</th>
               </tr>
             </thead>
 

@@ -118,7 +118,7 @@ const DetailSponsor = () => {
 
             <div>
                 <div className="button-field">
-                    <button className="button-green" onClick={handleBack}>Back</button>
+                    {/* <button className="button-green" onClick={handleBack}>Back</button> */}
                     <Link to={`/sponsor/edit/${idSponsor}`}>
                         <button className="button-pink">Edit Sponsor</button>
                     </Link>
