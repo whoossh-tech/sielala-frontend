@@ -147,9 +147,9 @@ const TenantApplicant = () => {
         
             <br></br>
         
-            <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
+            <div className="mb-3 rounded-md" style={{ display: "flex", justifyContent: "center" }}>
                 { (selectedEvent) && (
-                <table className="event-table mx-8">
+                <table className="event-table mx-8 rounded">
 
                     <thead>
                         <tr>
