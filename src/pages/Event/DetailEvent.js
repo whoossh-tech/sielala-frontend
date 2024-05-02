@@ -27,7 +27,7 @@ const DetailEvent = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/event/detail/${idEvent}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/event/detail/${idEvent}`)
       .then((res) => {
         setEventData(res.data.data);
         setStartDate(new Date(eventData.startDate));

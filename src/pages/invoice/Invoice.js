@@ -35,7 +35,7 @@ const Invoice = () => {
         }
 
         if (selectedEvent) {
-            axios.get(`http://localhost:8080/api/invoice/view-all/${selectedEvent}`)
+            axios.get(`https://sielala-backend-production.up.railway.app/api/invoice/view-all/${selectedEvent}`)
             .then(res => {
                 console.log(res.data.data)
                 setInvoiceData(res.data.data)
@@ -44,7 +44,7 @@ const Invoice = () => {
                 )
         }
 
-        axios.get('http://localhost:8080/api/reward/view-event-all')
+        axios.get('https://sielala-backend-production.up.railway.app/api/reward/view-event-all')
             .then(res => {
                 setEventData(res.data.data)
 
@@ -80,10 +80,18 @@ const Invoice = () => {
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>
                     <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-                        Invoice</h1>
+                        Invoice Management</h1>
+                    {/* <div>
+                        <p className="subtitle">Manage and view invoice's data here.</p>
+                    </div> */}
                     <div>
-                            <p className="subtitle">Manage and view invoice's data here.</p>
-                    </div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Invoice Management
+                    </p>
+                </div>
                 </div>
             </div>
 

@@ -54,7 +54,7 @@ const RewardRedemptionHistory = () => {
         }
 
         if (selectedEvent) {
-            axios.get(`http://localhost:8080/api/reward/reward-redemption-history/${selectedEvent}`)
+            axios.get(`https://sielala-backend-production.up.railway.app/api/reward/reward-redemption-history/${selectedEvent}`)
             .then(res => {
                 setRewardRedeemedList(res.data.data)
                 // setCountDays(res.data.dayRange)
@@ -64,7 +64,7 @@ const RewardRedemptionHistory = () => {
             )
         }
 
-        axios.get('http://localhost:8080/api/reward/view-event-all')
+        axios.get('https://sielala-backend-production.up.railway.app/api/reward/view-event-all')
             .then(res => {
                 setEventData(res.data.data)
 
@@ -108,9 +108,17 @@ const RewardRedemptionHistory = () => {
                 <div>
                     <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
                         Reward Redemption History</h1>
+                    {/* <div>
+                        <p className="subtitle">Manage and view reward redemption's data here.</p>
+                    </div> */}
                     <div>
-                            <p className="subtitle">Manage and view reward redemption's data here.</p>
-                    </div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Reward Redemption History
+                    </p>
+                </div>
                 </div>
             </div>
 

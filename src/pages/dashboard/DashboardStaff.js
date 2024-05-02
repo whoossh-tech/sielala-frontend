@@ -22,7 +22,7 @@ const DashboardStaff = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:8080/api/event/view-all")
+            .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
             setEventData(res.data.data);
 
@@ -35,7 +35,7 @@ const DashboardStaff = () => {
 
         if (selectedEvent) {
             axios
-            .get(`http://localhost:8080/api/event/detail/${selectedEvent}`)
+            .get(`https://sielala-backend-production.up.railway.app/api/event/detail/${selectedEvent}`)
             .then((res) => {
                 setEvent(res.data.data);
             })
