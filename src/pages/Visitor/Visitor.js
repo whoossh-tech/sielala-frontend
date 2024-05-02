@@ -63,6 +63,10 @@ const Visitor = () => {
     axios.get('http://localhost:8080/api/visitor/view-event-all')
       .then(res => {
         setEventData(res.data.data)
+
+        if (!selectedEvent && res.data.data.length > 0) {
+          setSelectedEvent(res.data.data[0].idEvent);
+        }
       }).catch(
         err =>
           console.log(err)
@@ -183,7 +187,7 @@ const Visitor = () => {
         </div>
       )}
 
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '350px', margin: '0 auto' }}>
         <div style={{ position: 'relative' }}>
           <select
             className="appearance-none px-4 py-3 w-full focus:outline-none"
@@ -196,10 +200,10 @@ const Visitor = () => {
               fontSize: '1rem',
               lineHeight: '1.5',
               padding: '0.5rem 1rem',
-              width: '300px',
+              width: '350px',
             }}
           >
-            <option value="Select event">Select event </option>
+            <option disabled>Select event</option>
             {eventData && eventData.length > 0 ?
               (eventData.map((event, index) => (
                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -231,7 +235,7 @@ const Visitor = () => {
       <br></br>
 
       {selectedEvent && eventData.length > 0 && (
-        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '350px', margin: '0 auto' }}>
           <div style={{ position: 'relative' }}>
             <input
               className="search px-4 py-3 w-full focus:outline-none"
@@ -245,7 +249,7 @@ const Visitor = () => {
                 fontSize: '1rem',
                 lineHeight: '1.5',
                 padding: '0.5rem 1rem',
-                width: '300px',
+                width: '350px',
                 paddingRight: '40px',
               }}
             />

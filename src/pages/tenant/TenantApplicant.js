@@ -43,7 +43,10 @@ const TenantApplicant = () => {
         axios
             .get("http://localhost:8080/api/event/view-all")
             .then((res) => {
-            setEventData(res.data.data);
+                setEventData(res.data.data);
+                if (!selectedEvent && res.data.data.length > 0) {
+                    setSelectedEvent(res.data.data[0].idEvent);
+                }
             })
             .catch((err) => console.log(err));
     }, [selectedEvent]);
@@ -90,7 +93,7 @@ const TenantApplicant = () => {
                 </div>
             )}
         
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "350px", margin: "0 auto" }}>
                 <select
                 className="appearance-none px-4 py-3 w-full focus:outline-none"
                 onChange={handleChange}
@@ -108,11 +111,11 @@ const TenantApplicant = () => {
                     justifyContent: "center",
                 }}
                 >
-                <option>Select event</option>
+                <option disabled>Select event</option>
                 {eventData && eventData.length > 0 ? (
                     eventData.map((event, index) => (
                     <option key={index} value={event.idEvent}>
-                        {event.eventName}
+                        {event.eventName}: : {event.startDate}
                     </option>
                     ))
                 ) : (

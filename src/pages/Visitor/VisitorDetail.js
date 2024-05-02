@@ -70,7 +70,7 @@ const VisitorDetail = () => {
                 <tbody>
                     <tr>
                         <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", width: "10%", textAlign: "left" }}>Name :</td>
-                        <td style={{ color: "black", textAlign: "left", marginLeft: 20, width: "30%" }}>{visitor?.name}</td>
+                        <td style={{ color: "black", textAlign: "left", marginLeft: 20, width: "30%" }}><strong>{visitor?.name}</strong></td>
                     </tr>
                     <tr>
                         <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", textAlign: "left" }}>Event Pass :</td>
