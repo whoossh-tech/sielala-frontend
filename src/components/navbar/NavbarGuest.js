@@ -18,11 +18,7 @@ export function NavbarGuest() {
   };
 
   const seeDashboard = () => {
-    if (role === 'ADMIN') { navigate("/admin") }
-    if (role === 'BISDEV') { navigate("/bisdev") }
-    if (role === 'OPERATION') { navigate("/operation") }
-    if (role === 'PARTNERSHIP') { navigate("/partnership") }
-    if (role === 'FINANCE') { navigate("/finance") }
+    navigate("/dashboard");
   };
 
   const navList = (

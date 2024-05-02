@@ -19,6 +19,7 @@ import { DashboardOperation } from "./pages/dashboard/DashboardOperation";
 import { DashboardAdmin } from "./pages/dashboard/DashboardAdmin";
 import { DashboardBisdev } from "./pages/dashboard/DashboardBisdev";
 import { DashboardFinance } from "./pages/dashboard/DashboardFinance";
+import { DashboardStaff } from "./pages/dashboard/DashboardStaff";
 import Login from "./pages/auth/Login";
 import ForgotPasswordForm from './pages/auth/ForgotPasswordForm';
 import RegisterStaffForm from "./pages/auth/RegisterStaffForm";
@@ -64,12 +65,19 @@ function App() {
             <Route path="/" element={<DashboardGuest />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPasswordForm/>} />
-          <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm />}></Route>
+            <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm />}></Route>
             <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
             <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
             <Route path="/visitor-registration/:eventId" element={<VisitorRegistrationForm />}></Route>
             <Route path="/visitor-registration/success" element={<VisitorRegistrationSuccessPage />} />
             <Route path="/visitor-registration/fail" element={<VisitorRegistrationFailPage />} />
+
+            {/* ROLE: ALL STAFF */}
+            {(role === "OPERATION" || role === "ADMIN" || role === "BISDEV" || role === "FINANCE" || role === "PARTNERSHIP") && (
+              <>
+                <Route path="/dashboard" element={<DashboardStaff />} />
+              </>
+            )}
 
             {/* ROLE: PARTNERHSIP */}
             {role === "PARTNERSHIP" && (
@@ -134,11 +142,11 @@ function App() {
             {/* ROLE: PARTNERSHIP and ADMIN */}
             {(role === "PARTNERSHIP" || role === "ADMIN") && (
               <>
-              <Route path="/contact" element={<Contacts />} />
-              <Route path="/tenant/detail/:idTenant" element={<TenantDetail />} />
+                <Route path="/contact" element={<Contacts />} />
+                <Route path="/tenant/detail/:idTenant" element={<TenantDetail />} />
                 <Route path="/sponsor/detail/:idSponsor" element={<DetailSponsor />} />
                 <Route path="/sponsor/create/:idEvent" element={<CreateSponsor />}></Route>
-                  <Route path="/invoice/create/:idContact" element={<CreateInvoice />} />
+                <Route path="/invoice/create/:idContact" element={<CreateInvoice />} />
                 <Route path="/invoice" element={<Invoice />} />
                 <Route path="/invoice/detail/:idInvoice" element={<InvoiceDetail />} />
                 <Route path="/invoice/edit-detail/:idInvoice" element={<EditDetailInvoice />} />
