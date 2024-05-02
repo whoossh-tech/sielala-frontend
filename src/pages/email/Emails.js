@@ -20,7 +20,7 @@ const Emails = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/email/retrieve-all")
+      .get("https://sielala-backend-production.up.railway.app/api/email/retrieve-all")
       .then((res) => {
         setEmails(res.data.data);
       })

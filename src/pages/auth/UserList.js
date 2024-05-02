@@ -20,7 +20,7 @@ const UserList = () => {
                 const token = localStorage.getItem('token');
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-                const response = await axios.get('http://localhost:8080/admin/acc-list');
+                const response = await axios.get('https://sielala-backend-production.up.railway.app/admin/acc-list');
                 setUserList(response.data);
             } catch (error) {
                 console.error('Error fetching user list:', error.response || error.message);
