@@ -14,6 +14,7 @@ const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState("");
   const [eventData, setEventData] = useState([]);
+  const [search, setSearch] = useState("");
 
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -60,6 +61,30 @@ const Contacts = () => {
 
   const handleChange = (e) => {
     setSelectedEvent(e.target.value);
+  };
+
+  const filterContact = () => {
+    if (!search.trim()) return contacts;
+    return contacts.filter((contact) =>
+      Object.values(contact).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  };
+
+  const highlightSearchText = (text) => {
+    const parts = text.split(new RegExp(`(${search})`, "gi"));
+    return parts.map((part, index) =>
+      part.toLowerCase() === search.toLowerCase() ? (
+        <span key={index} className="highlighted-text">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
   };
 
   return (
@@ -140,6 +165,49 @@ const Contacts = () => {
 
       <br></br>
 
+      {selectedEvent && eventData.length > 0 && (
+        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+          <div style={{ position: 'relative' }}>
+            <input
+              className="search px-4 py-3 w-full focus:outline-none"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                backgroundColor: '#ffffff',
+                color: '#333333',
+                borderRadius: '0.375rem',
+                fontSize: '1rem',
+                lineHeight: '1.5',
+                padding: '0.5rem 1rem',
+                width: '300px',
+                paddingRight: '40px',
+              }}
+            />
+            <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-search"
+                style={{ color: '#333333' }}
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <br></br>
+
       <div className="button-field">
         <button className="button-pink" onClick={handleCreateButton}>
           + Add Sponsor
@@ -163,12 +231,12 @@ const Contacts = () => {
 
             <tbody>
               {contacts && contacts.length > 0 ? (
-                contacts.map((contact, i) => (
+                filterContact().map((contact, i) => (
                   <tr key={i}>
                     { contact.type === 'Tenant' && (
                         <td>
                             <Link to={`/tenant/detail/${contact.idContact}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                            {contact.name}
+                            {highlightSearchText(contact.name)}
                             </Link>
                         </td>
                     )}
@@ -176,15 +244,15 @@ const Contacts = () => {
                     { contact.type === 'Sponsor' && (
                         <td>
                             <Link to={`/sponsor/detail/${contact.idContact}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                            {contact.name}
+                            {highlightSearchText(contact.name)}
                             </Link>
                         </td>
                     )}
 
-                    <td>{contact.picName}</td>
-                    <td>{contact.address}</td>
-                    <td>{contact.email}</td>
-                    <td>{contact.telephone}</td>
+                    <td>{highlightSearchText(contact.picName)}</td>
+                    <td>{highlightSearchText(contact.address)}</td>
+                    <td>{highlightSearchText(contact.email)}</td>
+                    <td>{highlightSearchText(contact.telephone)}</td>
 
                     { contact.type === 'Tenant' && (
                               <td className="text-secondary-80"><b>Tenant</b></td>

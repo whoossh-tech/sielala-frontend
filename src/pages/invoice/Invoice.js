@@ -21,6 +21,7 @@ const Invoice = () => {
     const [eventData, setEventData] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState('');
     const role = localStorage.getItem('role');
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
 
@@ -57,6 +58,30 @@ const Invoice = () => {
     const handleChange = (e) => {
         setSelectedEvent(e.target.value);
     };
+
+    const filterInvoice = () => {
+        if (!search.trim()) return invoiceData;
+        return invoiceData.filter((invoice) =>
+          Object.values(invoice).some(
+            (value) =>
+              typeof value === "string" &&
+              value.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      };
+      
+      const highlightSearchText = (text) => {
+        const parts = text.split(new RegExp(`(${search})`, "gi"));
+        return parts.map((part, index) =>
+          part.toLowerCase() === search.toLowerCase() ? (
+            <span key={index} className="highlighted-text">
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        );
+      };
 
 
     return (  
@@ -142,6 +167,48 @@ const Invoice = () => {
             
             <br></br>
 
+            {selectedEvent && eventData.length > 0 && (
+        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+          <div style={{ position: 'relative' }}>
+            <input
+              className="search px-4 py-3 w-full focus:outline-none"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                backgroundColor: '#ffffff',
+                color: '#333333',
+                borderRadius: '0.375rem',
+                fontSize: '1rem',
+                lineHeight: '1.5',
+                padding: '0.5rem 1rem',
+                width: '300px',
+                paddingRight: '40px',
+              }}
+            />
+            <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-search"
+                style={{ color: '#333333' }}
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
+      <br></br>
+
             {(selectedEvent && eventData.length > 0) && (
                 <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
                     <table>
@@ -158,15 +225,15 @@ const Invoice = () => {
                         </thead>
                         <tbody>
                             {invoiceData && invoiceData.length > 0 ? (
-                                invoiceData.map((invoice, i) => (
+                                filterInvoice().map((invoice, i) => (
                                     <tr key={i}>
                                         <td style={{ color: '#A9B245', fontWeight: 'bold'}}>
                                             {invoice.idInvoice}
                                         </td>
-                                        <td>{invoice.companyName}</td>
-                                        <td>{invoice.type}</td>
-                                        <td>{invoice.trackingStatus}</td>
-                                        <td>{invoice.paymentStatus}</td>
+                                        <td>{highlightSearchText(invoice.companyName)}</td>
+                                        <td>{highlightSearchText(invoice.type)}</td>
+                                        <td>{highlightSearchText(invoice.trackingStatus)}</td>
+                                        <td>{highlightSearchText(invoice.paymentStatus)}</td>
                                         
                                         <td>
                                             <Link to={`/invoice/detail/${invoice.idInvoice}`}>
