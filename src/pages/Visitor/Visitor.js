@@ -21,18 +21,14 @@ const Visitor = () => {
 
   // Mendapatkan tanggal saat ini
   const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-  console.log(currentDate);
 
   // Mendapatkan tanggal mulai dan akhir dari event yang dipilih
   const eventStartDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.startDate);
-  eventStartDate.setHours(0, 0, 0, 0);
   const eventEndDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.endDate);
-  eventEndDate.setHours(0, 0, 0, 0);
+  eventEndDate.setHours(23,59,59,999);
 
   const timeDiff = Math.abs(currentDate.getTime() - eventStartDate.getTime());
   const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-  console.log(daysDiff);
 
   const formattedStartDate = new Date(eventStartDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   const formattedEndDate = new Date(eventEndDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -53,7 +49,7 @@ const Visitor = () => {
         .then(res => {
           setVisitors(res.data.data)
           setCountDays(res.data.dayRange)
-          setDay(daysDiff + 1);
+          setDay(daysDiff);
         }).catch(err =>
           console.log(err)
 
@@ -304,7 +300,7 @@ const Visitor = () => {
                 <b>Current Event Day:</b>
               </p>
               <p style={{ color: '#7D512D' }}>
-                <b>Day {day}</b>
+                <b>Day {daysDiff}</b>
               </p>
             </React.Fragment>
           )}
