@@ -146,9 +146,6 @@ const DashboardGuest = () => {
                             <p className="text-md mb-2 text-start">
                                 📍 {event.location}
                             </p>
-                            <p className="text-md mb-2 text-start">
-                                📍 {event.totalVisitor}
-                            </p>
 
                             <div style={{ display: 'flex', justifyContent: 'center'}}>
                                 <div className="detail-square-card bg-primary-10 shadow-md rounded-lg py-1 px-6 my-14 mx-3" style={{ backgroundColor: '#F59FC3' }}>
