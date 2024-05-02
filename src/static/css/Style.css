@@ -24,13 +24,14 @@ li {
 	--grey: #ffffff;
 	--dark-grey: #AAAAAA;
 	--dark: #342E37;
-	--red: #DB504A;
+	--red: #BA1A1A;
 	--yellow: #FFCE26;
 	--light-yellow: #FFF2C6;
 	--orange: #FD7238;
 	--light-orange: #FFE0D3;
 	--green: #F4F8CB;
-	--pinky: #F7EFE9
+	--pinky: #F7EFE9;
+    --primary10: #FFF1F8;
 }
 
 html {
@@ -47,10 +48,6 @@ body {
 	background: var(--grey);
 	overflow-x: hidden;
 }
-
-
-
-
 
 /* SIDEBAR */
 #sidebar {
@@ -78,13 +75,13 @@ body {
 	height: 56px;
 	display: flex;
 	align-items: center;
-	color: var(--blue);
+	color: var(--primary10);
 	position: sticky;
 	top: 0;
 	left: 0;
 	background: var(--light);
 	z-index: 500;
-	padding-bottom: 20px;
+	/* padding-bottom: 20px; */
 	box-sizing: content-box;
 }
 #sidebar .brand .bx {
@@ -94,7 +91,7 @@ body {
 }
 #sidebar .side-menu {
 	width: 100%;
-	margin-top: 48px;
+	/* margin-top: 48px; */
 }
 #sidebar .side-menu li {
 	height: 48px;
@@ -142,7 +139,7 @@ body {
 	overflow-x: hidden;
 }
 #sidebar .side-menu.top li.active a {
-	color: var(--blue);
+	color: var(--primary10);
 }
 #sidebar.hide .side-menu li a {
 	width: calc(48px - (4px * 2));
@@ -152,33 +149,31 @@ body {
 	color: var(--red);
 }
 #sidebar .side-menu.top li a:hover {
-	color: var(--blue);
+	color: var(--primary10);
 }
 #sidebar .side-menu li a .bx {
 	min-width: calc(60px  - ((4px + 6px) * 2));
 	display: flex;
 	justify-content: center;
 }
-/* SIDEBAR */
-
-
-
-
 
 /* CONTENT */
 #content {
 	position: relative;
 	width: calc(100% - 280px);
-	left: 250px;
+	left: 280px;
 	transition: .3s ease;
 }
+
 #sidebar.hide ~ #content {
 	width: calc(100% - 60px);
 	left: 60px;
 }
 
-
-
+.content-container {
+    margin-left: 40px;
+    margin-right: 20px;
+}
 
 /* NAVBAR */
 #content nav {
@@ -302,19 +297,14 @@ body {
 #content nav #switch-mode:checked + .switch-mode::before {
 	left: calc(100% - (25px - 4px) - 2px);
 }
-/* NAVBAR */
-
-
-
-
 
 /* MAIN */
 #content main {
 	width: 100%;
-	padding: 36px 24px;
+	/* padding: 36px 24px; */
 	font-family: var(--poppins);
 	max-height: calc(100vh - 56px);
-	overflow-y: auto;
+	/* overflow-y: auto; */
 }
 #content main .head-title {
 	display: flex;
@@ -357,9 +347,6 @@ body {
 	grid-gap: 10px;
 	font-weight: 500;
 }
-
-
-
 
 #content main .box-info {
 	display: grid;
@@ -404,10 +391,6 @@ body {
 #content main .box-info li .text p {
 	color: var(--dark);	
 }
-
-
-
-
 
 #content main .table-data {
 	display: flex;
@@ -520,14 +503,6 @@ body {
 /* MAIN */
 /* CONTENT */
 
-
-
-
-
-
-
-
-
 @media screen and (max-width: 768px) {
 	#sidebar {
 		width: 200px;
@@ -542,11 +517,6 @@ body {
 		display: none;
 	}
 }
-
-
-
-
-
 
 @media screen and (max-width: 576px) {
 	#content nav form .form-input input {
