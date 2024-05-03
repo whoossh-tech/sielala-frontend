@@ -58,7 +58,9 @@
 
 .button-field {
   margin-bottom: 20px;
+  margin-right: 120px;
 }
+
 table {
   border-collapse: collapse;
   width: 1200px;
@@ -111,10 +113,9 @@ th {
 }
 
 .event-table th:first-child, .event-table td:first-child {
-  width: 10%; /* Set the width for the first column */
+  width: 10%;
 }
 
-/* Set the width for other columns */
 .event-table th:nth-child(2), .event-table td:nth-child(2) {
   width: 20%;
 }

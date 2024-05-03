@@ -70,7 +70,7 @@ const Sidebar = () => {
             </a>
           </li>
 
-          <li>
+          <li >
             <a href="/event">
               <i className='bx bx-calendar'></i> 
               <span className="text">Event Management</span>
