@@ -50,7 +50,7 @@ const UserList = () => {
             const token = localStorage.getItem('token');
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             
-            const response = await axios.delete(`http://localhost:8080/admin/delete/${idToBeDeleted}`);
+            const response = await axios.delete(`https://sielala-backend-production.up.railway.app/admin/delete/${idToBeDeleted}`);
 
             setUserDeleted(idToBeDeleted);
             console.log('User deleted successfully:', response.data);

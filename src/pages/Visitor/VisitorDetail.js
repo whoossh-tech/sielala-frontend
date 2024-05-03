@@ -8,22 +8,24 @@ import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { useParams } from "react-router-dom";
+import Sidebar from '../dashboard/Sidebar';
 
 const VisitorDetail = () => {
   const navigate = useNavigate();
   const { idVisitor } = useParams();
   const [visitor, setVisitor] = useState();
   const role = localStorage.getItem('role');
+  const [activePage, setActivePage] = useState('visitor');
 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/visitor/detail/${idVisitor}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/visitor/detail/${idVisitor}`)
       .then((res) => {
         setVisitor(res.data.visitorData);
-        // console.log(res.data.data);
+        console.log(res.data.visitorData);
       })
       .catch((err) => console.log(err));
   });
@@ -34,41 +36,40 @@ const VisitorDetail = () => {
   };
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-        {(role === 'BISDEV') && (
-        <NavbarBisdev style={{ zIndex: 999 }} />
-      )}
+    <body>
+      {/* Sidebar Navigation */}
+      <Sidebar activePage={activePage}/>
 
-      {(role === 'ADMIN') && (
-        <NavbarAdmin style={{ zIndex: 999 }} />
-      )}
+      <main style={{ marginLeft: "60px" }}>
 
-        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
-            <div>
-                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-                Visitor Detail</h1>
-                {/* <div>
-                    <p className="subtitle">Manage and view tenant applicant data here.</p>
-                </div> */}
-                <div>
+          {/* Header Start */}
+          <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Visitor Detail</h1>
+              </div>
+              <div>
                     <p className="subtitle">
                         <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
                         <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Visitor List </a>
                         / Detail
                     </p>
                 </div>
-            </div>
-        </div>
+          </div>
+          {/* Header Ends */}
+
+          <div className='content-container my-8'>
+            <div>
 
         <br></br>
 
         <br></br>
-        {/* <h1 style={{ textAlign: "left", marginLeft: 120 }}>{tenantApplicant?.brandName}</h1> */}
+        <h1 style={{ textAlign: "left", marginLeft: 90, fontSize:35 }}><strong>{visitor?.eventPass}</strong></h1>
 
         <div className="container mx-auto text-left">
 
         <div style={{ alignContent: "center", paddingLeft: "50px", paddingRight: "50px" }} className="mx-8">
-            <table style={{ borderCollapse: "collapse", width: "100%", alignItems: "center" }}>
+            <table style={{ borderCollapse: "collapse", width: "100%", alignItems: "center", borderRadius: "15px", overflow: "hidden" }}>
                 <tbody>
                     <tr>
                         <td className="text-tertiary-90" style={{ fontWeight: "bold", backgroundColor: "#E685AE", color: "white", width: "10%", textAlign: "left" }}>Name :</td>
@@ -104,13 +105,16 @@ const VisitorDetail = () => {
             
             </div>
 
-            <div className="text-center">
+            {/* <div className="text-center">
                 <button className="button-pink" onClick={handleBack}>
                     Back
                 </button>     
-            </div>
+            </div> */}
         </div>
     </div>
+    </div>
+    </main>
+    </body>
   );
 };
 
