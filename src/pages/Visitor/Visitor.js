@@ -193,7 +193,7 @@ const Visitor = () => {
         </div>
       )}
 
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '350px', margin: '0 auto' }}>
+      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
         <div style={{ position: 'relative' }}>
           <select
             className="appearance-none px-4 py-3 w-full focus:outline-none"
@@ -206,7 +206,7 @@ const Visitor = () => {
               fontSize: '1rem',
               lineHeight: '1.5',
               padding: '0.5rem 1rem',
-              width: '350px',
+              width: '400px',
             }}
           >
             <option value="">Select event</option>
@@ -241,7 +241,7 @@ const Visitor = () => {
       <br></br>
 
       {selectedEvent && eventData.length > 0 && (
-        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '350px', margin: '0 auto' }}>
+        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
           <div style={{ position: 'relative' }}>
             <input
               className="search px-4 py-3 w-full focus:outline-none"
@@ -255,7 +255,7 @@ const Visitor = () => {
                 fontSize: '1rem',
                 lineHeight: '1.5',
                 padding: '0.5rem 1rem',
-                width: '350px',
+                width: '400px',
                 paddingRight: '40px',
               }}
             />
@@ -365,7 +365,7 @@ const Visitor = () => {
                   </td>
                   <td>{highlightSearchText(visitor.name)}</td>
                   <td>{highlightSearchText(visitor.email)}</td>
-                  <td>{highlightSearchText(visitor.telephone)}</td>
+                  <td>{highlightSearchText("+62 " + visitor.telephone)}</td>
                   {[...Array(countDays)].map((_, dayIndex) => {
                     let attendanceRecord = attendanceData.data?.find(
                       record =>

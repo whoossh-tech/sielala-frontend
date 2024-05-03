@@ -99,7 +99,7 @@ const TenantApplicant = () => {
                 </div>
             )}
         
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "350px", margin: "0 auto" }}>
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>
                 <select
                 className="appearance-none px-4 py-3 w-full focus:outline-none"
                 onChange={handleChange}
