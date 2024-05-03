@@ -179,36 +179,43 @@ th {
     font-size: xx-large;
 }
 
-.reward-table {
+.reward-redemption-table {
     border-collapse: collapse;
     width: 100%;
     border-radius: 15px; 
     overflow: hidden;
 }
   
-.reward-table th, .reward-table td {
+.reward-redemption-table th, .reward-redemption-table td {
 border: 1px solid #ddd;
 padding: 8px;
 }
 
-.reward-table th {
+.reward-redemption-table th {
 text-align: center;
 }
 
-.reward-table th:first-child, .reward-table td:first-child {
+.reward-redemption-table th:first-child, .reward-redemption-table td:first-child {
 width: 10%; /* Set the width for the first column */
 }
 
 /* Set the width for other columns */
-.reward-table th:nth-child(2), .reward-table td:nth-child(2) {
+.reward-redemption-table th:nth-child(2), .reward-redemption-table td:nth-child(2) {
 width: 10%;
 }
 
-.reward-table th:nth-child(3), .reward-table td:nth-child(3) {
-width: 22%;
+.reward-redemption-table th:nth-child(3), .reward-redemption-table td:nth-child(3) {
+width: 20%;
 }
 
-.reward-table th:nth-child(4), .reward-table td:nth-child(4) {
+.reward-redemption-table th:nth-child(4), .reward-redemption-table td:nth-child(4) {
     width: 22%;
 }
 
+.reward-redemption-table th:nth-child(5), .reward-redemption-table td:nth-child(5) {
+    width: 20%;
+}
+
+.reward-redemption-table th:nth-child(6), .reward-redemption-table td:nth-child(6) {
+    width: 20%;
+}

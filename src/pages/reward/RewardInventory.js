@@ -293,9 +293,9 @@ const RewardInventory = () => {
                         <thead>
                             {/* Row headers */}
                             <tr>
-                                <th style={{borderRight: '1px solid #E3E2E6'}}> </th>
-                                <th style={{borderRight: '1px solid #E3E2E6'}}> </th>
-                                <th style={{borderRight: '1px solid #E3E2E6'}}> </th>
+                                <th style={{ width: "15%", borderRight: '1px solid #E3E2E6'}}> </th>
+                                <th style={{ width: "15%", borderRight: '1px solid #E3E2E6'}}> </th>
+                                <th style={{ width: "8%", borderRight: '1px solid #E3E2E6'}}> </th>
                                 {dayRangeCount.map((day, index) => (
                                     <React.Fragment key={index}>
                                         <th style={{ textAlign: "center", borderRight: '1px solid #E3E2E6',borderBottom: '1px solid #E3E2E6'}} colSpan="3">
