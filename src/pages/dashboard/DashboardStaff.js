@@ -14,12 +14,17 @@ const DashboardStaff = () => {
     const [rewardRedeemedList, setRewardRedeemedList] = useState([]);
     const [totalPointsRedeemed, setTotalPointsRedeemed] = useState(0);
     const [totalTenantAccepted, setTotalTenantAccepted] = useState(0);
+    const [activePage, setActivePage] = useState('dashboard');
 
     const colors = ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834'];
 
     const role = localStorage.getItem('role');
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    const changeActivePage = (page) => {
+        setActivePage(page);
+      };
 
     useEffect(() => {
         axios
@@ -138,7 +143,7 @@ const DashboardStaff = () => {
     return (
         <body>
             {/* Sidebar Navigation */}
-            <Sidebar /> 
+            <Sidebar activePage={activePage}/> 
 
             <main style={{ marginLeft: "60px" }}>
 
@@ -176,7 +181,7 @@ const DashboardStaff = () => {
                             {eventData.length > 0 ? (
                                 eventData.map((event, index) => (
                                 <option key={index} value={event.idEvent}>
-                                    {event.eventName}
+                                    {event.eventName}: {event.startDate}
                                 </option>
                                 ))
                             ) : (
