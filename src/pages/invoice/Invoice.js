@@ -35,7 +35,7 @@ const Invoice = () => {
         }
 
         if (selectedEvent) {
-            axios.get(`http://localhost:8080/api/invoice/view-all/${selectedEvent}`)
+            axios.get(`https://sielala-backend-production.up.railway.app/api/invoice/view-all/${selectedEvent}`)
             .then(res => {
                 console.log(res.data.data)
                 setInvoiceData(res.data.data)
@@ -44,7 +44,7 @@ const Invoice = () => {
                 )
         }
 
-        axios.get('http://localhost:8080/api/reward/view-event-all')
+        axios.get('https://sielala-backend-production.up.railway.app/api/reward/view-event-all')
             .then(res => {
                 setEventData(res.data.data)
             }).catch(

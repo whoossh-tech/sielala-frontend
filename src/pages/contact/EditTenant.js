@@ -15,7 +15,7 @@ import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 const EditTenant = () => {
   // const { eventId } = useParams();
   const { idTenant } = useParams();
-  const url = 'http://localhost:8080';
+  const url = 'https://sielala-backend-production.up.railway.app';
   const role = localStorage.getItem('role');
 
   const [picName, setPicName] = useState("");
@@ -106,7 +106,7 @@ const EditTenant = () => {
       try {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        const response = await axios.get(`http://localhost:8080/api/contact/detail/tenant/${idTenant}`);
+        const response = await axios.get(`https://sielala-backend-production.up.railway.app/api/contact/detail/tenant/${idTenant}`);
         const tenantData = response.data.data;
 
         setPicName(tenantData.picName);
@@ -145,7 +145,7 @@ const EditTenant = () => {
     closeModal();
 
     try {
-      const response = await axios.put(` http://localhost:8080/api/tenant/update/${idTenant}`, {
+      const response = await axios.put(` https://sielala-backend-production.up.railway.app/api/tenant/update/${idTenant}`, {
         // eventId,
         picName,
         address: address,

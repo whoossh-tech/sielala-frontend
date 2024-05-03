@@ -20,6 +20,8 @@ import { DashboardAdmin } from "./pages/dashboard/DashboardAdmin";
 import { DashboardBisdev } from "./pages/dashboard/DashboardBisdev";
 import { DashboardFinance } from "./pages/dashboard/DashboardFinance";
 import { DashboardStaff } from "./pages/dashboard/DashboardStaff";
+import { Dashboard } from "./pages/dashboard/Dashboard";
+
 import Login from "./pages/auth/Login";
 import ForgotPasswordForm from './pages/auth/ForgotPasswordForm';
 import RegisterStaffForm from "./pages/auth/RegisterStaffForm";
@@ -71,6 +73,13 @@ function App() {
             <Route path="/visitor-registration/:eventId" element={<VisitorRegistrationForm />}></Route>
             <Route path="/visitor-registration/success" element={<VisitorRegistrationSuccessPage />} />
             <Route path="/visitor-registration/fail" element={<VisitorRegistrationFailPage />} />
+
+            {/* ROLE: ALL STAFF */}
+            {(role === "OPERATION" || role === "ADMIN" || role === "BISDEV" || role === "FINANCE" || role === "PARTNERSHIP") && (
+              <>
+                <Route path="/d" element={<Dashboard />} />
+              </>
+            )}
 
             {/* ROLE: ALL STAFF */}
             {(role === "OPERATION" || role === "ADMIN" || role === "BISDEV" || role === "FINANCE" || role === "PARTNERSHIP") && (
