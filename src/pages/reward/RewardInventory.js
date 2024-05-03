@@ -78,6 +78,7 @@ const RewardInventory = () => {
         axios.get('https://sielala-backend-production.up.railway.app/api/reward/view-event-all')
             .then(res => {
                 setEventData(res.data.data)
+
             }).catch(
                 err => 
                 console.log(err)
@@ -182,7 +183,7 @@ const RewardInventory = () => {
 
             {/* <br></br> */}
 
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
                 <div style={{ position: 'relative' }}>
                     <select 
                         className="appearance-none px-4 py-3 w-full focus:outline-none" 
@@ -195,10 +196,10 @@ const RewardInventory = () => {
                             fontSize: '1rem',
                             lineHeight: '1.5',
                             padding: '0.5rem 1rem',
-                            width: '300px',
+                            width: '400px',
                         }}
                     >
-                        <option>select event</option>
+                        <option value="">Select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
                                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -243,7 +244,7 @@ const RewardInventory = () => {
                 </div> */}
 
             {(selectedEvent && eventData.length > 0) && (
-                
+                <React.Fragment>
                 <div className="detail-inventory">
                     {/* <div className="each-reward">
                             <p className="reward-text-title">Event:</p>
@@ -258,14 +259,15 @@ const RewardInventory = () => {
                             <p className="inventory-text">{formattedEndDate}</p>
                     </div>
                 </div>
+                <div className="button-field">
+                
+                    <button className="button-pink" onClick={handleAddRewardButton} disabled={disableAddRewardButton}>+ Add Reward</button>
+                    <button className="button-green" onClick={carryOutStockModal} disabled={disableCarryOutStockButton}>Carry Out Stock</button>
+
+                </div>
+                </React.Fragment>
             )}
             
-            <div className="button-field">
-                
-                <button className="button-pink" onClick={handleAddRewardButton} disabled={disableAddRewardButton}>+ Add Reward</button>
-                <button className="button-green" onClick={carryOutStockModal} disabled={disableCarryOutStockButton}>Carry Out Stock</button>
-
-            </div>
 
             <div>
                 <Modal
@@ -286,15 +288,19 @@ const RewardInventory = () => {
             
 
             {(selectedEvent && eventData.length > 0) && (
-                <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <table>
+                <div className="mb-3 mx-8" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <table className="reward-table">
                         <thead>
                             {/* Row headers */}
                             <tr>
-                                <th style={{borderRight: '1px solid #E3E2E6'}}colSpan="3"> </th>
+                                <th style={{ width: "15%", borderRight: '1px solid #E3E2E6'}}> </th>
+                                <th style={{ width: "15%", borderRight: '1px solid #E3E2E6'}}> </th>
+                                <th style={{ width: "8%", borderRight: '1px solid #E3E2E6'}}> </th>
                                 {dayRangeCount.map((day, index) => (
                                     <React.Fragment key={index}>
-                                        <th style={{borderRight: '1px solid #E3E2E6'}} colSpan="3">Day {index + 1}</th>
+                                        <th style={{ textAlign: "center", borderRight: '1px solid #E3E2E6',borderBottom: '1px solid #E3E2E6'}} colSpan="3">
+                                            Day {index + 1}
+                                        </th>
                                     </React.Fragment>
                                 ))}
                             </tr>
@@ -302,14 +308,14 @@ const RewardInventory = () => {
                         <thead>
                             {/* Column headers */}
                             <tr>
-                                <th>Reward</th>
-                                <th>Brand</th>
-                                <th style={{borderRight: '1px solid #E3E2E6'}}>Category</th>
+                                <th style={{ borderRight: '1px solid #E3E2E6'}}>Reward</th>
+                                <th style={{ borderRight: '1px solid #E3E2E6'}}>Brand</th>
+                                <th style={{ borderRight: '1px solid #E3E2E6'}}>Category</th>
                                 {dayRangeCount.map((day, index) => (
                                     <React.Fragment key={index}>
-                                        <th>Initial</th>
-                                        <th>Redeemed</th>
-                                        <th style={{borderRight: '1px solid #E3E2E6'}}>Remaining</th>
+                                        <th style={{ width: "8%", borderRight: '1px solid #E3E2E6'}}>Initial</th>
+                                        <th style={{ width: "8%", borderRight: '1px solid #E3E2E6'}}>Redeemed</th>
+                                        <th style={{ width: "8%", borderRight: '1px solid #E3E2E6'}}>Remaining</th>
                                     </React.Fragment>
                                 ))}
                             </tr>

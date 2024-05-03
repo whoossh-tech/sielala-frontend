@@ -75,9 +75,9 @@ const EmailDetail = () => {
 
       <div className="container mx-auto py-8">
         <div className="flex justify-between items-center mb-4">
-          <button className="button-green" onClick={handleBack}>
+          {/* <button className="button-green" onClick={handleBack}>
             Back
-          </button>
+          </button> */}
         </div>
 
         {emailDetail ? (

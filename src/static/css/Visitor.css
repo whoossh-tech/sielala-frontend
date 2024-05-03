@@ -96,44 +96,46 @@ th {
   z-index: 10000; /* Mengatur z-index agar modal berada di atas elemen lain */
 }
 
-.event-table {
+.visitor-table {
   border-collapse: collapse;
   width: 100%;
+  border-radius: 15px; 
+  overflow: hidden;
 }
 
-.event-table th, .event-table td {
+.visitor-table th, .visitor-table td {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-.event-table th {
-  text-align: left;
+.visitor-table th {
+  text-align: center;
 }
 
-.event-table th:first-child, .event-table td:first-child {
+.visitor-table th:first-child, .visitor-table td:first-child {
   width: 10%; /* Set the width for the first column */
 }
 
 /* Set the width for other columns */
-.event-table th:nth-child(2), .event-table td:nth-child(2) {
+.visitor-table th:nth-child(2), .visitor-table td:nth-child(2) {
+  width: 18%;
+}
+
+.visitor-table th:nth-child(3), .visitor-table td:nth-child(3) {
+  width: 18%;
+}
+
+.visitor-table th:nth-child(4), .visitor-table td:nth-child(4) {
+  width: 18%;
+}
+
+/* .visitor-table th:nth-child(5), .visitor-table td:nth-child(5) {
   width: 20%;
 }
 
-.event-table th:nth-child(3), .event-table td:nth-child(3) {
-  width: 15%;
-}
-
-.event-table th:nth-child(4), .event-table td:nth-child(4) {
-  width: 15%;
-}
-
-.event-table th:nth-child(5), .event-table td:nth-child(5) {
+.visitor-table th:nth-child(6), .visitor-table td:nth-child(6) {
   width: 20%;
-}
-
-.event-table th:nth-child(6), .event-table td:nth-child(6) {
-  width: 20%;
-}
+} */
 
 .highlighted-text {
   background-color: yellow; /* Background color for highlighting */

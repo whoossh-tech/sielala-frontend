@@ -339,9 +339,9 @@ const InvoiceDetail = () => {
 
           <div>
             <div className="button-field">
-              <button className="button-green" onClick={handleBack}>
+              {/* <button className="button-green" onClick={handleBack}>
                 Back
-              </button>
+              </button> */}
 
               {(role === "PARTNERSHIP" || role === "ADMIN") && (
                 <Link to={`/invoice/edit-detail/${idInvoice}`}>

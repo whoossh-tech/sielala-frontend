@@ -136,13 +136,13 @@ const RewardDetail = () => {
             <div>
                 {rewardData.redeemed ? (
                     <div className="button-field">
-                        <button className="button-green" onClick={handleBack}>Back</button>
+                        {/* <button className="button-green" onClick={handleBack}>Back</button> */}
                         <button className="button-pink" disabled>Edit Reward</button>
                         <button className="button-red" disabled>Delete Reward</button>
                     </div>
                 ) : (
                     <div className="button-field">
-                        <button className="button-green" onClick={handleBack}>Back</button>
+                        {/* <button className="button-green" onClick={handleBack}>Back</button> */}
                         <Link to={`/edit-reward/${id}`}>
                             <button className="button-pink">Edit Reward</button>
                         </Link>
