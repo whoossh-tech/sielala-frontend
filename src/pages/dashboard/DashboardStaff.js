@@ -3,7 +3,9 @@ import axios from "axios";
 import { PieChart, BarChart } from "@mui/x-charts";
 import '../../static/css/Dashboard.css';
 import backgroundPhoto from "../../assets/bg-cover.png";
+import tenantIcon from "../../assets/dashboard/Joystick.png";
 import rewardIcon from "../../assets/dashboard/Wrapped gift.png";
+import pointsIcon from "../../assets/dashboard/Bullseye.png";
 
 import Sidebar from './Sidebar';
 import '../../static/css/Style.css';
@@ -344,25 +346,29 @@ const DashboardStaff = () => {
                                 {/* show totals data */}
                                 <div style={{ marginTop: '40px', display: 'grid', gap: '20px' }}>
                                     <div class="box-info" style={{ backgroundColor: '#FDEFEF', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
-                                        <img src={rewardIcon} alt="Gift" style={{ width: '50px', marginRight: '20px' }} />
+                                        <img src={tenantIcon} alt="Joystick" style={{ width: '60px', marginRight: '20px' }} />
                                         <div>
-                                            <p style={{ marginBottom: '10px', textAlign: 'left' }}>Total Tenant Applicants: {event.listTenant ? event.listTenant.length : 0}</p>
-                                            <p style={{ textAlign: 'left' }}>Total Tenant Accepted: {totalTenantAccepted}</p>
+                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Tenants</p>
+                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{event.listTenant ? event.listTenant.length : 0} <span style={{ fontSize: '14px' }}>registered</span></p>
+                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalTenantAccepted} <span style={{ fontSize: '14px' }}>accepted</span></p>
                                         </div>
                                     </div>
                                     <div class="box-info" style={{ backgroundColor: '#F5F8FD', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
-                                        <img src={rewardIcon} alt="Gift" style={{ width: '50px', marginRight: '20px' }} />
+                                        <img src={rewardIcon} alt="Gift" style={{ width: '60px', marginRight: '20px' }} />
                                         <div>
-                                            <p style={{ marginBottom: '10px', textAlign: 'left' }}>Total Reward Redeemed: {rewardRedeemedList.length}</p>
+                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Rewards</p>
+                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{rewardRedeemedList.length} <span style={{ fontSize: '14px' }}>redeemed</span></p>
                                         </div>
                                     </div>
                                     <div class="box-info" style={{ backgroundColor: '#E8F8F5', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
-                                        <img src={rewardIcon} alt="Gift" style={{ width: '50px', marginRight: '20px' }} />
+                                        <img src={pointsIcon} alt="Bullseye" style={{ width: '60px', marginRight: '20px' }} />
                                         <div>
-                                            <p style={{ marginBottom: '10px', textAlign: 'left' }}>Total Points Redeemed: {totalPointsRedeemed}</p>
+                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Reward Points</p>
+                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalPointsRedeemed} <span style={{ fontSize: '14px' }}>redeemed</span></p>
                                         </div>
                                     </div>
                                 </div>
+
 
 
 
