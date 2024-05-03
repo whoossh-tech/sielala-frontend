@@ -43,7 +43,7 @@ const EditSponsor = () => {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         // app.use(cors());
-        const response = await axios.get(`http://localhost:8080/api/sponsor/detail/${idSponsor}`);
+        const response = await axios.get(`https://sielala-backend-production.up.railway.app/api/sponsor/detail/${idSponsor}`);
         const sponsorData = response.data.data;
         console.log(sponsorData);
 
@@ -109,7 +109,7 @@ const EditSponsor = () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       axios.defaults.mode = 'cors';
 
-      const response = await axios.put(`http://localhost:8080/api/sponsor/update/${idSponsor}`, {
+      const response = await axios.put(`https://sielala-backend-production.up.railway.app/api/sponsor/update/${idSponsor}`, {
         picName,
         name,
         address,

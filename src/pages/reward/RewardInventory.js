@@ -64,7 +64,7 @@ const RewardInventory = () => {
         }
 
         if (selectedEvent) {
-            axios.get(`http://localhost:8080/api/reward/view-all/${selectedEvent}`)
+            axios.get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
             .then(res => {
                 console.log(res.data.data)
                 setRewardData(res.data.data)
@@ -75,7 +75,7 @@ const RewardInventory = () => {
             )
         }
 
-        axios.get('http://localhost:8080/api/reward/view-event-all')
+        axios.get('https://sielala-backend-production.up.railway.app/api/reward/view-event-all')
             .then(res => {
                 setEventData(res.data.data)
             }).catch(
@@ -95,7 +95,7 @@ const RewardInventory = () => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         if (selectedEvent) {
-            axios.post(`http://localhost:8080/api/reward/carry-out-stock/${selectedEvent}`)
+            axios.post(`https://sielala-backend-production.up.railway.app/api/reward/carry-out-stock/${selectedEvent}`)
             .then(res => {
                 setRewardData(res.data.data)
                 setCountDays(res.data.dayRange)
@@ -149,8 +149,16 @@ const RewardInventory = () => {
                 <div>
                     <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
                         Reward Inventory</h1>
+                    {/* <div>
+                        <p className="subtitle">Manage and view reward's data here.</p>
+                    </div> */}
                     <div>
-                            <p className="subtitle">Manage and view reward's data here.</p>
+                        <p className="subtitle">
+                            <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                                <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                            </a>                            
+                            / Reward Inventory
+                        </p>
                     </div>
                 </div>
             </div>
@@ -278,7 +286,7 @@ const RewardInventory = () => {
             
 
             {(selectedEvent && eventData.length > 0) && (
-                <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
+                <div className="mb-3 mx-8" style={{ display: 'flex', justifyContent: 'center' }}>
                     <table>
                         <thead>
                             {/* Row headers */}

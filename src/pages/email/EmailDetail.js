@@ -21,7 +21,7 @@ const EmailDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/email/${idEmail}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/email/${idEmail}`)
       .then((res) => {
         setEmailDetail(res.data.data);
         console.log("email detail:")
@@ -75,9 +75,9 @@ const EmailDetail = () => {
 
       <div className="container mx-auto py-8">
         <div className="flex justify-between items-center mb-4">
-          <button className="button-green" onClick={handleBack}>
+          {/* <button className="button-green" onClick={handleBack}>
             Back
-          </button>
+          </button> */}
         </div>
 
         {emailDetail ? (

@@ -27,7 +27,7 @@ const DashboardGuest = () => {
             delete axios.defaults.headers.common['Authorization'];
         }
     
-        axios.get('http://localhost:8080/api/event/ongoing')
+        axios.get('https://sielala-backend-production.up.railway.app/api/event/ongoing')
             .then(res => {
                 setEvents(res.data.data)
                 console.log(res.data.data)
@@ -36,7 +36,7 @@ const DashboardGuest = () => {
                 console.log(err)
             )
 
-            axios.get('http://localhost:8080/api/event/ended')
+            axios.get('https://sielala-backend-production.up.railway.app/api/event/ended')
             .then(res => {
                 setEndedEvents(res.data.data)
                 console.log(res.data.data)
@@ -45,7 +45,7 @@ const DashboardGuest = () => {
                 console.log(err)
             )
 
-            axios.get('http://localhost:8080/api/event/total')
+            axios.get('https://sielala-backend-production.up.railway.app/api/event/total')
             .then(res => {
                 setTotalEvent(res.data.totalEvent)
                 setTotalTenant(res.data.totalTenant)
@@ -99,36 +99,40 @@ const DashboardGuest = () => {
 
             <br></br>
 
-            {events && events.length > 0 ? (
-              events.map((event, i) => (
-                <div className="event-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5">
-                    <div className="flex justify-between">
-                        <div className='text-left'>
-                            <h1 className='text-2xl my-2'>{event.eventName}</h1>
-                            <p className="text-md mb-2 text-center">
-                                📆 {event.startDateFormatted} - {event.endDateFormatted} | 📍 {event.location}
-                            </p>
-                        </div>
+            {/* <div style={{ textAlign: "left" }} className="ongoing-event-container"> */}
+                {events && events.length > 0 ? (
+                events.map((event, i) => (
+                    <div className="event-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5">
+                        <div className="flex justify-between">
+                            <div className='text-left'>
+                                <h1 className='text-2xl my-2'>{event.eventName}</h1>
+                                <p className="text-md mb-2 text-center">
+                                    📆 {event.startDateFormatted} - {event.endDateFormatted} | 📍 {event.location}
+                                </p>
+                            </div>
 
-                        <div className="5 flex items-center gap-0 mx-3">
-                            <div className="flex space-x-4">
-                                <button className="button-pink text-sm" onClick={() => visitorRegistrationClick(event.idEvent)}>
-                                    Register as Visitor
-                                </button>
-
-                                {event.tenantOpen && (
-                                    <button className="button-green text-sm" onClick={() => tenantRegistrationClick(event.idEvent)}>
-                                        Register as Tenant
+                            <div className="5 flex items-center gap-0 mx-3">
+                                <div className="flex space-x-4">
+                                    <button className="button-pink text-sm" onClick={() => visitorRegistrationClick(event.idEvent)}>
+                                        Register as Visitor
                                     </button>
-                                )}
+
+                                    {event.tenantOpen && (
+                                        <button className="button-green text-sm" onClick={() => tenantRegistrationClick(event.idEvent)}>
+                                            Register as Tenant
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-              ))
-            ) : (
-              <p><b>No Upcoming Events Available</b></p>
-            )}
+                ))
+                ) : (
+                    <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "left", alignContent: "left" }} className="rounded">
+                        <p><b>No Upcoming Events Available</b></p>
+                    </div>
+                )}
+            {/* </div> */}
 
             <br></br>
             <br></br>
@@ -161,7 +165,9 @@ const DashboardGuest = () => {
                             </div>
                     ))
                 ) : (
-                    <p><b>No Previous Events Available</b></p>
+                    <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4">
+                        <p><b>No Previous Events Available</b></p>
+                    </div>
                 )}
             </div>
             <br></br>

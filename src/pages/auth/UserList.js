@@ -20,7 +20,7 @@ const UserList = () => {
                 const token = localStorage.getItem('token');
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-                const response = await axios.get('http://localhost:8080/admin/acc-list');
+                const response = await axios.get('https://sielala-backend-production.up.railway.app/admin/acc-list');
                 setUserList(response.data);
             } catch (error) {
                 console.error('Error fetching user list:', error.response || error.message);
@@ -43,8 +43,16 @@ const UserList = () => {
                 <div>
                     <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
                         User Management</h1>
-                    <div>
+                    {/* <div>
                         <p className="subtitle">Manage and view SieLala users data here.</p>
+                    </div> */}
+                    <div>
+                        <p className="subtitle">
+                            <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                                <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                            </a> 
+                            / User Management
+                        </p>
                     </div>
                 </div>
             </div>
@@ -60,7 +68,7 @@ const UserList = () => {
                 <button className="button-pink"onClick={redirectToStaffRegistration}>+ Create Account</button>
             </div>
 
-            <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="mb-3 mx-8" style={{ display: 'flex', justifyContent: 'center' }}>
                 <table>
                     <thead>
                         {/* Column headers */}

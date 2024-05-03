@@ -27,7 +27,7 @@ const DetailSponsor = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/sponsor/detail/${idSponsor}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/sponsor/detail/${idSponsor}`)
       .then((res) => {
         setSponsorData(res.data.data);
         setIdEvent(res.data.idEvent);
@@ -37,7 +37,7 @@ const DetailSponsor = () => {
       .catch((err) => console.log(err));
 
       axios
-      .get(`http://localhost:8080/api/invoice/invoice-status/${idSponsor}`)
+      .get(`https://sielala-backend-production.up.railway.app/api/invoice/invoice-status/${idSponsor}`)
       .then((res) => {
         setStatusInvoice(res.data.statusInvoice);
 
@@ -118,7 +118,7 @@ const DetailSponsor = () => {
 
             <div>
                 <div className="button-field">
-                    <button className="button-green" onClick={handleBack}>Back</button>
+                    {/* <button className="button-green" onClick={handleBack}>Back</button> */}
                     <Link to={`/sponsor/edit/${idSponsor}`}>
                         <button className="button-pink">Edit Sponsor</button>
                     </Link>

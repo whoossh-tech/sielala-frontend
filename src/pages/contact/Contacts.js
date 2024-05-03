@@ -31,7 +31,7 @@ const Contacts = () => {
 
     if (selectedEvent) {
       axios
-        .get(`http://localhost:8080/api/contact/all/${selectedEvent}`)
+        .get(`https://sielala-backend-production.up.railway.app/api/contact/all/${selectedEvent}`)
         .then((res) => {
           setContacts(res.data.data);
           console.log(res.data.data);
@@ -42,7 +42,7 @@ const Contacts = () => {
     }
 
     axios
-      .get("http://localhost:8080/api/sponsor/view-event-all")
+      .get("https://sielala-backend-production.up.railway.app/api/sponsor/view-event-all")
       .then((res) => {
         setEventData(res.data.data);
         console.log(res.data.data);
@@ -78,8 +78,16 @@ const Contacts = () => {
           <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
             Partnership Management
           </h1>
-          <div>
+          {/* <div>
             <p className="subtitle">Manage your contact here</p>
+          </div> */}
+          <div>
+            <p className="subtitle">
+              <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                  <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+              </a>
+              / Partnership Management
+            </p>
           </div>
         </div>
       </div>
@@ -153,11 +161,11 @@ const Contacts = () => {
               {/* Row headers */}
               <tr>
                 <th style={{ width: "20%", textAlign: "center" }}>Company Name</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Pic Name</th>
+                <th style={{ width: "18%", textAlign: "center" }}>Pic Name</th>
                 <th style={{ width: "20%", textAlign: "center" }}>Company Address</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Email</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Telephone</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Contact Type</th>
+                <th style={{ width: "15%", textAlign: "center" }}>Company Email</th>
+                <th style={{ width: "12%", textAlign: "center" }}>Company Telephone</th>
+                <th style={{ width: "15%", textAlign: "center" }}>Contact Type</th>
               </tr>
             </thead>
 

@@ -35,7 +35,7 @@ const RewardDetail = () => {
     const token = localStorage.getItem('token');
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    axios.get(`http://localhost:8080/api/reward/detail/${id}`)
+    axios.get(`https://sielala-backend-production.up.railway.app/api/reward/detail/${id}`)
     .then(res => {
         setRewardData(res.data.rewardData)
         setCountDays(res.data.daysRange)
@@ -51,7 +51,7 @@ const RewardDetail = () => {
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        const response = await axios.delete(`http://localhost:8080/api/reward/delete/${id}`);
+        const response = await axios.delete(`https://sielala-backend-production.up.railway.app/api/reward/delete/${id}`);
 
         // Untuk pre-filled dropdown event
         localStorage.setItem('idSelectedEvent', idEvent);
@@ -136,13 +136,13 @@ const RewardDetail = () => {
             <div>
                 {rewardData.redeemed ? (
                     <div className="button-field">
-                        <button className="button-green" onClick={handleBack}>Back</button>
+                        {/* <button className="button-green" onClick={handleBack}>Back</button> */}
                         <button className="button-pink" disabled>Edit Reward</button>
                         <button className="button-red" disabled>Delete Reward</button>
                     </div>
                 ) : (
                     <div className="button-field">
-                        <button className="button-green" onClick={handleBack}>Back</button>
+                        {/* <button className="button-green" onClick={handleBack}>Back</button> */}
                         <Link to={`/edit-reward/${id}`}>
                             <button className="button-pink">Edit Reward</button>
                         </Link>

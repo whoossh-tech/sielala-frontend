@@ -30,7 +30,7 @@ const TenantApplicant = () => {
 
         if (selectedEvent) {
             axios
-            .get(`http://localhost:8080/api/tenant/view-all/${selectedEvent}`)
+            .get(`https://sielala-backend-production.up.railway.app/api/tenant/view-all/${selectedEvent}`)
             .then((res) => {
                 setTenantApplicants(res.data.data);
                 console.log(res.data.data);
@@ -41,7 +41,7 @@ const TenantApplicant = () => {
         }
 
         axios
-            .get("http://localhost:8080/api/event/view-all")
+            .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
             setEventData(res.data.data);
             })
@@ -74,8 +74,16 @@ const TenantApplicant = () => {
                 <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
                     Tenant Applicant List
                 </h1>
-                <div>
+                {/* <div>
                     <p className="subtitle">Manage tenant applicants here</p>
+                </div> */}
+                <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Tenant Applicant List
+                    </p>
                 </div>
                 </div>
             </div>
@@ -139,9 +147,9 @@ const TenantApplicant = () => {
         
             <br></br>
         
-            <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
+            <div className="mb-3 rounded-md" style={{ display: "flex", justifyContent: "center" }}>
                 { (selectedEvent) && (
-                <table className="event-table mx-8">
+                <table className="event-table mx-8 rounded">
 
                     <thead>
                         <tr>
@@ -167,15 +175,35 @@ const TenantApplicant = () => {
                             <td>{tenant.picName}</td>
 
                             { tenant.selectionDone === false && (
-                                <td className="text-secondary-80"><b>Pending</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-secondary-70 text-sm"
+                                    >    
+                                        <b>Pending</b>
+                                    </div>
+                                </td>
                             ) }
 
                             { (tenant.accepted === true && tenant.selectionDone === true) && (
-                                <td className="text-tertiary-80"><b>Accepted</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-tertiary-70 text-sm"
+                                    >    
+                                        <b>Accepted</b>
+                                    </div>
+                                </td>
+                                // <td className="text-tertiary-80"><b>Accepted</b></td>
                             ) }
 
                             { (tenant.accepted === false && tenant.selectionDone === true) && (
-                                <td className="text-warning-DEFAULT"><b>Rejected</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-warning-DEFAULT text-sm"
+                                    >    
+                                        <b>Rejected</b>
+                                    </div>
+                                </td>
+                                // <td className="text-warning-DEFAULT"><b>Rejected</b></td>
                             ) } 
                         </tr>
                         ))
