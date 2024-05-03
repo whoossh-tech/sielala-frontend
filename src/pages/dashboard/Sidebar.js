@@ -120,7 +120,7 @@ const Sidebar = ({activePage}) => {
           </li>
 
           <li className={activePage === 'bulk-email' ? 'active' : ''}>
-            <a href="/bulk-email">
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>
@@ -152,7 +152,7 @@ const Sidebar = ({activePage}) => {
           </li>
 
           <li className={activePage === 'bulk-email' ? 'active' : ''}>
-            <a href="/bulk-email">
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>
@@ -234,7 +234,7 @@ const Sidebar = ({activePage}) => {
           </li>
 
           <li className={activePage === 'bulk-email' ? 'active' : ''}>
-            <a href="/bulk-email">
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>
