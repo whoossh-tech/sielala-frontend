@@ -89,14 +89,13 @@ const InvoiceDetail = () => {
       .get(`https://sielala-backend-production.up.railway.app/api/invoice/detail/${idInvoice}`)
       .then((res) => {
         setInvoiceData(res.data.data);
-        // console.log(res.data.data);
         setIdEvent(res.data.data.event.idEvent);
-        const storedPaymentImageUrl = localStorage.getItem("paymentImageUrl");
-        if (storedPaymentImageUrl) {
-          setPaymentImageUrl(storedPaymentImageUrl);
+
+        if (res.data.data.paymentImage) {
+          setPaymentImageUrl(`data:image/png;base64,${res.data.data.paymentImage}`);
+          console.log("Payment Image Url for res.data:", res.data.data.paymentImage);
         } else {
-          setPaymentImageUrl(res.data.data.paymentImageUrl);
-          localStorage.setItem("paymentImageUrl", res.data.data.paymentImageUrl);
+          console.log("Payment Image is not yet submitted");
         }
       })
       .catch((err) => console.log(err));
@@ -104,7 +103,6 @@ const InvoiceDetail = () => {
 
   const handleBack = () => {
     localStorage.setItem("idSelectedEvent", idEvent);
-    // localStorage.removeItem("paymentImageUrl");
     navigate("/invoice");
   };
 
@@ -130,11 +128,10 @@ const InvoiceDetail = () => {
       reader.onload = () => {
         const base64Data = reader.result;
         toast.success("Payment proof uploaded successfully");
-
         setPaymentImageUrl(base64Data);
-        localStorage.setItem("paymentImageUrl", base64Data); // Memperbarui URL gambar
-        // setIsValidated(true); // Mengatur status validasi gambar menjadi true
+
         console.log("Payment image URL (base64):", base64Data);
+        // window.location.reload();
       };
       reader.onerror = (error) => {
         console.error(error);
@@ -200,25 +197,6 @@ const InvoiceDetail = () => {
       const fileURL = URL.createObjectURL(file);
 
       window.open(fileURL, "_blank");
-
-      // const response = await axios.get(`${url}/api/invoice/generate-pdf/invoice/${idInvoice}`, {
-      //     responseType: 'blob'
-      // });
-
-      // // Membuat objek URL untuk blob
-      // const fileURL = URL.createObjectURL(new Blob([response.data]));
-
-      // // Membuat elemen <a> untuk men-download file
-      // const link = document.createElement('a');
-      // link.href = fileURL;
-      // link.setAttribute('download', `SIELALA_INVOICE_${invoiceData.companyName}.pdf`);
-
-      // // Menambahkan elemen <a> ke dokumen dan memicu klik pada elemen tersebut
-      // document.body.appendChild(link);
-      // link.click();
-
-      // Menghapus elemen <a> setelah proses download selesai
-      // document.body.removeChild(link);
     } catch (error) {
       console.error("Error:", error);
       toast.error("Cannot generate invoice");
@@ -418,27 +396,30 @@ const InvoiceDetail = () => {
         {/* )} */}
         
         {paymentImageUrl && (
-          <div className="w-full flex justify-center items-center">
-            <img
-              src={paymentImageUrl}
-              alt="Payment proof"
-              className="w-full rounded-lg shadow-md"
-              style={{ width: "500px", height: "auto" }} 
-            />
+          <div>
+            <div className="w-full flex justify-center items-center">
+              <img
+                src={paymentImageUrl}
+                alt="Payment proof"
+                className="w-full rounded-lg shadow-md"
+                style={{ width: "500px", height: "auto" }} 
+              />
+            </div>
+
+            <div className="w-full flex justify-center items-center">
+              <button className="button-green" onClick={handleValidateButton}>
+                Validate
+              </button>
+              <button className="button-red" onClick={handleDeclineButton}>
+                Decline
+              </button>
+            </div>
           </div>
         )}
 
-        <div className="w-full flex justify-center items-center">
-          <button className="button-green" onClick={handleValidateButton}>
-            Validate
-          </button>
-          <button className="button-red" onClick={handleDeclineButton}>
-            Decline
-          </button>
-        </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
+      <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
         <p className="text-center text-gray-700">Are you sure you want to notify the client?</p>
         <br></br>
@@ -452,7 +433,7 @@ const InvoiceDetail = () => {
         </div>
       </Modal>
 
-      <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation">
+      <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
         <p className="text-center text-gray-700">Are you sure you want to upload this payment proof?</p>
         <br></br>
@@ -472,7 +453,7 @@ const InvoiceDetail = () => {
         </div>
       </Modal>
 
-      <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation">
+      <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
         <p className="text-center text-gray-700">Are you sure you want to validate this payment proof?</p>
         <br></br>
@@ -486,7 +467,7 @@ const InvoiceDetail = () => {
         </div>
       </Modal>
 
-      <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation">
+      <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
         <p className="text-center text-gray-700">Are you sure you want to decline this payment proof?</p>
         <br></br>
