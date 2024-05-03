@@ -102,8 +102,8 @@ const UserList = () => {
                 <button className="button-pink"onClick={redirectToStaffRegistration}>+ Create Account</button>
             </div>
 
-            <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                <table className="user-table mx-8">
+            <div className="mb-3 mx-8" style={{ display: 'flex', justifyContent: 'center' }}>
+                <table className='user-table'>
                     <thead>
                         {/* Column headers */}
                         <tr>

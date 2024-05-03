@@ -140,9 +140,9 @@ const TenantDetail = () => {
 
           <div className="container mx-auto py-8 text-center">
             <div className="button-field">
-              <button className="button-green" onClick={handleBack}>
+              {/* <button className="button-green" onClick={handleBack}>
                 Back
-              </button>
+              </button> */}
               <Link to={`/tenant/edit/${idTenant}`}>
                 <button className="button-pink">Edit Tenant</button>
               </Link>

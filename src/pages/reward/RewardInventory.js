@@ -288,8 +288,8 @@ const RewardInventory = () => {
             
 
             {(selectedEvent && eventData.length > 0) && (
-                <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <table className="reward-table mx-8">
+                <div className="mb-3 mx-8" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <table className="reward-table">
                         <thead>
                             {/* Row headers */}
                             <tr>
