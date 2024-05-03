@@ -6,6 +6,7 @@ import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import "../../static/css/Visitor.css";
 import { Link } from 'react-router-dom';
+import Sidebar from '../dashboard/Sidebar';
 
 const Visitor = () => {
   const [visitors, setVisitors] = useState([]);
@@ -16,6 +17,7 @@ const Visitor = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const [day, setDay] = useState(0);
   const [checkedState, setCheckedState] = useState([]);
+  const [activePage, setActivePage] = useState('visitor');
 
   const role = localStorage.getItem('role');
 
@@ -151,32 +153,24 @@ const Visitor = () => {
   }, [selectedEvent, attendanceData.data]);
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      {/* navigation bar */}
-      {(role === 'BISDEV') && (
-        <NavbarBisdev style={{ zIndex: 999 }} />
-      )}
+    <body>
+      {/* Sidebar Navigation */}
+      <Sidebar activePage={activePage}/>
 
-      {(role === 'ADMIN') && (
-        <NavbarAdmin style={{ zIndex: 999 }} />
-      )}
-      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
-        <div>
-          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-            Visitor Management</h1>
-          {/* <div>
-            <p className="subtitle">Manage and view visitors data here.</p>
-          </div> */}
-          <div>
-            <p className="subtitle">
-              <a href='/dashboard' style={{ textDecoration: 'none' }}>
-                <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
-              </a>                
-              / Visitor Management
-            </p>
+      <main style={{ marginLeft: "60px" }}>
+
+          {/* Header Start */}
+          <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '130px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Visitor Data Report</h1>
+              </div>
           </div>
-        </div>
-      </div>
+          {/* Header Ends */}
+
+          <div className='content-container my-8'>
+            <div>
+              {/* <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
 
       <Toaster
         position="top-center"
@@ -413,7 +407,11 @@ const Visitor = () => {
         </div>
       )}
       <br></br>
+    {/* </div> */}
     </div>
+    </div>
+    </main>
+</body>
 
   );
 }
