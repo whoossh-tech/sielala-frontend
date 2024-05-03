@@ -24,6 +24,7 @@ const InvoiceDetail = () => {
   const [invoiceData, setInvoiceData] = useState();
   const [countdays, setCountDays] = useState(0);
   const [idEvent, setIdEvent] = useState("");
+
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -38,6 +39,9 @@ const InvoiceDetail = () => {
   const [isDeclined, setIsDeclined] = useState(false);
   const [isEditDisabled, setIsEditDisabled] = useState(false);
   const [isMarkAsDeliveredVisible, setIsMarkAsDeliveredVisible] = useState(true);
+
+  const [statusInvoice, setStatusInvoice] = useState();
+  const [statusPayment, setStatusPayment] = useState();
 
   const role = localStorage.getItem("role");
 
@@ -91,15 +95,22 @@ const InvoiceDetail = () => {
         setInvoiceData(res.data.data);
         setIdEvent(res.data.data.event.idEvent);
 
+        console.log(res.data.data);
+        setStatusInvoice(res.data.data.trackingStatus);
+        setStatusPayment(res.data.data.paymentStatus);
+
         if (res.data.data.paymentImage) {
           setPaymentImageUrl(`data:image/png;base64,${res.data.data.paymentImage}`);
-          console.log("Payment Image Url for res.data:", res.data.data.paymentImage);
+          // console.log("Payment Image Url for res.data:", res.data.data.paymentImage);
         } else {
           console.log("Payment Image is not yet submitted");
         }
       })
       .catch((err) => console.log(err));
   }, [idInvoice]);
+
+  console.log(statusPayment);
+  console.log(statusInvoice);
 
   const handleBack = () => {
     localStorage.setItem("idSelectedEvent", idEvent);
@@ -130,8 +141,8 @@ const InvoiceDetail = () => {
         toast.success("Payment proof uploaded successfully");
         setPaymentImageUrl(base64Data);
 
-        console.log("Payment image URL (base64):", base64Data);
-        // window.location.reload();
+        // console.log("Payment image URL (base64):", base64Data);
+        window.location.reload();
       };
       reader.onerror = (error) => {
         console.error(error);
@@ -340,7 +351,7 @@ const InvoiceDetail = () => {
               )}
 
               {/* Tombol untuk mengubah status menjadi "delivered" */}
-              {invoiceData.trackingStatus !== "Delivered" && (
+              {invoiceData.trackingStatus === "Pending" && (
                 <button className="button-green" onClick={handleDeliveredButtonClick}>
                   Mark as Delivered
                 </button>
@@ -383,41 +394,47 @@ const InvoiceDetail = () => {
       )}
 
         {/* Payment Proof Section */}
-        <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
-        <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
-        {/* {(invoiceData.paymentStatus != "Approved") && ( */}
-          <div className="flex items-center mb-4">
-            <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-            <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
-              Submit Payment Proof
-            </button>
-          </div>
-        {/* )} */}
-        
-        {paymentImageUrl && (
-          <div>
-            <div className="w-full flex justify-center items-center">
-              <img
-                src={paymentImageUrl}
-                alt="Payment proof"
-                className="w-full rounded-lg shadow-md"
-                style={{ width: "500px", height: "auto" }} 
-              />
-            </div>
+        {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
 
-            <div className="w-full flex justify-center items-center">
-              <button className="button-green" onClick={handleValidateButton}>
-                Validate
-              </button>
-              <button className="button-red" onClick={handleDeclineButton}>
-                Decline
+          <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
+          <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
+
+          {(statusPayment !== "Approved") && (
+            <div className="flex items-center mb-4">
+              <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
+              <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
+                Submit Payment Proof
               </button>
             </div>
+          )}
+          
+          {paymentImageUrl && (
+            <div>
+              <div className="w-full flex justify-center items-center">
+                <img
+                  src={paymentImageUrl}
+                  alt="Payment proof"
+                  className="w-full rounded-lg shadow-md"
+                  style={{ width: "500px", height: "auto" }} 
+                />
+              </div>
+
+              {(statusPayment !== "Approved") && (
+                <div className="w-full flex justify-center items-center">
+                  <button className="button-green" onClick={handleValidateButton}>
+                    Validate
+                  </button>
+                  <button className="button-red" onClick={handleDeclineButton}>
+                    Decline
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
           </div>
         )}
-
-      </div>
 
       <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
