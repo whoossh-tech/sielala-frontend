@@ -178,3 +178,21 @@ th {
 #page-title {
     font-size: xx-large;
 }
+
+.reward-table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 15px; 
+    overflow: hidden;
+}
+  
+.reward-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.reward-table th {
+    text-align: center;
+}
+
+

@@ -8,7 +8,7 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
-import "../../static/css/event/Event.css";
+import "../../static/css/Contact.css";
 
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -45,7 +45,10 @@ const Contacts = () => {
       .get("https://sielala-backend-production.up.railway.app/api/sponsor/view-event-all")
       .then((res) => {
         setEventData(res.data.data);
-        console.log(res.data.data);
+        
+        // if (!selectedEvent && res.data.data.length > 0) {
+        //   setSelectedEvent(res.data.data[0].idEvent);
+        // }
       })
       .catch((err) => console.log(err));
   }, [selectedEvent]);
@@ -102,7 +105,7 @@ const Contacts = () => {
         </div>
       )}
  
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '350px', margin: '0 auto' }}>
                 <div style={{ position: 'relative' }}>
                     <select 
                         className="appearance-none px-4 py-3 w-full focus:outline-none" 
@@ -115,13 +118,13 @@ const Contacts = () => {
                             fontSize: '1rem',
                             lineHeight: '1.5',
                             padding: '0.5rem 1rem',
-                            width: '300px',
+                            width: '350px',
                         }}
                     >
-                        <option>select event</option>
+                        <option value="">Select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
-                                <option key={index} value={event.idEvent}>{event.eventName}</option>
+                                <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
                             ))) : (
                                 <option value="">No events available</option>
                             )
@@ -148,6 +151,8 @@ const Contacts = () => {
 
       <br></br>
 
+      {(selectedEvent && eventData.length > 0) && (
+      <React.Fragment>
       <div className="button-field">
         <button className="button-pink" onClick={handleCreateButton}>
           + Add Sponsor
@@ -155,17 +160,17 @@ const Contacts = () => {
       </div>
 
       <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
-        {selectedEvent ? (
-          <table className="event-table mx-8">
+     
+          <table className="contact-table mx-8">
             <thead>
               {/* Row headers */}
               <tr>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Name</th>
-                <th style={{ width: "18%", textAlign: "center" }}>Pic Name</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Company Address</th>
-                <th style={{ width: "15%", textAlign: "center" }}>Company Email</th>
-                <th style={{ width: "12%", textAlign: "center" }}>Company Telephone</th>
-                <th style={{ width: "15%", textAlign: "center" }}>Contact Type</th>
+                <th>Company Name</th>
+                <th>Pic Name</th>
+                <th>Company Address</th>
+                <th>Company Email</th>
+                <th>Company Telephone</th>
+                <th>Contact Type</th>
               </tr>
             </thead>
 
@@ -211,11 +216,9 @@ const Contacts = () => {
               )}
             </tbody>
           </table>
-        ) : (
-          <div className="text-center">Please select an event to view contacts</div>
-        )}
       </div>
-
+      </React.Fragment>
+    )}
       <br></br>
     </div>
   );

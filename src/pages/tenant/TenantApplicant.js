@@ -7,7 +7,7 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
-// import "../../static/css/event/Event.css";
+// import "../../static/css/TenantApplicant.css";
 
 const TenantApplicant = () => {
     const [tenantApplicants, setTenantApplicants] = useState("");
@@ -43,7 +43,10 @@ const TenantApplicant = () => {
         axios
             .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
-            setEventData(res.data.data);
+                setEventData(res.data.data);
+                // if (!selectedEvent && res.data.data.length > 0) {
+                //     setSelectedEvent(res.data.data[0].idEvent);
+                // }
             })
             .catch((err) => console.log(err));
     }, [selectedEvent]);
@@ -98,51 +101,51 @@ const TenantApplicant = () => {
                 </div>
             )}
         
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
-                <div style={{ position: 'relative' }}>
-                    <select
-                    className="appearance-none px-4 py-3 w-full focus:outline-none"
-                    onChange={handleChange}
-                    value={selectedEvent}
-                    style={{
-                        backgroundColor: '#ffffff',
-                        color: '#333333',
-                        borderRadius: '0.375rem',
-                        fontSize: '1rem',
-                        lineHeight: '1.5',
-                        padding: '0.5rem 1rem',
-                        width: '300px',
-                    }}
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "350px", margin: "0 auto" }}>
+                <select
+                className="appearance-none px-4 py-3 w-full focus:outline-none"
+                onChange={handleChange}
+                value={selectedEvent}
+                style={{
+                    backgroundColor: "#ffffff",
+                    color: "#333333",
+                    borderRadius: "0.375rem",
+                    border: "1px solid #E3E2E6",
+                    fontSize: "1rem",
+                    lineHeight: "1.5",
+                    padding: "0.5rem 1rem",
+                    width: "100%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+                >
+                <option value="">Select event</option>
+                {eventData && eventData.length > 0 ? (
+                    eventData.map((event, index) => (
+                    <option key={index} value={event.idEvent}>
+                        {event.eventName}: : {event.startDate}
+                    </option>
+                    ))
+                ) : (
+                    <option value="">No events available</option>
+                )}
+                </select>
+                <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        width="24" 
+                        height="24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        className="feather feather-chevron-down"
                     >
-                    <option>Select event</option>
-                    {eventData && eventData.length > 0 ? (
-                        eventData.map((event, index) => (
-                        <option key={index} value={event.idEvent}>
-                            {event.eventName}
-                        </option>
-                        ))
-                    ) : (
-                        <option value="">No events available</option>
-                    )}
-                    </select>
-                    <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            viewBox="0 0 24 24" 
-                            width="24" 
-                            height="24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            strokeWidth="2" 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            className="feather feather-chevron-down"
-                        >
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
                 </div>
-                
             </div>
         
             <br></br>
@@ -153,7 +156,7 @@ const TenantApplicant = () => {
 
                     <thead>
                         <tr>
-                            <th style={{ width: "28%", textAlign: "center" }}>Brand Name</th>
+                            <th style={{ width: "25%", textAlign: "center" }}>Brand Name</th>
                             <th style={{ width: "20%", textAlign: "center" }}>Email</th>
                             <th style={{ width: "20%", textAlign: "center" }}>Instagram</th>
                             <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
@@ -219,7 +222,7 @@ const TenantApplicant = () => {
 
             </div>
             </div>
-    );      
+    );            
 }
 
 export default TenantApplicant;

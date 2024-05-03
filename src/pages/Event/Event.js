@@ -19,6 +19,7 @@ const Event = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [location, setLocation] = useState("");
   const [errors, setErrors] = useState({});
+  const [activePage, setActivePage] = useState('event');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,7 +48,7 @@ const Event = () => {
 
   return (
     <body>
-      <Sidebar /> 
+      <Sidebar activePage={activePage}/> 
 
       <main style={{ marginLeft: "60px" }}>
 
@@ -62,7 +63,8 @@ const Event = () => {
 
         <div className='content-container my-8'>
           <div className="dashboard-container">
-            <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+            <div>
+            {/* <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
               <style>{reynaldoStyles}</style>
               {/* {( role === 'BISDEV' ) && (
                   <NavbarBisdev style={{ zIndex: 999 }} />
@@ -85,7 +87,7 @@ const Event = () => {
                 </button>
               </div>
 
-              <div className="mb-3" style={{ display: "flex", justifyContent: "center"}}>
+              <div className="mb-3" style={{ display: "flex", justifyContent: "center", marginRight:"20px"}}>
                 <table className="event-table mx-8">
                   <thead>
                     {/* Row headers */}

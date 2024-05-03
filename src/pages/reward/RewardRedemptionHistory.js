@@ -3,7 +3,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 
 import '../../App.css';
-import '../../static/css/RewardInventory.css';
+import '../../static/css/RewardRedemptionHistory.css';
 import '../../static/css/Button.css';
 import backgroundPhoto from '../../assets/bg-cover.png';
 import { useState, useEffect, useHistory} from "react";
@@ -67,6 +67,10 @@ const RewardRedemptionHistory = () => {
         axios.get('https://sielala-backend-production.up.railway.app/api/reward/view-event-all')
             .then(res => {
                 setEventData(res.data.data)
+
+                // if (!selectedEvent && res.data.data.length > 0) {
+                //     setSelectedEvent(res.data.data[0].idEvent);
+                // }
             }).catch(
                 err => 
                 console.log(err)
@@ -137,7 +141,7 @@ const RewardRedemptionHistory = () => {
 
             {/* <br></br> */}
 
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '350px', margin: '0 auto' }}>
                 <div style={{ position: 'relative' }}>
                     <select 
                         className="appearance-none px-4 py-3 w-full focus:outline-none" 
@@ -150,10 +154,10 @@ const RewardRedemptionHistory = () => {
                             fontSize: '1rem',
                             lineHeight: '1.5',
                             padding: '0.5rem 1rem',
-                            width: '300px',
+                            width: '350px',
                         }}
                     >
-                        <option>select event</option>
+                        <option value="">Select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
                                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -206,30 +210,30 @@ const RewardRedemptionHistory = () => {
                 </div> */}
 
             {(selectedEvent && eventData.length > 0) && (
-                
-                <div className="detail-inventory">
-                    {/* <div className="each-reward">
-                            <p className="reward-text-title">Event:</p>
-                            <p className="reward-text">{eventData.find(event => event.idEvent === selectedEvent)?.eventName}</p>
-                    </div> */}
-                    <div className="each-inventory">
-                            <p className="inventory-text-title">Start Date of Event:</p>
-                            <p className="inventory-text">{formattedStartDate}</p>
+                <React.Fragment>
+                    <div className="detail-inventory">
+                        {/* <div className="each-reward">
+                                <p className="reward-text-title">Event:</p>
+                                <p className="reward-text">{eventData.find(event => event.idEvent === selectedEvent)?.eventName}</p>
+                        </div> */}
+                        <div className="each-inventory">
+                                <p className="inventory-text-title">Start Date of Event:</p>
+                                <p className="inventory-text">{formattedStartDate}</p>
+                        </div>
+                        <div className="each-inventory">
+                                <p className="inventory-text-title">End Date of Event:</p>
+                                <p className="inventory-text">{formattedEndDate}</p>
+                        </div>
                     </div>
-                    <div className="each-inventory">
-                            <p className="inventory-text-title">End Date of Event:</p>
-                            <p className="inventory-text">{formattedEndDate}</p>
+                    <div className="button-field">
+                        <button className="button-pink" onClick={handleRedeemRewardButton} disabled={disableRedeemRewardButton}>Redeem Reward</button>
                     </div>
-                </div>
+                </React.Fragment>
             )}
             
-            <div className="button-field">
-                <button className="button-pink" onClick={handleRedeemRewardButton} disabled={disableRedeemRewardButton}>Redeem Reward</button>
-            </div>
-
             {(selectedEvent && eventData.length > 0) && (
                 <div className="mb-3 mx-8" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <table>
+                    <table className="reward-redemption-table">
                         <thead>
                             {/* Column headers */}
                             <tr>

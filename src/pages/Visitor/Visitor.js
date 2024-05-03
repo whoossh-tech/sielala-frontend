@@ -5,6 +5,8 @@ import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import "../../static/css/Visitor.css";
+import { Link } from 'react-router-dom';
+import Sidebar from '../dashboard/Sidebar';
 
 const Visitor = () => {
   const [visitors, setVisitors] = useState([]);
@@ -15,23 +17,20 @@ const Visitor = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const [day, setDay] = useState(0);
   const [checkedState, setCheckedState] = useState([]);
+  const [activePage, setActivePage] = useState('visitor');
 
   const role = localStorage.getItem('role');
 
   // Mendapatkan tanggal saat ini
   const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-  console.log(currentDate);
 
   // Mendapatkan tanggal mulai dan akhir dari event yang dipilih
   const eventStartDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.startDate);
-  eventStartDate.setHours(0, 0, 0, 0);
   const eventEndDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.endDate);
-  eventEndDate.setHours(0, 0, 0, 0);
+  eventEndDate.setHours(23,59,59,999);
 
   const timeDiff = Math.abs(currentDate.getTime() - eventStartDate.getTime());
   const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-  console.log(daysDiff);
 
   const formattedStartDate = new Date(eventStartDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   const formattedEndDate = new Date(eventEndDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -52,7 +51,7 @@ const Visitor = () => {
         .then(res => {
           setVisitors(res.data.data)
           setCountDays(res.data.dayRange)
-          setDay(daysDiff + 1);
+          setDay(daysDiff);
         }).catch(err =>
           console.log(err)
 
@@ -62,6 +61,10 @@ const Visitor = () => {
     axios.get('https://sielala-backend-production.up.railway.app/api/visitor/view-event-all')
       .then(res => {
         setEventData(res.data.data)
+
+        // if (!selectedEvent && res.data.data.length > 0) {
+        //   setSelectedEvent(res.data.data[0].idEvent);
+        // }
       }).catch(
         err =>
           console.log(err)
@@ -150,32 +153,24 @@ const Visitor = () => {
   }, [selectedEvent, attendanceData.data]);
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      {/* navigation bar */}
-      {(role === 'BISDEV') && (
-        <NavbarBisdev style={{ zIndex: 999 }} />
-      )}
+    <body>
+      {/* Sidebar Navigation */}
+      <Sidebar activePage={activePage}/>
 
-      {(role === 'ADMIN') && (
-        <NavbarAdmin style={{ zIndex: 999 }} />
-      )}
-      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
-        <div>
-          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-            Visitor Management</h1>
-          {/* <div>
-            <p className="subtitle">Manage and view visitors data here.</p>
-          </div> */}
-          <div>
-            <p className="subtitle">
-              <a href='/dashboard' style={{ textDecoration: 'none' }}>
-                <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
-              </a>                
-              / Visitor Management
-            </p>
+      <main style={{ marginLeft: "60px" }}>
+
+          {/* Header Start */}
+          <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '130px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Visitor Data Report</h1>
+              </div>
           </div>
-        </div>
-      </div>
+          {/* Header Ends */}
+
+          <div className='content-container my-8'>
+            <div>
+              {/* <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
 
       <Toaster
         position="top-center"
@@ -190,7 +185,7 @@ const Visitor = () => {
         </div>
       )}
 
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '350px', margin: '0 auto' }}>
         <div style={{ position: 'relative' }}>
           <select
             className="appearance-none px-4 py-3 w-full focus:outline-none"
@@ -203,10 +198,10 @@ const Visitor = () => {
               fontSize: '1rem',
               lineHeight: '1.5',
               padding: '0.5rem 1rem',
-              width: '300px',
+              width: '350px',
             }}
           >
-            <option value="Select event">Select event </option>
+            <option value="">Select event</option>
             {eventData && eventData.length > 0 ?
               (eventData.map((event, index) => (
                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -238,7 +233,7 @@ const Visitor = () => {
       <br></br>
 
       {selectedEvent && eventData.length > 0 && (
-        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '350px', margin: '0 auto' }}>
           <div style={{ position: 'relative' }}>
             <input
               className="search px-4 py-3 w-full focus:outline-none"
@@ -252,7 +247,7 @@ const Visitor = () => {
                 fontSize: '1rem',
                 lineHeight: '1.5',
                 padding: '0.5rem 1rem',
-                width: '300px',
+                width: '350px',
                 paddingRight: '40px',
               }}
             />
@@ -307,7 +302,7 @@ const Visitor = () => {
                 <b>Current Event Day:</b>
               </p>
               <p style={{ color: '#7D512D' }}>
-                <b>Day {day}</b>
+                <b>Day {daysDiff}</b>
               </p>
             </React.Fragment>
           )}
@@ -330,7 +325,7 @@ const Visitor = () => {
 
       {(selectedEvent && eventData.length > 0) && (
         <div className="mb-3 mx-8" style={{ display: 'flex', justifyContent: 'center' }}>
-          <table>
+          <table className="visitor-table">
             <thead>
               {/* Row headers  */}
               <tr>
@@ -355,7 +350,11 @@ const Visitor = () => {
             <tbody>
               {filterVisitors().map((visitor, visitorIndex) => (
                 <tr key={visitorIndex}>
-                  <td>{highlightSearchText(visitor.eventPass)}</td>
+                  <td>
+                    <Link to={`/visitor/detail/${visitor.idVisitor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
+                    {highlightSearchText(visitor.eventPass)}
+                    </Link>
+                  </td>
                   <td>{highlightSearchText(visitor.name)}</td>
                   <td>{highlightSearchText(visitor.email)}</td>
                   <td>{highlightSearchText(visitor.telephone)}</td>
@@ -408,7 +407,11 @@ const Visitor = () => {
         </div>
       )}
       <br></br>
+    {/* </div> */}
     </div>
+    </div>
+    </main>
+</body>
 
   );
 }

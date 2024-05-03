@@ -101,6 +101,8 @@ th {
 .event-table {
   border-collapse: collapse;
   width: 100%;
+  border-radius: 15px; 
+  overflow: hidden;
 }
 
 .event-table th, .event-table td {
