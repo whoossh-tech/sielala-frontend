@@ -150,7 +150,7 @@ const DashboardStaff = () => {
     return (
         <body>
             {/* Sidebar Navigation */}
-            <Sidebar activePage={activePage}/>
+            <Sidebar activePage={activePage} />
 
             <main style={{ marginLeft: "60px" }}>
 
@@ -216,7 +216,7 @@ const DashboardStaff = () => {
                         {/* Display charts or message */}
                         {event ? (
                             <div>
-                                <div className="grid grid-cols-4">
+                                <div className="grid grid-cols-4" style={{ padding: 0, margin: 0 }}>
                                     {/* First Column */}
                                     <div className="col-span-3">
                                         {/* Event detail card */}
@@ -233,7 +233,7 @@ const DashboardStaff = () => {
 
                                         {/* Event Pie Charts */}
                                         <div className="pie-charts-container" style={{ display: 'flex', gap: '20px' }}>
-                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
+                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
                                                 <h2><b>Visitor Location Distribution</b></h2>
                                                 <PieChart
                                                     colors={colors}
@@ -253,7 +253,7 @@ const DashboardStaff = () => {
                                                 />
                                             </div>
 
-                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
+                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
                                                 <h2><b>Visitor Gender Distribution</b></h2>
                                                 <PieChart
                                                     colors={colors}
@@ -304,56 +304,51 @@ const DashboardStaff = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-
-                                {/* Age Distribution Bar Chart */}
-                                <div className="pie-container p-5">
-                                    <div className="columns-2" style={{ display: 'flex', gap: '30px' }}>
-                                        <div className="first-column">
-                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '40px', width: '430px' }}>
-                                                <h2><b>Age Distribution - Female</b></h2>
-                                                <BarChart
-                                                    colors={colors}
-                                                    xAxis={[{
-                                                        scaleType: 'band',
-                                                        data: generateBarChartDataAge('Female').map(data => data.name),
-                                                        colorMap: {
-                                                            type: 'ordinal',
-                                                            colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
-                                                        }
-                                                    }]}
-                                                    series={[{
-                                                        data: generateBarChartDataAge('Female').map(data => data.value),
-                                                    }]}
-                                                    width={400}
-                                                    height={200}
-                                                />
-                                            </div>
+                                    {/* Age Distribution Bar Chart */}
+                                    <div className="bar-container col-span-4" style={{ display: 'flex', gap: '20px' }}>
+                                    <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
+                                            <h2><b>Age Distribution - Female</b></h2>
+                                            <BarChart
+                                                colors={colors}
+                                                xAxis={[{
+                                                    scaleType: 'band',
+                                                    data: generateBarChartDataAge('Female').map(data => data.name),
+                                                    colorMap: {
+                                                        type: 'ordinal',
+                                                        colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                    }
+                                                }]}
+                                                series={[{
+                                                    data: generateBarChartDataAge('Female').map(data => data.value),
+                                                }]}
+                                                width={400}
+                                                height={200}
+                                            />
                                         </div>
-                                        <div className="second-column">
-                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '40px', width: '430px' }}>
-                                                <h2><b>Age Distribution - Male</b></h2>
-                                                <BarChart
-                                                    colors={colors}
-                                                    xAxis={[{
-                                                        scaleType: 'band',
-                                                        data: generateBarChartDataAge('Male').map(data => data.name),
-                                                        colorMap: {
-                                                            type: 'ordinal',
-                                                            colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
-                                                        }
-                                                    }]}
-                                                    series={[{
-                                                        data: generateBarChartDataAge('Male').map(data => data.value),
-                                                    }]}
-                                                    width={400}
-                                                    height={200}
-                                                />
-                                            </div>
+                                        <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
+                                            <h2><b>Age Distribution - Male</b></h2>
+                                            <BarChart
+                                                colors={colors}
+                                                xAxis={[{
+                                                    scaleType: 'band',
+                                                    data: generateBarChartDataAge('Male').map(data => data.name),
+                                                    colorMap: {
+                                                        type: 'ordinal',
+                                                        colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                    }
+                                                }]}
+                                                series={[{
+                                                    data: generateBarChartDataAge('Male').map(data => data.value),
+                                                }]}
+                                                width={400}
+                                                height={200}
+                                            />
                                         </div>
                                     </div>
+
                                 </div>
+
 
                             </div>
                         ) : (
