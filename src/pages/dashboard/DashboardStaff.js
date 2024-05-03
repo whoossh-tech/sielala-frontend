@@ -215,176 +215,157 @@ const DashboardStaff = () => {
                         {/* Display charts or message */}
                         {event ? (
                             <div>
-                                {/* Event detail card */}
-                                <div className="event-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5">
-                                    <div className="flex justify-between">
-                                        <div className='text-left'>
-                                            <h1 className='text-2xl my-2'>{event.eventName}</h1>
-                                            <p className="text-md mb-2 text-center">
-                                                📆 {formattedStartDate} - {formattedEndDate} | 📍 {event.location}
-                                            </p>
+                                <div className="grid grid-cols-4">
+                                    {/* First Column */}
+                                    <div className="col-span-3">
+                                        {/* Event detail card */}
+                                        <div className="box-info bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5">
+                                            <div className="flex justify-between">
+                                                <div className='text-left'>
+                                                    <h1 className='text-2xl my-2'>{event.eventName}</h1>
+                                                    <p className="text-md mb-2 text-center">
+                                                        📆 {formattedStartDate} - {formattedEndDate} | 📍 {event.location}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-
-
-                                {(event.listVisitor.length === 0) && (
-                                    <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                                        {/* no registered visitors yet => won't show chart */}
-                                        <b>There are currently no registered visitors for this event.</b>
-                                    </div>
-                                )}
-
-                                {(event.listVisitor.length > 0) && (
-                                    <div>
 
                                         {/* Event Pie Charts */}
-                                        <div className="columns-2" style={{ display: 'flex' }}>
-                                            <div className="first-column">
-                                                <div className="bg-white p-6 rounded-lg shadow-md"
-                                                    style={{ marginTop: '40px', width: '415px' }}
-                                                >
-                                                    <h2><b>Visitor Location Distribution</b></h2>
-                                                    <PieChart
-                                                        colors={colors}
-                                                        series={[{
-                                                            data: generatePieChartDataLocation(),
-                                                            innerRadius: 20,
-                                                            outerRadius: 90,
-                                                            paddingAngle: 5,
-                                                            cornerRadius: 5,
-                                                            startAngle: 0,
-                                                            endAngle: 360,
-                                                            cx: 100,
-                                                            cy: 110,
-                                                        },]}
-                                                        height={210}
-                                                        width={390}
-                                                    />
-                                                </div>
+                                        <div className="pie-charts-container" style={{ display: 'flex', gap: '20px' }}>
+                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
+                                                <h2><b>Visitor Location Distribution</b></h2>
+                                                <PieChart
+                                                    colors={colors}
+                                                    series={[{
+                                                        data: generatePieChartDataLocation(),
+                                                        innerRadius: 20,
+                                                        outerRadius: 90,
+                                                        paddingAngle: 5,
+                                                        cornerRadius: 5,
+                                                        startAngle: 0,
+                                                        endAngle: 360,
+                                                        cx: 100,
+                                                        cy: 110,
+                                                    },]}
+                                                    height={210}
+                                                    width={390}
+                                                />
                                             </div>
 
-                                            <div className="second-column" style={{ marginLeft: '30px' }}>
-                                                <div className="bg-white p-6 rounded-lg shadow-md"
-                                                    style={{ marginTop: '40px', width: '350px' }}
-                                                >
-                                                    <h2><b>Visitor Gender Distribution</b></h2>
-                                                    <PieChart
-                                                        colors={colors}
-                                                        series={[{
-                                                            data: generatePieChartDataGender(),
-                                                            innerRadius: 20,
-                                                            outerRadius: 90,
-                                                            paddingAngle: 5,
-                                                            cornerRadius: 5,
-                                                            startAngle: 0,
-                                                            endAngle: 360,
-                                                            cx: 100,
-                                                            cy: 110,
-                                                            fontSize: 15
-                                                        },]}
-                                                        height={210}
-                                                        width={320}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Age Distribution Bar Chart */}
-                                        <div className="columns-2">
-                                            <div className="first-column">
-                                                <div className="bg-white p-6 rounded-lg shadow-md"
-                                                    style={{ marginTop: '40px', width: '430px' }}
-                                                >
-                                                    <h2><b>Age Distribution - Female</b></h2>
-                                                    <BarChart
-                                                        colors={colors}
-                                                        xAxis={[{
-                                                            scaleType: 'band',
-                                                            data: generateBarChartDataAge('Female').map(data => data.name),
-                                                            colorMap: {
-                                                                type: 'ordinal',
-                                                                colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
-                                                            }
-                                                        }]}
-                                                        series={[{
-                                                            data: generateBarChartDataAge('Female').map(data => data.value),
-                                                        }]}
-                                                        width={400}
-                                                        height={200}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="second-column" style={{ marginLeft: '30px' }}>
-                                                <div className="bg-white p-6 rounded-lg shadow-md"
-                                                    style={{ marginTop: '40px', width: '430px' }}
-                                                >
-                                                    <h2><b>Age Distribution - Male</b></h2>
-                                                    <BarChart
-                                                        colors={colors}
-                                                        xAxis={[{
-                                                            scaleType: 'band',
-                                                            data: generateBarChartDataAge('Male').map(data => data.name),
-                                                            colorMap: {
-                                                                type: 'ordinal',
-                                                                colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
-                                                            }
-                                                        }]}
-                                                        series={[{
-                                                            data: generateBarChartDataAge('Male').map(data => data.value),
-                                                        }]}
-                                                        width={400}
-                                                        height={200}
-                                                    />
-                                                </div>
+                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
+                                                <h2><b>Visitor Gender Distribution</b></h2>
+                                                <PieChart
+                                                    colors={colors}
+                                                    series={[{
+                                                        data: generatePieChartDataGender(),
+                                                        innerRadius: 20,
+                                                        outerRadius: 90,
+                                                        paddingAngle: 5,
+                                                        cornerRadius: 5,
+                                                        startAngle: 0,
+                                                        endAngle: 360,
+                                                        cx: 100,
+                                                        cy: 110,
+                                                        fontSize: 15
+                                                    },]}
+                                                    height={210}
+                                                    width={320}
+                                                />
                                             </div>
                                         </div>
                                     </div>
-                                )}
 
-                                {/* show totals data */}
-                                <div style={{ marginTop: '40px', display: 'grid', gap: '20px' }}>
-                                    <div class="box-info" style={{ backgroundColor: '#FDEFEF', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
-                                        <img src={tenantIcon} alt="Joystick" style={{ width: '60px', marginRight: '20px' }} />
-                                        <div>
-                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Tenants</p>
-                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{event.listTenant ? event.listTenant.length : 0} <span style={{ fontSize: '14px' }}>registered</span></p>
-                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalTenantAccepted} <span style={{ fontSize: '14px' }}>accepted</span></p>
-                                        </div>
-                                    </div>
-                                    <div class="box-info" style={{ backgroundColor: '#F5F8FD', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
-                                        <img src={rewardIcon} alt="Gift" style={{ width: '60px', marginRight: '20px' }} />
-                                        <div>
-                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Rewards</p>
-                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{rewardRedeemedList.length} <span style={{ fontSize: '14px' }}>redeemed</span></p>
-                                        </div>
-                                    </div>
-                                    <div class="box-info" style={{ backgroundColor: '#E8F8F5', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
-                                        <img src={pointsIcon} alt="Bullseye" style={{ width: '60px', marginRight: '20px' }} />
-                                        <div>
-                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Reward Points</p>
-                                            <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalPointsRedeemed} <span style={{ fontSize: '14px' }}>redeemed</span></p>
+                                    {/* Second Column */}
+                                    <div className="col-span-1">
+                                        {/* show totals data */}
+                                        <div className="totals-container p-5">
+                                            <div class="box-info mb-5" style={{ backgroundColor: '#FDEFEF', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                <img src={tenantIcon} alt="Joystick" style={{ width: '60px', marginRight: '20px' }} />
+                                                <div>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Tenants</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{event.listTenant ? event.listTenant.length : 0} <span style={{ fontSize: '14px' }}>registered</span></p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalTenantAccepted} <span style={{ fontSize: '14px' }}>accepted</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="box-info mb-5" style={{ backgroundColor: '#F5F8FD', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                <img src={rewardIcon} alt="Gift" style={{ width: '60px', marginRight: '20px' }} />
+                                                <div>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Rewards</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{rewardRedeemedList.length} <span style={{ fontSize: '14px' }}>redeemed</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="box-info mb-5" style={{ backgroundColor: '#E8F8F5', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                <img src={pointsIcon} alt="Bullseye" style={{ width: '60px', marginRight: '20px' }} />
+                                                <div>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Reward Points</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalPointsRedeemed} <span style={{ fontSize: '14px' }}>redeemed</span></p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
 
-
-
+                                {/* Age Distribution Bar Chart */}
+                                <div className="pie-container p-5">
+                                    <div className="columns-2" style={{ display: 'flex', gap: '30px' }}>
+                                        <div className="first-column">
+                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '40px', width: '430px' }}>
+                                                <h2><b>Age Distribution - Female</b></h2>
+                                                <BarChart
+                                                    colors={colors}
+                                                    xAxis={[{
+                                                        scaleType: 'band',
+                                                        data: generateBarChartDataAge('Female').map(data => data.name),
+                                                        colorMap: {
+                                                            type: 'ordinal',
+                                                            colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                        }
+                                                    }]}
+                                                    series={[{
+                                                        data: generateBarChartDataAge('Female').map(data => data.value),
+                                                    }]}
+                                                    width={400}
+                                                    height={200}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="second-column">
+                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '40px', width: '430px' }}>
+                                                <h2><b>Age Distribution - Male</b></h2>
+                                                <BarChart
+                                                    colors={colors}
+                                                    xAxis={[{
+                                                        scaleType: 'band',
+                                                        data: generateBarChartDataAge('Male').map(data => data.name),
+                                                        colorMap: {
+                                                            type: 'ordinal',
+                                                            colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                        }
+                                                    }]}
+                                                    series={[{
+                                                        data: generateBarChartDataAge('Male').map(data => data.value),
+                                                    }]}
+                                                    width={400}
+                                                    height={200}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         ) : (
                             <div style={{ marginTop: '20px', textAlign: 'center' }}>
                                 <b>No events have been made.</b>
                             </div>
-
                         )}
+
                     </div>
                     <script src="script.js"></script>
                 </div>
             </main>
-        </body>
+        </body >
 
     )
 }
