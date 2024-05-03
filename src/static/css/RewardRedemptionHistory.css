@@ -20,7 +20,7 @@
     margin-bottom: 4px; /* Adjust as needed */
 }
 
-.detail-invoice{
+.detail-reward{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,7 @@
     gap: 20px;
 }
 
-.invoice-text {
+.reward-text {
     font-size: 16px;
     color: #A9B245;
     font-weight: bold;
@@ -39,7 +39,7 @@
     margin: 0;
 }
 
-.invoice-text-title {
+.reward-text-title {
     font-size: 16px;
     color: #2F3033;
     font-weight: bold;
@@ -47,10 +47,10 @@
     text-align: left;
     margin-top: 0; /* Reset margin-top */
     margin: 0;
-    width: 180px;
+    width: 120px;
 }
 
-.each-invoice{
+.each-reward{
     /* align-items: flex-start; */
     display: flex;
     align-items: center;
@@ -111,6 +111,24 @@
     /* margin: 0 5px; */
 }
 
+/* .subtitle-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.text-wrapper {
+    margin-top: 10px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+} */
+
 #page-title {
     font-size: xx-large;
 }
@@ -118,7 +136,6 @@
 .button-field {
     margin-bottom: 20px;
 }
-
 table {
     border-collapse: collapse;
     width: 1200px;
@@ -162,43 +179,43 @@ th {
     font-size: xx-large;
 }
 
-.invoice-table {
+.reward-redemption-table {
     border-collapse: collapse;
     width: 100%;
     border-radius: 15px; 
     overflow: hidden;
-  }
+}
   
-  .invoice-table th, .invoice-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  .invoice-table th {
-    text-align: center;
-  }
-  
-  .invoice-table th:first-child, .invoice-table td:first-child {
-    width: 20%; /* Set the width for the first column */
-  }
-  
-  /* Set the width for other columns */
-  .invoice-table th:nth-child(2), .invoice-table td:nth-child(2) {
+.reward-redemption-table th, .reward-redemption-table td {
+border: 1px solid #ddd;
+padding: 8px;
+}
+
+.reward-redemption-table th {
+text-align: center;
+}
+
+.reward-redemption-table th:first-child, .reward-redemption-table td:first-child {
+width: 10%; /* Set the width for the first column */
+}
+
+/* Set the width for other columns */
+.reward-redemption-table th:nth-child(2), .reward-redemption-table td:nth-child(2) {
+width: 10%;
+}
+
+.reward-redemption-table th:nth-child(3), .reward-redemption-table td:nth-child(3) {
+width: 20%;
+}
+
+.reward-redemption-table th:nth-child(4), .reward-redemption-table td:nth-child(4) {
+    width: 22%;
+}
+
+.reward-redemption-table th:nth-child(5), .reward-redemption-table td:nth-child(5) {
     width: 20%;
-  }
-  
-  .invoice-table th:nth-child(3), .invoice-table td:nth-child(3) {
-    width: 15%;
-  }
-  
-  .invoice-table th:nth-child(4), .invoice-table td:nth-child(4) {
-    width: 15%;
-  }
-  
-  .invoice-table th:nth-child(5), .invoice-table td:nth-child(5) {
-    width: 15%;
-  }
-  
-  .invoice-table th:nth-child(6), .invoice-table td:nth-child(6) {
-    width: 15%;
-  }
+}
+
+.reward-redemption-table th:nth-child(6), .reward-redemption-table td:nth-child(6) {
+    width: 20%;
+}

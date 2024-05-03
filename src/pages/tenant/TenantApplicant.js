@@ -7,12 +7,14 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
-// import "../../static/css/event/Event.css";
+import Sidebar from '../dashboard/Sidebar';
+// import "../../static/css/TenantApplicant.css";
 
 const TenantApplicant = () => {
     const [tenantApplicants, setTenantApplicants] = useState("");
     const [selectedEvent, setSelectedEvent] = useState("");
     const [eventData, setEventData] = useState([]);
+    const [activePage, setActivePage] = useState('tenant-applicant');
 
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -43,7 +45,10 @@ const TenantApplicant = () => {
         axios
             .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
-            setEventData(res.data.data);
+                setEventData(res.data.data);
+                // if (!selectedEvent && res.data.data.length > 0) {
+                //     setSelectedEvent(res.data.data[0].idEvent);
+                // }
             })
             .catch((err) => console.log(err));
     }, [selectedEvent]);
@@ -58,27 +63,31 @@ const TenantApplicant = () => {
     };
 
     return (
-        <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            <style>{reynaldoStyles}</style>
+        <body>
+        {/* Sidebar Navigation */}
+        <Sidebar activePage={activePage}/>
 
-            {( role === 'PARTNERSHIP' ) && (
-                <NavbarPartnership style={{ zIndex: 999 }} />
-            )}
+        <main style={{ marginLeft: "60px" }}>
 
-            {( role === 'ADMIN' ) && (
-                <NavbarAdmin style={{ zIndex: 999 }} />
-            )}
-    
-            <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
-                <div>
-                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
-                    Tenant Applicant List
-                </h1>
-                <div>
-                    <p className="subtitle">Manage tenant applicants here</p>
+          {/* Header Start */}
+          <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Tenant Applicant</h1>
+                  <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Tenant Applicant List
+                    </p>
                 </div>
-                </div>
-            </div>
+              </div>
+          </div>
+          {/* Header Ends */}
+
+          <div className='content-container my-8'>
+            <div>
         
             <Toaster position="top-center" reverseOrder={false} />
         
@@ -90,7 +99,7 @@ const TenantApplicant = () => {
                 </div>
             )}
         
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "200px", margin: "0 auto" }}>
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>
                 <select
                 className="appearance-none px-4 py-3 w-full focus:outline-none"
                 onChange={handleChange}
@@ -108,11 +117,11 @@ const TenantApplicant = () => {
                     justifyContent: "center",
                 }}
                 >
-                <option>Select event</option>
+                <option value="">Select event</option>
                 {eventData && eventData.length > 0 ? (
                     eventData.map((event, index) => (
                     <option key={index} value={event.idEvent}>
-                        {event.eventName}
+                        {event.eventName}: {event.startDate}
                     </option>
                     ))
                 ) : (
@@ -139,13 +148,13 @@ const TenantApplicant = () => {
         
             <br></br>
         
-            <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
+            <div className="mb-3 rounded-md" style={{ display: "flex", justifyContent: "center" }}>
                 { (selectedEvent) && (
-                <table className="event-table mx-8">
+                <table className="event-table mx-8 rounded">
 
                     <thead>
                         <tr>
-                            <th style={{ width: "28%", textAlign: "center" }}>Brand Name</th>
+                            <th style={{ width: "25%", textAlign: "center" }}>Brand Name</th>
                             <th style={{ width: "20%", textAlign: "center" }}>Email</th>
                             <th style={{ width: "20%", textAlign: "center" }}>Instagram</th>
                             <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
@@ -167,15 +176,35 @@ const TenantApplicant = () => {
                             <td>{tenant.picName}</td>
 
                             { tenant.selectionDone === false && (
-                                <td className="text-secondary-80"><b>Pending</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-secondary-70 text-sm"
+                                    >    
+                                        <b>Pending</b>
+                                    </div>
+                                </td>
                             ) }
 
                             { (tenant.accepted === true && tenant.selectionDone === true) && (
-                                <td className="text-tertiary-80"><b>Accepted</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-tertiary-70 text-sm"
+                                    >    
+                                        <b>Accepted</b>
+                                    </div>
+                                </td>
+                                // <td className="text-tertiary-80"><b>Accepted</b></td>
                             ) }
 
                             { (tenant.accepted === false && tenant.selectionDone === true) && (
-                                <td className="text-warning-DEFAULT"><b>Rejected</b></td>
+                                <td className="text-white">
+                                    <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} 
+                                        className="rounded bg-warning-DEFAULT text-sm"
+                                    >    
+                                        <b>Rejected</b>
+                                    </div>
+                                </td>
+                                // <td className="text-warning-DEFAULT"><b>Rejected</b></td>
                             ) } 
                         </tr>
                         ))
@@ -191,6 +220,9 @@ const TenantApplicant = () => {
 
             </div>
             </div>
+            </div>
+        </main>
+    </body>
     );      
 }
 

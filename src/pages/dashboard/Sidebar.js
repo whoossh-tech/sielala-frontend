@@ -7,7 +7,8 @@ import logo from "../../assets/logo-sielala.png";
 import element from "../../assets/element.png";
 import { useAuth } from "../../pages/auth/AuthContext";
 
-const Sidebar = () => {
+
+const Sidebar = ({activePage}) => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const role = localStorage.getItem('role');
   const { logout } = useAuth(); 
@@ -55,72 +56,71 @@ const Sidebar = () => {
       {/* Sidebar Content */}
       {( role === 'ADMIN' ) && (
         <ul className="side-menu top">
-
-          <li className="active">
+          <li className={activePage === 'dashboard' ? 'active' : ''}>
             <a href="/dashboard">
               <i className='bx bxs-dashboard'></i>
               <span className="text">Dashboard</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'user-list' ? 'active' : ''}>
             <a href="/user-list">
               <i className='bx bx-user'></i>
               <span className="text">User Management</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'event' ? 'active' : ''}>
             <a href="/event">
               <i className='bx bx-calendar'></i> 
               <span className="text">Event Management</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'visitor' ? 'active' : ''}>
             <a href="/visitor">
               <i className='bx bx-group'></i>
               <span className="text">Visitor Data Report</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'reward-inventory' ? 'active' : ''}>
             <a href="/reward-inventory">
               <i className='bx bx-archive'></i>  
               <span className="text">Reward Inventory</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'reward-redemption' ? 'active' : ''}>
             <a href="/reward-redemption-history">
               <i className='bx bx-gift'></i>  
               <span className="text">Reward Redemption</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'invoice' ? 'active' : ''}>
             <a href="/invoice">
               <i className='bx bx-printer'></i>  
               <span className="text">Invoice Management</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'contact' ? 'active' : ''}>
             <a href="/contact">
               <i className='bx bx-phone'></i>  
               <span className="text">Partnership</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'tenant-applicant' ? 'active' : ''}>
             <a href="/tenant-applicant">
               <i className='bx bx-store'></i>  
               <span className="text">Tenant Applicant</span>
             </a>
           </li>
 
-          <li>
-            <a href="/bulk-email">
+          <li className={activePage === 'bulk-email' ? 'active' : ''}>
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>
@@ -130,29 +130,29 @@ const Sidebar = () => {
 
       {(role === "BISDEV") && (
         <ul className="side-menu top">
-          <li className="active">
+          <li className={activePage === 'dashboard' ? 'active' : ''}>
             <a href="/dashboard">
               <i className='bx bxs-dashboard'></i>
               <span className="text">Dashboard</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'event' ? 'active' : ''}>
             <a href="/event">
               <i className='bx bx-calendar'></i> 
               <span className="text">Event Management</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'visitor' ? 'active' : ''}>
             <a href="/visitor">
               <i className='bx bx-group'></i>
               <span className="text">Visitor Data Report</span>
             </a>
           </li>
 
-          <li>
-            <a href="/bulk-email">
+          <li className={activePage === 'bulk-email' ? 'active' : ''}>
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>
@@ -162,14 +162,14 @@ const Sidebar = () => {
 
       {(role === "FINANCE") && (
         <ul className="side-menu top">
-          <li className="active">
+          <li className={activePage === 'dashboard' ? 'active' : ''}>
             <a href="/dashboard">
               <i className='bx bxs-dashboard'></i>
               <span className="text">Dashboard</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'invoice' ? 'active' : ''}>
             <a href="/invoice">
               <i className='bx bx-printer'></i>  
               <span className="text">Invoice Management</span>
@@ -180,21 +180,21 @@ const Sidebar = () => {
 
       {(role === "OPERATION") && (
         <ul className="side-menu top">
-          <li className="active">
+          <li className={activePage === 'dashboard' ? 'active' : ''}>
             <a href="/dashboard">
               <i className='bx bxs-dashboard'></i>
               <span className="text">Dashboard</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'reward-inventory' ? 'active' : ''}>
             <a href="/reward-inventory">
               <i className='bx bx-archive'></i>  
               <span className="text">Reward Inventory</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'reward-redemption' ? 'active' : ''}>
             <a href="/reward-redemption-history">
               <i className='bx bx-gift'></i>  
               <span className="text">Reward Redemption</span>
@@ -205,36 +205,36 @@ const Sidebar = () => {
 
       {(role === "PARTNERSHIP") && (
         <ul className="side-menu top">
-          <li className="active">
+          <li className={activePage === 'dashboard' ? 'active' : ''}>
             <a href="/dashboard">
               <i className='bx bxs-dashboard'></i>
               <span className="text">Dashboard</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'invoice' ? 'active' : ''}>
             <a href="/invoice">
               <i className='bx bx-printer'></i>  
               <span className="text">Invoice Management</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'contact' ? 'active' : ''}>
             <a href="/contact">
               <i className='bx bx-phone'></i>  
               <span className="text">Partnership</span>
             </a>
           </li>
 
-          <li>
+          <li className={activePage === 'tenant-applicant' ? 'active' : ''}>
             <a href="/tenant-applicant">
               <i className='bx bx-store'></i>  
               <span className="text">Tenant Applicant</span>
             </a>
           </li>
 
-          <li>
-            <a href="/bulk-email">
+          <li className={activePage === 'bulk-email' ? 'active' : ''}>
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>

@@ -56,8 +56,8 @@ export function NavbarFinance() {
               <span className="montserrat text-primary-70 text-md">Hi, { role }!</span>
             </Button>
 
-            <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10" onClick={handleLogout}>
-              <span className="montserrat text-primary-70 text-md">Log Out</span>
+            <Button variant="gradient" size="sm" className="bg-danger hidden lg:inline-block" onClick={handleLogout}>
+              <span className="montserrat text-white text-md">Log Out</span>
             </Button>
           </div>
         </div>

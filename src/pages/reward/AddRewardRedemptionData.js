@@ -312,18 +312,17 @@ const AddRewardRedemptionData = () => {
                     textDistance={55}
                     fontSize={[15]}
                     backgroundColors={[
-                        "#f7a416",
-                        "#e6471d",
-                        "#dc0936",
-                        "#e5177b",
-                        "#be1180",
-                        "#871f7f",
-                        "#3f297e",
-                        "#175fa9",
-                        "#169ed8",
-                        "#239b63",
-                        "#64b031",
-                        "#efe61f"
+                        "#F04684",
+                        "#F55151",
+                        "#F57A69",
+                        "#F2B05C",
+                        "#F4DB71",
+                        "#52D858",
+                        "#0CDAC6",
+                        "#5096F1",
+                        "#5668D5",
+                        "#C52CEE",
+                        "#818181"
                     ]}
                     onStopSpinning={handleStopSpinning}
                 />
@@ -348,18 +347,17 @@ const AddRewardRedemptionData = () => {
                     textDistance={55}
                     fontSize={[15]}
                     backgroundColors={[
-                        "#f7a416",
-                        "#e6471d",
-                        "#dc0936",
-                        "#e5177b",
-                        "#be1180",
-                        "#871f7f",
-                        "#3f297e",
-                        "#175fa9",
-                        "#169ed8",
-                        "#239b63",
-                        "#64b031",
-                        "#efe61f"
+                        "#F04684",
+                        "#F55151",
+                        "#F57A69",
+                        "#F2B05C",
+                        "#F4DB71",
+                        "#52D858",
+                        "#0CDAC6",
+                        "#5096F1",
+                        "#5668D5",
+                        "#C52CEE",
+                        "#818181"
                     ]}
                     onStopSpinning={handleStopSpinning}
                 />

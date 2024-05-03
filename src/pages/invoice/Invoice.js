@@ -47,6 +47,10 @@ const Invoice = () => {
         axios.get('https://sielala-backend-production.up.railway.app/api/reward/view-event-all')
             .then(res => {
                 setEventData(res.data.data)
+
+                // if (!selectedEvent && res.data.data.length > 0) {
+                //     setSelectedEvent(res.data.data[0].idEvent);
+                // }
             }).catch(
                 err => 
                 console.log(err)
@@ -76,10 +80,18 @@ const Invoice = () => {
             <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
                 <div>
                     <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-                        Invoice</h1>
+                        Invoice Management</h1>
+                    {/* <div>
+                        <p className="subtitle">Manage and view invoice's data here.</p>
+                    </div> */}
                     <div>
-                            <p className="subtitle">Manage and view invoice's data here.</p>
-                    </div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Invoice Management
+                    </p>
+                </div>
                 </div>
             </div>
 
@@ -96,7 +108,7 @@ const Invoice = () => {
                 </div>
             )}
 
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '300px', margin: '0 auto' }}>
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
                 <div style={{ position: 'relative' }}>
                     <select 
                         className="appearance-none px-4 py-3 w-full focus:outline-none" 
@@ -109,10 +121,10 @@ const Invoice = () => {
                             fontSize: '1rem',
                             lineHeight: '1.5',
                             padding: '0.5rem 1rem',
-                            width: '300px',
+                            width: '400px',
                         }}
                     >
-                        <option>select event</option>
+                        <option value="">Select event</option>
                         {eventData && eventData.length > 0 ? 
                             (eventData.map((event, index) => (
                                 <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
@@ -144,7 +156,7 @@ const Invoice = () => {
 
             {(selectedEvent && eventData.length > 0) && (
                 <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <table>
+                    <table className='invoice-table mx-8'>
                         <thead>
                             {/* Column headers */}
                             <tr>

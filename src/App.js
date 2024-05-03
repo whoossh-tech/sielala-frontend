@@ -26,6 +26,7 @@ import Login from "./pages/auth/Login";
 import ForgotPasswordForm from './pages/auth/ForgotPasswordForm';
 import RegisterStaffForm from "./pages/auth/RegisterStaffForm";
 import UserList from "./pages/auth/UserList";
+import EditUserForm from "./pages/auth/EditUserForm";
 import Sponsor from "./pages/Sponsor/Sponsor";
 import CreateSponsor from "./pages/Sponsor/CreateSponsor";
 import DetailSponsor from "./pages/Sponsor/DetailSponsor";
@@ -51,6 +52,7 @@ import { VisitorRegistrationForm } from "./pages/Visitor/VisitorRegistrationForm
 import { VisitorRegistrationSuccessPage } from "./pages/Visitor/VisitorRegistrationSuccessPage";
 import { VisitorRegistrationFailPage } from "./pages/Visitor/VisitorRegistrationFailPage";
 import Visitor from "./pages/Visitor/Visitor";
+import VisitorDetail from "./pages/Visitor/VisitorDetail";
 import Contacts from './pages/contact/Contacts';
 import TenantDetail from './pages/contact/TenantDetail';
 
@@ -122,6 +124,7 @@ function App() {
                 <Route path="/admin" element={<DashboardAdmin />} />
                 <Route path="/staff-registration" element={<RegisterStaffForm />} />
                 <Route path="/user-list" element={<UserList />} />
+                <Route path="/user/edit/:idUser" element={<EditUserForm />} />
               </>
             )}
 
@@ -144,6 +147,7 @@ function App() {
                 <Route path="/event/create" element={<CreateEvent />} />
                 <Route path="/event/detail/:idEvent" element={<DetailEvent />} />
                 <Route path="/visitor" element={<Visitor />} />
+                <Route path="/visitor/detail/:idVisitor" element={<VisitorDetail />} />
                 <Route path="/event/edit/:idEvent" element={<EditEvent />} />
               </>
             )}

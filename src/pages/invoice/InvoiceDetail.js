@@ -24,6 +24,7 @@ const InvoiceDetail = () => {
   const [invoiceData, setInvoiceData] = useState();
   const [countdays, setCountDays] = useState(0);
   const [idEvent, setIdEvent] = useState("");
+
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -38,6 +39,9 @@ const InvoiceDetail = () => {
   const [isDeclined, setIsDeclined] = useState(false);
   const [isEditDisabled, setIsEditDisabled] = useState(false);
   const [isMarkAsDeliveredVisible, setIsMarkAsDeliveredVisible] = useState(true);
+
+  const [statusInvoice, setStatusInvoice] = useState();
+  const [statusPayment, setStatusPayment] = useState();
 
   const role = localStorage.getItem("role");
 
@@ -89,23 +93,28 @@ const InvoiceDetail = () => {
       .get(`https://sielala-backend-production.up.railway.app/api/invoice/detail/${idInvoice}`)
       .then((res) => {
         setInvoiceData(res.data.data);
-        // console.log(res.data.data);
         setIdEvent(res.data.data.event.idEvent);
-        const storedPaymentImageUrl = localStorage.getItem("paymentImageUrl");
-        if (storedPaymentImageUrl) {
-          setPaymentImageUrl(storedPaymentImageUrl);
+
+        console.log(res.data.data);
+        setStatusInvoice(res.data.data.trackingStatus);
+        setStatusPayment(res.data.data.paymentStatus);
+
+        if (res.data.data.paymentImage) {
+          setPaymentImageUrl(`data:image/png;base64,${res.data.data.paymentImage}`);
+          // console.log("Payment Image Url for res.data:", res.data.data.paymentImage);
         } else {
-          setPaymentImageUrl(res.data.data.paymentImageUrl);
-          localStorage.setItem("paymentImageUrl", res.data.data.paymentImageUrl);
+          console.log("Payment Image is not yet submitted");
         }
       })
       .catch((err) => console.log(err));
   }, [idInvoice]);
 
+  console.log(statusPayment);
+  console.log(statusInvoice);
+
   const handleBack = () => {
     localStorage.setItem("idSelectedEvent", idEvent);
-    // localStorage.removeItem("paymentImageUrl");
-    navigate(-1);
+    navigate("/invoice");
   };
 
   const uploadPaymentProof = async (idInvoice, file) => {
@@ -130,11 +139,10 @@ const InvoiceDetail = () => {
       reader.onload = () => {
         const base64Data = reader.result;
         toast.success("Payment proof uploaded successfully");
-
         setPaymentImageUrl(base64Data);
-        localStorage.setItem("paymentImageUrl", base64Data); // Memperbarui URL gambar
-        // setIsValidated(true); // Mengatur status validasi gambar menjadi true
-        console.log("Payment image URL (base64):", base64Data);
+
+        // console.log("Payment image URL (base64):", base64Data);
+        window.location.reload();
       };
       reader.onerror = (error) => {
         console.error(error);
@@ -200,25 +208,6 @@ const InvoiceDetail = () => {
       const fileURL = URL.createObjectURL(file);
 
       window.open(fileURL, "_blank");
-
-      // const response = await axios.get(`${url}/api/invoice/generate-pdf/invoice/${idInvoice}`, {
-      //     responseType: 'blob'
-      // });
-
-      // // Membuat objek URL untuk blob
-      // const fileURL = URL.createObjectURL(new Blob([response.data]));
-
-      // // Membuat elemen <a> untuk men-download file
-      // const link = document.createElement('a');
-      // link.href = fileURL;
-      // link.setAttribute('download', `SIELALA_INVOICE_${invoiceData.companyName}.pdf`);
-
-      // // Menambahkan elemen <a> ke dokumen dan memicu klik pada elemen tersebut
-      // document.body.appendChild(link);
-      // link.click();
-
-      // Menghapus elemen <a> setelah proses download selesai
-      // document.body.removeChild(link);
     } catch (error) {
       console.error("Error:", error);
       toast.error("Cannot generate invoice");
@@ -271,8 +260,15 @@ const InvoiceDetail = () => {
           <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
             Invoice Detail
           </h1>
-          <div>
+          {/* <div>
             <p className="subtitle">Manage and view invoice's data here.</p>
+          </div> */}
+          <div>
+            <p className="subtitle">
+                <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
+                <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Invoice Management </a>
+                / Detail
+            </p>
           </div>
         </div>
       </div>
@@ -332,9 +328,9 @@ const InvoiceDetail = () => {
 
           <div>
             <div className="button-field">
-              <button className="button-green" onClick={handleBack}>
+              {/* <button className="button-green" onClick={handleBack}>
                 Back
-              </button>
+              </button> */}
 
               {(role === "PARTNERSHIP" || role === "ADMIN") && (
                 <Link to={`/invoice/edit-detail/${idInvoice}`}>
@@ -355,7 +351,7 @@ const InvoiceDetail = () => {
               )}
 
               {/* Tombol untuk mengubah status menjadi "delivered" */}
-              {invoiceData.trackingStatus !== "Delivered" && (
+              {invoiceData.trackingStatus === "Pending" && (
                 <button className="button-green" onClick={handleDeliveredButtonClick}>
                   Mark as Delivered
                 </button>
@@ -398,40 +394,49 @@ const InvoiceDetail = () => {
       )}
 
         {/* Payment Proof Section */}
-        <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
-        <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
-        {/* {(invoiceData.paymentStatus != "Approved") && ( */}
-          <div className="flex items-center mb-4">
-            <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-            <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
-              Submit Payment Proof
-            </button>
-          </div>
-        {/* )} */}
-        
-        {paymentImageUrl && (
-          <div className="w-full flex justify-center items-center">
-            <img
-              src={paymentImageUrl}
-              alt="Payment proof"
-              className="w-full rounded-lg shadow-md"
-              style={{ width: "500px", height: "auto" }} 
-            />
+        {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
+
+          <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
+          <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
+
+          {(statusPayment !== "Approved") && (
+            <div className="flex items-center mb-4">
+              <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
+              <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
+                Submit Payment Proof
+              </button>
+            </div>
+          )}
+          
+          {paymentImageUrl && (
+            <div>
+              <div className="w-full flex justify-center items-center">
+                <img
+                  src={paymentImageUrl}
+                  alt="Payment proof"
+                  className="w-full rounded-lg shadow-md"
+                  style={{ width: "500px", height: "auto" }} 
+                />
+              </div>
+
+              {(statusPayment !== "Approved") && (
+                <div className="w-full flex justify-center items-center">
+                  <button className="button-green" onClick={handleValidateButton}>
+                    Validate
+                  </button>
+                  <button className="button-red" onClick={handleDeclineButton}>
+                    Decline
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
           </div>
         )}
 
-        <div className="w-full flex justify-center items-center">
-          <button className="button-green" onClick={handleValidateButton}>
-            Validate
-          </button>
-          <button className="button-red" onClick={handleDeclineButton}>
-            Decline
-          </button>
-        </div>
-      </div>
-
-      <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
+      <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
         <p className="text-center text-gray-700">Are you sure you want to notify the client?</p>
         <br></br>
@@ -445,7 +450,7 @@ const InvoiceDetail = () => {
         </div>
       </Modal>
 
-      <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation">
+      <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
         <p className="text-center text-gray-700">Are you sure you want to upload this payment proof?</p>
         <br></br>
@@ -465,7 +470,7 @@ const InvoiceDetail = () => {
         </div>
       </Modal>
 
-      <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation">
+      <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
         <p className="text-center text-gray-700">Are you sure you want to validate this payment proof?</p>
         <br></br>
@@ -479,7 +484,7 @@ const InvoiceDetail = () => {
         </div>
       </Modal>
 
-      <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation">
+      <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
         <p className="text-center text-gray-700">Are you sure you want to decline this payment proof?</p>
         <br></br>
