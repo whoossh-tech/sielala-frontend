@@ -17,6 +17,7 @@ const DashboardStaff = () => {
     const [rewardRedeemedList, setRewardRedeemedList] = useState([]);
     const [totalPointsRedeemed, setTotalPointsRedeemed] = useState(0);
     const [totalTenantAccepted, setTotalTenantAccepted] = useState(0);
+    const [activePage] = useState('dashboard');
 
     // Mendapatkan tanggal mulai dan akhir dari event yang dipilih
     const eventStartDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.startDate);
@@ -149,7 +150,7 @@ const DashboardStaff = () => {
     return (
         <body>
             {/* Sidebar Navigation */}
-            <Sidebar />
+            <Sidebar activePage={activePage}/>
 
             <main style={{ marginLeft: "60px" }}>
 
