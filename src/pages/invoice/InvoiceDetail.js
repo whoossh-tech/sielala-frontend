@@ -342,7 +342,7 @@ const InvoiceDetail = () => {
                         </Link>
                       )}
 
-                      <button className="button-orange" onClick={handleGenerate}>
+                      <button className="button-green" onClick={handleGenerate}>
                         Generate to PDF
                       </button>
 
@@ -395,6 +395,7 @@ const InvoiceDetail = () => {
               ) : (
                 <p>Loading...</p>
               )}
+              <br></br>
 
 {/* Payment Proof Section */}
 
@@ -446,7 +447,7 @@ const InvoiceDetail = () => {
         </div>
       </Modal>
 
-              <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation">
+              <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation-form">
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
                 <p className="text-center text-gray-700">Are you sure you want to upload this payment proof?</p>
                 <br></br>
@@ -466,7 +467,7 @@ const InvoiceDetail = () => {
                 </div>
               </Modal>
 
-              <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation">
+              <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation-form">
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
                 <p className="text-center text-gray-700">Are you sure you want to validate this payment proof?</p>
                 <br></br>
@@ -480,7 +481,7 @@ const InvoiceDetail = () => {
                 </div>
               </Modal>
 
-              <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation">
+              <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation-form">
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
                 <p className="text-center text-gray-700">Are you sure you want to decline this payment proof?</p>
                 <br></br>
