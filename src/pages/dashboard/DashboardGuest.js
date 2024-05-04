@@ -168,7 +168,7 @@ const DashboardGuest = () => {
                             </div>
                     ))
                 ) : (
-                    <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4">
+                    <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4 px-2">
                         <p><b>No Previous Events Available</b></p>
                     </div>
                 )}
