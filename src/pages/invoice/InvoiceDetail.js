@@ -163,6 +163,7 @@ const InvoiceDetail = () => {
       setIsValidated(true);
 
       toast.success("Payment proof validated successfully");
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Error validating payment proof");
@@ -177,6 +178,7 @@ const InvoiceDetail = () => {
       console.log("Payment validation declined :", response.data);
       toast.success("Payment proof declined successfully");
       setIsDeclined(true);
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Error declining payment proof");
@@ -241,6 +243,7 @@ const InvoiceDetail = () => {
         ...prevData,
         trackingStatus: "Delivered",
       }));
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Failed to change tracking status");
@@ -265,9 +268,15 @@ const InvoiceDetail = () => {
           </div> */}
           <div>
             <p className="subtitle">
-                <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Invoice Management </a>
-                / Detail
+              <a href="/dashboard" style={{ borderBottom: "1px solid #E685AE", textDecoration: "none" }}>
+                Dashboard
+              </a>{" "}
+              /
+              <a onClick={handleBack} style={{ borderBottom: "1px solid #E685AE", textDecoration: "none", cursor: "pointer" }}>
+                {" "}
+                Invoice Management{" "}
+              </a>
+              / Detail
             </p>
           </div>
         </div>
@@ -345,7 +354,7 @@ const InvoiceDetail = () => {
               </button>
 
               {(invoiceData.trackingStatus === "Issued" || invoiceData.trackingStatus === "Pending") && (
-                <button className="button-green" onClick={openModal} disabled={isLoading}>
+                <button className="button-orange" onClick={openModal} disabled={isLoading}>
                   {isLoading ? "Sending..." : "Notify Client"}
                 </button>
               )}
@@ -393,14 +402,13 @@ const InvoiceDetail = () => {
         <p>Loading...</p>
       )}
 
-        {/* Payment Proof Section */}
+      {/* Payment Proof Section */}
 
-        {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
-
-          <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
+      {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
+        <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
           <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
-          {(statusPayment !== "Approved") && (
+          {statusPayment !== "Approved" && (
             <div className="flex items-center mb-4">
               <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
               <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
@@ -408,19 +416,14 @@ const InvoiceDetail = () => {
               </button>
             </div>
           )}
-          
+
           {paymentImageUrl && (
             <div>
               <div className="w-full flex justify-center items-center">
-                <img
-                  src={paymentImageUrl}
-                  alt="Payment proof"
-                  className="w-full rounded-lg shadow-md"
-                  style={{ width: "500px", height: "auto" }} 
-                />
+                <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" style={{ width: "500px", height: "auto" }} />
               </div>
 
-              {(statusPayment !== "Approved") && (
+              {(role === "FINANCE" || role === "ADMIN") && statusPayment !== "Approved" && (
                 <div className="w-full flex justify-center items-center">
                   <button className="button-green" onClick={handleValidateButton}>
                     Validate
@@ -432,9 +435,8 @@ const InvoiceDetail = () => {
               )}
             </div>
           )}
-
-          </div>
-        )}
+        </div>
+      )}
 
       <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>

@@ -8,6 +8,7 @@ import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import Sidebar from '../dashboard/Sidebar';
 
 const TenantDetail = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const TenantDetail = () => {
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const role = localStorage.getItem("role");
+  const [activePage, setActivePage] = useState('contact');
 
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -51,28 +53,25 @@ const TenantDetail = () => {
   };
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      {role === "PARTNERSHIP" && <NavbarPartnership style={{ zIndex: 999 }} />}
-
-      {role === "ADMIN" && <NavbarAdmin style={{ zIndex: 999 }} />}
-
-      <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
-        <div>
-          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
-            Tenant Detail
-          </h1>
-          {/* <div>
-            <p className="subtitle">Manage and view tenant data here.</p>
-          </div> */}
-          <div>
-            <p className="subtitle">
-                <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Partnership Management </a>
-                / Detail
-            </p>
+    <body>
+      <Sidebar activePage={activePage}/>
+      <main style={{ marginLeft: "60px"}}>
+      <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+      {/* Header Start */}
+      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Tenant Detail</h1>
+              </div>
+              <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
+                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Contact List </a>
+                        / Tenant Detail
+                    </p>
+                </div>
           </div>
-        </div>
-      </div>
+          {/* Header Ends */}
 
       <br></br>
       <Toaster position="top-center" reverseOrder={false} />
@@ -191,6 +190,15 @@ const TenantDetail = () => {
         </div>
       </div>
     </div>
+
+
+      </main>
+    </body>
+
+
+
+
+    
   );
 };
 

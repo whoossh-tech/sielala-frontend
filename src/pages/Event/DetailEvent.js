@@ -78,28 +78,16 @@ const DetailEvent = () => {
 
         <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
 
-        <div className="flex justify-between items-center mb-4 grid grid-cols-3 w-full mx-auto">
-
+{/* 
           <div className="mr-96">
             <button className="button-green w-24" onClick={handleBack}>
               Back
             </button>
-          </div>
+          </div> */}
 
           <div>
             <h1 className="text-2xl font-semibold mb-4" style={{ textAlign: "center" }}>Event Detail</h1>
           </div>
-
-          <div className="ml-10">
-              {currentDate < startDate ? (
-                <Link to={`/event/edit/${idEvent}`}>
-                  <button className="button-pink">Edit Event</button>
-                </Link>
-              ) : (
-                  <button className="button-pink" disabled>Edit Event</button>
-              )}
-          </div>
-        </div>
 
           <div className="each-event">
             <p className="event-text-title">Event Name:</p>
@@ -118,8 +106,16 @@ const DetailEvent = () => {
             <p className="reward-text">{eventData?.location}</p>
           </div>
         </div>
-
         <br></br>
+        <div className="ml-10">
+              {currentDate < startDate ? (
+                <Link to={`/event/edit/${idEvent}`}>
+                  <button className="button-pink">Edit Event</button>
+                </Link>
+              ) : (
+                  <button className="button-pink" disabled>Edit Event</button>
+              )}
+          </div>
         <br></br>
 
         <h1 className="text-2xl font-semibold mb-4">Accepted Tenant</h1>

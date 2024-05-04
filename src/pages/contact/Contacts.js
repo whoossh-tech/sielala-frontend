@@ -9,11 +9,14 @@ import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import "../../static/css/Contact.css";
+// import { Sidebar } from "flowbite-react";
+import Sidebar from '../dashboard/Sidebar';
 
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState("");
   const [eventData, setEventData] = useState([]);
+  const [activePage, setActivePage] = useState('contact');
 
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -66,34 +69,35 @@ const Contacts = () => {
   };
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      <style>{reynaldoStyles}</style>
+    <body> 
+      <Sidebar activePage={activePage}/>
+      <main style={{marginLeft: " 60px"}}>
+      <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+      {/* <style>{reynaldoStyles}</style>
       {( role === 'PARTNERSHIP' ) && (
         <NavbarPartnership style={{ zIndex: 999 }} />
       )}
 
       {( role === 'ADMIN' ) && (
         <NavbarAdmin style={{ zIndex: 999 }} />
-      )}
+      )} */}
 
-      <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
-        <div>
-          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
-            Partnership Management
-          </h1>
-          {/* <div>
-            <p className="subtitle">Manage your contact here</p>
-          </div> */}
-          <div>
-            <p className="subtitle">
-              <a href='/dashboard' style={{ textDecoration: 'none' }}>
-                  <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
-              </a>
-              / Partnership Management
-            </p>
+      {/* Header Start */}
+      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                 Partnership Management</h1>
+                  <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Contact List
+                    </p>
+                  </div>
+              </div>
           </div>
-        </div>
-      </div>
+          {/* Header Ends */}
 
       <Toaster position="top-center" reverseOrder={false} />
 
@@ -159,9 +163,9 @@ const Contacts = () => {
         </button>
       </div>
 
-      <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
+      <div className="mb-3 mx-8" style={{ display: "flex", justifyContent: "center" }}>
      
-          <table className="contact-table mx-8">
+          <table className="contact-table mx-12">
             <thead>
               {/* Row headers */}
               <tr>
@@ -197,7 +201,7 @@ const Contacts = () => {
                     <td>{contact.picName}</td>
                     <td>{contact.address}</td>
                     <td>{contact.email}</td>
-                    <td>{contact.telephone}</td>
+                    <td>{"+62 " + contact.telephone}</td>
 
                     { contact.type === 'Tenant' && (
                               <td className="text-secondary-80"><b>Tenant</b></td>
@@ -221,6 +225,12 @@ const Contacts = () => {
     )}
       <br></br>
     </div>
+
+      </main>
+    </body>
+
+
+    
   );
 };
 
