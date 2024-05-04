@@ -47,6 +47,7 @@ const DetailSponsor = () => {
       })
       .catch((err) => console.log(err));
 
+    localStorage.setItem('idSelectedEvent', idEvent);
   });
 
   const handleBack = () => {

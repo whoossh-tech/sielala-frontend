@@ -42,6 +42,9 @@ const RewardDetail = () => {
         setIdEvent(res.data.rewardData.event.idEvent)
     }).catch(err => 
         console.log(err))
+
+    
+    localStorage.setItem('idSelectedEvent', idEvent);
     })
 
    const confirmDelete = async (e) => {

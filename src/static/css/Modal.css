@@ -1,3 +1,7 @@
+:root {
+  --modal-margin-left: calc((100vw - 400px - 80px) / 2); 
+}
+
 .modalBackground {
   width: 100vw;
   height: 100vh;
@@ -75,6 +79,6 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-top: 180px;
-  margin-left: 420px;
+  margin-top: 14%;
+  margin-left: var(--modal-margin-left);
 }

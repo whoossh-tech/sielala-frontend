@@ -125,6 +125,8 @@ const AddRewardRedemptionData = () => {
             }).catch(err => 
                 console.error('Error fetching reward cat2 data:', err)
         )
+
+        localStorage.setItem('idSelectedEvent', idEvent);
     }, [idEvent]);
 
     const validateForm = () => {
