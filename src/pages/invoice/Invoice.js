@@ -155,7 +155,7 @@ const Invoice = () => {
               <br></br>
 
               {selectedEvent && eventData.length > 0 && (
-                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>
+                <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "350px", margin: "0 auto" }}>
                   <div style={{ position: "relative" }}>
                     <input
                       className="search px-4 py-3 w-full focus:outline-none"
@@ -169,7 +169,7 @@ const Invoice = () => {
                         fontSize: "1rem",
                         lineHeight: "1.5",
                         padding: "0.5rem 1rem",
-                        width: "400px",
+                        width: "350px",
                         paddingRight: "40px",
                       }}
                     />
