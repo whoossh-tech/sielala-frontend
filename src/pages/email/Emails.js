@@ -8,9 +8,11 @@ import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import "../../static/css/email/Emails.css";
+import Sidebar from '../dashboard/Sidebar';
 
 const Emails = () => {
   const [emails, setEmails] = useState([]);
+  const [activePage, setActivePage] = useState('bulk-email');
 
   const navigate = useNavigate();
   const role = localStorage.getItem('role');
@@ -34,36 +36,26 @@ const Emails = () => {
   };
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      <style>{reynaldoStyles}</style>
-
-      {( role === 'BISDEV' ) && (
-        <NavbarBisdev style={{ zIndex: 999 }} />
-      )}
-
-      {( role === 'PARTNERSHIP' ) && (
-        <NavbarPartnership style={{ zIndex: 999 }} />
-      )}
-
-      {( role === 'ADMIN' ) && (
-        <NavbarAdmin style={{ zIndex: 999 }} />
-      )}
-
-      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
-          <div>
-              <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-                Bulk Email Management
-              </h1>
-              <div>
-                <p className="subtitle">
-                  <a href='/dashboard' style={{ textDecoration: 'none' }}>
-                    <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
-                  </a>
-                  / Bulk Email Management
-                </p>
+    <body>
+      <Sidebar activePage={activePage}/>
+      <main style={{ marginLeft:"60px"}}>
+      <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+      {/* Header Start */}
+      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Bulk Email Management</h1>
+                  <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                        </a>                        
+                        / Bulk Email List
+                    </p>
+                  </div>
               </div>
           </div>
-      </div>
+          {/* Header Ends */}
 
       <br></br>
 
@@ -101,6 +93,11 @@ const Emails = () => {
         </table>
       </div>
     </div>
+      </main>
+    </body>
+
+
+    
   );
 };
 

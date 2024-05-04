@@ -136,3 +136,26 @@
     background-color: #F1F0F4;
     color: white;
 }
+
+.button-orange {
+    background-color: #EEA604;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    outline: 0;
+    border: 0; 
+    margin: 10px 10px;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px lightgray;
+    transition: ease background-color 250ms;
+}
+
+.button-orange:hover {
+    background-color: #D3DA80;
+    color: white;
+}
+
+.button-orange:disabled {
+    background-color: #C48B0C; 
+    cursor: not-allowed; 
+}

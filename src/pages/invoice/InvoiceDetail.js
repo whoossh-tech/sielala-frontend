@@ -170,6 +170,7 @@ const InvoiceDetail = () => {
       setIsValidated(true);
 
       toast.success("Payment proof validated successfully");
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Error validating payment proof");
@@ -184,6 +185,7 @@ const InvoiceDetail = () => {
       console.log("Payment validation declined :", response.data);
       toast.success("Payment proof declined successfully");
       setIsDeclined(true);
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Error declining payment proof");
@@ -248,6 +250,7 @@ const InvoiceDetail = () => {
         ...prevData,
         trackingStatus: "Delivered",
       }));
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Failed to change tracking status");
@@ -393,32 +396,28 @@ const InvoiceDetail = () => {
                 <p>Loading...</p>
               )}
 
-              <br></br>
-              <br></br>
-                {/* Payment Proof Section */}
-                <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
-                <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
+{/* Payment Proof Section */}
 
-                {/* {(invoiceData.paymentStatus != "Approved") && ( */}
-                  <div className="flex items-center mb-4">
-                    <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-                    <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
-                      Submit Payment Proof
-                    </button>
-                  </div>
-                {/* )} */}
-                
-                {paymentImageUrl && (
-                  <div className="w-full flex justify-center items-center">
-                    <img
-                      src={paymentImageUrl}
-                      alt="Payment proof"
-                      className="w-full rounded-lg shadow-md"
-                      style={{ width: "500px", height: "auto" }} 
-                    />
-                  </div>
-                )}
+      {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
+        <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
+          <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
+          {statusPayment !== "Approved" && (
+            <div className="flex items-center mb-4">
+              <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
+              <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
+                Submit Payment Proof
+              </button>
+            </div>
+          )}
+
+          {paymentImageUrl && (
+            <div>
+              <div className="w-full flex justify-center items-center">
+                <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" style={{ width: "500px", height: "auto" }} />
+              </div>
+
+              {(role === "FINANCE" || role === "ADMIN") && statusPayment !== "Approved" && (
                 <div className="w-full flex justify-center items-center">
                   <button className="button-green" onClick={handleValidateButton}>
                     Validate
@@ -427,21 +426,25 @@ const InvoiceDetail = () => {
                     Decline
                   </button>
                 </div>
-              </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
-              <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
-                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-                <p className="text-center text-gray-700">Are you sure you want to notify the client?</p>
-                <br></br>
-                <div>
-                  <button className="button-red text-center" onClick={closeModal}>
-                    Cancel
-                  </button>
-                  <button className="button-green text-center" onClick={handleNotify}>
-                    Confirm
-                  </button>
-                </div>
-              </Modal>
+      <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
+        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+        <p className="text-center text-gray-700">Are you sure you want to notify the client?</p>
+        <br></br>
+        <div>
+          <button className="button-red text-center" onClick={closeModal}>
+            Cancel
+          </button>
+          <button className="button-green text-center" onClick={handleNotify}>
+            Confirm
+          </button>
+        </div>
+      </Modal>
 
               <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation">
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>

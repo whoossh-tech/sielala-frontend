@@ -46,9 +46,8 @@ const DetailEvent = () => {
   return (
     <body>
       <Sidebar activePage={activePage}/> 
-
       <main style={{ marginLeft: "60px" }}>
-
+        
         {/* Header Start */}
         <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '130px' }}>
             <div className="mx-8">
