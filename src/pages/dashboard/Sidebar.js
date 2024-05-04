@@ -7,6 +7,7 @@ import logo from "../../assets/logo-sielala.png";
 import element from "../../assets/element.png";
 import { useAuth } from "../../pages/auth/AuthContext";
 
+
 const Sidebar = ({activePage}) => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const role = localStorage.getItem('role');
@@ -55,7 +56,6 @@ const Sidebar = ({activePage}) => {
       {/* Sidebar Content */}
       {( role === 'ADMIN' ) && (
         <ul className="side-menu top">
-
           <li className={activePage === 'dashboard' ? 'active' : ''}>
             <a href="/dashboard">
               <i className='bx bxs-dashboard'></i>
@@ -120,7 +120,7 @@ const Sidebar = ({activePage}) => {
           </li>
 
           <li className={activePage === 'bulk-email' ? 'active' : ''}>
-            <a href="/bulk-email">
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>
@@ -152,7 +152,7 @@ const Sidebar = ({activePage}) => {
           </li>
 
           <li className={activePage === 'bulk-email' ? 'active' : ''}>
-            <a href="/bulk-email">
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>
@@ -234,7 +234,7 @@ const Sidebar = ({activePage}) => {
           </li>
 
           <li className={activePage === 'bulk-email' ? 'active' : ''}>
-            <a href="/bulk-email">
+            <a href="/email">
               <i className='bx bx-envelope'></i>  
               <span className="text">Bulk Email</span>
             </a>

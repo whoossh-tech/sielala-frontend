@@ -1,4 +1,4 @@
-import './style.css';
+import '../../static/css/Style.css';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 

@@ -29,6 +29,7 @@ const InvoiceDetail = () => {
   const [invoiceData, setInvoiceData] = useState();
   const [countdays, setCountDays] = useState(0);
   const [idEvent, setIdEvent] = useState("");
+
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -43,6 +44,9 @@ const InvoiceDetail = () => {
   const [isDeclined, setIsDeclined] = useState(false);
   const [isEditDisabled, setIsEditDisabled] = useState(false);
   const [isMarkAsDeliveredVisible, setIsMarkAsDeliveredVisible] = useState(true);
+
+  const [statusInvoice, setStatusInvoice] = useState();
+  const [statusPayment, setStatusPayment] = useState();
 
   const role = localStorage.getItem("role");
 
@@ -94,22 +98,27 @@ const InvoiceDetail = () => {
       .get(`https://sielala-backend-production.up.railway.app/api/invoice/detail/${idInvoice}`)
       .then((res) => {
         setInvoiceData(res.data.data);
-        // console.log(res.data.data);
         setIdEvent(res.data.data.event.idEvent);
-        const storedPaymentImageUrl = localStorage.getItem("paymentImageUrl");
-        if (storedPaymentImageUrl) {
-          setPaymentImageUrl(storedPaymentImageUrl);
+
+        console.log(res.data.data);
+        setStatusInvoice(res.data.data.trackingStatus);
+        setStatusPayment(res.data.data.paymentStatus);
+
+        if (res.data.data.paymentImage) {
+          setPaymentImageUrl(`data:image/png;base64,${res.data.data.paymentImage}`);
+          // console.log("Payment Image Url for res.data:", res.data.data.paymentImage);
         } else {
-          setPaymentImageUrl(res.data.data.paymentImageUrl);
-          localStorage.setItem("paymentImageUrl", res.data.data.paymentImageUrl);
+          console.log("Payment Image is not yet submitted");
         }
       })
       .catch((err) => console.log(err));
   }, [idInvoice]);
 
+  console.log(statusPayment);
+  console.log(statusInvoice);
+
   const handleBack = () => {
     localStorage.setItem("idSelectedEvent", idEvent);
-    // localStorage.removeItem("paymentImageUrl");
     navigate("/invoice");
   };
 
@@ -135,11 +144,10 @@ const InvoiceDetail = () => {
       reader.onload = () => {
         const base64Data = reader.result;
         toast.success("Payment proof uploaded successfully");
-
         setPaymentImageUrl(base64Data);
-        localStorage.setItem("paymentImageUrl", base64Data); // Memperbarui URL gambar
-        // setIsValidated(true); // Mengatur status validasi gambar menjadi true
-        console.log("Payment image URL (base64):", base64Data);
+
+        // console.log("Payment image URL (base64):", base64Data);
+        window.location.reload();
       };
       reader.onerror = (error) => {
         console.error(error);
@@ -205,25 +213,6 @@ const InvoiceDetail = () => {
       const fileURL = URL.createObjectURL(file);
 
       window.open(fileURL, "_blank");
-
-      // const response = await axios.get(`${url}/api/invoice/generate-pdf/invoice/${idInvoice}`, {
-      //     responseType: 'blob'
-      // });
-
-      // // Membuat objek URL untuk blob
-      // const fileURL = URL.createObjectURL(new Blob([response.data]));
-
-      // // Membuat elemen <a> untuk men-download file
-      // const link = document.createElement('a');
-      // link.href = fileURL;
-      // link.setAttribute('download', `SIELALA_INVOICE_${invoiceData.companyName}.pdf`);
-
-      // // Menambahkan elemen <a> ke dokumen dan memicu klik pada elemen tersebut
-      // document.body.appendChild(link);
-      // link.click();
-
-      // Menghapus elemen <a> setelah proses download selesai
-      // document.body.removeChild(link);
     } catch (error) {
       console.error("Error:", error);
       toast.error("Cannot generate invoice");
