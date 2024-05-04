@@ -9,6 +9,7 @@ import pointsIcon from "../../assets/dashboard/Bullseye.png";
 
 import Sidebar from './Sidebar';
 import '../../static/css/Style.css';
+import { reynaldoStyles } from "../../assets/fonts/fonts";
 
 const DashboardStaff = () => {
     const [selectedEvent, setSelectedEvent] = useState("");
@@ -31,6 +32,7 @@ const DashboardStaff = () => {
     const role = localStorage.getItem('role');
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    const [activePage, setActivePage] = useState('dashboard');
 
     useEffect(() => {
         axios
@@ -150,6 +152,8 @@ const DashboardStaff = () => {
         <body>
             {/* Sidebar Navigation */}
             <Sidebar />
+            <style>{reynaldoStyles}</style>
+            <Sidebar activePage={activePage}/>
 
             <main style={{ marginLeft: "60px" }}>
 
@@ -215,9 +219,9 @@ const DashboardStaff = () => {
                         {/* Display charts or message */}
                         {event ? (
                             <div>
-                                <div className="grid grid-cols-4">
+                                <div className="grid grid-cols-4 mx-6 pt-5">
                                     {/* First Column */}
-                                    <div className="col-span-3">
+                                    <div className="col-span-3" style={{ marginRight: "30px" }}>
                                         {/* Event detail card */}
                                         <div className="box-info bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5">
                                             <div className="flex justify-between">
@@ -229,6 +233,12 @@ const DashboardStaff = () => {
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {(event.listVisitor.length === 0) && ( 
+                                            <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4 px-2">
+                                                <p><b>There are currently no registered visitors for this event.</b></p>
+                                            </div>
+                                        )}
 
                                         {/* Event Pie Charts */}
                                         <div className="pie-charts-container" style={{ display: 'flex', gap: '20px' }}>
@@ -276,9 +286,9 @@ const DashboardStaff = () => {
                                     </div>
 
                                     {/* Second Column */}
-                                    <div className="col-span-1">
+                                    <div className="col-span-1 mt-5">
                                         {/* show totals data */}
-                                        <div className="totals-container p-5">
+                                        <div className="totals-container px-5">
                                             <div class="box-info mb-5" style={{ backgroundColor: '#FDEFEF', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={tenantIcon} alt="Joystick" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
@@ -307,48 +317,54 @@ const DashboardStaff = () => {
 
 
                                 {/* Age Distribution Bar Chart */}
-                                <div className="pie-container p-5">
+                                <div className="pie-container px-5">
                                     <div className="columns-2" style={{ display: 'flex', gap: '30px' }}>
                                         <div className="first-column">
-                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '40px', width: '430px' }}>
+                                            <div className="bg-white p-4 rounded-lg shadow-md" style={{ marginTop: '40px', width: '500px', height: '240px' }}>
                                                 <h2><b>Age Distribution - Female</b></h2>
-                                                <BarChart
-                                                    colors={colors}
-                                                    xAxis={[{
-                                                        scaleType: 'band',
-                                                        data: generateBarChartDataAge('Female').map(data => data.name),
-                                                        colorMap: {
-                                                            type: 'ordinal',
-                                                            colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
-                                                        }
-                                                    }]}
-                                                    series={[{
-                                                        data: generateBarChartDataAge('Female').map(data => data.value),
-                                                    }]}
-                                                    width={400}
-                                                    height={200}
-                                                />
+
+                                                {(event.listVisitor.length > 0) && (
+                                                    <BarChart
+                                                        colors={colors}
+                                                        xAxis={[{
+                                                            scaleType: 'band',
+                                                            data: generateBarChartDataAge('Female').map(data => data.name),
+                                                            colorMap: {
+                                                                type: 'ordinal',
+                                                                colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                            }
+                                                        }]}
+                                                        series={[{
+                                                            data: generateBarChartDataAge('Female').map(data => data.value),
+                                                        }]}
+                                                        width={450}
+                                                        height={200}
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                         <div className="second-column">
-                                            <div className="bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '40px', width: '430px' }}>
+                                            <div className="bg-white p-4 rounded-lg shadow-md" style={{ marginTop: '40px', width: '500px', height: '240px' }}>
                                                 <h2><b>Age Distribution - Male</b></h2>
-                                                <BarChart
-                                                    colors={colors}
-                                                    xAxis={[{
-                                                        scaleType: 'band',
-                                                        data: generateBarChartDataAge('Male').map(data => data.name),
-                                                        colorMap: {
-                                                            type: 'ordinal',
-                                                            colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
-                                                        }
-                                                    }]}
-                                                    series={[{
-                                                        data: generateBarChartDataAge('Male').map(data => data.value),
-                                                    }]}
-                                                    width={400}
-                                                    height={200}
-                                                />
+
+                                                {(event.listVisitor.length > 0) && (
+                                                    <BarChart
+                                                        colors={colors}
+                                                        xAxis={[{
+                                                            scaleType: 'band',
+                                                            data: generateBarChartDataAge('Male').map(data => data.name),
+                                                            colorMap: {
+                                                                type: 'ordinal',
+                                                                colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                            }
+                                                        }]}
+                                                        series={[{
+                                                            data: generateBarChartDataAge('Male').map(data => data.value),
+                                                        }]}
+                                                        width={450}
+                                                        height={200}
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                     </div>
