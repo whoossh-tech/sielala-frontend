@@ -231,7 +231,7 @@ const EditUserForm = () => {
 
             <br></br>
             <div>
-                <button className="button-green" onClick={() => navigate(-1)}>Back</button>
+                <button className="button-green" onClick={() => navigate(-1)}>Cancel</button>
                 <button className="button-pink" type="submit" disabled={isLoading}>
                     {isLoading ? 'Saving...' : 'Save'}
                 </button>
@@ -242,7 +242,6 @@ const EditUserForm = () => {
                 onRequestClose={closeModal}
                 id="modal-confirmation-form"
             >
-
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
                 <p className="text-center text-gray-700">Are you sure you want to edit account?</p>
                 <br></br>
