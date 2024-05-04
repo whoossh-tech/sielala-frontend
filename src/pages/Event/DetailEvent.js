@@ -40,7 +40,7 @@ const DetailEvent = () => {
   });
 
   const handleBack = () => {
-    navigate(-1);
+    navigate('/event');
   };
 
   return (

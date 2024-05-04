@@ -126,9 +126,9 @@ const UserList = () => {
                                 Edit
                             </button> */}
                             <Link to={`/user/edit/${user.userId}`}>
-                                <button className="button-green w-32">Edit</button>
+                                <button className="button-green w-20">Edit</button>
                             </Link>
-                            <button className="button-red w-32" onClick={() => handleDelete(user.userId)}>Delete</button>
+                            <button className="button-red w-20" onClick={() => handleDelete(user.userId)}>Delete</button>
                         </td>
                     </tr>
                 ))}
