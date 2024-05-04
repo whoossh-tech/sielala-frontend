@@ -155,12 +155,12 @@ const DashboardStaff = () => {
             <main style={{ marginLeft: "60px" }}>
 
                 {/* Header Start */}
-                <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '130px' }}>
+                {/* <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '130px' }}>
                     <div className="mx-8">
                         <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
                             Dashboard</h1>
                     </div>
-                </div>
+                </div> */}
                 {/* Header Ends */}
 
                 <div className='content-container my-8'>
@@ -216,9 +216,9 @@ const DashboardStaff = () => {
                         {/* Display charts or message */}
                         {event ? (
                             <div>
-                                <div className="grid grid-cols-4" style={{ padding: 0, margin: 0 }}>
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-5" style={{ padding: 0, margin: 0 }}>
                                     {/* First Column */}
-                                    <div className="col-span-3">
+                                    <div className="col-span-1 md:col-span-3">
                                         {/* Event detail card */}
                                         <div className="box-info bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5">
                                             <div className="flex justify-between">
@@ -277,7 +277,7 @@ const DashboardStaff = () => {
                                     </div>
 
                                     {/* Second Column */}
-                                    <div className="col-span-1">
+                                    <div className="col-span-1 md:col-span-1">
                                         {/* show totals data */}
                                         <div className="totals-container p-5">
                                             <div class="box-info mb-5" style={{ backgroundColor: '#FDEFEF', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
@@ -306,8 +306,8 @@ const DashboardStaff = () => {
                                     </div>
 
                                     {/* Age Distribution Bar Chart */}
-                                    <div className="bar-container col-span-4" style={{ display: 'flex', gap: '20px' }}>
-                                    <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
+                                    <div className="bar-container col-span-1 md:col-span-4 flex flex-col md:flex-row gap-5">
+                                        <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' }}>
                                             <h2><b>Age Distribution - Female</b></h2>
                                             <BarChart
                                                 colors={colors}
