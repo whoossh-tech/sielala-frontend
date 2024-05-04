@@ -396,7 +396,7 @@ const InvoiceDetail = () => {
                 <p>Loading...</p>
               )}
 
-      {/* Payment Proof Section */}
+{/* Payment Proof Section */}
 
       {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
         <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
