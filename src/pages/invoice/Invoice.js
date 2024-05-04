@@ -27,7 +27,7 @@ const Invoice = () => {
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        // Pre-filled dropdown event
+        // Pre-giled dropdown event
         const storedEvent = localStorage.getItem('idSelectedEvent');
         if (storedEvent) {
             setSelectedEvent(storedEvent);
