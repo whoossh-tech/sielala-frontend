@@ -45,7 +45,6 @@ const ChooseContact = () => {
         const storedSubject = localStorage.getItem('subject');
         const storedBody = localStorage.getItem('body');
         const storedEvent = localStorage.getItem('idSelectedEvent');
-        const storedSelectedContacts = JSON.parse(localStorage.getItem('selectedContacts'));
 
         if (storedSubject) {
             setSubject(storedSubject);
@@ -62,22 +61,7 @@ const ChooseContact = () => {
             localStorage.removeItem('idSelectedEvent'); 
         }
 
-        if (storedSelectedContacts) {
-          setSelectedContact(storedSelectedContacts);
-          localStorage.removeItem('selectedContacts');
-        }
-
-        if (selectedEvent) {
-            axios
-            .get(`https://sielala-backend-production.up.railway.app/api/email/contacts/${selectedEvent}`)
-            .then((res) => {
-                setContacts(res.data.data);
-                // console.log(res.data.data);
-            })
-            .catch((error) => {
-                toast.error("Failed to fetch contacts");
-            });
-        }
+        fetchContacts(selectedEvent);
 
         axios
           .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
@@ -88,22 +72,32 @@ const ChooseContact = () => {
 
     }, [selectedEvent]);
 
+    const fetchContacts = (selectedEvent) => {
+      if (selectedEvent) {
+          axios
+              .get(`https://sielala-backend-production.up.railway.app/api/email/contacts/${selectedEvent}`)
+              .then((res) => {
+                  setContacts(res.data.data);
+              })
+              .catch((error) => {
+                  toast.error("Failed to fetch contacts");
+              });
+        }
+    };
+
     // handle selected event (dropdown)
     const handleChange = (e) => {
       setSelectedEvent(e.target.value);
+      fetchContacts(e.target.value);
     };
 
     // handle checked & unchecked box
     const handleCheckboxChange = (e, contactId) => {
-      console.log("contact id: " + contactId);
-
       if (e.target.checked) {
-        setSelectedContact([...selectedContact, contactId]);
+        setSelectedContact(prevSelectedContact => [...prevSelectedContact, contactId]);
       } else {
-        setSelectedContact(selectedContact.filter(id => id !== contactId));
+        setSelectedContact(prevSelectedContact => prevSelectedContact.filter(id => id !== contactId));
       }
-
-      localStorage.setItem('selectedContacts', JSON.stringify(selectedContact));
     };
 
     const handleSelectAll = () => {

@@ -10,6 +10,8 @@ import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
+import Sidebar from '../../pages/dashboard/Sidebar';
+import '../../static/css/Style.css';
 import { Link, useParams } from "react-router-dom";
 
 const DetailEvent = () => {
@@ -20,6 +22,8 @@ const DetailEvent = () => {
   const [eventData, setEventData] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [tenantData, setTenantData] = useState();
+  const [activePage, setActivePage] = useState('event');
+
   const currentDate = new Date();
 
   const token = localStorage.getItem("token");
@@ -36,119 +40,129 @@ const DetailEvent = () => {
   });
 
   const handleBack = () => {
-    navigate(-1);
+    navigate('/event');
   };
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      {( role === 'BISDEV' ) && (
-          <NavbarBisdev style={{ zIndex: 999 }} />
-      )}
-
-      {( role === 'ADMIN' ) && (
-          <NavbarAdmin style={{ zIndex: 999 }} />
-      )}
-
-      <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
-        <div>
-          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
-            Event Detail
-          </h1>
-          {/* <div>
-            <p className="subtitle">Manage and view event data here</p>
-          </div> */}
-          <div>
-            <p className="subtitle">
-                <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Event Management </a>
-                / Detail
-            </p>
-          </div>
+    <body>
+      <Sidebar activePage={activePage}/> 
+      <main style={{ marginLeft: "60px" }}>
+        
+        {/* Header Start */}
+        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '130px' }}>
+            <div className="mx-8">
+                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                Detail Event</h1>
+            </div>
         </div>
-      </div>
-      
-      <Toaster
-                position="top-center"
-                reverseOrder={false}
-            />
+        {/* Header Ends */}
 
-      <br></br>
+        <div className='content-container my-8'>
+          <div className="dashboard-container">
+            <div>
+                <Toaster
+                          position="top-center"
+                          reverseOrder={false}
+                      />
 
-      <div className="container mx-auto py-8">
+                <br></br>
 
-        <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
+                <div className="container mx-auto py-8">
 
-{/* 
-          <div className="mr-96">
-            <button className="button-green w-24" onClick={handleBack}>
-              Back
-            </button>
-          </div> */}
+                  <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
 
-          <div>
-            <h1 className="text-2xl font-semibold mb-4" style={{ textAlign: "center" }}>Event Detail</h1>
-          </div>
+                  <div className="ml-10" style={{justifyContent: "right"}}>
+                          {currentDate < startDate ? (
+                            <Link to={`/event/edit/${idEvent}`}>
+                              <button className="button-pink">Edit Event</button>
+                            </Link>
+                          ) : (
+                              <button className="button-pink" disabled>Edit Event</button>
+                          )}
+                  </div>
+                    {/* <div className="flex justify-between items-center mb-4 grid grid-cols-3 w-full mx-auto"> */}
 
-          <div className="each-event">
-            <p className="event-text-title">Event Name:</p>
-            <p className="reward-text">{eventData?.eventName}</p>
-          </div>
-          <div className="each-event">
-            <p className="event-text-title">Start Date:</p>
-            <p className="reward-text">{eventData?.startDate ? new Date(eventData.startDate).toLocaleDateString("en-GB") : ""}</p> {/* Convert startDate to desired format */}
-          </div>
-          <div className="each-event">
-            <p className="event-text-title">End Date:</p>
-            <p className="reward-text">{eventData?.endDate ? new Date(eventData.endDate).toLocaleDateString("en-GB") : ""}</p> {/* Convert endDate to desired format */}
-          </div>
-          <div className="each-event">
-            <p className="event-text-title">Location:</p>
-            <p className="reward-text">{eventData?.location}</p>
-          </div>
+                      {/* <div className="mr-96">
+                        <button className="button-green w-24" onClick={handleBack}>
+                          Back
+                        </button>
+                      </div> */}
+
+                      {/* <div className="ml-10">
+                          {currentDate < startDate ? (
+                            <Link to={`/event/edit/${idEvent}`}>
+                              <button className="button-pink">Edit Event</button>
+                            </Link>
+                          ) : (
+                              <button className="button-pink" disabled>Edit Event</button>
+                          )}
+                      </div> */}
+                    {/* </div> */}
+
+                    <div>
+                        <h1 className="text-2xl font-semibold mb-34" style={{ textAlign: "center" }}>Event Detail</h1>
+                    </div>
+
+                  <div className="each-event">
+                      <p className="event-text-title">Event Name:</p>
+                      <p className="reward-text">{eventData?.eventName}</p>
+                    </div>
+                    <div className="each-event">
+                      <p className="event-text-title">Start Date:</p>
+                      <p className="reward-text">{eventData?.startDate ? new Date(eventData.startDate).toLocaleDateString("en-GB") : ""}</p>
+                    </div>
+                    <div className="each-event">
+                      <p className="event-text-title">End Date:</p>
+                      <p className="reward-text">{eventData?.endDate ? new Date(eventData.endDate).toLocaleDateString("en-GB") : ""}</p>
+                    </div>
+                    <div className="each-event">
+                      <p className="event-text-title">Location:</p>
+                      <p className="reward-text">{eventData?.location}</p>
+                    </div>
+                  </div>
+
+                  <br></br>
+                  <br></br>
+
+                  <h1 className="text-2xl font-semibold mb-4">Accepted Tenant</h1>
+                  {/* <div className="bg-white p-6 rounded-lg shadow-md mb-4"> */}
+                      <div className="mb-3 rounded-md" style={{ display: "flex", justifyContent: "center" }}>
+                        <table className="event-table mx-8 rounded">
+                          <thead>
+                            <tr>
+                              <th style={{ width: "20%", textAlign: "center" }}>Brand Name</th>
+                              <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
+                              <th style={{ width: "20%", textAlign: "center" }}>Brand Email</th>
+                              <th style={{ width: "20%", textAlign: "center" }}>Brand Telephone</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {eventData?.listTenant && eventData.listTenant.length > 0 ? (
+                              eventData.listTenant.map((tenant, i) => (
+                                <tr key={i}>
+                                  <td>{tenant.brandName}</td>
+                                  <td>{tenant.picName}</td>
+                                  <td>{tenant.brandEmail}</td>
+                                  <td>{tenant.brandTelephone}</td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td colSpan="5">No tenant data available</td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  {/* </div> */}
+                </div>
+              </div>
+          <script src="script.js"></script>  
         </div>
-        <br></br>
-        <div className="ml-10">
-              {currentDate < startDate ? (
-                <Link to={`/event/edit/${idEvent}`}>
-                  <button className="button-pink">Edit Event</button>
-                </Link>
-              ) : (
-                  <button className="button-pink" disabled>Edit Event</button>
-              )}
-          </div>
-        <br></br>
-
-        <h1 className="text-2xl font-semibold mb-4">Accepted Tenant</h1>
-        <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-          <table className="Tenant-table w-full">
-            <thead>
-              <tr>
-                <th style={{ width: "20%", textAlign: "center" }}>Brand Name</th>
-                <th style={{ width: "20%", textAlign: "center" }}>PIC Name</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Brand Email</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Brand Telephone</th>
-              </tr>
-            </thead>
-            <tbody>
-              {eventData?.listTenant && eventData.listTenant.length > 0 ? (
-                eventData.listTenant.map((tenant, i) => (
-                  <tr key={i}>
-                    <td>{tenant.brandName}</td>
-                    <td>{tenant.picName}</td>
-                    <td>{tenant.brandEmail}</td>
-                    <td>{tenant.brandTelephone}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5">No tenantData available</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+        
+      </main>
+    </body>
   );
 };
 

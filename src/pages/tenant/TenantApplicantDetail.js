@@ -16,7 +16,7 @@ const TenantApplicantDetail = () => {
   const navigate = useNavigate();
   const { idTenantApplicant } = useParams();
   const [tenantApplicant, setTenantApplicant] = useState();
-  const [eventData, setEventData] = useState();
+  const [idEvent, setIdEvent] = useState();
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const role = localStorage.getItem('role');
@@ -30,10 +30,11 @@ const TenantApplicantDetail = () => {
       .get(`https://sielala-backend-production.up.railway.app/api/tenant/detail/${idTenantApplicant}`)
       .then((res) => {
         setTenantApplicant(res.data.data);
-        // console.log(res.data.data);
-        // localStorage.setItem('idSelectedEvent', res.data.data.event.idEvent);
+        setIdEvent(res.data.data.event.idEvent);
       })
       .catch((err) => console.log(err));
+
+      localStorage.setItem('idSelectedEvent', idEvent);
   });
 
   const handleBack = () => {
