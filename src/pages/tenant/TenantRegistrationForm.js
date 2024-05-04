@@ -155,7 +155,7 @@ const TenantRegistrationForm = () => {
                 onSubmit={(e) => onRegister(e)}
             >
 
-                <div className="columns-2">
+                <div className="columns-2-tenant">
                     <div className="first-column">
 
                         {/* brand name */}
