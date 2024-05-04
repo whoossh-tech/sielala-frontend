@@ -75,7 +75,7 @@ const DashboardStaff = () => {
                 })
                 .catch((err) => console.log(err));
 
-                axios
+            axios
                 .get(`https://sielala-backend-production.up.railway.app/api/contact/all/${selectedEvent}`)
                 .then((res) => {
                     const filteredContactList = res.data.data.filter((entry) => entry.type === 'Sponsor');
@@ -177,7 +177,7 @@ const DashboardStaff = () => {
 
                 <div className='content-container'>
                     <div className="dashboard-container">
-                    {/* <h1 id="page-title" className="font-reynaldo mb-2 text-general mx-8" style={{ paddingTop: 20, textAlign: 'center', fontSize: 50 }}>
+                        {/* <h1 id="page-title" className="font-reynaldo mb-2 text-general mx-8" style={{ paddingTop: 20, textAlign: 'center', fontSize: 50 }}>
                             Welcome to {role}'s Dashboard!</h1> */}
                         {/* Event Dropdown */}
                         <br></br>
@@ -237,12 +237,12 @@ const DashboardStaff = () => {
                                     {/* First Column */}
                                     <div className="col-span-1 md:col-span-3">
                                         {/* Event detail card */}
-                                        <div className="box-info bg-primary-10 rounded-lg py-3 px-8" style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                                        <div className="box-info bg-primary-10 rounded-lg py-3 px-8" style={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
                                             <div className="flex justify-between">
                                                 <div className='text-left'>
                                                     {/* <h1 className='text-2xl my-2'>{event.eventName}</h1> */}
                                                     <h1 className="font-reynaldo mb-2 text-general" style={{ paddingTop: 5, textAlign: 'left', fontSize: 30 }}>
-                                                    {event.eventName}</h1>
+                                                        {event.eventName}</h1>
                                                     <p className="text-md mb-2 text-center">
                                                         📆 {formattedStartDate} - {formattedEndDate} | 📍 {event.location}
                                                     </p>
@@ -252,87 +252,121 @@ const DashboardStaff = () => {
 
                                         {/* Event Pie Charts */}
                                         <div className="pie-charts-container" style={{ display: 'flex', gap: '20px' }}>
-                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                                                <h2><b>Visitor Location Distribution</b></h2>
-                                                <PieChart
-                                                    colors={colors}
-                                                    series={[{
-                                                        data: generatePieChartDataLocation(),
-                                                        innerRadius: 20,
-                                                        outerRadius: 90,
-                                                        paddingAngle: 5,
-                                                        cornerRadius: 5,
-                                                        startAngle: 0,
-                                                        endAngle: 360,
-                                                        cx: 100,
-                                                        cy: 110,
-                                                    },]}
-                                                    height={210}
-                                                    width={390}
-                                                />
-                                            </div>
+                                            {/* Visitor Location Distribution */}
+                                            {event.listVisitor && event.listVisitor.length > 0 ? (
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                    <h2><b>Visitor Location Distribution</b></h2>
+                                                    <PieChart
+                                                        colors={colors}
+                                                        series={[{
+                                                            data: generatePieChartDataLocation(),
+                                                            innerRadius: 20,
+                                                            outerRadius: 90,
+                                                            paddingAngle: 5,
+                                                            cornerRadius: 5,
+                                                            startAngle: 0,
+                                                            endAngle: 360,
+                                                            cx: 100,
+                                                            cy: 110,
+                                                        },]}
+                                                        height={210}
+                                                        width={390}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                    <h2><b>Visitor Location Distribution</b></h2>
+                                                    <p style={{ textAlign: 'center' }}>No visitors yet</p>
+                                                </div>
+                                            )}
 
-                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)' , boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                                                <h2><b>Visitor Gender Distribution</b></h2>
-                                                <PieChart
-                                                    colors={colors}
-                                                    series={[{
-                                                        data: generatePieChartDataGender(),
-                                                        innerRadius: 20,
-                                                        outerRadius: 90,
-                                                        paddingAngle: 5,
-                                                        cornerRadius: 5,
-                                                        startAngle: 0,
-                                                        endAngle: 360,
-                                                        cx: 100,
-                                                        cy: 110,
-                                                        fontSize: 15
-                                                    },]}
-                                                    height={210}
-                                                    width={320}
-                                                />
-                                            </div>
+                                            {/* Visitor Gender Distribution */}
+                                            {event.listVisitor && event.listVisitor.length > 0 ? (
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                    <h2><b>Visitor Gender Distribution</b></h2>
+                                                    <PieChart
+                                                        colors={colors}
+                                                        series={[{
+                                                            data: generatePieChartDataGender(),
+                                                            innerRadius: 20,
+                                                            outerRadius: 90,
+                                                            paddingAngle: 5,
+                                                            cornerRadius: 5,
+                                                            startAngle: 0,
+                                                            endAngle: 360,
+                                                            cx: 100,
+                                                            cy: 110,
+                                                            fontSize: 15
+                                                        },]}
+                                                        height={210}
+                                                        width={320}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                    <h2><b>Visitor Gender Distribution</b></h2>
+                                                    <p style={{ textAlign: 'center' }}>No visitors yet</p>
+                                                </div>
+                                            )}
                                         </div>
+
+
                                         {/* Age Distribution Bar Chart */}
                                         <div className="bar-charts-container" style={{ display: 'flex', gap: '20px' }}>
-                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'  }}>
-                                                <h2><b>Age Distribution - Female</b></h2>
-                                                <BarChart
-                                                    colors={colors}
-                                                    xAxis={[{
-                                                        scaleType: 'band',
-                                                        data: generateBarChartDataAge('Female').map(data => data.name),
-                                                        colorMap: {
-                                                            type: 'ordinal',
-                                                            colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
-                                                        }
-                                                    }]}
-                                                    series={[{
-                                                        data: generateBarChartDataAge('Female').map(data => data.value),
-                                                    }]}
-                                                    width={400}
-                                                    height={200}
-                                                />
-                                            </div>
-                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'  }}>
-                                                <h2><b>Age Distribution - Male</b></h2>
-                                                <BarChart
-                                                    colors={colors}
-                                                    xAxis={[{
-                                                        scaleType: 'band',
-                                                        data: generateBarChartDataAge('Male').map(data => data.name),
-                                                        colorMap: {
-                                                            type: 'ordinal',
-                                                            colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
-                                                        }
-                                                    }]}
-                                                    series={[{
-                                                        data: generateBarChartDataAge('Male').map(data => data.value),
-                                                    }]}
-                                                    width={400}
-                                                    height={200}
-                                                />
-                                            </div>
+                                            {event.listVisitor && event.listVisitor.length > 0 ? (
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                    <h2><b>Age Distribution - Female</b></h2>
+                                                    <BarChart
+                                                        colors={colors}
+                                                        xAxis={[{
+                                                            scaleType: 'band',
+                                                            data: generateBarChartDataAge('Female').map(data => data.name),
+                                                            colorMap: {
+                                                                type: 'ordinal',
+                                                                colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                            }
+                                                        }]}
+                                                        series={[{
+                                                            data: generateBarChartDataAge('Female').map(data => data.value),
+                                                        }]}
+                                                        width={400}
+                                                        height={200}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                    <h2><b>Visitor Gender Distribution</b></h2>
+                                                    <p style={{ textAlign: 'center' }}>No visitors yet</p>
+                                                </div>
+                                            )}
+
+                                            {event.listVisitor && event.listVisitor.length > 0 ? (
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                    <h2><b>Age Distribution - Male</b></h2>
+                                                    <BarChart
+                                                        colors={colors}
+                                                        xAxis={[{
+                                                            scaleType: 'band',
+                                                            data: generateBarChartDataAge('Male').map(data => data.name),
+                                                            colorMap: {
+                                                                type: 'ordinal',
+                                                                colors: ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834']
+                                                            }
+                                                        }]}
+                                                        series={[{
+                                                            data: generateBarChartDataAge('Male').map(data => data.value),
+                                                        }]}
+                                                        width={400}
+                                                        height={200}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                    <h2><b>Visitor Gender Distribution</b></h2>
+                                                    <p style={{ textAlign: 'center' }}>No visitors yet</p>
+                                                </div>
+                                            )}
+
                                         </div>
                                     </div>
 
