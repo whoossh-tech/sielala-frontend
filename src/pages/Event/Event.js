@@ -64,7 +64,6 @@ const Event = () => {
         <div className='content-container my-8'>
           <div className="dashboard-container">
             <div>
-            {/* <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
               <style>{reynaldoStyles}</style>
               {/* {( role === 'BISDEV' ) && (
                   <NavbarBisdev style={{ zIndex: 999 }} />
