@@ -107,6 +107,8 @@ const InvoiceDetail = () => {
         }
       })
       .catch((err) => console.log(err));
+
+  localStorage.setItem('idSelectedEvent', idEvent);
   }, [idInvoice]);
 
   console.log(statusPayment);
