@@ -242,6 +242,11 @@ const Invoice = () => {
                         </tr>
                       )}
                     </tbody>
+                    {search.trim() && filterInvoice().length === 0 && (
+                <tr>
+                  <td colSpan="6">No Invoice match the search criteria</td>
+                </tr>
+              )}
                   </table>
                 </div>
               )}

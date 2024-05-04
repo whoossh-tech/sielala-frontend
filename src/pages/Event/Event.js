@@ -167,6 +167,11 @@ const Event = () => {
                         <td colSpan="6">No events available</td>
                       </tr>
                     )}
+                    {search.trim() && filterEvent().length === 0 && (
+                      <tr>
+                        <td colSpan="4">No Event match the search criteria</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

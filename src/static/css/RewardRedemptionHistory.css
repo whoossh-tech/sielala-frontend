@@ -219,3 +219,18 @@ width: 20%;
 .reward-redemption-table th:nth-child(6), .reward-redemption-table td:nth-child(6) {
     width: 20%;
 }
+
+.search-and-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .button-container {
+    margin-right: 10px; 
+  }
+  
+  .search-container {
+    position: relative;
+    display: inline-block;
+  }

@@ -276,6 +276,11 @@ const Contacts = () => {
                 </tr>
               )}
             </tbody>
+            {search.trim() && filterContact().length === 0 && (
+                <tr>
+                  <td colSpan="6">No Contact match the search criteria</td>
+                </tr>
+              )}
           </table>
       </div>
       </React.Fragment>
