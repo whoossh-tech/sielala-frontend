@@ -139,16 +139,13 @@ const EditSponsor = () => {
       <main style={{ marginLeft: "60px" }}>
 
         {/* Header Start */}
-        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
-          <div>
-            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
-              Edit Sponsor
-            </h1>
-            <div>
-              <p className="subtitle">Edit sponsor data here</p>
-            </div>
+        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+          <div className="mx-8">
+            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+              Edit Sponsor Data</h1>
           </div>
         </div>
+        {/* Header Ends */}
 
         <Toaster position="top-center" reverseOrder={false} />
 
