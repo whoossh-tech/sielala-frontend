@@ -68,11 +68,19 @@ const Event = () => {
 
       <main style={{ marginLeft: "60px" }}>
         {/* Header Start */}
-        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "130px" }}>
+        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "150px" }}>
           <div className="mx-8">
             <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: "left", fontSize: 50 }}>
               Event Management
             </h1>
+            <div >
+                <p className="subtitle">
+                  <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                      <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                  </a>
+                  / Event Management
+                </p>
+            </div>
           </div>
         </div>
         {/* Header Ends */}
