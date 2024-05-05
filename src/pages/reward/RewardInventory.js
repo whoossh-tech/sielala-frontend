@@ -124,17 +124,10 @@ const RewardInventory = () => {
         }
     }
 
-    if (selectedEvent) {
-      axios
-        .get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
-        .then((res) => {
-          console.log(res.data.data);
-          setRewardData(res.data.data);
-          setCountDays(res.data.dayRange);
-          setDay(res.data.newDay);
-        })
-        .catch((err) => console.log(err));
-    }
+    const sortedRewardData = rewardData.map(reward => {
+        const sortedListDayReward = reward.listDayReward.sort((a, b) => a.day - b.day);
+        return { ...reward, listDayReward: sortedListDayReward };
+    });
 
     const handleAddRewardButton = () => {
         if (selectedEvent) {
@@ -264,10 +257,8 @@ const RewardInventory = () => {
                             </div>
                         </div>
                         <div className="button-field">
-
                             <button className="button-pink" onClick={handleAddRewardButton} disabled={disableAddRewardButton}>+ Add Reward</button>
                             <button className="button-green" onClick={carryOutStockModal} disabled={disableCarryOutStockButton}>Carry Out Stock</button>
-
                         </div>
                     </React.Fragment>
                 )}
