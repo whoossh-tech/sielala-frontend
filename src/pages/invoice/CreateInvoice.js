@@ -12,11 +12,15 @@ import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { NavbarFinance } from '../../components/navbar/NavbarFinance';
 import Sponsor from '../Sponsor/Sponsor';
+import "../../static/css/event/Event.css";
+import Sidebar from '../../pages/dashboard/Sidebar';
+import '../../static/css/Style.css';
 
 const CreateInvoice = () => {
     const { idContact } = useParams();
     const url = 'https://sielala-backend-production.up.railway.app';
     const navigate = useNavigate();
+    const [activePage, setActivePage] = useState('invoice');
 
     const [companyName, setCompanyName] = useState('');
     const [companyAddress, setCompanyAddress] = useState('');
@@ -166,204 +170,219 @@ const CreateInvoice = () => {
     }
 
     return (
-        <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            {( role === 'PARTNERSHIP' ) && (
-            <NavbarPartnership style={{ zIndex: 999 }} />
-            )}
-
-            {( role === 'ADMIN' ) && (
-                <NavbarAdmin style={{ zIndex: 999 }} />
-            )}
-
-            <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
-                <div>
-                    <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-                        Create Invoice</h1>
-                    <div>
-                            <p className="subtitle">Manage and view invoice's data here.</p>
-                    </div>
-                </div>
-            </div>
-
-            <Toaster
-                    position="top-center"
-                    reverseOrder={false}
-            />
-            
-        <form
-            className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
-             onSubmit={(e) => onSubmit(e)}
-        >
-
-            <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
-
-                <div className="input-form flex flex-col">
-                    <label className="input-label font-reynaldo text-left" htmlFor="event">
-                        Company Name
-                    </label>
-
-                    <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
-                        <input
-                            id="company_name"
-                            className="px-4 py-3 w-full focus:outline-none bg-gray-100"
-                            value={companyName}
-                            readOnly
-                        />
-                    </div>
-                </div>
-
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="company_address">
-                    Company Address<span className="text-danger">*</span>
-                </label>
-
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.company_address && "border-danger"}`}>
-                    <input
-                    id="company_address"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="Insert Company Address"
-                    value={companyAddress}
-                    onChange={(e) => setCompanyAddress(e.target.value)} 
-                    />
-                </div>
-
-                {errors.company_address && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.company_address}
-                    </span>
-                )}
-                </div>
-
-                <div className="input-form flex flex-col space-y-1">
-                <label className="input-label font-reynaldo text-left" htmlFor="pic_name">
-                    Company PIC<span className="text-danger">*</span>
-                </label>
-
-                <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.pic_name && "border-danger"}`}>
-                    <input
-                    id="pic_name"
-                    className="px-4 py-3 w-full focus:outline-none"
-                    placeholder="Insert Company PIC Name"
-                    value={picName}
-                    onChange={(e) => setPicName(e.target.value)} 
-                    />
-                </div>
-
-                {errors.pic_name && (
-                    <span className="mt-0.5 text-danger text-xs">
-                    {errors.pic_name}
-                    </span>
-                )}
-                </div>
-
-                <div>
-                    <div className="button-field">
-                        <button className="button-green" onClick={handleAddRow}>Add Item</button>
-                    </div>
-                </div>
-
-                <div className="input-form flex flex-col">
-                <label className="input-label font-reynaldo text-left" htmlFor="items">
-                    Items<span className="text-danger">*</span>
-                </label>
-
-                <table>
-                    <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Rate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {listInvoiceItem.map((item, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>
-                                <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
-                                    <input
-                                        className="px-4 py-3 w-full focus:outline-none"
-                                        type="text"
-                                        value={item.item}  
+    <body>
+        <Sidebar activePage={activePage}/> 
   
-                                        onChange={(e) => handleInputChange(index, 'item', e.target.value)}
-                                    />
-                                </div>
-                            </td>
-                            <td>
-                                <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
-                                    <input
-                                        className="px-4 py-3 w-full focus:outline-none"
-                                        type="number"
-                                        value={item.quantity}  
-                                        min="1"
-                                        onChange={(e) => handleInputChange(index, 'quantity', parseInt(e.target.value))}
-                                    />
-                                </div>
-                            </td>
-                            <td>
-                                <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
-                                    <input
-                                        className="px-4 py-3 w-full focus:outline-none"
-                                        type="number"
-                                        value={item.rate}  
-                                        min="1"
-                                        onChange={(e) => handleInputChange(index, 'rate', parseInt(e.target.value))}
-                                    />
-                                </div>
-                            </td>
-                            <td>
-                                <button className="button-red"onClick={() => handleDeleteRow(index)}>Delete</button>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td colSpan="3">
-                            {errors.listInvoiceItem && (
+        <main style={{ marginLeft: "60px" }}>
+  
+          {/* Header Start */}
+          <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Create Invoice</h1>
+              </div>
+          </div>
+          {/* Header Ends */}
+  
+          <div className='content-container my-8'>
+            <div className="dashboard-container">
+              <div>
+                    {/* {( role === 'PARTNERSHIP' ) && (
+                    <NavbarPartnership style={{ zIndex: 999 }} />
+                    )}
+
+                    {( role === 'ADMIN' ) && (
+                        <NavbarAdmin style={{ zIndex: 999 }} />
+                    )} */}
+
+                <Toaster
+                        position="top-center"
+                        reverseOrder={false}
+                />
+                    
+                <form
+                    className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg"
+                    onSubmit={(e) => onSubmit(e)}
+                >
+
+                    <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
+
+                        <div className="input-form flex flex-col">
+                            <label className="input-label font-reynaldo text-left" htmlFor="event">
+                                Company Name
+                            </label>
+
+                            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
+                                <input
+                                    id="company_name"
+                                    className="px-4 py-3 w-full focus:outline-none bg-gray-100"
+                                    value={companyName}
+                                    readOnly
+                                />
+                            </div>
+                        </div>
+
+                        <div className="input-form flex flex-col space-y-1">
+                            <label className="input-label font-reynaldo text-left" htmlFor="company_address">
+                                Company Address<span className="text-danger">*</span>
+                            </label>
+
+                            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.company_address && "border-danger"}`}>
+                                <input
+                                id="company_address"
+                                className="px-4 py-3 w-full focus:outline-none"
+                                placeholder="Insert Company Address"
+                                value={companyAddress}
+                                onChange={(e) => setCompanyAddress(e.target.value)} 
+                                />
+                            </div>
+
+                            {errors.company_address && (
                                 <span className="mt-0.5 text-danger text-xs">
-                                    {errors.listInvoiceItem}
+                                {errors.company_address}
                                 </span>
                             )}
-                        </td>
-                    </tr>
-                </tfoot>
-                </table>
+                        </div>
 
-                </div>
+                        <div className="input-form flex flex-col space-y-1">
+                        <label className="input-label font-reynaldo text-left" htmlFor="pic_name">
+                            Company PIC<span className="text-danger">*</span>
+                        </label>
 
-            </div>
+                        <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.pic_name && "border-danger"}`}>
+                            <input
+                            id="pic_name"
+                            className="px-4 py-3 w-full focus:outline-none"
+                            placeholder="Insert Company PIC Name"
+                            value={picName}
+                            onChange={(e) => setPicName(e.target.value)} 
+                            />
+                        </div>
 
-            <br></br>
-            <div>
-                <button className="button-green" onClick={handleBack}>Cancel</button>
-                <button className="button-pink" type="submit">Create Invoice</button>
-            </div>
+                        {errors.pic_name && (
+                            <span className="mt-0.5 text-danger text-xs">
+                            {errors.pic_name}
+                            </span>
+                        )}
+                        </div>
 
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                id="modal-confirmation-form"
-            >
-            {/* <div className='modalBackground'>
-                <div className="modalContainer"> */}
-                    <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-                    <p className="text-center text-gray-700">Are you sure you want to create this invoice?</p>
+                        <div>
+                            <div className="button-field">
+                                <button className="button-green" onClick={handleAddRow}>Add Item</button>
+                            </div>
+                        </div>
+
+                        <div className="input-form flex flex-col">
+                        <label className="input-label font-reynaldo text-left" htmlFor="items">
+                            Items<span className="text-danger">*</span>
+                        </label>
+
+                        <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
+                            <table className="event-table mx-8">
+                            <thead>
+                                <tr>
+                                <th>#</th>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {listInvoiceItem.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
+                                            <input
+                                                className="px-4 py-3 w-full focus:outline-none"
+                                                type="text"
+                                                value={item.item}  
+        
+                                                onChange={(e) => handleInputChange(index, 'item', e.target.value)}
+                                            />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
+                                            <input
+                                                className="px-4 py-3 w-full focus:outline-none"
+                                                type="number"
+                                                value={item.quantity}  
+                                                min="1"
+                                                onChange={(e) => handleInputChange(index, 'quantity', parseInt(e.target.value))}
+                                            />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
+                                            <input
+                                                className="px-4 py-3 w-full focus:outline-none"
+                                                type="number"
+                                                value={item.rate}  
+                                                min="1"
+                                                onChange={(e) => handleInputChange(index, 'rate', parseInt(e.target.value))}
+                                            />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button className="button-red"onClick={() => handleDeleteRow(index)}>Delete</button>
+                                    </td>
+                                </tr>
+                                ))}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colSpan="3">
+                                    {errors.listInvoiceItem && (
+                                        <span className="mt-0.5 text-danger text-xs">
+                                            {errors.listInvoiceItem}
+                                        </span>
+                                    )}
+                                </td>
+                            </tr>
+                        </tfoot>
+                        
+                        </table>
+                        </div>
+                        </div>
+
+                    </div>
+
                     <br></br>
                     <div>
-                        <button className="button-red text-center" onClick={closeModal}>Cancel</button>
-                        <button className="button-green text-center" onClick={confirmSubmit}>Confirm</button>
+                        <button className="button-green" onClick={handleBack}>Cancel</button>
+                        <button className="button-pink" type="submit">Create Invoice</button>
                     </div>
-                {/* </div>
-            </div> */}
-            </Modal>
 
-            <br></br>
+                    <Modal
+                        isOpen={isModalOpen}
+                        onRequestClose={closeModal}
+                        id="modal-confirmation-form"
+                    >
+                    {/* <div className='modalBackground'>
+                        <div className="modalContainer"> */}
+                            <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                            <p className="text-center text-gray-700">Are you sure you want to create this invoice?</p>
+                            <br></br>
+                            <div>
+                                <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+                                <button className="button-green text-center" onClick={confirmSubmit}>Confirm</button>
+                            </div>
+                        {/* </div>
+                    </div> */}
+                    </Modal>
 
-        </form>
+                    <br></br>
+
+                </form>
+                </div>
         </div>
+          <script src="script.js"></script>  
+        </div>
+        
+      </main>
+    </body>
     );
 
 

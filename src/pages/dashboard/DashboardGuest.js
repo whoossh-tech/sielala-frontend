@@ -150,9 +150,6 @@ const DashboardGuest = () => {
                             <p className="text-md mb-2 text-start">
                                 📍 {event.location}
                             </p>
-                            <p className="text-md mb-2 text-start">
-                                📍 {event.totalVisitor}
-                            </p>
 
                             <div style={{ display: 'flex', justifyContent: 'center'}}>
                                 <div className="detail-square-card bg-primary-10 shadow-md rounded-lg py-1 px-6 my-14 mx-3" style={{ backgroundColor: '#F59FC3' }}>
@@ -168,7 +165,7 @@ const DashboardGuest = () => {
                             </div>
                     ))
                 ) : (
-                    <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4">
+                    <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4 px-2">
                         <p><b>No Previous Events Available</b></p>
                     </div>
                 )}

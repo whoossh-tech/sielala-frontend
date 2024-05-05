@@ -16,6 +16,7 @@ const VisitorDetail = () => {
   const [visitor, setVisitor] = useState();
   const role = localStorage.getItem('role');
   const [activePage, setActivePage] = useState('visitor');
+  const [idEvent, setIdEvent] = useState();
 
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -26,8 +27,11 @@ const VisitorDetail = () => {
       .then((res) => {
         setVisitor(res.data.visitorData);
         console.log(res.data.visitorData);
+        setIdEvent(res.data.visitorData.event.idEvent);
       })
       .catch((err) => console.log(err));
+
+      localStorage.setItem('idSelectedEvent', idEvent);
   });
 
   const handleBack = () => {

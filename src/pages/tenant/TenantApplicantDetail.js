@@ -121,8 +121,6 @@ const TenantApplicantDetail = () => {
                             </p>
                         </div>
                     </div>
-
-
                 </div>
                 {/* Header Ends */}
 

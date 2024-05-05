@@ -37,13 +37,14 @@ const RewardDetail = () => {
         const token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        axios.get(`https://sielala-backend-production.up.railway.app/api/reward/detail/${id}`)
-            .then(res => {
-                setRewardData(res.data.rewardData)
-                setCountDays(res.data.daysRange)
-                setIdEvent(res.data.rewardData.event.idEvent)
-            }).catch(err =>
-                console.log(err))
+    axios.get(`https://sielala-backend-production.up.railway.app/api/reward/detail/${id}`)
+    .then(res => {
+        setRewardData(res.data.rewardData)
+        setCountDays(res.data.daysRange)
+        setIdEvent(res.data.rewardData.event.idEvent)
+    }).catch(err => 
+        console.log(err))
+
     })
 
     const confirmDelete = async (e) => {

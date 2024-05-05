@@ -3,6 +3,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import { useState, useEffect } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import { reynaldoStyles } from "../../assets/fonts/fonts";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { NavbarOperation } from "../../components/navbar/NavbarOperation";
 import "../../App.css";
@@ -14,12 +15,16 @@ import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { NavbarFinance } from "../../components/navbar/NavbarFinance";
 import { FaceSmileIcon } from "@heroicons/react/24/solid";
+import "../../static/css/event/Event.css";
+import Sidebar from '../../pages/dashboard/Sidebar';
+import '../../static/css/Style.css';
 
 const InvoiceDetail = () => {
   const { idInvoice } = useParams();
   const url = "https://sielala-backend-production.up.railway.app";
 
   const navigate = useNavigate();
+  const [activePage, setActivePage] = useState('invoice');
 
   const [invoiceData, setInvoiceData] = useState();
   const [countdays, setCountDays] = useState(0);
@@ -107,6 +112,8 @@ const InvoiceDetail = () => {
         }
       })
       .catch((err) => console.log(err));
+
+  localStorage.setItem('idSelectedEvent', idEvent);
   }, [idInvoice]);
 
   console.log(statusPayment);
@@ -163,6 +170,7 @@ const InvoiceDetail = () => {
       setIsValidated(true);
 
       toast.success("Payment proof validated successfully");
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Error validating payment proof");
@@ -177,6 +185,7 @@ const InvoiceDetail = () => {
       console.log("Payment validation declined :", response.data);
       toast.success("Payment proof declined successfully");
       setIsDeclined(true);
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Error declining payment proof");
@@ -241,6 +250,7 @@ const InvoiceDetail = () => {
         ...prevData,
         trackingStatus: "Delivered",
       }));
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Failed to change tracking status");
@@ -248,159 +258,159 @@ const InvoiceDetail = () => {
   };
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      {role === "PARTNERSHIP" && <NavbarPartnership style={{ zIndex: 999 }} />}
+    <body>
+      <Sidebar activePage={activePage}/> 
 
-      {role === "FINANCE" && <NavbarFinance style={{ zIndex: 999 }} />}
+      <main style={{ marginLeft: "60px" }}>
 
-      {role === "ADMIN" && <NavbarAdmin style={{ zIndex: 999 }} />}
-
-      <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
-        <div>
-          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
-            Invoice Detail
-          </h1>
-          {/* <div>
-            <p className="subtitle">Manage and view invoice's data here.</p>
-          </div> */}
-          <div>
-            <p className="subtitle">
-                <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Invoice Management </a>
-                / Detail
-            </p>
-          </div>
+        {/* Header Start */}
+        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+            <div className="mx-8">
+                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                Invoice Detail</h1>
+            </div>
+            <div>
+                <p className="subtitle">
+                    <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
+                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Invoice List </a>
+                    / Detail
+                </p>
+            </div>
         </div>
-      </div>
+        {/* Header Ends */}
 
-      <Toaster position="top-center" reverseOrder={false} />
+        <div className='content-container my-8'>
+          <div className="dashboard-container">
+            <div>
+            <style>{reynaldoStyles}</style>
+              {/* {role === "PARTNERSHIP" && <NavbarPartnership style={{ zIndex: 999 }} />}
 
-      <br></br>
-      <br></br>
+              {role === "FINANCE" && <NavbarFinance style={{ zIndex: 999 }} />}
 
-      <h1 className="text-2xl font-semibold mb-4 text-center">Invoice Detail</h1>
+              {role === "ADMIN" && <NavbarAdmin style={{ zIndex: 999 }} />} */}
 
-      {invoiceData ? (
-        <>
-          <br></br>
+              <Toaster position="top-center" reverseOrder={false} />
 
-          <div className="detail-invoice">
-            <div className="each-invoice">
-              <p className="invoice-text-title">Tenant/Sponsor:</p>
-              <p className="invoice-text">{invoiceData.companyName}</p>
-            </div>
-            <div className="each-invoice">
-              <p className="invoice-text-title">Type:</p>
-              <p className="invoice-text">{invoiceData.type}</p>
-            </div>
-            <div className="each-invoice">
-              <p className="invoice-text-title">Address:</p>
-              <p className="invoice-text">{invoiceData.companyAddress}</p>
-            </div>
-            <div className="each-invoice">
-              <p className="invoice-text-title">PIC Name:</p>
-              <p className="invoice-text">{invoiceData.picName}</p>
-            </div>
-            <div className="each-invoice">
-              <p className="invoice-text-title">Date Issued:</p>
-              <p className="invoice-text">
-                {new Date(invoiceData.dateIssued).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-            </div>
-            <div className="each-invoice">
-              <p className="invoice-text-title">Tracking Status:</p>
-              <p className="invoice-text">{invoiceData.trackingStatus}</p>
-            </div>
-            <div className="each-invoice">
-              <p className="invoice-text-title">Payment Status:</p>
-              <p className="invoice-text">{invoiceData.paymentStatus}</p>
-            </div>
-          </div>
 
-          <br></br>
-          <br></br>
+              {invoiceData ? (
+                <>
+                  <br></br>
 
-          {/* <p>{invoiceData.paymentStatus}</p> */}
+                  <div className="detail-invoice" style={{display: "flex", justifyContent: "center"}}>
+                    <div className="each-invoice">
+                      <p className="invoice-text-title">Tenant/Sponsor:</p>
+                      <p className="invoice-text">{invoiceData.companyName}</p>
+                    </div>
+                    <div className="each-invoice">
+                      <p className="invoice-text-title">Type:</p>
+                      <p className="invoice-text">{invoiceData.type}</p>
+                    </div>
+                    <div className="each-invoice">
+                      <p className="invoice-text-title">Address:</p>
+                      <p className="invoice-text">{invoiceData.companyAddress}</p>
+                    </div>
+                    <div className="each-invoice">
+                      <p className="invoice-text-title">PIC Name:</p>
+                      <p className="invoice-text">{invoiceData.picName}</p>
+                    </div>
+                    <div className="each-invoice">
+                      <p className="invoice-text-title">Date Issued:</p>
+                      <p className="invoice-text">
+                        {new Date(invoiceData.dateIssued).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </p>
+                    </div>
+                    <div className="each-invoice">
+                      <p className="invoice-text-title">Tracking Status:</p>
+                      <p className="invoice-text">{invoiceData.trackingStatus}</p>
+                    </div>
+                    <div className="each-invoice">
+                      <p className="invoice-text-title">Payment Status:</p>
+                      <p className="invoice-text">{invoiceData.paymentStatus}</p>
+                    </div>
+                  </div>
 
-          <div>
-            <div className="button-field">
-              {/* <button className="button-green" onClick={handleBack}>
-                Back
-              </button> */}
+                  {/* <p>{invoiceData.paymentStatus}</p> */}
 
-              {(role === "PARTNERSHIP" || role === "ADMIN") && (
-                <Link to={`/invoice/edit-detail/${idInvoice}`}>
-                  <button className="button-pink" disabled={isEditDisabled}>
-                    Edit Invoice
-                  </button>
-                </Link>
-              )}
+                  <div>
+                    {/* <div className="button-field"> */}
+                      {/* <button className="button-green" onClick={handleBack}>
+                        Back
+                      </button> */}
 
-              <button className="button-brown" onClick={handleGenerate}>
-                Generate to PDF
-              </button>
+                      {(role === "PARTNERSHIP" || role === "ADMIN") && (
+                        <Link to={`/invoice/edit-detail/${idInvoice}`}>
+                          <button className="button-pink" disabled={isEditDisabled}>
+                            Edit Invoice
+                          </button>
+                        </Link>
+                      )}
+
+                      <button className="button-green" onClick={handleGenerate}>
+                        Generate to PDF
+                      </button>
 
               {(invoiceData.trackingStatus === "Issued" || invoiceData.trackingStatus === "Pending") && (
-                <button className="button-green" onClick={openModal} disabled={isLoading}>
+                <button className="button-orange" onClick={openModal} disabled={isLoading}>
                   {isLoading ? "Sending..." : "Notify Client"}
                 </button>
               )}
 
-              {/* Tombol untuk mengubah status menjadi "delivered" */}
-              {invoiceData.trackingStatus === "Pending" && (
-                <button className="button-green" onClick={handleDeliveredButtonClick}>
-                  Mark as Delivered
-                </button>
+                      {/* Tombol untuk mengubah status menjadi "delivered" */}
+                      {invoiceData.trackingStatus !== "Delivered" && (
+                        <button className="button-brown" onClick={handleDeliveredButtonClick}>
+                          Mark as Delivered
+                        </button>
+                      )}
+                    {/* </div> */}
+                  </div>
+
+                  <br></br>
+                  <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
+                    <table className="event-table mx-8">
+                      <thead>
+                        {/* Row headers */}
+                        <tr>
+                          <th style={{ width: "20%", textAlign: "center"}}>Item</th>
+                          <th style={{ width: "20%", textAlign: "center"}}>Quantity</th>
+                          <th style={{ width: "20%", textAlign: "center"}}>Rate</th>
+                          <th style={{ width: "20%", textAlign: "center"}}>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {invoiceData.listInvoiceItem.map((itemInvoice, j) => (
+                          <tr key={j}>
+                            <td>{itemInvoice.item}</td>
+                            <td>{itemInvoice.quantity}</td>
+                            <td>{formatRupiah(itemInvoice.rate)}</td>
+                            <td>{formatRupiah(itemInvoice.totalAmountItem)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                      <tbody>
+                        <tr>
+                          <td colSpan={3}>Total</td>
+                          <td>{formatRupiah(invoiceData.totalAmount)}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              ) : (
+                <p>Loading...</p>
               )}
-            </div>
-          </div>
+              <br></br>
 
-          <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
-            <table>
-              <thead>
-                {/* Row headers */}
-                <tr>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Rate</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoiceData.listInvoiceItem.map((itemInvoice, j) => (
-                  <tr key={j}>
-                    <td>{itemInvoice.item}</td>
-                    <td>{itemInvoice.quantity}</td>
-                    <td>{formatRupiah(itemInvoice.rate)}</td>
-                    <td>{formatRupiah(itemInvoice.totalAmountItem)}</td>
-                  </tr>
-                ))}
-              </tbody>
-              <tbody>
-                <tr>
-                  <td colSpan={3}>Total</td>
-                  <td>{formatRupiah(invoiceData.totalAmount)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
+{/* Payment Proof Section */}
 
-        {/* Payment Proof Section */}
-
-        {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
-
-          <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
+      {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
+        <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
           <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
-          {(statusPayment !== "Approved") && (
+          {statusPayment !== "Approved" && (
             <div className="flex items-center mb-4">
               <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
               <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
@@ -408,19 +418,14 @@ const InvoiceDetail = () => {
               </button>
             </div>
           )}
-          
+
           {paymentImageUrl && (
             <div>
               <div className="w-full flex justify-center items-center">
-                <img
-                  src={paymentImageUrl}
-                  alt="Payment proof"
-                  className="w-full rounded-lg shadow-md"
-                  style={{ width: "500px", height: "auto" }} 
-                />
+                <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" style={{ width: "500px", height: "auto" }} />
               </div>
 
-              {(statusPayment !== "Approved") && (
+              {(role === "FINANCE" || role === "ADMIN") && statusPayment !== "Approved" && (
                 <div className="w-full flex justify-center items-center">
                   <button className="button-green" onClick={handleValidateButton}>
                     Validate
@@ -432,9 +437,8 @@ const InvoiceDetail = () => {
               )}
             </div>
           )}
-
-          </div>
-        )}
+        </div>
+      )}
 
       <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
@@ -450,56 +454,62 @@ const InvoiceDetail = () => {
         </div>
       </Modal>
 
-      <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation-form">
-        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-        <p className="text-center text-gray-700">Are you sure you want to upload this payment proof?</p>
-        <br></br>
-        <div>
-          <button className="button-red text-center" onClick={closeUploadModal}>
-            Cancel
-          </button>
-          <button
-            className="button-green text-center"
-            onClick={() => {
-              uploadPaymentProof(idInvoice, paymentImage);
-              closeUploadModal();
-            }}
-          >
-            Confirm
-          </button>
-        </div>
-      </Modal>
+              <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation-form">
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                <p className="text-center text-gray-700">Are you sure you want to upload this payment proof?</p>
+                <br></br>
+                <div>
+                  <button className="button-red text-center" onClick={closeUploadModal}>
+                    Cancel
+                  </button>
+                  <button
+                    className="button-green text-center"
+                    onClick={() => {
+                      uploadPaymentProof(idInvoice, paymentImage);
+                      closeUploadModal();
+                    }}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </Modal>
 
-      <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation-form">
-        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-        <p className="text-center text-gray-700">Are you sure you want to validate this payment proof?</p>
-        <br></br>
-        <div>
-          <button className="button-red text-center" onClick={closeValidateModal}>
-            Cancel
-          </button>
-          <button className="button-green text-center" onClick={confirmValidate}>
-            Confirm
-          </button>
-        </div>
-      </Modal>
+              <Modal isOpen={isValidateModalOpen} onRequestClose={closeValidateModal} id="modal-confirmation-form">
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                <p className="text-center text-gray-700">Are you sure you want to validate this payment proof?</p>
+                <br></br>
+                <div>
+                  <button className="button-red text-center" onClick={closeValidateModal}>
+                    Cancel
+                  </button>
+                  <button className="button-green text-center" onClick={confirmValidate}>
+                    Confirm
+                  </button>
+                </div>
+              </Modal>
 
-      <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation-form">
-        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-        <p className="text-center text-gray-700">Are you sure you want to decline this payment proof?</p>
-        <br></br>
-        <div>
-          <button className="button-red text-center" onClick={closeDeclineModal}>
-            Cancel
-          </button>
-          <button className="button-green text-center" onClick={confirmDecline}>
-            Confirm
-          </button>
-        </div>
-      </Modal>
+              <Modal isOpen={isDeclineModalOpen} onRequestClose={closeDeclineModal} id="modal-confirmation-form">
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                <p className="text-center text-gray-700">Are you sure you want to decline this payment proof?</p>
+                <br></br>
+                <div>
+                  <button className="button-red text-center" onClick={closeDeclineModal}>
+                    Cancel
+                  </button>
+                  <button className="button-green text-center" onClick={confirmDecline}>
+                    Confirm
+                  </button>
+                </div>
+              </Modal>
 
-      <br></br>
-    </div>
+              <br></br>
+            </div>
+          </div>
+          <script src="script.js"></script>  
+        </div>
+        
+      </main>
+    </body>
   );
 };
 

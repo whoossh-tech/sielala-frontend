@@ -87,7 +87,11 @@ const EditSponsor = () => {
 
     if (!telephone.trim()) {
       newErrors.company_telephone = "Company Telephone Number cannot be empty";
-    }
+    } else if (!/^\d+$/.test(telephone)) {
+      newErrors.company_telephone = 'Telephone Number must contain only numbers';
+  } else if (telephone.charAt(0) === '0') {
+      newErrors.company_telephone = 'Telephone Number cannot start with 0';
+  }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

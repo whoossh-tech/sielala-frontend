@@ -124,10 +124,17 @@ const RewardInventory = () => {
         }
     }
 
-    const sortedRewardData = rewardData.map(reward => {
-        const sortedListDayReward = reward.listDayReward.sort((a, b) => a.day - b.day);
-        return { ...reward, listDayReward: sortedListDayReward };
-    });
+    if (selectedEvent) {
+      axios
+        .get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
+        .then((res) => {
+          console.log(res.data.data);
+          setRewardData(res.data.data);
+          setCountDays(res.data.dayRange);
+          setDay(res.data.newDay);
+        })
+        .catch((err) => console.log(err));
+    }
 
     const handleAddRewardButton = () => {
         if (selectedEvent) {

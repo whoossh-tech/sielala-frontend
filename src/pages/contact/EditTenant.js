@@ -11,6 +11,7 @@ import "../../static/css/TenantRegistrationForm.css";
 import "../../static/css/Button.css";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
+import Sidebar from '../dashboard/Sidebar';
 
 const EditTenant = () => {
   // const { eventId } = useParams();
@@ -32,6 +33,8 @@ const EditTenant = () => {
   const [category, setCategory] = useState("");
   const [boothPreference, setBoothPreference] = useState("");
   const [errors, setErrors] = useState({});
+  const [activePage, setActivePage] = useState('contact');
+  
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,8 +63,12 @@ const EditTenant = () => {
     }
 
     if (!telephone.trim()) {
-      newErrors.brand_number = "Brand Telephone Number cannot be empty";
-    }
+      newErrors.brand_number = "Company Telephone Number cannot be empty";
+    } else if (!/^\d+$/.test(telephone)) {
+      newErrors.brand_number = 'Telephone Number must contain only numbers';
+  } else if (telephone.charAt(0) === '0') {
+      newErrors.brand_number = 'Telephone Number cannot start with 0';
+  }
 
     if (!brandInstagram.trim()) {
       newErrors.brand_instagram = "Brand Instagram cannot be empty";
@@ -172,23 +179,35 @@ const EditTenant = () => {
     }
   };
 
+  const handleBackContactList = () => {
+    navigate(-2);
+  };
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      <style>{reynaldoStyles}</style>
-      {role === "PARTENRSHIP" && <NavbarPartnership style={{ zIndex: 999 }} />}
-
-      {role === "ADMIN" && <NavbarAdmin style={{ zIndex: 999 }} />}
-
-      <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
-        <div>
-          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
-            Edit Tenant
-          </h1>
-          <div>
-            <p className="subtitle">Manage and view tenant's data here.</p>
+    <body>
+      <Sidebar activePage={activePage}/>
+      <main style={{marginLeft: " 60px"}}>
+      <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
+      {/* Header Start */}
+          <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Edit Tenant</h1>
+              </div>
+              <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
+                        <a onClick={handleBackContactList} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Contact List </a>/
+                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Detail Tenant </a>
+                        / Edit Tenant
+                    </p>
+                </div>
           </div>
-        </div>
-      </div>
+          {/* Header Ends */}
 
       <Toaster position="top-center" reverseOrder={false} />
 
@@ -377,7 +396,11 @@ const EditTenant = () => {
 
         <br></br>
       </form>
-    </main>
+    </div>
+
+
+      </main>
+    </body>
   );
 };
 
