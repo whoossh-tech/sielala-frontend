@@ -272,7 +272,7 @@ const InvoiceDetail = () => {
             <div>
                 <p className="subtitle">
                     <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Invoice List </a>
+                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Invoice Management </a>
                     / Detail
                 </p>
             </div>
@@ -406,7 +406,7 @@ const InvoiceDetail = () => {
 
 {/* Payment Proof Section */}
 
-      {(statusInvoice === "delivered" || statusInvoice === "Finished") && (
+      {(statusInvoice !== "Issued" || statusInvoice !== "Pending") && (
         <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
           <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
