@@ -20,7 +20,6 @@ import { DashboardAdmin } from "./pages/dashboard/DashboardAdmin";
 import { DashboardBisdev } from "./pages/dashboard/DashboardBisdev";
 import { DashboardFinance } from "./pages/dashboard/DashboardFinance";
 import { DashboardStaff } from "./pages/dashboard/DashboardStaff";
-import { Dashboard } from "./pages/dashboard/Dashboard";
 
 import Login from "./pages/auth/Login";
 import ForgotPasswordForm from './pages/auth/ForgotPasswordForm';
@@ -58,7 +57,6 @@ import TenantDetail from './pages/contact/TenantDetail';
 
 function App() {
   const role = localStorage.getItem("role");
-  
 
   return (
     <div className="App">
@@ -68,20 +66,13 @@ function App() {
             {/* PUBLIC ROUTES */}
             <Route path="/" element={<DashboardGuest />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPasswordForm/>} />
+            <Route path="/forgot-password" element={<ForgotPasswordForm />} />
             <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm />}></Route>
             <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
             <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
             <Route path="/visitor-registration/:eventId" element={<VisitorRegistrationForm />}></Route>
             <Route path="/visitor-registration/success" element={<VisitorRegistrationSuccessPage />} />
             <Route path="/visitor-registration/fail" element={<VisitorRegistrationFailPage />} />
-
-            {/* ROLE: ALL STAFF */}
-            {(role === "OPERATION" || role === "ADMIN" || role === "BISDEV" || role === "FINANCE" || role === "PARTNERSHIP") && (
-              <>
-                <Route path="/d" element={<Dashboard />} />
-              </>
-            )}
 
             {/* ROLE: ALL STAFF */}
             {(role === "OPERATION" || role === "ADMIN" || role === "BISDEV" || role === "FINANCE" || role === "PARTNERSHIP") && (
@@ -165,17 +156,17 @@ function App() {
                 <Route path="/invoice/edit-detail/:idInvoice" element={<EditDetailInvoice />} />
                 <Route path="/tenant-applicant" element={<TenantApplicant />} />
                 <Route path="/tenant-applicant/:idTenantApplicant" element={<TenantApplicantDetail />} />
-                <Route path="/tenant/edit/:idTenant" element={<EditTenant />} /> 
+                <Route path="/tenant/edit/:idTenant" element={<EditTenant />} />
                 <Route path="/sponsor/edit/:idSponsor" element={<EditSponsor />} />              </>
-                
+
             )}
 
-          {(role === 'FINANCE') && (
-            <>
-              <Route path="/invoice" element={<Invoice />} />
-              <Route path="/invoice/detail/:idInvoice" element={<InvoiceDetail />} />
-            </>
-          )}
+            {(role === 'FINANCE') && (
+              <>
+                <Route path="/invoice" element={<Invoice />} />
+                <Route path="/invoice/detail/:idInvoice" element={<InvoiceDetail />} />
+              </>
+            )}
 
             {/* ROLE: PARTNERSHIP, BISDEV, and ADMIN */}
             {(role === "PARTNERSHIP" || role === "ADMIN" || role === "BISDEV") && (
