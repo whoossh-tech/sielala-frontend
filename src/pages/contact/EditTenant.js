@@ -179,14 +179,6 @@ const EditTenant = () => {
     }
   };
 
-  const handleBackContactList = () => {
-    navigate(-2);
-  };
-
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   return (
     <body>
       <Sidebar activePage={activePage}/>
@@ -198,14 +190,6 @@ const EditTenant = () => {
                   <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
                   Edit Tenant</h1>
               </div>
-              <div>
-                    <p className="subtitle">
-                        <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                        <a onClick={handleBackContactList} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Contact List </a>/
-                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Detail Tenant </a>
-                        / Edit Tenant
-                    </p>
-                </div>
           </div>
           {/* Header Ends */}
 
