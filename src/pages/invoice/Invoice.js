@@ -87,11 +87,19 @@ const Invoice = () => {
 
       <main style={{ marginLeft: "60px" }}>
         {/* Header Start */}
-        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "130px" }}>
+        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "150px" }}>
           <div className="mx-8">
             <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: "left", fontSize: 50 }}>
               Invoice Management
             </h1>
+            <div >
+                <p className="subtitle">
+                  <a href='/dashboard' style={{ textDecoration: 'none' }}>
+                      <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
+                  </a>
+                  / Invoice Management
+                </p>
+            </div>
           </div>
         </div>
         {/* Header Ends */}
@@ -99,17 +107,6 @@ const Invoice = () => {
         <div className="content-container my-8">
           <div className="dashboard-container">
             <div>
-              {/* {( role === 'PARTNERSHIP' ) && (
-                <NavbarPartnership style={{ zIndex: 999 }} />
-                )}
-
-                {( role === 'FINANCE' ) && (
-                    <NavbarFinance style={{ zIndex: 999 }} />
-                )}
-
-                {( role === 'ADMIN' ) && (
-                    <NavbarAdmin style={{ zIndex: 999 }} />
-                )} */}
 
               <Toaster position="top-center" reverseOrder={false} />
 

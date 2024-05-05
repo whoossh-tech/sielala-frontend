@@ -49,10 +49,17 @@ const DetailEvent = () => {
       <main style={{ marginLeft: "60px" }}>
         
         {/* Header Start */}
-        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '130px' }}>
+        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
             <div className="mx-8">
                 <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
-                Detail Event</h1>
+                Event Detail</h1>
+            </div>
+            <div>
+                <p className="subtitle">
+                    <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
+                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Visitor List </a>
+                    / Detail
+                </p>
             </div>
         </div>
         {/* Header Ends */}

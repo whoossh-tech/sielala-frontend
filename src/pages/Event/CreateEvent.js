@@ -111,7 +111,7 @@ const CreateEvent = () => {
         <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '130px' }}>
             <div className="mx-8">
                 <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
-                Event Management</h1>
+                Create Event</h1>
             </div>
         </div>
         {/* Header Ends */}
@@ -121,23 +121,7 @@ const CreateEvent = () => {
             </div>
             {/* <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
               <style>{reynaldoStyles}</style>
-              {/* {( role === 'BISDEV' ) && (
-                  <NavbarBisdev style={{ zIndex: 999 }} />
-              )}
 
-              {( role === 'ADMIN' ) && (
-                  <NavbarAdmin style={{ zIndex: 999 }} />
-              )} */}
-
-              {/* <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
-                  <div>
-                      <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-                      Create Event</h1>
-                      <div>
-                          <p className="subtitle">Create your event here</p>
-                      </div>
-                  </div>
-              </div> */}
 
               <Toaster position="top-center" reverseOrder={false} />
 
