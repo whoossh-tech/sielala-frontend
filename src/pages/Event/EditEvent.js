@@ -127,7 +127,7 @@ const EditEvent = () => {
         </div>
         {/* Header Ends */}
 
-        <div className='content-container my-8'>
+        <div className='content-container my-4'>
           <div className="dashboard-container">
             <div>
               <style>{reynaldoStyles}</style>
@@ -143,8 +143,6 @@ const EditEvent = () => {
                       position="top-center"
                       reverseOrder={false}
                   />
-
-                <br></br>
 
                 <form className="flex flex-col items-center px-4 pt-8 pb-6 mt-3 w-full text-neutral-100 bg-white rounded-2xl shadow-lg" onSubmit={(e) => onEditEvent(e)}>
                   <div className="flex flex-col items-stretch space-y-4 mt-3 w-full">

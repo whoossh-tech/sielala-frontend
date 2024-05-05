@@ -104,7 +104,7 @@ const TenantApplicant = () => {
         </div>
         {/* Header Ends */}
 
-        <div className="content-container my-8">
+        <div className="content-container my-4">
           <div>
             <Toaster position="top-center" reverseOrder={false} />
 

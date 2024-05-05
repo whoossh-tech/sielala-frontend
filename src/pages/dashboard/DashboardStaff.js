@@ -142,7 +142,7 @@ const DashboardStaff = () => {
     //     <Sidebar />
     //      <main>
     // Header
-    // <div className='content-container my-8'>
+    // <div className='content-container my-4'>
     //      current code (kecuali tag <main> kalo ada)
     // </div>
     //      </main>
@@ -151,7 +151,6 @@ const DashboardStaff = () => {
     return (
         <body>
             {/* Sidebar Navigation */}
-            <Sidebar />
             <style>{reynaldoStyles}</style>
             <Sidebar activePage={activePage}/>
 
@@ -166,7 +165,7 @@ const DashboardStaff = () => {
                 </div>
                 {/* Header Ends */}
 
-                <div className='content-container my-8'>
+                <div className='content-container my-4'>
                     <div className="dashboard-container">
                         {/* Event Dropdown */}
                         <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>

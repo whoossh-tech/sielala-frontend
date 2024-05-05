@@ -116,7 +116,7 @@ const CreateEvent = () => {
         </div>
         {/* Header Ends */}
 
-        <div className='content-container my-8'>
+        <div className='content-container my-4'>
           <div className="dashboard-container"></div>
             </div>
             {/* <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
