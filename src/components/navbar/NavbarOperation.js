@@ -50,7 +50,7 @@ export function NavbarOperation() {
       <Navbar className="rounded-none sticky top-0 z-10 h-max bg-primary-60 px-4 py-2 lg:px-8 lg:py-4" style={{ border: 'none', zIndex: '0' }}>
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-4">
-            <a href="/operation">
+            <a href="/dashboard">
               <img
                   src={logo} 
                   alt="SieLALA Logo"
@@ -67,8 +67,8 @@ export function NavbarOperation() {
               <span className="montserrat text-primary-70 text-md">Hi, { role }!</span>
             </Button>
 
-            <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10" onClick={handleLogout}>
-              <span className="montserrat text-primary-70 text-md">Log Out</span>
+            <Button variant="gradient" size="sm" className="bg-danger hidden lg:inline-block" onClick={handleLogout}>
+              <span className="montserrat text-white text-md">Log Out</span>
             </Button>
           </div>
         </div>

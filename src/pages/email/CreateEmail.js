@@ -8,10 +8,12 @@ import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
+import Sidebar from '../dashboard/Sidebar';
 
 const CreateEmail = () => {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
+  const [activePage, setActivePage] = useState('bulk-email');
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -72,33 +74,30 @@ const CreateEmail = () => {
     }
   })
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+
   return (
-    <main className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-      <style>{reynaldoStyles}</style>
+    <body>
+      <Sidebar activePage={activePage}/>
+      <main style={{ marginLeft: "60px" }} className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
 
-      {/* navigation bar */}
-      {( role === 'BISDEV' ) && (
-        <NavbarBisdev style={{ zIndex: 999 }} />
-      )}
-
-      {( role === 'PARTNERSHIP' ) && (
-        <NavbarPartnership style={{ zIndex: 999 }} />
-      )}
-
-      {( role === 'ADMIN' ) && (
-        <NavbarAdmin style={{ zIndex: 999 }} />
-      )}
-
-      {/* header */}
-      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '200px' }}>
-          <div>
-              <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
-              Send Bulk Email</h1>
-              <div>
-                  <p className="subtitle">Write your email here</p>
+      {/* Header Start */}
+      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+              <div className="mx-8">
+                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                  Send Bulk Email</h1>
+                  <div>
+                    <p className="subtitle">
+                        <a href='/dashboard' style={{ textDecoration: 'none' }}> <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp; </a> /
+                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Bulk Email List </a> / Create Bulk Email
+                    </p>
+                  </div>
               </div>
           </div>
-      </div>
+          {/* Header Ends */}
 
       <Toaster position="top-center" reverseOrder={false} />
 
@@ -159,6 +158,9 @@ const CreateEmail = () => {
         </div>
       </form>
     </main>
+
+    </body>
+    
   );
 };
 

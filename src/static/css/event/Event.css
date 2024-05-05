@@ -58,7 +58,9 @@
 
 .button-field {
   margin-bottom: 20px;
+  margin-right: 120px;
 }
+
 table {
   border-collapse: collapse;
   width: 1200px;
@@ -99,6 +101,8 @@ th {
 .event-table {
   border-collapse: collapse;
   width: 100%;
+  border-radius: 15px; 
+  overflow: hidden;
 }
 
 .event-table th, .event-table td {
@@ -111,10 +115,9 @@ th {
 }
 
 .event-table th:first-child, .event-table td:first-child {
-  width: 10%; /* Set the width for the first column */
+  width: 10%;
 }
 
-/* Set the width for other columns */
 .event-table th:nth-child(2), .event-table td:nth-child(2) {
   width: 20%;
 }
@@ -133,5 +136,20 @@ th {
 
 .event-table th:nth-child(6), .event-table td:nth-child(6) {
   width: 20%;
+}
+
+.search-and-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-container {
+  margin-right: 10px; 
+}
+
+.search-container {
+  position: relative;
+  display: inline-block;
 }
 

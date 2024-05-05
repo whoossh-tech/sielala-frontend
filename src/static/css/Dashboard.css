@@ -3,7 +3,54 @@
 }
 
 .event-card {
+    margin: 0 120px;
+    margin-top: 10px;
+}
+
+.total-card {
+    margin-top: 10px;
+    margin: 0 120px;
+}
+
+
+.square-card {
+    margin-top: 10px;
+}
+
+.detail-square-card {
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+
+.previous-event-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     margin-left: 120px;
     margin-right: 120px;
-    margin-top: 10px;
+}
+
+.ongoing-event-container {
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.previousevent-card {
+    width: calc(25% - 20px);
+    margin-right: 20px;
+}
+
+.base-Popper-root {
+    width: 200px;
+}
+
+.MuiChartsTooltip-table {
+    width: 150px;
+    height: 50px;
+    margin-top: 0px;
+}
+
+tspan {
+    font-size: 0.9rem;
 }

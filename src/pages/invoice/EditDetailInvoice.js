@@ -11,12 +11,18 @@ import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { NavbarFinance } from "../../components/navbar/NavbarFinance";
+import "../../static/css/event/Event.css";
+import Sidebar from '../../pages/dashboard/Sidebar';
+import '../../static/css/Style.css';
+import '../../static/css/Login.css';
+import '../../static/css/RegisterStaffForm.css';
 
 const EditDetailInvoice = () => {
     const { idInvoice } = useParams();
     const url = 'https://sielala-backend-production.up.railway.app';
     const navigate = useNavigate();
     const role = localStorage.getItem('role');
+    const [activePage, setActivePage] = useState('invoice');
 
   const [listInvoiceItem, setInvoiceItems] = useState([]);
 
@@ -166,25 +172,23 @@ const EditDetailInvoice = () => {
   };
 
   return (
-    <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-            {( role === 'PARTNERSHIP' ) && (
-      <NavbarPartnership style={{ zIndex: 999 }} />
-            )}
+    <body>
+    <Sidebar activePage={activePage}/> 
 
-            {( role === 'ADMIN' ) && (
-                <NavbarAdmin style={{ zIndex: 999 }} />
-            )}
+    <main style={{ marginLeft: "60px" }}>
 
-      <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>
-        <div>
-          <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: "left", fontSize: 50 }}>
-            Edit Invoice
-          </h1>
-          <div>
-            <p className="subtitle">Manage and view invoice's data here.</p>
+      {/* Header Start */}
+      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+          <div className="mx-8">
+              <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+              Edit Invoice</h1>
           </div>
-        </div>
       </div>
+      {/* Header Ends */}
+
+      <div className='content-container my-4'>
+        <div className="dashboard-container">
+          <div>
 
       <Toaster position="top-center" reverseOrder={false} />
 
@@ -251,13 +255,15 @@ const EditDetailInvoice = () => {
               Items<span className="text-danger">*</span>
             </label>
 
-            <table>
+            <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
+                <table className="event-table mx-8">
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Item</th>
                   <th>Quantity</th>
                   <th>Rate</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -293,6 +299,7 @@ const EditDetailInvoice = () => {
                 </tr>
               </tfoot>
             </table>
+            </div>
           </div>
         </div>
 
@@ -302,7 +309,7 @@ const EditDetailInvoice = () => {
             Cancel
           </button>
           <button className="button-pink" type="submit">
-            Edit Invoice
+            Edit
           </button>
         </div>
 
@@ -323,6 +330,12 @@ const EditDetailInvoice = () => {
         <br></br>
       </form>
     </div>
+    </div>
+          <script src="script.js"></script>  
+        </div>
+        
+      </main>
+    </body>
   );
 };
 export default EditDetailInvoice;

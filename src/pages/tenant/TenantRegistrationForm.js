@@ -145,7 +145,7 @@ const TenantRegistrationForm = () => {
                     <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 ml-6" style={{ paddingTop: 80, paddingLeft: 185, textAlign: 'left', fontSize: 50 }}>
                     Tenant Registration</h1>
                     <div>
-                        <p className="subtitle">Register as Tenant at Lala Market now!</p>
+                        <p className="subtitle" style={{ paddingLeft: 150 }}>Register as Tenant at Lala Market now!</p>
                     </div>
                 </div>
             </div>
@@ -155,7 +155,7 @@ const TenantRegistrationForm = () => {
                 onSubmit={(e) => onRegister(e)}
             >
 
-                <div className="columns-2">
+                <div className="columns-2-tenant">
                     <div className="first-column">
 
                         {/* brand name */}

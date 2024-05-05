@@ -6,6 +6,8 @@ import '../../static/css/RegisterStaffForm.css';
 import '../../static/css/Button.css';
 import backgroundPhoto from '../../assets/background.svg';
 import '../../static/css/Login.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -37,47 +39,54 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       const role = localStorage.getItem('role');
-      switch (role) {
-      case 'ADMIN':
-        toast.success("Login successfully");
-        toast.loading('Redirecting to Admin Dashboard...');
-        window.location.replace('/admin');
-        break;
-      case 'PARTNERSHIP':
-        toast.loading('Redirecting to Partnerhsip Dashboard...');
-        window.location.replace('/partnership');
-        break;
-      case 'OPERATION':
-        toast.loading('Redirecting to Operations Dashboard...');
-        window.location.replace('/operation');
-        break;
-      case 'FINANCE':
-        toast.loading('Redirecting to Finance Dashboard...');
-        window.location.replace('/finance');
-        break;
-      case 'BISDEV':
-        toast.loading('Redirecting to Business Development Dashboard...');
-        window.location.replace('/bisdev');
-        break;
-      default:
-        toast.loading('Redirecting to Guest Dashboard...');
-        window.location.replace('/'); 
-    }
+      window.location.replace('/dashboard');
+    //   switch (role) {
+    //   case 'ADMIN':
+    //     toast.success("Login successfully");
+    //     toast.loading('Redirecting to Admin Dashboard...');
+    //     window.location.replace('/admin');
+    //     break;
+    //   case 'PARTNERSHIP':
+    //     toast.loading('Redirecting to Partnerhsip Dashboard...');
+    //     window.location.replace('/partnership');
+    //     break;
+    //   case 'OPERATION':
+    //     toast.loading('Redirecting to Operations Dashboard...');
+    //     window.location.replace('/operation');
+    //     break;
+    //   case 'FINANCE':
+    //     toast.loading('Redirecting to Finance Dashboard...');
+    //     window.location.replace('/finance');
+    //     break;
+    //   case 'BISDEV':
+    //     toast.loading('Redirecting to Business Development Dashboard...');
+    //     window.location.replace('/bisdev');
+    //     break;
+    //   default:
+    //     toast.loading('Redirecting to Guest Dashboard...');
+    //     window.location.replace('/'); 
+    // }
   }
   }, [isAuthenticated]);
 
   return (
     <div className="object-cover-login absolute inset-0 flex justify-center items-center" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh' }}>
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="card bg-white shadow-lg rounded-md p-8">
-        <h2 className="text-2xl font-bold mb-3">Login</h2>
+      <div className="card bg-white shadow-lg rounded-md p-8" >
         <form
-          className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100"
+          className="flex flex-col items-left text-neutral-100"
           onSubmit={handleLogin}
         >
-          {/* Username */}
-          <div className="flex flex-col space-y-1">
+          <h2 className="text-2xl font-bold mb-3">Login</h2>
+
+          <br></br>
+
+          <div className="flex justify-between">
             <label htmlFor="username" className="text-sm" style={{ marginBottom: '5px' }}>Username: </label>
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            {/* <label htmlFor="username" className="text-sm" style={{ marginBottom: '5px' }}>Username: </label> */}
             <input
               type="text"
               id="username"
@@ -91,9 +100,12 @@ const Login = () => {
 
           <br></br>
 
-          {/* Password */}
-          <div className="flex flex-col space-y-1 relative">
+          <div className="flex justify-between">
             <label htmlFor="password" className="text-sm">Password: </label>
+          </div>
+
+          <div className="flex justify-between">
+            {/* <label htmlFor="password" className="text-sm">Password: </label> */}
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
@@ -102,16 +114,24 @@ const Login = () => {
               placeholder="Enter your password"
               className="input-field"
             />
-            <button
+            {/* <button
               type="button"
-              className="absolute top-1/2 right-2 transform -translate-y-1/2 focus:outline-none"
+              // className="absolute top-1/2 right-2 transform -translate-y-1/2 focus:outline-none"
               onClick={() => setShowPassword((prevShowPassword) => !prevShowPassword)}
             >
               {showPassword ? 'Hide' : 'Show'}
+            </button> */}
+
+            <button 
+            type="button"
+
+            onClick={() => setShowPassword((prevShowPassword) => !prevShowPassword)}>
+              <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
             </button>
+
           </div>
 
-          {/* Submit Button */}
+          <br></br>
           <button
             type="submit"
             className="button-pink w-full"
@@ -119,10 +139,11 @@ const Login = () => {
             Login
           </button>
 
-          <Link to="/forgot-password" className="text-sm mt-2 text-neutral-100 hover:underline">Forgot Password?</Link>
+          <Link to="/forgot-password" className="text-sm mt-2 text-neutral-100" style={{ textDecoration: 'underline' }}>Forgot Password?</Link>
         </form>
       </div>
     </div>
+    
   );
 };
 

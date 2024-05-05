@@ -65,7 +65,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    margin-left: 210px;
+    /* margin-left: 210px; */
     margin-bottom: 30px
     /* margin-top: 0; Reset margin-top */
     /* margin: 0 5px; */
@@ -131,3 +131,46 @@ th {
     justify-content: center;
     align-items: center;
 }
+
+.user-table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 15px; 
+    overflow: hidden;
+  }
+  
+  .user-table th, .user-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .user-table th {
+    text-align: left;
+  }
+  
+  .user-table th:first-child, .user-table td:first-child {
+    width: 10%; /* Set the width for the first column */
+  }
+  
+  /* Set the width for other columns */
+  .user-table th:nth-child(2), .user-table td:nth-child(2) {
+    width: 20%;
+  }
+  
+  .user-table th:nth-child(3), .user-table td:nth-child(3) {
+    width: 20%;
+  }
+  
+  .user-table th:nth-child(4), .user-table td:nth-child(4) {
+    width: 15%;
+  }
+  
+  .user-table th:nth-child(5), .user-table td:nth-child(5) {
+    width: 20%;
+  }
+  
+  .user-table th:nth-child(6), .user-table td:nth-child(6) {
+    width: 15%;
+  }
+  
+  

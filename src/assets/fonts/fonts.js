@@ -32,10 +32,6 @@ export const reynaldoStyles = css`
     font-style: italic;
   }
 
-  p {
-    font-family: 'Montserrat';
-  }
-
   .montserrat-lean {
     font-family: 'Montserrat';
   }
