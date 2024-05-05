@@ -57,14 +57,14 @@ const DetailEvent = () => {
             <div>
                 <p className="subtitle">
                     <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Visitor List </a>
+                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Event List </a>
                     / Detail
                 </p>
             </div>
         </div>
         {/* Header Ends */}
 
-        <div className='content-container my-8'>
+        <div className='content-container my-4'>
           <div className="dashboard-container">
             <div>
                 <Toaster
@@ -72,10 +72,7 @@ const DetailEvent = () => {
                           reverseOrder={false}
                       />
 
-                <br></br>
-
-                <div className="container mx-auto py-8">
-
+                <div className="container mx-auto py-6">
                   <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
 
                   <div className="ml-10" style={{justifyContent: "right"}}>

@@ -50,7 +50,7 @@ const Emails = () => {
                         <a href='/dashboard' style={{ textDecoration: 'none' }}>
                             <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
                         </a>                        
-                        / Bulk Email List
+                        / Bulk Email Management
                     </p>
                   </div>
               </div>
