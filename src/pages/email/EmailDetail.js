@@ -55,7 +55,7 @@ const EmailDetail = () => {
               <div>
                     <p className="subtitle">
                         <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Bulk Email List </a>
+                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Bulk Email Management </a>
                         / Email Detail
                     </p>
                 </div>

@@ -104,7 +104,7 @@ const Invoice = () => {
         </div>
         {/* Header Ends */}
 
-        <div className="content-container my-8">
+        <div className="content-container my-4">
           <div className="dashboard-container">
             <div>
 

@@ -80,7 +80,8 @@ const ChooseContact = () => {
                   setContacts(res.data.data);
               })
               .catch((error) => {
-                  toast.error("Failed to fetch contacts");
+                  console.log("Failed to fetch contacts");
+                  setContacts([]);
               });
         }
     };
@@ -190,28 +191,26 @@ const ChooseContact = () => {
       <body>
         <Sidebar activePage={activePage}/>
         <main style={{marginLeft: "60px"}}>
-        <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none">
-    
-          <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
-              <div className="mx-8">
-                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
-                  Email Contact</h1>
+        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+            <div className="mx-8">
+                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
+                Email Contact</h1>
+            </div>
+            <div>
+                  <p className="subtitle">
+                  <a href='/dashboard' style={{ textDecoration: 'none' }}> <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp; </a> /
+                      <a onClick={handleBackEmailList} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Bulk Email List </a> /
+                      <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Create Bulk Email </a> / Choose Email Contact
+                  </p>
               </div>
-              <div>
-                    <p className="subtitle">
-                    <a href='/dashboard' style={{ textDecoration: 'none' }}> <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp; </a> /
-                        <a onClick={handleBackEmailList} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Bulk Email List </a> /
-                        <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Create Bulk Email </a> / Choose Email Contact
-                    </p>
-                </div>
-          </div>
-          {/* Header Ends */}
-        
+        </div>
+
+        <div className='content-container my-4'> 
             <Toaster position="top-center" reverseOrder={false} />
 
             <br></br>
 
-            <div className="button-field">
+            <div className="button-field mx-8" >
               <button className="button-grey" 
                 onClick={handleBackButton}
                 disabled={isLoading}

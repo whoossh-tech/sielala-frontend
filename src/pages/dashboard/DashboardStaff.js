@@ -161,7 +161,7 @@ const DashboardStaff = () => {
     //     <Sidebar />
     //      <main>
     // Header
-    // <div className='content-container my-8'>
+    // <div className='content-container my-4'>
     //      current code (kecuali tag <main> kalo ada)
     // </div>
     //      </main>
@@ -171,7 +171,8 @@ const DashboardStaff = () => {
         <body>
             {/* <div className="object-cover absolute inset-0 flex justify-center items-center" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh' }}> */}
             {/* Sidebar Navigation */}
-            <Sidebar activePage={activePage} />
+            <style>{reynaldoStyles}</style>
+            <Sidebar activePage={activePage}/>
 
             <main style={{ marginLeft: "60px", padding: "5px" }}>
 
@@ -424,6 +425,8 @@ const DashboardStaff = () => {
                                 <b>No events have been made.</b>
                             </div>
                         )}
+
+                        <br></br>
 
                     </div>
                     <script src="script.js"></script>

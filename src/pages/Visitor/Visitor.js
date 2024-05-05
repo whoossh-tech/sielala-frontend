@@ -176,7 +176,7 @@ const Visitor = () => {
           </div>
           {/* Header Ends */}
 
-          <div className='content-container my-8'>
+          <div className='content-container my-4'>
             <div>
               {/* <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
 

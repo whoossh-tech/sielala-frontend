@@ -124,8 +124,8 @@ const TenantApplicantDetail = () => {
                 </div>
                 {/* Header Ends */}
 
-                <div className='content-container my-8'>
-                    <div>
+          <div className='content-container my-4'>
+            <div>
 
                         <br></br>
                         <Toaster
