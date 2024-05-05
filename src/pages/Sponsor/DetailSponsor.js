@@ -115,7 +115,7 @@ const DetailSponsor = () => {
           <br></br>
 
           <div>
-            <div className="button-field">
+            <div className="button-field " style={{ marginLeft: '80px' }}>
               {/* <button className="button-green" onClick={handleBack}>Back</button> */}
               <Link to={`/sponsor/edit/${idSponsor}`}>
                 <button className="button-pink">Edit Sponsor</button>
