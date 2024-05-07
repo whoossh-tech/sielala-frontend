@@ -126,13 +126,18 @@ const UserList = () => {
                                     <td>{user.email}</td>
                                     <td>{user.username}</td>
                                     <td>
-                                        {/* <button onClick={() => handleEditClick(user.userId)}>
-                                            Edit
-                                        </button> */}
-                                        <Link to={`/user/edit/${user.userId}`}>
-                                            <button className="button-green w-20">Edit</button>
-                                        </Link>
-                                        <button className="button-red w-20" onClick={() => handleDelete(user.userId)}>Delete</button>
+                                        {user.userId !== 1 ? (
+                                            <Link to={`/user/edit/${user.userId}`}>
+                                                <button className="button-green w-20">Edit</button>
+                                            </Link>
+                                        ) : (
+                                            <button disabled className="button-green w-20">Edit</button>
+                                        )}
+                                        {user.userId !== 1 ? (
+                                            <button className="button-red w-20" onClick={() => handleDelete(user.userId)}>Delete</button>
+                                        ) : (
+                                            <button disabled className="button-red w-20">Delete</button>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
