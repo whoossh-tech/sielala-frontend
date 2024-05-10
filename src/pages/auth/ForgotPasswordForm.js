@@ -24,12 +24,12 @@ const ForgotPasswordForm = () => {
     try {
 
       const response = await axios.post('https://sielala-backend-production.up.railway.app/auth/forgot-password', {
-                email, 
-                username
-            })
-      
+        email,
+        username
+      })
+
       console.log('Form submitted successfully:', response.data);
-      toast.success('Reset Password Success: Check your email for new login credentials!');
+      toast.success('Email Sent: Check your email for the link to reset your password!');
       // navigate('/forgot-password-success');
     } catch (error) {
       console.error('Error resetting password:', error.message);
@@ -39,15 +39,14 @@ const ForgotPasswordForm = () => {
 
   return (
     <div className="object-cover-login absolute inset-0 flex justify-center items-center" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh' }}>
-       <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="card bg-white shadow-lg rounded-md p-8">
-      
+
         <form
           className="flex flex-col items-left text-neutral-100"
           onSubmit={handleForgotPassword}
         >
           <h2 className="text-2xl font-bold mb-3">Forgot Password</h2>
-
           <br></br>
 
           {/* Username */}
@@ -72,7 +71,7 @@ const ForgotPasswordForm = () => {
           <br></br>
 
           <div className="flex justify-between">
-          <label htmlFor="email" className="text-sm" style={{ marginBottom: '5px' }}>Email: </label>
+            <label htmlFor="email" className="text-sm" style={{ marginBottom: '5px' }}>Email: </label>
           </div>
 
           {/* Email */}
