@@ -41,7 +41,7 @@ const DashboardStaff = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:8080/api/event/view-all")
+            .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
                 setEventData(res.data.data);
 
@@ -54,7 +54,7 @@ const DashboardStaff = () => {
 
         if (selectedEvent) {
             axios
-                .get(`http://localhost:8080/api/event/detail/${selectedEvent}`)
+                .get(`https://sielala-backend-production.up.railway.app/api/event/detail/${selectedEvent}`)
                 .then((res) => {
                     setEvent(res.data.data);
                     const totalAccepted = res.data.data.listTenant.filter(tenant => tenant.accepted).length;
@@ -62,21 +62,21 @@ const DashboardStaff = () => {
                 })
                 .catch((err) => console.log(err));
 
-            axios.get(`http://localhost:8080/api/reward/view-all/${selectedEvent}`)
+            axios.get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
                 .then(res => {
                     setRewardInventoryList(res.data.data)
                 })
                 .catch((err) => console.log(err));
 
             axios
-                .get(`http://localhost:8080/api/reward/reward-redemption-history/${selectedEvent}`)
+                .get(`https://sielala-backend-production.up.railway.app/api/reward/reward-redemption-history/${selectedEvent}`)
                 .then((res) => {
                     setRewardRedeemedList(res.data.data);
                 })
                 .catch((err) => console.log(err));
 
             axios
-                .get(`http://localhost:8080/api/contact/all/${selectedEvent}`)
+                .get(`https://sielala-backend-production.up.railway.app/api/contact/all/${selectedEvent}`)
                 .then((res) => {
                     const filteredContactList = res.data.data.filter((entry) => entry.type === 'Sponsor');
                     setSponsorList(filteredContactList);

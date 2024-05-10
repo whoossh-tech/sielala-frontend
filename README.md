@@ -9,4 +9,4 @@
 
 ## Link Deployment
 - [Frontend](https://sielala-frontend-production.up.railway.app/)
-- [Backend (API needs)](http://localhost:8080/)
+- [Backend (API needs)](https://sielala-backend-production.up.railway.app/)

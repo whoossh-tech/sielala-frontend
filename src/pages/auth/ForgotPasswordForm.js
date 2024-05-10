@@ -23,7 +23,7 @@ const ForgotPasswordForm = () => {
 
     try {
 
-      const response = await axios.post('http://localhost:8080/auth/forgot-password', {
+      const response = await axios.post('https://sielala-backend-production.up.railway.app/auth/forgot-password', {
                 email, 
                 username
             })

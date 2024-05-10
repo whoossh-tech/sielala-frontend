@@ -32,7 +32,7 @@ const Event = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/event/view-all")
+      .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
       .then((res) => {
         setEvents(res.data.data);
         // console.log(res.data.data); // Make sure that res.data is an array

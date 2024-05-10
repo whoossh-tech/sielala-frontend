@@ -19,7 +19,7 @@ import '../../static/css/RegisterStaffForm.css';
 
 const EditDetailInvoice = () => {
     const { idInvoice } = useParams();
-    const url = 'http://localhost:8080';
+    const url = 'https://sielala-backend-production.up.railway.app';
     const navigate = useNavigate();
     const role = localStorage.getItem('role');
     const [activePage, setActivePage] = useState('invoice');

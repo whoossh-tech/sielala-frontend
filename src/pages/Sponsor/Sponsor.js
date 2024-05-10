@@ -24,7 +24,7 @@ const Sponsor = () => {
   useEffect(() => {
     if (selectedEvent) {
       axios
-        .get(`http://localhost:8080/api/sponsor/view-all/${selectedEvent}`)
+        .get(`https://sielala-backend-production.up.railway.app/api/sponsor/view-all/${selectedEvent}`)
         .then((res) => {
           setSponsors(res.data.data);
           console.log(res.data.data);
@@ -35,7 +35,7 @@ const Sponsor = () => {
     }
 
     axios
-      .get("http://localhost:8080/api/sponsor/view-event-all")
+      .get("https://sielala-backend-production.up.railway.app/api/sponsor/view-event-all")
       .then((res) => {
         setEventData(res.data.data);
       })

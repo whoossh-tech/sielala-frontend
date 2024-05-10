@@ -18,7 +18,7 @@ import '../../static/css/Style.css';
 
 const CreateInvoice = () => {
     const { idContact } = useParams();
-    const url = 'http://localhost:8080';
+    const url = 'https://sielala-backend-production.up.railway.app';
     const navigate = useNavigate();
     const [activePage, setActivePage] = useState('invoice');
 

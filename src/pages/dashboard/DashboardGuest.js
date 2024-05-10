@@ -29,7 +29,7 @@ const DashboardGuest = () => {
             delete axios.defaults.headers.common['Authorization'];
         }
     
-        axios.get('http://localhost:8080/api/event/ongoing')
+        axios.get('https://sielala-backend-production.up.railway.app/api/event/ongoing')
             .then(res => {
                 setEvents(res.data.data)
                 console.log(res.data.data)
@@ -38,7 +38,7 @@ const DashboardGuest = () => {
                 console.log(err)
             )
 
-            axios.get('http://localhost:8080/api/event/ended')
+            axios.get('https://sielala-backend-production.up.railway.app/api/event/ended')
             .then(res => {
                 setEndedEvents(res.data.data)
                 console.log(res.data.data)
@@ -47,7 +47,7 @@ const DashboardGuest = () => {
                 console.log(err)
             )
 
-            axios.get('http://localhost:8080/api/event/total')
+            axios.get('https://sielala-backend-production.up.railway.app/api/event/total')
             .then(res => {
                 setTotalEvent(res.data.totalEvent)
                 setTotalTenant(res.data.totalTenant)

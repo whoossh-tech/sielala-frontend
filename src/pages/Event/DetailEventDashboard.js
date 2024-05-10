@@ -40,7 +40,7 @@ const DetailEventDashboard = () => {
 
     useEffect(() => {
         axios
-          .get(`http://localhost:8080/api/event/ongoing`)
+          .get(`https://sielala-backend-production.up.railway.app/api/event/ongoing`)
           .then((res) => {
 
             console.log(idEvent);

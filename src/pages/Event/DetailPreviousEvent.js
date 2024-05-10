@@ -39,7 +39,7 @@ const DetailPreviousEvent = () => {
 
     useEffect(() => {
         axios
-          .get(`http://localhost:8080/api/event/ended`)
+          .get(`https://sielala-backend-production.up.railway.app/api/event/ended`)
           .then((res) => {
             console.log(idEvent);
             const filteredEvent = res.data.data.filter(event => event.idEvent === idEvent);

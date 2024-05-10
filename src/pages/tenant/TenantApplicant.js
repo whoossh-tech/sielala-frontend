@@ -32,7 +32,7 @@ const TenantApplicant = () => {
 
     if (selectedEvent) {
       axios
-        .get(`http://localhost:8080/api/tenant/view-all/${selectedEvent}`)
+        .get(`https://sielala-backend-production.up.railway.app/api/tenant/view-all/${selectedEvent}`)
         .then((res) => {
           setTenantApplicants(res.data.data);
           console.log(res.data.data);
@@ -43,7 +43,7 @@ const TenantApplicant = () => {
     }
 
     axios
-      .get("http://localhost:8080/api/event/view-all")
+      .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
       .then((res) => {
         setEventData(res.data.data);
         // if (!selectedEvent && res.data.data.length > 0) {
