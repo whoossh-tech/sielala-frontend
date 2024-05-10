@@ -64,7 +64,7 @@ const RewardInventory = () => {
 
         if (selectedEvent) {
             axios
-                .get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
+                .get(`http://localhost:8080/api/reward/view-all/${selectedEvent}`)
                 .then((res) => {
                     console.log(res.data.data);
                     setRewardData(res.data.data);
@@ -75,7 +75,7 @@ const RewardInventory = () => {
         }
 
         axios
-            .get("https://sielala-backend-production.up.railway.app/api/reward/view-event-all")
+            .get("http://localhost:8080/api/reward/view-event-all")
             .then((res) => {
                 setEventData(res.data.data);
             })
@@ -94,7 +94,7 @@ const RewardInventory = () => {
 
         if (selectedEvent) {
             axios
-                .post(`https://sielala-backend-production.up.railway.app/api/reward/carry-out-stock/${selectedEvent}`)
+                .post(`http://localhost:8080/api/reward/carry-out-stock/${selectedEvent}`)
                 .then((res) => {
                     setRewardData(res.data.data);
                     setCountDays(res.data.dayRange);

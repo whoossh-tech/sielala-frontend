@@ -54,6 +54,8 @@ import Visitor from "./pages/Visitor/Visitor";
 import VisitorDetail from "./pages/Visitor/VisitorDetail";
 import Contacts from './pages/contact/Contacts';
 import TenantDetail from './pages/contact/TenantDetail';
+import DetailEventDashboard from "./pages/Event/DetailEventDashboard";
+import DetailPreviousEvent from "./pages/Event/DetailPreviousEvent";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -73,6 +75,8 @@ function App() {
             <Route path="/visitor-registration/:eventId" element={<VisitorRegistrationForm />}></Route>
             <Route path="/visitor-registration/success" element={<VisitorRegistrationSuccessPage />} />
             <Route path="/visitor-registration/fail" element={<VisitorRegistrationFailPage />} />
+            <Route path="/ongoing-event/:idEvent" element={<DetailEventDashboard />} />
+            <Route path="/previous-event/:idEvent" element={<DetailPreviousEvent />} />
 
             {/* ROLE: ALL STAFF */}
             {(role === "OPERATION" || role === "ADMIN" || role === "BISDEV" || role === "FINANCE" || role === "PARTNERSHIP") && (

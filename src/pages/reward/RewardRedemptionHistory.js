@@ -57,7 +57,7 @@ const RewardRedemptionHistory = () => {
 
         if (selectedEvent) {
             axios
-                .get(`https://sielala-backend-production.up.railway.app/api/reward/reward-redemption-history/${selectedEvent}`)
+                .get(`http://localhost:8080/api/reward/reward-redemption-history/${selectedEvent}`)
                 .then((res) => {
                     setRewardRedeemedList(res.data.data);
                     // setCountDays(res.data.dayRange)
@@ -67,7 +67,7 @@ const RewardRedemptionHistory = () => {
         }
 
         axios
-            .get("https://sielala-backend-production.up.railway.app/api/reward/view-event-all")
+            .get("http://localhost:8080/api/reward/view-event-all")
             .then((res) => {
                 setEventData(res.data.data);
 

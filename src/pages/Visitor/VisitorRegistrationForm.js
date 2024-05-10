@@ -82,12 +82,16 @@ const VisitorRegistrationForm = () => {
         }
     };
 
+    const handleBack = () => {
+        navigate(-1);
+    }
+
     const confirmRegistration = async (e) => {
         closeModal();
         setIsLoading(true);
 
         try { 
-            const response = await axios.post('https://sielala-backend-production.up.railway.app/api/visitor/register', {
+            const response = await axios.post('http://localhost:8080/api/visitor/register', {
                 eventId,
                 name,
                 email,
@@ -347,14 +351,18 @@ const VisitorRegistrationForm = () => {
 
                 <br></br>
 
-                <button
+                <div>
+                    <button className="button-green" onClick={handleBack}>Cancel</button>
+                    <button
                     className="button-pink montserrat"
                     type="submit"
                     disabled={isLoading}
-                // disabled={isRegisterLoading}
-                >
-                    {isLoading ? 'Loading...' : 'Apply for Visitor'}
-                </button>
+                    // disabled={isRegisterLoading}
+                    >
+                        {isLoading ? 'Loading...' : 'Apply for Visitor'}
+                    </button>
+                </div>
+                
 
                 <Modal
                     isOpen={isModalOpen}

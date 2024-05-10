@@ -42,7 +42,7 @@ const CreateSponsor = () => {
   useEffect(() => {
     const fetchEventInfo = async () => {
       try {
-        const response = await axios.get(`https://sielala-backend-production.up.railway.app/api/sponsor/${idEvent}`);
+        const response = await axios.get(`http://localhost:8080/api/sponsor/${idEvent}`);
         const eventData = response.data.eventData;
         setEventName(eventData.eventName);
       } catch (error) {
@@ -71,7 +71,7 @@ const CreateSponsor = () => {
       const token = localStorage.getItem('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const response = await axios.post(`https://sielala-backend-production.up.railway.app/api/sponsor/create/${idEvent}`, {
+      const response = await axios.post(`http://localhost:8080/api/sponsor/create/${idEvent}`, {
         picName,
         name: companyName,
         address: companyAddress,

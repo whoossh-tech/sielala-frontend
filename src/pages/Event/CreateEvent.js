@@ -19,6 +19,7 @@ import '../../static/css/Style.css';
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
+  const [description, setEventDescription] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [location, setLocation] = useState("");
@@ -43,6 +44,10 @@ const CreateEvent = () => {
 
     if (!eventName.trim()) {
       newErrors.event_name = "Event Name cannot be empty";
+    }
+
+    if (!description.trim()) {
+      newErrors.description = "Event Description cannot be empty";
     }
 
     if (!location.trim()) {
@@ -74,8 +79,9 @@ const CreateEvent = () => {
       const token = localStorage.getItem('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const response = await axios.post("https://sielala-backend-production.up.railway.app/api/event/create", {
+      const response = await axios.post("http://localhost:8080/api/event/create", {
         eventName,
+        description,
         startDate,
         endDate,
         location,
@@ -140,6 +146,26 @@ const CreateEvent = () => {
                     </div>
 
                     {errors.event_name && <span className="mt-0.5 text-danger text-xs">{errors.event_name}</span>}
+                  </div>
+
+                  {/* Event Description */}
+                  <div className="input-form flex flex-col space-y-1">
+                    <label className="input-label font-reynaldo text-left" htmlFor="event_description">
+                      Event Description<span className="text-danger">*</span>
+                    </label>
+
+                    <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.description && "border-danger"}`}>
+                      {/* <input id="description" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. Summer Bazaar of LALA MARKET is back!" value={description} onChange={(e) => setEventDescription(e.target.value)} /> */}
+                      <textarea
+                        id="description"
+                        className="px-4 py-3 w-full h-40 focus:outline-none" // Sesuaikan tinggi textarea sesuai kebutuhan
+                        placeholder="ex. Summer Bazaar of LALA MARKET is back!"
+                        value={description}
+                        onChange={(e) => setEventDescription(e.target.value)}
+                      />
+                    </div>
+
+                    {errors.description && <span className="mt-0.5 text-danger text-xs">{errors.description}</span>}
                   </div>
 
                   {/* Start Date */}

@@ -14,7 +14,7 @@ import Sidebar from '../dashboard/Sidebar';
 
 const EditRewardInventory = () => {
     const { idReward } = useParams();
-    const url = 'https://sielala-backend-production.up.railway.app';
+    const url = 'http://localhost:8080';
     const navigate = useNavigate();
     const role = localStorage.getItem('role');
     const [activePage] = useState('reward-inventory');

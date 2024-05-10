@@ -12,7 +12,7 @@ import '../../static/css/Style.css';
 
 const EditUserForm = () => {
     const { idUser } = useParams();
-    const url = 'https://sielala-backend-production.up.railway.app';
+    const url = 'http://localhost:8080';
     const navigate = useNavigate();
 
     const[email, setEmail] = useState('');

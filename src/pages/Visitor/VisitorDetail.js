@@ -23,7 +23,7 @@ const VisitorDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`https://sielala-backend-production.up.railway.app/api/visitor/detail/${idVisitor}`)
+      .get(`http://localhost:8080/api/visitor/detail/${idVisitor}`)
       .then((res) => {
         setVisitor(res.data.visitorData);
         console.log(res.data.visitorData);

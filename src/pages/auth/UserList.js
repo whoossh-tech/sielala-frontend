@@ -35,7 +35,7 @@ const UserList = () => {
                 const token = localStorage.getItem('token');
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-                const response = await axios.get('https://sielala-backend-production.up.railway.app/admin/acc-list');
+                const response = await axios.get('http://localhost:8080/admin/acc-list');
                 setUserList(response.data);
             } catch (error) {
                 console.error('Error fetching user list:', error.response || error.message);
@@ -53,7 +53,7 @@ const UserList = () => {
             const token = localStorage.getItem('token');
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             
-            const response = await axios.delete(`https://sielala-backend-production.up.railway.app/admin/delete/${idToBeDeleted}`);
+            const response = await axios.delete(`http://localhost:8080/admin/delete/${idToBeDeleted}`);
 
             setUserDeleted(idToBeDeleted);
             console.log('User deleted successfully:', response.data);

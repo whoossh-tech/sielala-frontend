@@ -31,7 +31,7 @@ const DetailEvent = () => {
 
   useEffect(() => {
     axios
-      .get(`https://sielala-backend-production.up.railway.app/api/event/detail/${idEvent}`)
+      .get(`http://localhost:8080/api/event/detail/${idEvent}`)
       .then((res) => {
         setEventData(res.data.data);
         setStartDate(new Date(eventData.startDate));
@@ -113,6 +113,10 @@ const DetailEvent = () => {
                     <div className="each-event">
                       <p className="event-text-title">Location:</p>
                       <p className="reward-text">{eventData?.location}</p>
+                    </div>
+                    <div className="each-event">
+                      <p className="event-text-title">Description:</p>
+                      <p className="reward-text">{eventData?.description}</p>
                     </div>
                   </div>
                   
