@@ -23,6 +23,7 @@ import { DashboardStaff } from "./pages/dashboard/DashboardStaff";
 
 import Login from "./pages/auth/Login";
 import ForgotPasswordForm from './pages/auth/ForgotPasswordForm';
+import ResetPasswordForm from './pages/auth/ResetPasswordForm';
 import RegisterStaffForm from "./pages/auth/RegisterStaffForm";
 import UserList from "./pages/auth/UserList";
 import EditUserForm from "./pages/auth/EditUserForm";
@@ -69,6 +70,7 @@ function App() {
             <Route path="/" element={<DashboardGuest />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+            <Route path="/reset-password" element={<ResetPasswordForm />} />
             <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm />}></Route>
             <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
             <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
