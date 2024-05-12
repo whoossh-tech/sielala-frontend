@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate, Link } from 'react-router-dom';
 import { PieChart, BarChart, LineChart, lineElementClasses,
     markElementClasses, } from "@mui/x-charts";
 import '../../static/css/Dashboard.css';
@@ -70,6 +71,7 @@ const DashboardStaff = () => {
                     console.log(res.data.data);
                     const totalAccepted = res.data.data.listTenant.filter(tenant => tenant.accepted).length;
                     setTotalTenantAccepted(totalAccepted);
+                    localStorage.setItem("idSelectedEvent", selectedEvent);
                 })
                 .catch((err) => console.log(err));
 
@@ -172,15 +174,6 @@ const DashboardStaff = () => {
             label: ageGroup
         }));
     };
-
-    // const sortEventsByVisitorsOrTenants = (events, type) => {
-    //     const sortedEvents = events.sort((a, b) => b[`numOf${type}`] - a[`numOf${type}`]);
-    //     return sortedEvents.slice(0, 5);
-    // };
-
-    // const topEventsByVisitors = sortEventsByVisitorsOrTenants(eventOverall, 'Visitor');
-    // const topEventsByTenants = sortEventsByVisitorsOrTenants(eventOverall, 'Tenant');
-    // const topEventsBySponsors = sortEventsByVisitorsOrTenants(eventOverall, 'Sponsor');
 
     const generateLineChartVisitorData = (data) => {
         return data.map(event => ({
@@ -296,16 +289,6 @@ const DashboardStaff = () => {
                                     </div>
                                 </div>
                             </div>
-
-                            {(selectedEvent) && (
-                                <div>
-                                    <button className="button-grey" 
-                                        onClick={handleAllEvent}
-                                    >
-                                        See Event Insights
-                                    </button>
-                                </div>
-                            )}
                         </div>
 
 
@@ -313,7 +296,13 @@ const DashboardStaff = () => {
 
                         {(!selectedEvent) && (
                             <div className="text-center text-neutral-80 font-bold mb-4">
-                            Select event to see more details!
+                                Select event to see more details!
+                            </div>
+                        )}
+
+                        {(selectedEvent) && (
+                            <div className="text-center text-neutral-80 font-bold mb-4">
+                                <a onClick={handleAllEvent} style={{ cursor: 'pointer', textDecoration: 'underline' }}>Click here for Overall Event Insights!</a>
                             </div>
                         )}
 
@@ -362,7 +351,7 @@ const DashboardStaff = () => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', height: '280px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                     <h2><b>Visitor Location Distribution</b></h2>
                                                     <p style={{ textAlign: 'center' }}>No visitors yet</p>
                                                 </div>
@@ -391,7 +380,7 @@ const DashboardStaff = () => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', height: '280px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                     <h2><b>Visitor Gender Distribution</b></h2>
                                                     <p style={{ textAlign: 'center' }}>No visitors yet</p>
                                                 </div>
@@ -422,7 +411,7 @@ const DashboardStaff = () => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', height: '260px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                     <h2><b>Visitor Gender Distribution</b></h2>
                                                     <p style={{ textAlign: 'center' }}>No visitors yet</p>
                                                 </div>
@@ -449,7 +438,7 @@ const DashboardStaff = () => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', height: '260px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                     <h2><b>Visitor Gender Distribution</b></h2>
                                                     <p style={{ textAlign: 'center' }}>No visitors yet</p>
                                                 </div>
@@ -466,21 +455,21 @@ const DashboardStaff = () => {
                                             <div class="box-info bg-tertiary-10 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={visitorIcon} alt="Ticket" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Visitors</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/visitor' style={{ textDecoration: 'underline' }}>Visitors</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{event.listVisitor ? event.listVisitor.length : 0} <span style={{ fontSize: '14px' }}>registered</span></p>
                                                 </div>
                                             </div>
                                             <div class="box-info bg-secondary-10 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={sponsorIcon} alt="Megaphone" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Sponsors</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/contact' style={{ textDecoration: 'underline' }}>Sponsors</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{sponsorList.length} <span style={{ fontSize: '14px' }}>sponsors</span></p>
                                                 </div>
                                             </div>
                                             <div class="box-info bg-tertiary-20 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={tenantIcon} alt="Tent" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Tenants</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/contact' style={{ textDecoration: 'underline' }}>Tenants</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{event.listTenant ? event.listTenant.length : 0} <span style={{ fontSize: '14px' }}>registered</span></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalTenantAccepted} <span style={{ fontSize: '14px' }}>accepted</span></p>
                                                 </div>
@@ -488,14 +477,14 @@ const DashboardStaff = () => {
                                             <div class="box-info bg-primary-10 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={rewardIcon} alt="Gift" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Rewards</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/reward-inventory' style={{ textDecoration: 'underline' }}>Rewards</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{rewardInventoryList.length} <span style={{ fontSize: '14px' }}>product types</span></p>
                                                 </div>
                                             </div>
                                             <div class="box-info bg-tertiary-30 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={pointsIcon} alt="Bullseye" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Rewards Redeemed</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/reward-redemption-history' style={{ textDecoration: 'underline' }}>Rewards Redeemed</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{rewardRedeemedList.length} <span style={{ fontSize: '14px' }}>rewards</span></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalPointsRedeemed} <span style={{ fontSize: '14px' }}>points</span></p>
                                                 </div>
