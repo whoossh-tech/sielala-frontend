@@ -57,7 +57,8 @@ const CreateSponsor = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      openModal(); // Open the modal if the form is valid
+      openModal();
+      localStorage.setItem('idSelectedEvent', idEvent);
     } else {
       console.log("Form validation failed");
     }

@@ -57,7 +57,7 @@ const DetailEvent = () => {
             <div>
                 <p className="subtitle">
                     <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Event List </a>
+                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Event Management </a>
                     / Detail
                 </p>
             </div>
@@ -75,15 +75,6 @@ const DetailEvent = () => {
                 <div className="container mx-auto py-6">
                   <div className="detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4">
 
-                  <div className="ml-10" style={{justifyContent: "right"}}>
-                          {currentDate < startDate ? (
-                            <Link to={`/event/edit/${idEvent}`}>
-                              <button className="button-pink">Edit Event</button>
-                            </Link>
-                          ) : (
-                              <button className="button-pink" disabled>Edit Event</button>
-                          )}
-                  </div>
                     {/* <div className="flex justify-between items-center mb-4 grid grid-cols-3 w-full mx-auto"> */}
 
                       {/* <div className="mr-96">
@@ -123,9 +114,23 @@ const DetailEvent = () => {
                       <p className="event-text-title">Location:</p>
                       <p className="reward-text">{eventData?.location}</p>
                     </div>
+                    <div className="each-event">
+                      <p className="event-text-title">Description:</p>
+                      <p className="reward-text">{eventData?.description}</p>
+                    </div>
                   </div>
-
+                  
                   <br></br>
+
+                  <div className="Edit-button" style={{justifyContent: "right"}}>
+                          {currentDate < startDate ? (
+                            <Link to={`/event/edit/${idEvent}`}>
+                              <button className="button-pink">Edit Event</button>
+                            </Link>
+                          ) : (
+                              <button className="button-pink" disabled>Edit Event</button>
+                          )}
+                  </div>
                   <br></br>
 
                   <h1 className="text-2xl font-semibold mb-4">Accepted Tenant</h1>

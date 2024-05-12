@@ -93,6 +93,10 @@ const TenantRegistrationForm = () => {
         return Object.keys(newErrors).length === 0;
     };
 
+    const handleBack = () => {
+        navigate(-1);
+    }
+
     const onRegister = async (e) => {
         e.preventDefault();
 
@@ -438,14 +442,18 @@ const TenantRegistrationForm = () => {
 
             <br></br>
 
-            <button
-                className="button-pink montserrat"
-                type="submit"
-                disabled={isLoading}
-                // disabled={isRegisterLoading}
-            >
-                {isLoading ? 'Loading...' : 'Apply for Tenant'}
-            </button>
+            <div>
+                <button className="button-green" onClick={handleBack}>Cancel</button>
+                <button
+                    className="button-pink montserrat"
+                    type="submit"
+                    disabled={isLoading}
+                    // disabled={isRegisterLoading}
+                    >
+                    {isLoading ? 'Loading...' : 'Apply for Tenant'}
+                </button>
+            </div>
+        
 
             <Modal
                 isOpen={isModalOpen}

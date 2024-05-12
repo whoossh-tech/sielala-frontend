@@ -114,3 +114,10 @@ th {
     z-index: 10000; /* Mengatur z-index agar modal berada di atas elemen lain */
 }
 
+.button-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Adjust the gap between buttons if needed */
+  }
+

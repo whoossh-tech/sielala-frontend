@@ -82,6 +82,10 @@ const VisitorRegistrationForm = () => {
         }
     };
 
+    const handleBack = () => {
+        navigate(-1);
+    }
+
     const confirmRegistration = async (e) => {
         closeModal();
         setIsLoading(true);
@@ -347,14 +351,18 @@ const VisitorRegistrationForm = () => {
 
                 <br></br>
 
-                <button
+                <div>
+                    <button className="button-green" onClick={handleBack}>Cancel</button>
+                    <button
                     className="button-pink montserrat"
                     type="submit"
                     disabled={isLoading}
-                // disabled={isRegisterLoading}
-                >
-                    {isLoading ? 'Loading...' : 'Apply for Visitor'}
-                </button>
+                    // disabled={isRegisterLoading}
+                    >
+                        {isLoading ? 'Loading...' : 'Apply for Visitor'}
+                    </button>
+                </div>
+                
 
                 <Modal
                     isOpen={isModalOpen}
