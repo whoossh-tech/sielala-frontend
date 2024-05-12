@@ -18,6 +18,7 @@ const DashboardStaff = () => {
     const [selectedEvent, setSelectedEvent] = useState("");
     const [eventData, setEventData] = useState([]);
     const [event, setEvent] = useState();
+    const [eventOverall, setEventOverall] = useState([]);
     const [rewardInventoryList, setRewardInventoryList] = useState([]);
     const [rewardRedeemedList, setRewardRedeemedList] = useState([]);
     const [sponsorList, setSponsorList] = useState([]);
@@ -35,6 +36,14 @@ const DashboardStaff = () => {
 
     const colors = ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834'];
 
+    // const eventWithMostVisitors = eventOverall.reduce((prev, current) => 
+    //     (prev.listVisitor.length > current.listVisitor.length) ? prev : current
+    // );
+
+    // const eventWithMostTenants = eventOverall.reduce((prev, current) => 
+    //     (prev.listTenant.length > current.listTenant.length) ? prev : current
+    // );
+
     const role = localStorage.getItem('role');
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -49,8 +58,17 @@ const DashboardStaff = () => {
                     setSelectedEvent(res.data.data[0].idEvent);
                 }
 
+                console.log(res.data.data);
             })
             .catch((err) => console.log(err));
+
+        axios
+        .get("https://sielala-backend-production.up.railway.app/api/event/view-all-information")
+        .then((res) => {
+            setEventOverall(res.data.data);
+            console.log(res.data.data);
+        })
+        .catch((err) => console.log(err));
 
         if (selectedEvent) {
             axios
@@ -181,6 +199,8 @@ const DashboardStaff = () => {
                         {/* <h1 id="page-title" className="font-reynaldo mb-2 text-general mx-8" style={{ paddingTop: 20, textAlign: 'center', fontSize: 50 }}>
                             Welcome to {role}'s Dashboard!</h1> */}
                         {/* Event Dropdown */}
+
+                        {/* <p>Most visitor: {eventWithMostVisitors.eventName}</p> */}
                         <br></br>
                         <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>
                             <select
