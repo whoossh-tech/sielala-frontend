@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PieChart, BarChart, LineChart, Tooltip } from "@mui/x-charts";
+import { PieChart, BarChart, LineChart, lineElementClasses,
+    markElementClasses, } from "@mui/x-charts";
 import '../../static/css/Dashboard.css';
 // import backgroundPhoto from "../../assets/bg-cover.png";
 import backgroundPhoto from '../../assets/background.svg';
@@ -189,9 +190,42 @@ const DashboardStaff = () => {
         }));
     };
 
-    const eventWithMost = (events, type) => {
-        const sortedEvents = events.sort((a, b) => b[`list${type}.length`] - a[`list${type}.length`]);
-        return sortedEvents.slice(0, 1)[0].eventName;
+    const eventWithMostVisitor = () => {
+        let numOfVisitor = 0;
+        let eventName = "";
+    
+        eventOverall.forEach(event => {
+            if (event.listVisitor.length > numOfVisitor) {
+                numOfVisitor = event.listVisitor.length;
+                eventName = event.eventName;
+            } else if (event.listVisitor.length == numOfVisitor) {
+                eventName += ", ";
+                eventName += event.eventName;
+            }
+        });
+    
+        return { eventName: eventName, number: numOfVisitor };
+    };
+
+    const eventWithMostTenant = () => {
+        let numOfTenant = 0;
+        let eventName = "";
+    
+        eventOverall.forEach(event => {
+            if (event.listTenant.length > numOfTenant) {
+                numOfTenant = event.listTenant.length;
+                eventName = event.eventName;
+            } else if (event.listTenant.length == numOfTenant) {
+                if (eventName == "") {
+                    eventName += event.eventName;
+                } else {
+                    eventName += ", ";
+                    eventName += event.eventName;
+                }
+            }
+        });
+    
+        return { eventName: eventName, number: numOfTenant };
     };
 
     return (
@@ -447,9 +481,9 @@ const DashboardStaff = () => {
                                     </div>
                                     </div>
                                 ) : (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5" style={{ padding: 0, margin: 0 }}>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-4" style={{ padding: 0, margin: 0 }}>
                                         <div className="col-span-1 md:col-span-2">
-                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(75% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                 <h2><b>Number of Visitor in Each Event</b></h2>
                                                 <LineChart
                                                     xAxis={[{
@@ -460,11 +494,23 @@ const DashboardStaff = () => {
                                                     series={[{
                                                         data: generateLineChartVisitorData(eventOverall).map(data => data.y),
                                                     }]}
-                                                    width={400}
-                                                    height={200}
+                                                    width={700}
+                                                    height={250}
+                                                    sx={{
+                                                        [`& .${lineElementClasses.root}`]: {
+                                                          stroke: '#E685AE',
+                                                          strokeWidth: 3,
+                                                        },
+                                                        [`& .${markElementClasses.root}`]: {
+                                                          stroke: '#B35985',
+                                                          scale: '0.8',
+                                                          fill: '#fff',
+                                                          strokeWidth: 3,
+                                                        },
+                                                    }}
                                                 />
                                             </div>
-                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                 <h2><b>Number of Tenant in Each Event</b></h2>
                                                 <LineChart
                                                     xAxis={[{
@@ -475,28 +521,52 @@ const DashboardStaff = () => {
                                                     series={[{
                                                         data: generateLineChartTenantData(eventOverall).map(data => data.y),
                                                     }]}
-                                                    width={400}
-                                                    height={200}
+                                                    width={700}
+                                                    height={250}
+                                                    sx={{
+                                                        [`& .${lineElementClasses.root}`]: {
+                                                          stroke: '#E685AE',
+                                                          strokeWidth: 3,
+                                                        },
+                                                        [`& .${markElementClasses.root}`]: {
+                                                          stroke: '#B35985',
+                                                          scale: '0.8',
+                                                          fill: '#fff',
+                                                          strokeWidth: 3,
+                                                        },
+                                                    }}
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="col-span-1 md:col-span-1">
-                                            <div class="box-info bg-tertiary-10 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                            <div class="box-info bg-secondary-10 mb-5" style={{ marginTop: '20px', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={visitorIcon} alt="Ticket" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Event with the most visitor</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><b>Most visitor</b></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
-                                                        {/* {eventWithMost(eventOverall, 'Visitor')} */}
+                                                        {eventWithMostVisitor().eventName}
+                                                    </p>
+
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>With</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                        {eventWithMostVisitor().number} 
+                                                        <span style={{ fontSize: '14px' }}> visitors registered</span>
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="box-info bg-tertiary-20 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={tenantIcon} alt="Tent" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Tenants</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><b>Most tenants</b></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
-                                                        {/* {eventWithMost(eventOverall, 'Tenant')} */}
+                                                        {eventWithMostTenant().eventName}
+                                                    </p>
+
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Partnering with</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                        {eventWithMostTenant().number} 
+                                                        <span style={{ fontSize: '14px' }}> tenants</span>
                                                     </p>
                                                 </div>
                                             </div>
