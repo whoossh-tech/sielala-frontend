@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PieChart, BarChart } from "@mui/x-charts";
+import { PieChart, BarChart, LineChart, Tooltip } from "@mui/x-charts";
 import '../../static/css/Dashboard.css';
 // import backgroundPhoto from "../../assets/bg-cover.png";
 import backgroundPhoto from '../../assets/background.svg';
@@ -36,51 +36,42 @@ const DashboardStaff = () => {
 
     const colors = ['#FFB2D3', '#B69478', '#D3DA80', '#F59FC3', '#8C6749', '#B2BA59', '#CC6E99', '#7D512D', '#9FA834'];
 
-    // const eventWithMostVisitors = eventOverall.reduce((prev, current) => 
-    //     (prev.listVisitor.length > current.listVisitor.length) ? prev : current
-    // );
-
-    // const eventWithMostTenants = eventOverall.reduce((prev, current) => 
-    //     (prev.listTenant.length > current.listTenant.length) ? prev : current
-    // );
-
     const role = localStorage.getItem('role');
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     useEffect(() => {
         axios
-            .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
+            .get("https://sielala-backend-production.up.railway.app/api/event/view-all-information")
             .then((res) => {
-                setEventData(res.data.data);
-
-                if (!selectedEvent && res.data.data.length > 0) {
-                    setSelectedEvent(res.data.data[0].idEvent);
-                }
-
-                console.log(res.data.data);
+                setEventOverall(res.data.data);
             })
             .catch((err) => console.log(err));
 
         axios
-        .get("https://sielala-backend-production.up.railway.app/api/event/view-all-information")
-        .then((res) => {
-            setEventOverall(res.data.data);
-            console.log(res.data.data);
-        })
-        .catch((err) => console.log(err));
+            .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
+            .then((res) => {
+                setEventData(res.data.data);
+            })
+            .catch((err) => console.log(err));
+    })
+
+    useEffect(() => {
+        console.log("selected event after: ", selectedEvent);
 
         if (selectedEvent) {
             axios
                 .get(`https://sielala-backend-production.up.railway.app/api/event/detail/${selectedEvent}`)
                 .then((res) => {
                     setEvent(res.data.data);
+                    console.log(res.data.data);
                     const totalAccepted = res.data.data.listTenant.filter(tenant => tenant.accepted).length;
                     setTotalTenantAccepted(totalAccepted);
                 })
                 .catch((err) => console.log(err));
 
-            axios.get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
+            axios
+                .get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
                 .then(res => {
                     setRewardInventoryList(res.data.data)
                 })
@@ -100,6 +91,8 @@ const DashboardStaff = () => {
                     setSponsorList(filteredContactList);
                 })
                 .catch((err) => console.log(err));
+        } else {
+            setEvent();
         }
     }, [selectedEvent]);
 
@@ -116,9 +109,7 @@ const DashboardStaff = () => {
 
     const handleChange = (e) => {
         const selectedValue = e.target.value;
-        if (selectedValue === "Select event") {
-            setSelectedEvent("");
-        } else {
+        if (selectedValue !== "Overall Insight") {
             setSelectedEvent(selectedValue);
         }
     };
@@ -175,19 +166,36 @@ const DashboardStaff = () => {
         }));
     };
 
-    // <body>
-    //     <Sidebar />
-    //      <main>
-    // Header
-    // <div className='content-container my-4'>
-    //      current code (kecuali tag <main> kalo ada)
-    // </div>
-    //      </main>
-    // </body>
+    const sortEventsByVisitorsOrTenants = (events, type) => {
+        const sortedEvents = events.sort((a, b) => b[`list${type}.length`] - a[`list${type}.length`]);
+        // console.log(sortedEvents[0].map(event => event.eventName));
+        return sortedEvents.slice(0, 5);
+    };
+
+    const topEventsByVisitors = sortEventsByVisitorsOrTenants(eventOverall, 'Visitor');
+    const topEventsByTenants = sortEventsByVisitorsOrTenants(eventOverall, 'Tenant');
+
+    const generateLineChartVisitorData = (data) => {
+        return data.map(event => ({
+            x: event.eventName,
+            y: event.listVisitor.length, 
+        }));
+    };
+
+    const generateLineChartTenantData = (data) => {
+        return data.map(event => ({
+            x: event.eventName,
+            y: event.listTenant.length, 
+        }));
+    };
+
+    const eventWithMost = (events, type) => {
+        const sortedEvents = events.sort((a, b) => b[`list${type}.length`] - a[`list${type}.length`]);
+        return sortedEvents.slice(0, 1)[0].eventName;
+    };
 
     return (
         <body>
-            {/* <div className="object-cover absolute inset-0 flex justify-center items-center" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh' }}> */}
             {/* Sidebar Navigation */}
             <style>{reynaldoStyles}</style>
             <Sidebar activePage={activePage}/>
@@ -196,65 +204,67 @@ const DashboardStaff = () => {
 
                 <div className='content-container'>
                     <div className="dashboard-container">
-                        {/* <h1 id="page-title" className="font-reynaldo mb-2 text-general mx-8" style={{ paddingTop: 20, textAlign: 'center', fontSize: 50 }}>
-                            Welcome to {role}'s Dashboard!</h1> */}
-                        {/* Event Dropdown */}
 
-                        {/* <p>Most visitor: {eventWithMostVisitors.eventName}</p> */}
                         <br></br>
-                        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>
+
+                        {(!selectedEvent) && (
+                            <div className="text-center text-red-500 font-bold mb-4">
+                            Event is not selected, please select event on the dropdown
+                            </div>
+                        )}
+
+                        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
+                            <div style={{ position: 'relative' }}>
                             <select
                                 className="appearance-none px-4 py-3 w-full focus:outline-none"
                                 onChange={handleChange}
                                 value={selectedEvent}
                                 style={{
-                                    backgroundColor: "#ffffff",
-                                    color: "#333333",
-                                    borderRadius: "0.375rem",
-                                    border: "1px solid #E3E2E6",
-                                    fontSize: "1rem",
-                                    lineHeight: "1.5",
-                                    padding: "0.5rem 1rem",
-                                    width: "400px",
-                                    alignItems: "center",
-                                    justifyContent: "center",
+                                backgroundColor: '#ffffff',
+                                color: '#333333',
+                                borderRadius: '0.375rem',
+                                fontSize: '1rem',
+                                lineHeight: '1.5',
+                                padding: '0.5rem 1rem',
+                                width: '400px',
                                 }}
                             >
-
-                                {eventData.length > 0 ? (
-                                    eventData.map((event, index) => (
-                                        <option key={index} value={event.idEvent}>
-                                            {event.eventName}
-                                        </option>
-                                    ))
-                                ) : (
+                                <option value="">Overall Insight</option>
+                                {eventData && eventData.length > 0 ?
+                                (eventData.map((event, index) => (
+                                    <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
+                                ))) : (
                                     <option value="">No events available</option>
-                                )}
+                                )
+                                }
                             </select>
+
                             <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
                                 <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    width="24"
-                                    height="24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="feather feather-chevron-down"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-chevron-down"
                                 >
-                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
+                            </div>
                             </div>
                         </div>
 
                         <br></br>
 
                         {/* Display charts or message */}
-                        {event ? (
+                        {eventData ? (
                             <div>
-                                <div className="grid grid-cols-1 md:grid-cols-4 gap-5" style={{ padding: 0, margin: 0 }}>
+                                {event ? (
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-5" style={{ padding: 0, margin: 0 }}>
                                     {/* First Column */}
                                     <div className="col-span-1 md:col-span-3">
                                         {/* Event detail card */}
@@ -435,10 +445,64 @@ const DashboardStaff = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5" style={{ padding: 0, margin: 0 }}>
+                                        <div className="col-span-1 md:col-span-2">
+                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(75% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <h2><b>Number of Visitor in Each Event</b></h2>
+                                                <LineChart
+                                                    xAxis={[{
+                                                        scaleType: 'band',
+                                                        data: generateLineChartVisitorData(topEventsByVisitors).map(data => data.x),
+                                                        fontSize: 15
+                                                    }]}
+                                                    series={[{
+                                                        data: generateLineChartVisitorData(eventOverall).map(data => data.y),
+                                                    }]}
+                                                    width={400}
+                                                    height={200}
+                                                />
+                                            </div>
+                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <h2><b>Number of Tenant in Each Event</b></h2>
+                                                <LineChart
+                                                    xAxis={[{
+                                                        scaleType: 'band',
+                                                        data: generateLineChartTenantData(topEventsByTenants).map(data => data.x),
+                                                        fontSize: 12
+                                                    }]}
+                                                    series={[{
+                                                        data: generateLineChartTenantData(eventOverall).map(data => data.y),
+                                                    }]}
+                                                    width={400}
+                                                    height={200}
+                                                />
+                                            </div>
+                                        </div>
 
-                                </div>
-
-
+                                        <div className="col-span-1 md:col-span-1">
+                                            <div class="box-info bg-tertiary-10 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                <img src={visitorIcon} alt="Ticket" style={{ width: '60px', marginRight: '20px' }} />
+                                                <div>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Event with the most visitor</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                        {/* {eventWithMost(eventOverall, 'Visitor')} */}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="box-info bg-tertiary-20 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                <img src={tenantIcon} alt="Tent" style={{ width: '60px', marginRight: '20px' }} />
+                                                <div>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Tenants</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                        {/* {eventWithMost(eventOverall, 'Tenant')} */}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <div style={{ marginTop: '20px', textAlign: 'center' }}>
