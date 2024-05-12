@@ -46,6 +46,7 @@ const DashboardStaff = () => {
             .get("https://sielala-backend-production.up.railway.app/api/event/view-all-information")
             .then((res) => {
                 setEventOverall(res.data.data);
+                // console.log("info", res.data.data);
             })
             .catch((err) => console.log(err));
 
@@ -53,9 +54,10 @@ const DashboardStaff = () => {
             .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
                 setEventData(res.data.data);
+                // console.log("view all ", res.data.data);
             })
             .catch((err) => console.log(err));
-    })
+    });
 
     useEffect(() => {
         console.log("selected event after: ", selectedEvent);
@@ -110,9 +112,13 @@ const DashboardStaff = () => {
 
     const handleChange = (e) => {
         const selectedValue = e.target.value;
-        if (selectedValue !== "Overall Insight") {
+        if (selectedValue !== "Select event") {
             setSelectedEvent(selectedValue);
         }
+    };
+
+    const handleAllEvent = () => {
+        setSelectedEvent("");
     };
 
     // visitor location
@@ -167,26 +173,26 @@ const DashboardStaff = () => {
         }));
     };
 
-    const sortEventsByVisitorsOrTenants = (events, type) => {
-        const sortedEvents = events.sort((a, b) => b[`list${type}.length`] - a[`list${type}.length`]);
-        // console.log(sortedEvents[0].map(event => event.eventName));
-        return sortedEvents.slice(0, 5);
-    };
+    // const sortEventsByVisitorsOrTenants = (events, type) => {
+    //     const sortedEvents = events.sort((a, b) => b[`numOf${type}`] - a[`numOf${type}`]);
+    //     return sortedEvents.slice(0, 5);
+    // };
 
-    const topEventsByVisitors = sortEventsByVisitorsOrTenants(eventOverall, 'Visitor');
-    const topEventsByTenants = sortEventsByVisitorsOrTenants(eventOverall, 'Tenant');
+    // const topEventsByVisitors = sortEventsByVisitorsOrTenants(eventOverall, 'Visitor');
+    // const topEventsByTenants = sortEventsByVisitorsOrTenants(eventOverall, 'Tenant');
+    // const topEventsBySponsors = sortEventsByVisitorsOrTenants(eventOverall, 'Sponsor');
 
     const generateLineChartVisitorData = (data) => {
         return data.map(event => ({
             x: event.eventName,
-            y: event.listVisitor.length, 
+            y: event.numOfVisitor, 
         }));
     };
 
     const generateLineChartTenantData = (data) => {
         return data.map(event => ({
             x: event.eventName,
-            y: event.listTenant.length, 
+            y: event.numOfTenant, 
         }));
     };
 
@@ -195,12 +201,16 @@ const DashboardStaff = () => {
         let eventName = "";
     
         eventOverall.forEach(event => {
-            if (event.listVisitor.length > numOfVisitor) {
-                numOfVisitor = event.listVisitor.length;
+            if (event.numOfVisitor > numOfVisitor) {
+                numOfVisitor = event.numOfVisitor;
                 eventName = event.eventName;
-            } else if (event.listVisitor.length == numOfVisitor) {
-                eventName += ", ";
-                eventName += event.eventName;
+            } else if (event.numOfVisitor == numOfVisitor) {
+                if (eventName == "") {
+                    eventName += event.eventName;
+                } else {
+                    eventName += ", ";
+                    eventName += event.eventName;
+                }
             }
         });
     
@@ -212,10 +222,10 @@ const DashboardStaff = () => {
         let eventName = "";
     
         eventOverall.forEach(event => {
-            if (event.listTenant.length > numOfTenant) {
-                numOfTenant = event.listTenant.length;
+            if (event.numOfTenant > numOfTenant) {
+                numOfTenant = event.numOfTenant;
                 eventName = event.eventName;
-            } else if (event.listTenant.length == numOfTenant) {
+            } else if (event.numOfTenant == numOfTenant) {
                 if (eventName == "") {
                     eventName += event.eventName;
                 } else {
@@ -241,58 +251,71 @@ const DashboardStaff = () => {
 
                         <br></br>
 
-                        {(!selectedEvent) && (
-                            <div className="text-center text-red-500 font-bold mb-4">
-                            Event is not selected, please select event on the dropdown
-                            </div>
-                        )}
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: '1' }}>
+                            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
+                                <div style={{ position: 'relative'}}>
+                                    <select
+                                        className="appearance-none px-4 py-3 w-full focus:outline-none"
+                                        onChange={handleChange}
+                                        value={selectedEvent}
+                                        style={{
+                                            backgroundColor: '#ffffff',
+                                            color: '#333333',
+                                            borderRadius: '0.375rem',
+                                            fontSize: '1rem',
+                                            lineHeight: '1.5',
+                                            padding: '0.5rem 1rem',
+                                            width: '400px',
+                                        }}
+                                    >
+                                        <option value="">Select event</option>
+                                        {eventData && eventData.length > 0 ?
+                                        (eventData.map((event, index) => (
+                                            <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
+                                        ))) : (
+                                            <option value="">No events available</option>
+                                        )
+                                        }
+                                    </select>
 
-                        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
-                            <div style={{ position: 'relative' }}>
-                            <select
-                                className="appearance-none px-4 py-3 w-full focus:outline-none"
-                                onChange={handleChange}
-                                value={selectedEvent}
-                                style={{
-                                backgroundColor: '#ffffff',
-                                color: '#333333',
-                                borderRadius: '0.375rem',
-                                fontSize: '1rem',
-                                lineHeight: '1.5',
-                                padding: '0.5rem 1rem',
-                                width: '400px',
-                                }}
-                            >
-                                <option value="">Overall Insight</option>
-                                {eventData && eventData.length > 0 ?
-                                (eventData.map((event, index) => (
-                                    <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
-                                ))) : (
-                                    <option value="">No events available</option>
-                                )
-                                }
-                            </select>
+                                    <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+                                        <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        height="24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-chevron-down"
+                                        >
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-                                <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                width="24"
-                                height="24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="feather feather-chevron-down"
-                                >
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-                            </div>
+                            {(selectedEvent) && (
+                                <div>
+                                    <button className="button-grey" 
+                                        onClick={handleAllEvent}
+                                    >
+                                        See Event Insights
+                                    </button>
+                                </div>
+                            )}
                         </div>
 
+
                         <br></br>
+
+                        {(!selectedEvent) && (
+                            <div className="text-center text-neutral-80 font-bold mb-4">
+                            Select event to see more details!
+                            </div>
+                        )}
 
                         {/* Display charts or message */}
                         {eventData ? (
@@ -481,97 +504,110 @@ const DashboardStaff = () => {
                                     </div>
                                     </div>
                                 ) : (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-4" style={{ padding: 0, margin: 0 }}>
-                                        <div className="col-span-1 md:col-span-2">
-                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                                                <h2><b>Number of Visitor in Each Event</b></h2>
-                                                <LineChart
-                                                    xAxis={[{
-                                                        scaleType: 'band',
-                                                        data: generateLineChartVisitorData(topEventsByVisitors).map(data => data.x),
-                                                        fontSize: 15
-                                                    }]}
-                                                    series={[{
-                                                        data: generateLineChartVisitorData(eventOverall).map(data => data.y),
-                                                    }]}
-                                                    width={700}
-                                                    height={250}
-                                                    sx={{
-                                                        [`& .${lineElementClasses.root}`]: {
-                                                          stroke: '#E685AE',
-                                                          strokeWidth: 3,
-                                                        },
-                                                        [`& .${markElementClasses.root}`]: {
-                                                          stroke: '#B35985',
-                                                          scale: '0.8',
-                                                          fill: '#fff',
-                                                          strokeWidth: 3,
-                                                        },
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                                                <h2><b>Number of Tenant in Each Event</b></h2>
-                                                <LineChart
-                                                    xAxis={[{
-                                                        scaleType: 'band',
-                                                        data: generateLineChartTenantData(topEventsByTenants).map(data => data.x),
-                                                        fontSize: 12
-                                                    }]}
-                                                    series={[{
-                                                        data: generateLineChartTenantData(eventOverall).map(data => data.y),
-                                                    }]}
-                                                    width={700}
-                                                    height={250}
-                                                    sx={{
-                                                        [`& .${lineElementClasses.root}`]: {
-                                                          stroke: '#E685AE',
-                                                          strokeWidth: 3,
-                                                        },
-                                                        [`& .${markElementClasses.root}`]: {
-                                                          stroke: '#B35985',
-                                                          scale: '0.8',
-                                                          fill: '#fff',
-                                                          strokeWidth: 3,
-                                                        },
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
 
-                                        <div className="col-span-1 md:col-span-1">
-                                            <div class="box-info bg-secondary-10 mb-5" style={{ marginTop: '20px', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
-                                                <img src={visitorIcon} alt="Ticket" style={{ width: '60px', marginRight: '20px' }} />
-                                                <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><b>Most visitor</b></p>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
-                                                        {eventWithMostVisitor().eventName}
-                                                    </p>
+                                    <div>
+                                        <h1>Event Insights</h1>
+                                        {eventOverall ? (
+                                            <div>
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-4" style={{ padding: 0, margin: 0 }}>
+                                                    <div className="col-span-1 md:col-span-2">
+                                                        <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                            <h2><b>Number of Visitor in Each Event</b></h2>
+                                                            <LineChart
+                                                                xAxis={[{
+                                                                    scaleType: 'band',
+                                                                    data: generateLineChartVisitorData(eventOverall).map(data => data.x),
+                                                                    fontSize: 15
+                                                                }]}
+                                                                series={[{
+                                                                    data: generateLineChartVisitorData(eventOverall).map(data => data.y),
+                                                                }]}
+                                                                width={700}
+                                                                height={250}
+                                                                sx={{
+                                                                    [`& .${lineElementClasses.root}`]: {
+                                                                    stroke: '#E685AE',
+                                                                    strokeWidth: 3,
+                                                                    },
+                                                                    [`& .${markElementClasses.root}`]: {
+                                                                    stroke: '#B35985',
+                                                                    scale: '0.8',
+                                                                    fill: '#fff',
+                                                                    strokeWidth: 3,
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                            <h2><b>Number of Tenant in Each Event</b></h2>
+                                                            <LineChart
+                                                                xAxis={[{
+                                                                    scaleType: 'band',
+                                                                    data: generateLineChartTenantData(eventOverall).map(data => data.x),
+                                                                    fontSize: 12
+                                                                }]}
+                                                                series={[{
+                                                                    data: generateLineChartTenantData(eventOverall).map(data => data.y),
+                                                                }]}
+                                                                width={700}
+                                                                height={250}
+                                                                sx={{
+                                                                    [`& .${lineElementClasses.root}`]: {
+                                                                    stroke: '#E685AE',
+                                                                    strokeWidth: 3,
+                                                                    },
+                                                                    [`& .${markElementClasses.root}`]: {
+                                                                    stroke: '#B35985',
+                                                                    scale: '0.8',
+                                                                    fill: '#fff',
+                                                                    strokeWidth: 3,
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </div>
 
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>With</p>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
-                                                        {eventWithMostVisitor().number} 
-                                                        <span style={{ fontSize: '14px' }}> visitors registered</span>
-                                                    </p>
+                                                    <div className="col-span-1 md:col-span-1">
+                                                        <div class="box-info bg-secondary-10 mb-5" style={{ marginTop: '20px', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                            <img src={visitorIcon} alt="Ticket" style={{ width: '60px', marginRight: '20px' }} />
+                                                            <div>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><b>Most visitor</b></p>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                                    {eventWithMostVisitor().eventName}
+                                                                </p>
+
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>With</p>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                                    {eventWithMostVisitor().number} 
+                                                                    <span style={{ fontSize: '14px' }}> visitors registered</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="box-info bg-tertiary-20 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                            <img src={tenantIcon} alt="Tent" style={{ width: '60px', marginRight: '20px' }} />
+                                                            <div>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><b>Most tenants</b></p>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                                    {eventWithMostTenant().eventName}
+                                                                </p>
+
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>With</p>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                                    {eventWithMostTenant().number} 
+                                                                    <span style={{ fontSize: '14px' }}> tenant applications</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="box-info bg-tertiary-20 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
-                                                <img src={tenantIcon} alt="Tent" style={{ width: '60px', marginRight: '20px' }} />
-                                                <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><b>Most tenants</b></p>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
-                                                        {eventWithMostTenant().eventName}
-                                                    </p>
-
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Partnering with</p>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
-                                                        {eventWithMostTenant().number} 
-                                                        <span style={{ fontSize: '14px' }}> tenants</span>
-                                                    </p>
-                                                </div>
+                                        ) : (
+                                            <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                                                <b>Loading...</b>
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
+                                    
                                 )}
                             </div>
                         ) : (
