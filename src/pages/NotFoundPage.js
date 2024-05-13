@@ -14,7 +14,7 @@ const NotFoundPage = () => {
     <div className="not-found-container">
       <h2>404 - Not Found</h2>
       <p>Sorry, the page you are looking for does not exist.</p>
-      <div className="button-field">
+      <div className="button-area" style={{ display: 'flex', justifyContent: 'center' }}>
         <button className="button-pink" onClick={goBack}>
           Go Back
         </button>

@@ -114,6 +114,10 @@ const DetailEvent = () => {
                       <p className="event-text-title">Location:</p>
                       <p className="reward-text">{eventData?.location}</p>
                     </div>
+                    <div className="each-event">
+                      <p className="event-text-title">Description:</p>
+                      <p className="reward-text">{eventData?.description}</p>
+                    </div>
                   </div>
                   
                   <br></br>

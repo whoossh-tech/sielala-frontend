@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PieChart, BarChart } from "@mui/x-charts";
+import { useNavigate, Link } from 'react-router-dom';
+import { PieChart, BarChart, LineChart, lineElementClasses,
+    markElementClasses, } from "@mui/x-charts";
 import '../../static/css/Dashboard.css';
 // import backgroundPhoto from "../../assets/bg-cover.png";
 import backgroundPhoto from '../../assets/background.svg';
@@ -18,6 +20,7 @@ const DashboardStaff = () => {
     const [selectedEvent, setSelectedEvent] = useState("");
     const [eventData, setEventData] = useState([]);
     const [event, setEvent] = useState();
+    const [eventOverall, setEventOverall] = useState([]);
     const [rewardInventoryList, setRewardInventoryList] = useState([]);
     const [rewardRedeemedList, setRewardRedeemedList] = useState([]);
     const [sponsorList, setSponsorList] = useState([]);
@@ -41,28 +44,39 @@ const DashboardStaff = () => {
 
     useEffect(() => {
         axios
+            .get("https://sielala-backend-production.up.railway.app/api/event/view-all-information")
+            .then((res) => {
+                setEventOverall(res.data.data);
+                // console.log("info", res.data.data);
+            })
+            .catch((err) => console.log(err));
+
+        axios
             .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
             .then((res) => {
                 setEventData(res.data.data);
-
-                if (!selectedEvent && res.data.data.length > 0) {
-                    setSelectedEvent(res.data.data[0].idEvent);
-                }
-
+                // console.log("view all ", res.data.data);
             })
             .catch((err) => console.log(err));
+    }, [selectedEvent]);
+
+    useEffect(() => {
+        console.log("selected event after: ", selectedEvent);
 
         if (selectedEvent) {
             axios
                 .get(`https://sielala-backend-production.up.railway.app/api/event/detail/${selectedEvent}`)
                 .then((res) => {
                     setEvent(res.data.data);
+                    console.log(res.data.data);
                     const totalAccepted = res.data.data.listTenant.filter(tenant => tenant.accepted).length;
                     setTotalTenantAccepted(totalAccepted);
+                    localStorage.setItem("idSelectedEvent", selectedEvent);
                 })
                 .catch((err) => console.log(err));
 
-            axios.get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
+            axios
+                .get(`https://sielala-backend-production.up.railway.app/api/reward/view-all/${selectedEvent}`)
                 .then(res => {
                     setRewardInventoryList(res.data.data)
                 })
@@ -82,6 +96,8 @@ const DashboardStaff = () => {
                     setSponsorList(filteredContactList);
                 })
                 .catch((err) => console.log(err));
+        } else {
+            setEvent();
         }
     }, [selectedEvent]);
 
@@ -98,11 +114,13 @@ const DashboardStaff = () => {
 
     const handleChange = (e) => {
         const selectedValue = e.target.value;
-        if (selectedValue === "Select event") {
-            setSelectedEvent("");
-        } else {
+        if (selectedValue !== "Select event") {
             setSelectedEvent(selectedValue);
         }
+    };
+
+    const handleAllEvent = () => {
+        setSelectedEvent("");
     };
 
     // visitor location
@@ -157,19 +175,64 @@ const DashboardStaff = () => {
         }));
     };
 
-    // <body>
-    //     <Sidebar />
-    //      <main>
-    // Header
-    // <div className='content-container my-4'>
-    //      current code (kecuali tag <main> kalo ada)
-    // </div>
-    //      </main>
-    // </body>
+    const generateLineChartVisitorData = (data) => {
+        return data.map(event => ({
+            x: event.eventName,
+            y: event.numOfVisitor, 
+        }));
+    };
+
+    const generateLineChartTenantData = (data) => {
+        return data.map(event => ({
+            x: event.eventName,
+            y: event.numOfTenant, 
+        }));
+    };
+
+    const eventWithMostVisitor = () => {
+        let numOfVisitor = 0;
+        let eventName = "";
+    
+        eventOverall.forEach(event => {
+            if (event.numOfVisitor > numOfVisitor) {
+                numOfVisitor = event.numOfVisitor;
+                eventName = event.eventName;
+            } else if (event.numOfVisitor == numOfVisitor) {
+                if (eventName == "") {
+                    eventName += event.eventName;
+                } else {
+                    eventName += ", ";
+                    eventName += event.eventName;
+                }
+            }
+        });
+    
+        return { eventName: eventName, number: numOfVisitor };
+    };
+
+    const eventWithMostTenant = () => {
+        let numOfTenant = 0;
+        let eventName = "";
+    
+        eventOverall.forEach(event => {
+            if (event.numOfTenant > numOfTenant) {
+                numOfTenant = event.numOfTenant;
+                eventName = event.eventName;
+            } else if (event.numOfTenant == numOfTenant) {
+                if (eventName == "") {
+                    eventName += event.eventName;
+                } else {
+                    eventName += ", ";
+                    eventName += event.eventName;
+                }
+            }
+        });
+    
+        return { eventName: eventName, number: numOfTenant };
+    };
 
     return (
         <body>
-            {/* <div className="object-cover absolute inset-0 flex justify-center items-center" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh' }}> */}
             {/* Sidebar Navigation */}
             <style>{reynaldoStyles}</style>
             <Sidebar activePage={activePage}/>
@@ -178,63 +241,76 @@ const DashboardStaff = () => {
 
                 <div className='content-container'>
                     <div className="dashboard-container">
-                        {/* <h1 id="page-title" className="font-reynaldo mb-2 text-general mx-8" style={{ paddingTop: 20, textAlign: 'center', fontSize: 50 }}>
-                            Welcome to {role}'s Dashboard!</h1> */}
-                        {/* Event Dropdown */}
-                        <br></br>
-                        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>
-                            <select
-                                className="appearance-none px-4 py-3 w-full focus:outline-none"
-                                onChange={handleChange}
-                                value={selectedEvent}
-                                style={{
-                                    backgroundColor: "#ffffff",
-                                    color: "#333333",
-                                    borderRadius: "0.375rem",
-                                    border: "1px solid #E3E2E6",
-                                    fontSize: "1rem",
-                                    lineHeight: "1.5",
-                                    padding: "0.5rem 1rem",
-                                    width: "400px",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                            >
 
-                                {eventData.length > 0 ? (
-                                    eventData.map((event, index) => (
-                                        <option key={index} value={event.idEvent}>
-                                            {event.eventName}
-                                        </option>
-                                    ))
-                                ) : (
-                                    <option value="">No events available</option>
-                                )}
-                            </select>
-                            <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    width="24"
-                                    height="24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="feather feather-chevron-down"
-                                >
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
+                        <br></br>
+
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: '1' }}>
+                            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
+                                <div style={{ position: 'relative'}}>
+                                    <select
+                                        className="appearance-none px-4 py-3 w-full focus:outline-none"
+                                        onChange={handleChange}
+                                        value={selectedEvent}
+                                        style={{
+                                            backgroundColor: '#ffffff',
+                                            color: '#333333',
+                                            borderRadius: '0.375rem',
+                                            fontSize: '1rem',
+                                            lineHeight: '1.5',
+                                            padding: '0.5rem 1rem',
+                                            width: '400px',
+                                        }}
+                                    >
+                                        <option value="">Select event</option>
+                                        {eventData && eventData.length > 0 ?
+                                        (eventData.map((event, index) => (
+                                            <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
+                                        ))) : (
+                                            <option value="">No events available</option>
+                                        )
+                                        }
+                                    </select>
+
+                                    <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+                                        <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        height="24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-chevron-down"
+                                        >
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+
                         <br></br>
 
+                        {(!selectedEvent) && (
+                            <div className="text-center text-neutral-80 font-bold mb-4">
+                                Select event to see more details!
+                            </div>
+                        )}
+
+                        {(selectedEvent) && (
+                            <div className="text-center text-neutral-80 font-bold mb-4">
+                                <a onClick={handleAllEvent} style={{ cursor: 'pointer', textDecoration: 'underline' }}>Click here for Overall Event Insights!</a>
+                            </div>
+                        )}
+
                         {/* Display charts or message */}
-                        {event ? (
+                        {eventData ? (
                             <div>
-                                <div className="grid grid-cols-1 md:grid-cols-4 gap-5" style={{ padding: 0, margin: 0 }}>
+                                {event ? (
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-5" style={{ padding: 0, margin: 0 }}>
                                     {/* First Column */}
                                     <div className="col-span-1 md:col-span-3">
                                         {/* Event detail card */}
@@ -275,7 +351,7 @@ const DashboardStaff = () => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', height: '280px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                     <h2><b>Visitor Location Distribution</b></h2>
                                                     <p style={{ textAlign: 'center' }}>No visitors yet</p>
                                                 </div>
@@ -304,7 +380,7 @@ const DashboardStaff = () => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', height: '280px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                     <h2><b>Visitor Gender Distribution</b></h2>
                                                     <p style={{ textAlign: 'center' }}>No visitors yet</p>
                                                 </div>
@@ -335,7 +411,7 @@ const DashboardStaff = () => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', height: '260px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                     <h2><b>Visitor Gender Distribution</b></h2>
                                                     <p style={{ textAlign: 'center' }}>No visitors yet</p>
                                                 </div>
@@ -362,7 +438,7 @@ const DashboardStaff = () => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(50% - 10px)', height: '260px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                                     <h2><b>Visitor Gender Distribution</b></h2>
                                                     <p style={{ textAlign: 'center' }}>No visitors yet</p>
                                                 </div>
@@ -379,21 +455,21 @@ const DashboardStaff = () => {
                                             <div class="box-info bg-tertiary-10 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={visitorIcon} alt="Ticket" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Visitors</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/visitor' style={{ textDecoration: 'underline' }}>Visitors</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{event.listVisitor ? event.listVisitor.length : 0} <span style={{ fontSize: '14px' }}>registered</span></p>
                                                 </div>
                                             </div>
                                             <div class="box-info bg-secondary-10 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={sponsorIcon} alt="Megaphone" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Sponsors</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/contact' style={{ textDecoration: 'underline' }}>Sponsors</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{sponsorList.length} <span style={{ fontSize: '14px' }}>sponsors</span></p>
                                                 </div>
                                             </div>
                                             <div class="box-info bg-tertiary-20 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={tenantIcon} alt="Tent" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Tenants</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/contact' style={{ textDecoration: 'underline' }}>Tenants</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{event.listTenant ? event.listTenant.length : 0} <span style={{ fontSize: '14px' }}>registered</span></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalTenantAccepted} <span style={{ fontSize: '14px' }}>accepted</span></p>
                                                 </div>
@@ -401,24 +477,127 @@ const DashboardStaff = () => {
                                             <div class="box-info bg-primary-10 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={rewardIcon} alt="Gift" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Rewards</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/reward-inventory' style={{ textDecoration: 'underline' }}>Rewards</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{rewardInventoryList.length} <span style={{ fontSize: '14px' }}>product types</span></p>
                                                 </div>
                                             </div>
                                             <div class="box-info bg-tertiary-30 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
                                                 <img src={pointsIcon} alt="Bullseye" style={{ width: '60px', marginRight: '20px' }} />
                                                 <div>
-                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>Rewards Redeemed</p>
+                                                    <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><Link to='/reward-redemption-history' style={{ textDecoration: 'underline' }}>Rewards Redeemed</Link></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{rewardRedeemedList.length} <span style={{ fontSize: '14px' }}>rewards</span></p>
                                                     <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>{totalPointsRedeemed} <span style={{ fontSize: '14px' }}>points</span></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                ) : (
 
-                                </div>
+                                    <div>
+                                        <h1 style={{ textAlign: 'left' }}>Event Insights</h1>
+                                        {eventOverall ? (
+                                            <div>
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-4" style={{ padding: 0, margin: 0 }}>
+                                                    <div className="col-span-1 md:col-span-2">
+                                                        <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                            <h2><b>Number of Visitor in Each Event</b></h2>
+                                                            <LineChart
+                                                                xAxis={[{
+                                                                    scaleType: 'band',
+                                                                    data: generateLineChartVisitorData(eventOverall).map(data => data.x),
+                                                                    fontSize: 15
+                                                                }]}
+                                                                series={[{
+                                                                    data: generateLineChartVisitorData(eventOverall).map(data => data.y),
+                                                                }]}
+                                                                width={700}
+                                                                height={250}
+                                                                sx={{
+                                                                    [`& .${lineElementClasses.root}`]: {
+                                                                    stroke: '#E685AE',
+                                                                    strokeWidth: 3,
+                                                                    },
+                                                                    [`& .${markElementClasses.root}`]: {
+                                                                    stroke: '#B35985',
+                                                                    scale: '0.8',
+                                                                    fill: '#fff',
+                                                                    strokeWidth: 3,
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                                                            <h2><b>Number of Tenant in Each Event</b></h2>
+                                                            <LineChart
+                                                                xAxis={[{
+                                                                    scaleType: 'band',
+                                                                    data: generateLineChartTenantData(eventOverall).map(data => data.x),
+                                                                    fontSize: 12
+                                                                }]}
+                                                                series={[{
+                                                                    data: generateLineChartTenantData(eventOverall).map(data => data.y),
+                                                                }]}
+                                                                width={700}
+                                                                height={250}
+                                                                sx={{
+                                                                    [`& .${lineElementClasses.root}`]: {
+                                                                    stroke: '#E685AE',
+                                                                    strokeWidth: 3,
+                                                                    },
+                                                                    [`& .${markElementClasses.root}`]: {
+                                                                    stroke: '#B35985',
+                                                                    scale: '0.8',
+                                                                    fill: '#fff',
+                                                                    strokeWidth: 3,
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </div>
 
+                                                    <div className="col-span-1 md:col-span-1">
+                                                        <div class="box-info bg-secondary-10 mb-5" style={{ marginTop: '20px', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                            <img src={visitorIcon} alt="Ticket" style={{ width: '60px', marginRight: '20px' }} />
+                                                            <div>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><b>Most visitor</b></p>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                                    {eventWithMostVisitor().eventName}
+                                                                </p>
 
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>With</p>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                                    {eventWithMostVisitor().number} 
+                                                                    <span style={{ fontSize: '14px' }}> visitors registered</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="box-info bg-tertiary-20 mb-5" style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center' }}>
+                                                            <img src={tenantIcon} alt="Tent" style={{ width: '60px', marginRight: '20px' }} />
+                                                            <div>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}><b>Most tenants</b></p>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                                    {eventWithMostTenant().eventName}
+                                                                </p>
+
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '14px' }}>With</p>
+                                                                <p style={{ marginBottom: '5px', textAlign: 'left', fontSize: '24px' }}>
+                                                                    {eventWithMostTenant().number} 
+                                                                    <span style={{ fontSize: '14px' }}> tenant applications</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                                                <b>Loading...</b>
+                                            </div>
+                                        )}
+                                    </div>
+                                    
+                                )}
                             </div>
                         ) : (
                             <div style={{ marginTop: '20px', textAlign: 'center' }}>

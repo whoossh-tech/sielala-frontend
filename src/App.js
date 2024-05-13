@@ -23,6 +23,7 @@ import { DashboardStaff } from "./pages/dashboard/DashboardStaff";
 
 import Login from "./pages/auth/Login";
 import ForgotPasswordForm from './pages/auth/ForgotPasswordForm';
+import ResetPasswordForm from './pages/auth/ResetPasswordForm';
 import RegisterStaffForm from "./pages/auth/RegisterStaffForm";
 import UserList from "./pages/auth/UserList";
 import EditUserForm from "./pages/auth/EditUserForm";
@@ -54,6 +55,8 @@ import Visitor from "./pages/Visitor/Visitor";
 import VisitorDetail from "./pages/Visitor/VisitorDetail";
 import Contacts from './pages/contact/Contacts';
 import TenantDetail from './pages/contact/TenantDetail';
+import DetailEventDashboard from "./pages/Event/DetailEventDashboard";
+import DetailPreviousEvent from "./pages/Event/DetailPreviousEvent";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -67,12 +70,15 @@ function App() {
             <Route path="/" element={<DashboardGuest />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+            <Route path="/reset-password" element={<ResetPasswordForm />} />
             <Route path="/tenant-registration/:eventId" element={<TenantRegistrationForm />}></Route>
             <Route path="/tenant-registration/success" element={<TenantRegistrationSuccessPage />} />
             <Route path="/tenant-registration/fail" element={<TenantRegistrationFailPage />} />
             <Route path="/visitor-registration/:eventId" element={<VisitorRegistrationForm />}></Route>
             <Route path="/visitor-registration/success" element={<VisitorRegistrationSuccessPage />} />
             <Route path="/visitor-registration/fail" element={<VisitorRegistrationFailPage />} />
+            <Route path="/ongoing-event/:idEvent" element={<DetailEventDashboard />} />
+            <Route path="/previous-event/:idEvent" element={<DetailPreviousEvent />} />
 
             {/* ROLE: ALL STAFF */}
             {(role === "OPERATION" || role === "ADMIN" || role === "BISDEV" || role === "FINANCE" || role === "PARTNERSHIP") && (

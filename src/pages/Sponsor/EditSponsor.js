@@ -231,7 +231,7 @@ const EditSponsor = () => {
             </div>
             {/* </div> */}
 
-            <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation">
+            <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
               <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Edit Sponsor</h2>
               <p className="text-center text-gray-700">Are you sure you want to Edit Sponsor?</p>
               <br></br>

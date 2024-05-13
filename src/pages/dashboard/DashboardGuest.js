@@ -5,7 +5,7 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import '../../static/css/Dashboard.css';
 import '../../static/css/Button.css';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {toast, Toaster} from 'react-hot-toast';
 
 const DashboardGuest = () => {
@@ -16,6 +16,8 @@ const DashboardGuest = () => {
     const [totalTenant, setTotalTenant] = useState(0);
     const [totalVisitor, setTotalVisitor] = useState(0);
     const [endedEvents, setEndedEvents] = useState([]);
+    const MAX_WORDS_LIMIT = 50;
+    const SEVEN_DAYS_IN_MS = 7 * 24 * 60 * 60 * 1000;
 
     useEffect(() => {
 
@@ -66,6 +68,21 @@ const DashboardGuest = () => {
         navigate(`/tenant-registration/${eventId}`);
     };
 
+    const truncateText = (text, limit) => {
+        const words = text.split(' ');
+        if (words.length > limit) {
+            return words.slice(0, limit).join(' ') + '...'; // Tambahkan elipsis (...) untuk menandakan teks yang dipotong
+        }
+        return text;
+    };
+
+    const isEventWithinSevenDays = (startDate) => {
+        const eventStartDate = new Date(startDate);
+        const currentDate = new Date();
+        const sevenDaysBeforeEvent = new Date(eventStartDate.getTime() - SEVEN_DAYS_IN_MS);
+        return currentDate >= sevenDaysBeforeEvent;
+    };
+
     return (
         <main>
             <NavbarGuest />
@@ -81,16 +98,16 @@ const DashboardGuest = () => {
 
             <div className="mb-3" style={{ display: 'flex', justifyContent: 'center', marginBottom: "40px" }}>
                 <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#F59FC3' }}>
-                    <h1>{totalEvent}++</h1>
+                    <h1>{totalEvent}</h1>
                     <h2>Events</h2>
                 </div>
                 <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#B2BA59' }}>
-                    <h1>{totalTenant}++</h1>
+                    <h1>{totalTenant}</h1>
                     <h2>Brands</h2>
                 </div>
 
                 <div className="square-card bg-primary-10 shadow-md rounded-lg py-4 px-14 my-3 mx-2" style={{ backgroundColor: '#8C6749' }}>
-                    <h1>{totalVisitor}++</h1>
+                    <h1>{totalVisitor}</h1>
                     <h2>Visitors</h2>
                 </div>
             </div>
@@ -99,31 +116,52 @@ const DashboardGuest = () => {
 
             <br></br>
 
+            <div className="going-event-cards-container">
             {/* <div style={{ textAlign: "left" }} className="ongoing-event-container"> */}
                 {events && events.length > 0 ? (
                 events.map((event, i) => (
-                    <div className="event-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5">
-                        <div className="flex justify-between">
-                            <div className='text-left'>
-                                <h1 className='text-2xl my-2'>{event.eventName}</h1>
-                                <p className="text-md mb-2 text-center">
+                    <div className="goingevent-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5" style={{marginBottom: "30px"}}>
+                        {/* <div className="flex justify-between"> */}
+                            <div style= {{marginLeft: "10px", marginRight: "10px", marginTop: "20px"}}>
+                                <h1 className='text-2xl my-2 text-start'>{event.eventName}</h1>
+                                <p className="text-md mb-2 text-start" style= {{fontWeight: "bold"}}>
                                     📆 {event.startDateFormatted} - {event.endDateFormatted} | 📍 {event.location}
                                 </p>
+                                <p className="text-md mb-2 text-start" style={{marginBottom: "20px"}}>
+                                    {truncateText(event.description, MAX_WORDS_LIMIT)}
+                                </p>
+
+                                {isEventWithinSevenDays(event.startDateFormatted) ? (
+                                    <p className="text-md mb-2 text-end" style={{marginBottom: "20px", color: "#744622", fontWeight: "bold"}}>
+                                        <Link to={`/ongoing-event/${event.idEvent}`}  style={{ textDecoration: 'underline' }}>See all tenants</Link>
+                                    </p>
+                                ) : (
+                                    <p className="text-md mb-2 text-end" style={{marginBottom: "20px", color: "#744622", fontWeight: "bold"}}>
+                                        <Link to={`/ongoing-event/${event.idEvent}`} style={{ textDecoration: 'underline' }}>See detail</Link>
+                                    </p>
+                                )}
+
+                                {/* <p className="text-md mb-2 text-start" style= {{fontWeight: "bold"}}>
+                                    📆 {event.startDateFormatted} - {event.endDateFormatted} | 📍 {event.location}
+                                </p> */}
                             </div>
 
-                            <div className="5 flex items-center gap-0 mx-3">
+                            <div style={{ display: 'flex', justifyContent: 'start'}}>
+                            {/* <div className="5 flex items-center gap-0 mx-3" style={{alignContent: "center"}}> */}
                                 <div className="flex space-x-4">
+                                {isEventWithinSevenDays(event.startDateFormatted) && (
                                     <button className="button-pink text-sm" onClick={() => visitorRegistrationClick(event.idEvent)}>
                                         Register as Visitor
                                     </button>
+                                )}
 
-                                    {event.tenantOpen && (
-                                        <button className="button-green text-sm" onClick={() => tenantRegistrationClick(event.idEvent)}>
-                                            Register as Tenant
-                                        </button>
-                                    )}
+                                {event.tenantOpen && (
+                                    <button className="button-green text-sm" onClick={() => tenantRegistrationClick(event.idEvent)}>
+                                        Register as Tenant
+                                    </button>
+                                )}
                                 </div>
-                            </div>
+                            {/* </div> */}
                         </div>
                     </div>
                 ))
@@ -132,7 +170,7 @@ const DashboardGuest = () => {
                         <p><b>No Upcoming Events Available</b></p>
                     </div>
                 )}
-            {/* </div> */}
+            </div>
 
             <br></br>
             <br></br>
@@ -150,7 +188,9 @@ const DashboardGuest = () => {
                             <p className="text-md mb-2 text-start">
                                 📍 {event.location}
                             </p>
-
+                            <p className="text-md mb-2 text-start" style={{color: "#744622", fontWeight: "bold"}}>
+                                    <Link to={`/previous-event/${event.idEvent}`}  style={{ textDecoration: 'underline' }}>See detail tenants</Link>
+                            </p>
                             <div style={{ display: 'flex', justifyContent: 'center'}}>
                                 <div className="detail-square-card bg-primary-10 shadow-md rounded-lg py-1 px-6 my-14 mx-3" style={{ backgroundColor: '#F59FC3' }}>
                                     <h1 style={{ fontSize: '20px' }}>{event.totalVisitor}</h1>
@@ -162,7 +202,7 @@ const DashboardGuest = () => {
                                     <h2>Tenants</h2>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                     ))
                 ) : (
                     <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4 px-2">
