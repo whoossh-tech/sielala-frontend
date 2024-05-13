@@ -113,7 +113,7 @@ const DetailEventDashboard = () => {
                 {eventData.map((event, i) => (
                     event?.listTenant && isEventWithinSevenDays(event.startDateFormatted) && event.listTenant.length > 0 ? (
                         event.listTenant.map((tenant, j) => (
-                            tenant.isAccepted === "TRUE" ? ( // Check if the tenant status is 'accepted'
+                            // tenant.isAccepted ? ( // Check if the tenant status is 'accepted'
                                 <div key={j} className="previousevent-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5" style={{ backgroundColor: '#E9D8CB' }}>
                                     <h1 className='text-2xl my-2 text-start'>{tenant.brandName}</h1>
                                     <p className="text-md mb-2 text-start">
@@ -126,7 +126,7 @@ const DetailEventDashboard = () => {
                                         💰 {tenant.brandPromo}
                                     </p>
                                 </div>
-                            ) : null // If status is not 'accepted', don't render anything
+                            // ) : null // If status is not 'accepted', don't render anything
                         ))
                     ) : (
                         <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4 px-2">

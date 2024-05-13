@@ -101,7 +101,7 @@ const DetailPreviousEvent = () => {
             {eventData.map((event, i) => (
                 event?.listTenant && event.listTenant.length > 0 ? (
                     event.listTenant.map((tenant, j) => (
-                        tenant.isAccepted === "TRUE" ? (
+                        // tenant.isAccepted === "TRUE" ? (
                         <div key={j} className="previousevent-card bg-primary-10 shadow-md rounded-lg py-3 px-8 my-5" style={{ backgroundColor: '#E9D8CB' }}>
                             <h1 className='text-2xl my-2 text-start'>{tenant.brandName}</h1> {/* Corrected brandName */}
                             <p className="text-md mb-2 text-start">
@@ -114,7 +114,7 @@ const DetailPreviousEvent = () => {
                                 💰 {tenant.brandPromo}
                             </p>
                         </div>
-                        ) : null
+                        // ) : null
                     ))
                 ) : (
                     <div style={{ backgroundColor: "#FFB2D3", borderRadius: "20px", padding: "10px", display: "inline-block", textAlign: "center" }} className="rounded my-4 px-2">
