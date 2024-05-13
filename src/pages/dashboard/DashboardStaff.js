@@ -58,7 +58,7 @@ const DashboardStaff = () => {
                 // console.log("view all ", res.data.data);
             })
             .catch((err) => console.log(err));
-    });
+    }, [selectedEvent]);
 
     useEffect(() => {
         console.log("selected event after: ", selectedEvent);
@@ -495,7 +495,7 @@ const DashboardStaff = () => {
                                 ) : (
 
                                     <div>
-                                        <h1>Event Insights</h1>
+                                        <h1 style={{ textAlign: 'left' }}>Event Insights</h1>
                                         {eventOverall ? (
                                             <div>
                                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-4" style={{ padding: 0, margin: 0 }}>
