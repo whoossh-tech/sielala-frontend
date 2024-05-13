@@ -121,7 +121,7 @@ const UserList = () => {
                                 <tbody>
                                 {users.map((user) => (
                                 <tr key={user.userId}>
-                                    <td>{user.authorities.length > 0 ? user.authorities[0].authority : ''}</td>
+                                    <td>{user.role}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.username}</td>

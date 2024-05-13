@@ -6,6 +6,9 @@ import '../../static/css/Style.css';
 import logo from "../../assets/logo-sielala.png";
 import element from "../../assets/element.png";
 import { useAuth } from "../../pages/auth/AuthContext";
+import {
+  Button,
+} from "@material-tailwind/react";
 
 
 const Sidebar = ({activePage}) => {
@@ -40,6 +43,12 @@ const Sidebar = ({activePage}) => {
               style={{ height: "42px" }}
               href="/"
             />
+          </div>
+
+          <div className="mt-4 mx-2" style={{ textAlign: 'left' }}>
+            <Button variant="gradient" size="sm" className="hidden lg:inline-block bg-primary-10">
+              <span className="montserrat text-primary-70 text-md">Hi, { role }!</span>
+            </Button>
           </div>
         </div>
       ) : (
