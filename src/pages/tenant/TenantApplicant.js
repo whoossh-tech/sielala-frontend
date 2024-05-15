@@ -238,7 +238,7 @@ const TenantApplicant = () => {
 
                           {tenant.accepted === false && tenant.selectionDone === true && (
                             <td className="text-white">
-                              <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} className="rounded bg-warning-DEFAULT text-sm">
+                              <div style={{ borderRadius: "30px", padding: "13px", display: "inline-block", textAlign: "left", alignContent: "left" }} className="rounded bg-danger text-sm">
                                 <b>Rejected</b>
                               </div>
                             </td>
