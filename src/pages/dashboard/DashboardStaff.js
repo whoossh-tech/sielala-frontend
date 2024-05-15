@@ -511,7 +511,7 @@ const DashboardStaff = () => {
                                                                 series={[{
                                                                     data: generateLineChartVisitorData(eventOverall).map(data => data.y),
                                                                 }]}
-                                                                width={700}
+                                                                width={770}
                                                                 height={250}
                                                                 sx={{
                                                                     [`& .${lineElementClasses.root}`]: {
@@ -528,7 +528,7 @@ const DashboardStaff = () => {
                                                             />
                                                         </div>
                                                         <div className="box-info bg-white p-6 rounded-lg shadow-md" style={{ marginTop: '20px', width: 'calc(100% - 10px)', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                                                            <h2><b>Number of Tenant in Each Event</b></h2>
+                                                            <h2><b>Number of Registered Tenant in Each Event</b></h2>
                                                             <LineChart
                                                                 xAxis={[{
                                                                     scaleType: 'band',
@@ -538,7 +538,7 @@ const DashboardStaff = () => {
                                                                 series={[{
                                                                     data: generateLineChartTenantData(eventOverall).map(data => data.y),
                                                                 }]}
-                                                                width={700}
+                                                                width={770}
                                                                 height={250}
                                                                 sx={{
                                                                     [`& .${lineElementClasses.root}`]: {

@@ -148,14 +148,14 @@ const DetailEvent = () => {
                           <tbody>
                             {eventData?.listTenant && eventData.listTenant.length > 0 ? (
                               eventData.listTenant.map((tenant, i) => (
-                                // tenant.isAccepted === "TRUE" ? (
+                                tenant.accepted ? (
                                   <tr key={i}>
                                     <td>{tenant.brandName}</td>
                                     <td>{tenant.picName}</td>
                                     <td>{tenant.brandEmail}</td>
                                     <td>{tenant.brandTelephone}</td>
                                   </tr>
-                                  // ) : null
+                                  ) : null
                               ))
                             ) : (
                               <tr>
