@@ -10,7 +10,7 @@ import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
-import Sidebar from '../dashboard/Sidebar'
+import Sidebar from "../dashboard/Sidebar";
 
 const EditSponsor = () => {
   const [picName, setPicName] = useState("");
@@ -27,8 +27,8 @@ const EditSponsor = () => {
 
   const { idSponsor } = useParams();
   const navigate = useNavigate();
-  const role = localStorage.getItem('role');
-  const [activePage] = useState('contact');
+  const role = localStorage.getItem("role");
+  const [activePage] = useState("contact");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -38,14 +38,13 @@ const EditSponsor = () => {
     setIsModalOpen(false);
   };
 
-
   useEffect(() => {
     const fetchSponsorData = async () => {
       try {
         const token = localStorage.getItem("token");
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         // app.use(cors());
-        const response = await axios.get(`https://sielala-backend-production.up.railway.app/api/sponsor/detail/${idSponsor}`);
+        const response = await axios.get(`http://localhost:8080/api/sponsor/detail/${idSponsor}`);
         const sponsorData = response.data.data;
         console.log(sponsorData);
 
@@ -55,7 +54,6 @@ const EditSponsor = () => {
         setEmail(sponsorData.email);
         setTelephone(sponsorData.telephone);
         // setEventName(sponsorData.event.eventName);
-
       } catch (error) {
         console.error("Error fetching sponsor data:", error);
       }
@@ -88,10 +86,10 @@ const EditSponsor = () => {
     if (!telephone.trim()) {
       newErrors.company_telephone = "Company Telephone Number cannot be empty";
     } else if (!/^\d+$/.test(telephone)) {
-      newErrors.company_telephone = 'Telephone Number must contain only numbers';
-  } else if (telephone.charAt(0) === '0') {
-      newErrors.company_telephone = 'Telephone Number cannot start with 0';
-  }
+      newErrors.company_telephone = "Telephone Number must contain only numbers";
+    } else if (telephone.charAt(0) === "0") {
+      newErrors.company_telephone = "Telephone Number cannot start with 0";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -113,9 +111,9 @@ const EditSponsor = () => {
     try {
       const token = localStorage.getItem("token");
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      axios.defaults.mode = 'cors';
+      axios.defaults.mode = "cors";
 
-      const response = await axios.put(`https://sielala-backend-production.up.railway.app/api/sponsor/update/${idSponsor}`, {
+      const response = await axios.put(`http://localhost:8080/api/sponsor/update/${idSponsor}`, {
         picName,
         name,
         address,
@@ -141,12 +139,12 @@ const EditSponsor = () => {
       {/* Sidebar Navigation */}
       <Sidebar activePage={activePage} />
       <main style={{ marginLeft: "60px" }}>
-
         {/* Header Start */}
-        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "150px" }}>
           <div className="mx-8">
-            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
-              Edit Sponsor Data</h1>
+            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: "left", fontSize: 50 }}>
+              Edit Sponsor Data
+            </h1>
           </div>
         </div>
         {/* Header Ends */}
@@ -155,7 +153,6 @@ const EditSponsor = () => {
 
         <form className="flex flex-col items-center px-4 pt-8 pb-6 mt-3 w-full text-neutral-100 bg-white rounded-2xl shadow-lg" onSubmit={(e) => onSubmit(e)}>
           <div className="flex flex-col items-stretch space-y-4 mt-3 w-full">
-
             {/* Company name */}
             <div className="input-form flex flex-col space-y-1">
               <label className="input-label font-reynaldo text-left" htmlFor="company_name">
@@ -226,8 +223,12 @@ const EditSponsor = () => {
 
             {/* <div className="input-form flex flex-col space-y-1"> */}
             <div>
-              <button className="button-green" onClick={() => navigate(-1)}>Cancel</button>
-              <button className="button-pink" type="submit">Save Sponsor</button>
+              <button className="button-green" onClick={() => navigate(-1)}>
+                Cancel
+              </button>
+              <button className="button-pink" type="submit">
+                Save Sponsor
+              </button>
             </div>
             {/* </div> */}
 
@@ -235,7 +236,9 @@ const EditSponsor = () => {
               <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirm Edit Sponsor</h2>
               <p className="text-center text-gray-700">Are you sure you want to Edit Sponsor?</p>
               <br></br>
-              <button className="button-red text-center" onClick={closeModal}>Cancel</button>
+              <button className="button-red text-center" onClick={closeModal}>
+                Cancel
+              </button>
               <button className="button-green text-center" onClick={confirmSubmit}>
                 Confirm
               </button>

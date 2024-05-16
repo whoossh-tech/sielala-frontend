@@ -12,17 +12,17 @@ import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { NavbarFinance } from "../../components/navbar/NavbarFinance";
 import "../../static/css/event/Event.css";
-import Sidebar from '../../pages/dashboard/Sidebar';
-import '../../static/css/Style.css';
-import '../../static/css/Login.css';
-import '../../static/css/RegisterStaffForm.css';
+import Sidebar from "../../pages/dashboard/Sidebar";
+import "../../static/css/Style.css";
+import "../../static/css/Login.css";
+import "../../static/css/RegisterStaffForm.css";
 
 const EditDetailInvoice = () => {
-    const { idInvoice } = useParams();
-    const url = 'https://sielala-backend-production.up.railway.app';
-    const navigate = useNavigate();
-    const role = localStorage.getItem('role');
-    const [activePage, setActivePage] = useState('invoice');
+  const { idInvoice } = useParams();
+  const url = "http://localhost:8080";
+  const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+  const [activePage, setActivePage] = useState("invoice");
 
   const [listInvoiceItem, setInvoiceItems] = useState([]);
 
@@ -173,27 +173,26 @@ const EditDetailInvoice = () => {
 
   return (
     <body>
-    <Sidebar activePage={activePage}/> 
+      <Sidebar activePage={activePage} />
 
-    <main style={{ marginLeft: "60px" }}>
-
-      {/* Header Start */}
-      <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+      <main style={{ marginLeft: "60px" }}>
+        {/* Header Start */}
+        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "150px" }}>
           <div className="mx-8">
-              <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
-              Edit Invoice</h1>
+            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: "left", fontSize: 50 }}>
+              Edit Invoice
+            </h1>
           </div>
-      </div>
-      {/* Header Ends */}
+        </div>
+        {/* Header Ends */}
 
-      <div className='content-container my-4'>
-        <div className="dashboard-container">
-          <div>
+        <div className="content-container my-4">
+          <div className="dashboard-container">
+            <div>
+              <Toaster position="top-center" reverseOrder={false} />
 
-      <Toaster position="top-center" reverseOrder={false} />
-
-      <form className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg" onSubmit={(e) => onSubmit(e)}>
-        {/* <div className="input-form flex flex-col space-y-1">
+              <form className="flex flex-col items-center px-4 pt-8 pb-6 mt-8 w-full text-neutral-100 bg-white rounded-2xl shadow-lg" onSubmit={(e) => onSubmit(e)}>
+                {/* <div className="input-form flex flex-col space-y-1">
           <label className="input-label font-reynaldo text-left" htmlFor="tracking_status">
             Tracking Status
           </label>
@@ -203,137 +202,136 @@ const EditDetailInvoice = () => {
             <option value="Delivered">Delivered</option>
             <option value="Cancelled">Cancelled</option>
           </select> */}
-        {/* </div> */}
+                {/* </div> */}
 
-        <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
-          <div className="input-form flex flex-col">
-            <label className="input-label font-reynaldo text-left" htmlFor="event">
-              Company Name
-            </label>
+                <div className="flex flex-col items-stretch space-y-4 mt-6 w-full">
+                  <div className="input-form flex flex-col">
+                    <label className="input-label font-reynaldo text-left" htmlFor="event">
+                      Company Name
+                    </label>
 
-            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
-              <input id="company_name" className="px-4 py-3 w-full focus:outline-none bg-gray-100" value={companyName} readOnly />
-            </div>
-          </div>
-
-          <div className="input-form flex flex-col space-y-1">
-            <label className="input-label font-reynaldo text-left" htmlFor="company_address">
-              Company Address<span className="text-danger">*</span>
-            </label>
-
-            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.company_address && "border-danger"}`}>
-              <input id="company_address" className="px-4 py-3 w-full focus:outline-none" placeholder="Insert Company Address" value={companyAddress} onChange={(e) => setCompanyAddress(e.target.value)} />
-            </div>
-
-            {errors.company_address && <span className="mt-0.5 text-danger text-xs">{errors.company_address}</span>}
-          </div>
-
-          {/* product name */}
-          <div className="input-form flex flex-col space-y-1">
-            <label className="input-label font-reynaldo text-left" htmlFor="pic_name">
-              Company PIC<span className="text-danger">*</span>
-            </label>
-
-            <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.pic_name && "border-danger"}`}>
-              <input id="pic_name" className="px-4 py-3 w-full focus:outline-none" placeholder="Insert Company PIC Name" value={picName} onChange={(e) => setPicName(e.target.value)} />
-            </div>
-
-            {errors.pic_name && <span className="mt-0.5 text-danger text-xs">{errors.pic_name}</span>}
-          </div>
-
-          <div>
-            <div className="button-field">
-              <button className="button-green" onClick={handleAddRow}>
-                Add Item
-              </button>
-            </div>
-          </div>
-
-          {/* initial stock */}
-          <div className="input-form flex flex-col">
-            <label className="input-label font-reynaldo text-left" htmlFor="items">
-              Items<span className="text-danger">*</span>
-            </label>
-
-            <div className="mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                <table className="event-table mx-8">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Rate</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {listInvoiceItem.map((item, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
-                        <input className="px-4 py-3 w-full focus:outline-none" type="text" value={item.item} onChange={(e) => handleInputChange(index, "item", e.target.value)} />
-                      </div>
-                    </td>
-                    <td>
-                      <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
-                        <input className="px-4 py-3 w-full focus:outline-none" type="number" value={item.quantity} min="1" onChange={(e) => handleInputChange(index, "quantity", parseInt(e.target.value))} />
-                      </div>
-                    </td>
-                    <td>
-                      <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
-                        <input className="px-4 py-3 w-full focus:outline-none" type="number" value={item.rate} min="1" onChange={(e) => handleInputChange(index, "rate", parseInt(e.target.value))} />
-                      </div>
-                    </td>
-                    <td>
-                      <button className="button-red" onClick={() => handleDeleteRow(index)}>
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colSpan="3">{errors.listInvoiceItem && <span className="mt-0.5 text-danger text-xs">{errors.listInvoiceItem}</span>}</td>
-                </tr>
-              </tfoot>
-            </table>
-            </div>
-          </div>
-        </div>
-
-        <br></br>
-        <div>
-          <button className="button-green" onClick={handleBack}>
-            Cancel
-          </button>
-          <button className="button-pink" type="submit">
-            Edit
-          </button>
-        </div>
-
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                id="modal-confirmation-form"
-            >
-                    <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-                    <p className="text-center text-gray-700">Are you sure you want to edit this invoice?</p>
-                    <br></br>
-                    <div>
-                        <button className="button-red text-center" onClick={closeModal}>Cancel</button>
-                        <button className="button-green text-center" onClick={confirmSubmit}>Confirm</button>
+                    <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
+                      <input id="company_name" className="px-4 py-3 w-full focus:outline-none bg-gray-100" value={companyName} readOnly />
                     </div>
-            </Modal>
+                  </div>
 
-        <br></br>
-      </form>
-    </div>
-    </div>
-          <script src="script.js"></script>  
+                  <div className="input-form flex flex-col space-y-1">
+                    <label className="input-label font-reynaldo text-left" htmlFor="company_address">
+                      Company Address<span className="text-danger">*</span>
+                    </label>
+
+                    <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.company_address && "border-danger"}`}>
+                      <input id="company_address" className="px-4 py-3 w-full focus:outline-none" placeholder="Insert Company Address" value={companyAddress} onChange={(e) => setCompanyAddress(e.target.value)} />
+                    </div>
+
+                    {errors.company_address && <span className="mt-0.5 text-danger text-xs">{errors.company_address}</span>}
+                  </div>
+
+                  {/* product name */}
+                  <div className="input-form flex flex-col space-y-1">
+                    <label className="input-label font-reynaldo text-left" htmlFor="pic_name">
+                      Company PIC<span className="text-danger">*</span>
+                    </label>
+
+                    <div className={`overflow-clip w-full border border-neutral-40 rounded-lg ${errors.pic_name && "border-danger"}`}>
+                      <input id="pic_name" className="px-4 py-3 w-full focus:outline-none" placeholder="Insert Company PIC Name" value={picName} onChange={(e) => setPicName(e.target.value)} />
+                    </div>
+
+                    {errors.pic_name && <span className="mt-0.5 text-danger text-xs">{errors.pic_name}</span>}
+                  </div>
+
+                  <div>
+                    <div className="button-field">
+                      <button className="button-green" onClick={handleAddRow}>
+                        Add Item
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* initial stock */}
+                  <div className="input-form flex flex-col">
+                    <label className="input-label font-reynaldo text-left" htmlFor="items">
+                      Items<span className="text-danger">*</span>
+                    </label>
+
+                    <div className="mb-3" style={{ display: "flex", justifyContent: "center" }}>
+                      <table className="event-table mx-8">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {listInvoiceItem.map((item, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>
+                                <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
+                                  <input className="px-4 py-3 w-full focus:outline-none" type="text" value={item.item} onChange={(e) => handleInputChange(index, "item", e.target.value)} />
+                                </div>
+                              </td>
+                              <td>
+                                <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
+                                  <input className="px-4 py-3 w-full focus:outline-none" type="number" value={item.quantity} min="1" onChange={(e) => handleInputChange(index, "quantity", parseInt(e.target.value))} />
+                                </div>
+                              </td>
+                              <td>
+                                <div className={`overflow-clip w-100 border border-neutral-40 rounded-lg ${errors.listInvoiceItem && "border-danger"}`}>
+                                  <input className="px-4 py-3 w-full focus:outline-none" type="number" value={item.rate} min="1" onChange={(e) => handleInputChange(index, "rate", parseInt(e.target.value))} />
+                                </div>
+                              </td>
+                              <td>
+                                <button className="button-red" onClick={() => handleDeleteRow(index)}>
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td colSpan="3">{errors.listInvoiceItem && <span className="mt-0.5 text-danger text-xs">{errors.listInvoiceItem}</span>}</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <br></br>
+                <div>
+                  <button className="button-green" onClick={handleBack}>
+                    Cancel
+                  </button>
+                  <button className="button-pink" type="submit">
+                    Edit
+                  </button>
+                </div>
+
+                <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
+                  <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                  <p className="text-center text-gray-700">Are you sure you want to edit this invoice?</p>
+                  <br></br>
+                  <div>
+                    <button className="button-red text-center" onClick={closeModal}>
+                      Cancel
+                    </button>
+                    <button className="button-green text-center" onClick={confirmSubmit}>
+                      Confirm
+                    </button>
+                  </div>
+                </Modal>
+
+                <br></br>
+              </form>
+            </div>
+          </div>
+          <script src="script.js"></script>
         </div>
-        
       </main>
     </body>
   );

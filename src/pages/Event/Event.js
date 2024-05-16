@@ -11,6 +11,7 @@ import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import "../../static/css/event/Event.css";
 import Sidebar from "../../pages/dashboard/Sidebar";
 import "../../static/css/Style.css";
+import { blue } from "@mui/material/colors";
 
 const Event = () => {
   const [events, setEvents] = useState([]);
@@ -21,6 +22,8 @@ const Event = () => {
   const [errors, setErrors] = useState({});
   const [activePage, setActivePage] = useState("event");
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,7 +35,7 @@ const Event = () => {
 
   useEffect(() => {
     axios
-      .get("https://sielala-backend-production.up.railway.app/api/event/view-all")
+      .get("http://localhost:8080/api/event/view-all")
       .then((res) => {
         setEvents(res.data.data);
         // console.log(res.data.data); // Make sure that res.data is an array
@@ -47,6 +50,29 @@ const Event = () => {
   const filterEvent = () => {
     if (!search.trim()) return events;
     return events.filter((event) => Object.values(event).some((value) => typeof value === "string" && value.toLowerCase().includes(search.toLowerCase())));
+  };
+
+  //  TAMBAHAN
+  const sortedEvents = events.slice().sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+  const paginatedEvents = sortedEvents.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const totalPages = Math.ceil(sortedEvents.length / itemsPerPage);
+  const pageNumbers = [...Array(totalPages).keys()].map((num) => num + 1);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
   };
 
   const highlightSearchText = (text) => {
@@ -73,13 +99,13 @@ const Event = () => {
             <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: "left", fontSize: 50 }}>
               Event Management
             </h1>
-            <div >
-                <p className="subtitle">
-                  <a href='/dashboard' style={{ textDecoration: 'none' }}>
-                      <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
-                  </a>
-                  / Event Management
-                </p>
+            <div>
+              <p className="subtitle">
+                <a href="/dashboard" style={{ textDecoration: "none" }}>
+                  <span style={{ borderBottom: "1px solid #E685AE" }}>Dashboard</span>&nbsp;
+                </a>
+                / Event Management
+              </p>
             </div>
           </div>
         </div>
@@ -158,7 +184,7 @@ const Event = () => {
 
                   <tbody>
                     {events && events.length > 0 ? (
-                      filterEvent().map((event, i) => (
+                      paginatedEvents.map((event, i) => (
                         <tr key={i}>
                           <td>
                             <Link to={`/event/detail/${event.idEvent}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
@@ -183,6 +209,19 @@ const Event = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
+            <div className="pagination-container">
+              <button onClick={handlePreviousPage} disabled={currentPage === 1} className="pagination-button">
+                Previous
+              </button>
+              {pageNumbers.map((number) => (
+                <button key={number} onClick={() => handlePageChange(number)} className={`pagination-button ${currentPage === number ? "active" : ""}`}>
+                  {number}
+                </button>
+              ))}
+              <button onClick={handleNextPage} disabled={currentPage === totalPages} className="pagination-button">
+                Next
+              </button>
             </div>
           </div>
           <script src="script.js"></script>

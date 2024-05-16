@@ -16,15 +16,15 @@ import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { NavbarFinance } from "../../components/navbar/NavbarFinance";
 import { FaceSmileIcon } from "@heroicons/react/24/solid";
 import "../../static/css/event/Event.css";
-import Sidebar from '../../pages/dashboard/Sidebar';
-import '../../static/css/Style.css';
+import Sidebar from "../../pages/dashboard/Sidebar";
+import "../../static/css/Style.css";
 
 const InvoiceDetail = () => {
   const { idInvoice } = useParams();
-  const url = "https://sielala-backend-production.up.railway.app";
+  const url = "http://localhost:8080";
 
   const navigate = useNavigate();
-  const [activePage, setActivePage] = useState('invoice');
+  const [activePage, setActivePage] = useState("invoice");
 
   const [invoiceData, setInvoiceData] = useState();
   const [countdays, setCountDays] = useState(0);
@@ -95,7 +95,7 @@ const InvoiceDetail = () => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     axios
-      .get(`https://sielala-backend-production.up.railway.app/api/invoice/detail/${idInvoice}`)
+      .get(`http://localhost:8080/api/invoice/detail/${idInvoice}`)
       .then((res) => {
         setInvoiceData(res.data.data);
         setIdEvent(res.data.data.event.idEvent);
@@ -113,7 +113,7 @@ const InvoiceDetail = () => {
       })
       .catch((err) => console.log(err));
 
-  localStorage.setItem('idSelectedEvent', idEvent);
+    localStorage.setItem("idSelectedEvent", idEvent);
   }, [idInvoice]);
 
   console.log(statusPayment);
@@ -165,7 +165,7 @@ const InvoiceDetail = () => {
     closeValidateModal();
 
     try {
-      const response = await axios.put(`https://sielala-backend-production.up.railway.app/api/invoice/validate-payment-proof/${idInvoice}`);
+      const response = await axios.put(`http://localhost:8080/api/invoice/validate-payment-proof/${idInvoice}`);
       console.log("Payment validated :", response.data);
       setIsValidated(true);
 
@@ -181,7 +181,7 @@ const InvoiceDetail = () => {
     closeDeclineModal();
 
     try {
-      const response = await axios.put(`https://sielala-backend-production.up.railway.app/api/invoice/decline-payment-proof/${idInvoice}`);
+      const response = await axios.put(`http://localhost:8080/api/invoice/decline-payment-proof/${idInvoice}`);
       console.log("Payment validation declined :", response.data);
       toast.success("Payment proof declined successfully");
       setIsDeclined(true);
@@ -235,7 +235,7 @@ const InvoiceDetail = () => {
   const handleDeliveredButtonClick = async () => {
     try {
       // Mengirim permintaan untuk mengubah trackingStatus menjadi "delivered"
-      await axios.put(`https://sielala-backend-production.up.railway.app/api/invoice/mark-as-delivered/${idInvoice}`, {
+      await axios.put(`http://localhost:8080/api/invoice/mark-as-delivered/${idInvoice}`, {
         trackingStatus: "Delivered",
       });
 
@@ -259,30 +259,36 @@ const InvoiceDetail = () => {
 
   return (
     <body>
-      <Sidebar activePage={activePage}/> 
+      <Sidebar activePage={activePage} />
 
       <main style={{ marginLeft: "60px" }}>
-
         {/* Header Start */}
-        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
-            <div className="mx-8">
-                <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
-                Invoice Detail</h1>
-            </div>
-            <div>
-                <p className="subtitle">
-                    <a href='/dashboard' style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none' }}>Dashboard</a> / 
-                    <a onClick={handleBack} style={{ borderBottom: '1px solid #E685AE', textDecoration: 'none', cursor: 'pointer' }}> Invoice Management </a>
-                    / Detail
-                </p>
-            </div>
+        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "150px" }}>
+          <div className="mx-8">
+            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: "left", fontSize: 50 }}>
+              Invoice Detail
+            </h1>
+          </div>
+          <div>
+            <p className="subtitle">
+              <a href="/dashboard" style={{ borderBottom: "1px solid #E685AE", textDecoration: "none" }}>
+                Dashboard
+              </a>{" "}
+              /
+              <a onClick={handleBack} style={{ borderBottom: "1px solid #E685AE", textDecoration: "none", cursor: "pointer" }}>
+                {" "}
+                Invoice Management{" "}
+              </a>
+              / Detail
+            </p>
+          </div>
         </div>
         {/* Header Ends */}
 
-        <div className='content-container my-4'>
+        <div className="content-container my-4">
           <div className="dashboard-container">
             <div>
-            <style>{reynaldoStyles}</style>
+              <style>{reynaldoStyles}</style>
               {/* {role === "PARTNERSHIP" && <NavbarPartnership style={{ zIndex: 999 }} />}
 
               {role === "FINANCE" && <NavbarFinance style={{ zIndex: 999 }} />}
@@ -291,12 +297,11 @@ const InvoiceDetail = () => {
 
               <Toaster position="top-center" reverseOrder={false} />
 
-
               {invoiceData ? (
                 <>
                   <br></br>
 
-                  <div className="detail-invoice" style={{display: "flex", justifyContent: "center"}}>
+                  <div className="detail-invoice" style={{ display: "flex", justifyContent: "center" }}>
                     <div className="each-invoice">
                       <p className="invoice-text-title">Tenant/Sponsor:</p>
                       <p className="invoice-text">{invoiceData.companyName}</p>
@@ -337,34 +342,34 @@ const InvoiceDetail = () => {
 
                   <div>
                     {/* <div className="button-field"> */}
-                      {/* <button className="button-green" onClick={handleBack}>
+                    {/* <button className="button-green" onClick={handleBack}>
                         Back
                       </button> */}
 
-                      {(role === "PARTNERSHIP" || role === "ADMIN") && (
-                        <Link to={`/invoice/edit-detail/${idInvoice}`}>
-                          <button className="button-pink" disabled={isEditDisabled}>
-                            Edit Invoice
-                          </button>
-                        </Link>
-                      )}
-
-                      <button className="button-green" onClick={handleGenerate}>
-                        Generate to PDF
-                      </button>
-
-              {(invoiceData.trackingStatus === "Issued" || invoiceData.trackingStatus === "Pending") && (
-                <button className="button-orange" onClick={openModal} disabled={isLoading}>
-                  {isLoading ? "Sending..." : "Notify Client"}
-                </button>
-              )}
-
-                      {/* Tombol untuk mengubah status menjadi "delivered" */}
-                      {invoiceData.trackingStatus !== "Delivered" && (
-                        <button className="button-brown" onClick={handleDeliveredButtonClick}>
-                          Mark as Delivered
+                    {(role === "PARTNERSHIP" || role === "ADMIN") && (
+                      <Link to={`/invoice/edit-detail/${idInvoice}`}>
+                        <button className="button-pink" disabled={isEditDisabled}>
+                          Edit Invoice
                         </button>
-                      )}
+                      </Link>
+                    )}
+
+                    <button className="button-green" onClick={handleGenerate}>
+                      Generate to PDF
+                    </button>
+
+                    {(invoiceData.trackingStatus === "Issued" || invoiceData.trackingStatus === "Pending") && (
+                      <button className="button-orange" onClick={openModal} disabled={isLoading}>
+                        {isLoading ? "Sending..." : "Notify Client"}
+                      </button>
+                    )}
+
+                    {/* Tombol untuk mengubah status menjadi "delivered" */}
+                    {invoiceData.trackingStatus !== "Delivered" && (
+                      <button className="button-brown" onClick={handleDeliveredButtonClick}>
+                        Mark as Delivered
+                      </button>
+                    )}
                     {/* </div> */}
                   </div>
 
@@ -374,10 +379,10 @@ const InvoiceDetail = () => {
                       <thead>
                         {/* Row headers */}
                         <tr>
-                          <th style={{ width: "20%", textAlign: "center"}}>Item</th>
-                          <th style={{ width: "20%", textAlign: "center"}}>Quantity</th>
-                          <th style={{ width: "20%", textAlign: "center"}}>Rate</th>
-                          <th style={{ width: "20%", textAlign: "center"}}>Amount</th>
+                          <th style={{ width: "20%", textAlign: "center" }}>Item</th>
+                          <th style={{ width: "20%", textAlign: "center" }}>Quantity</th>
+                          <th style={{ width: "20%", textAlign: "center" }}>Rate</th>
+                          <th style={{ width: "20%", textAlign: "center" }}>Amount</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -404,55 +409,55 @@ const InvoiceDetail = () => {
               )}
               <br></br>
 
-{/* Payment Proof Section */}
+              {/* Payment Proof Section */}
 
-      {(statusInvoice !== "Issued" || statusInvoice !== "Pending") && (
-        <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
-          <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
+              {(statusInvoice !== "Issued" || statusInvoice !== "Pending") && (
+                <div className={`detail-sponsor bg-white p-6 rounded-lg shadow-md mb-4 ${paymentImageUrl ? "with-image" : ""}`}>
+                  <h1 className="text-2xl font-semibold mb-4 text-center">Payment Proof</h1>
 
-          {statusPayment !== "Approved" && (
-            <div className="flex items-center mb-4">
-              <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
-              <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
-                Submit Payment Proof
-              </button>
-            </div>
-          )}
+                  {statusPayment !== "Approved" && (
+                    <div className="flex items-center mb-4">
+                      <input type="file" accept="image/*" onChange={(e) => setPaymentImage(e.target.files[0])} />
+                      <button className="button-green ml-2" onClick={openUploadModal} disabled={!paymentImage}>
+                        Submit Payment Proof
+                      </button>
+                    </div>
+                  )}
 
-          {paymentImageUrl && (
-            <div>
-              <div className="w-full flex justify-center items-center">
-                <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" style={{ width: "500px", height: "auto" }} />
-              </div>
+                  {paymentImageUrl && (
+                    <div>
+                      <div className="w-full flex justify-center items-center">
+                        <img src={paymentImageUrl} alt="Payment proof" className="w-full rounded-lg shadow-md" style={{ width: "500px", height: "auto" }} />
+                      </div>
 
-              {(role === "FINANCE" || role === "ADMIN") && statusPayment !== "Approved" && (
-                <div className="w-full flex justify-center items-center">
-                  <button className="button-green" onClick={handleValidateButton}>
-                    Validate
-                  </button>
-                  <button className="button-red" onClick={handleDeclineButton}>
-                    Decline
-                  </button>
+                      {(role === "FINANCE" || role === "ADMIN") && statusPayment !== "Approved" && (
+                        <div className="w-full flex justify-center items-center">
+                          <button className="button-green" onClick={handleValidateButton}>
+                            Validate
+                          </button>
+                          <button className="button-red" onClick={handleDeclineButton}>
+                            Decline
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
-            </div>
-          )}
-        </div>
-      )}
 
-      <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
-        <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
-        <p className="text-center text-gray-700">Are you sure you want to notify the client?</p>
-        <br></br>
-        <div>
-          <button className="button-red text-center" onClick={closeModal}>
-            Cancel
-          </button>
-          <button className="button-green text-center" onClick={handleNotify}>
-            Confirm
-          </button>
-        </div>
-      </Modal>
+              <Modal isOpen={isModalOpen} onRequestClose={closeModal} id="modal-confirmation-form">
+                <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
+                <p className="text-center text-gray-700">Are you sure you want to notify the client?</p>
+                <br></br>
+                <div>
+                  <button className="button-red text-center" onClick={closeModal}>
+                    Cancel
+                  </button>
+                  <button className="button-green text-center" onClick={handleNotify}>
+                    Confirm
+                  </button>
+                </div>
+              </Modal>
 
               <Modal isOpen={isUploadModalOpen} onRequestClose={closeUploadModal} id="modal-confirmation-form">
                 <h2 className="text-xl font-bold text-gray-800 text-center mb-4">Confirmation</h2>
@@ -505,9 +510,8 @@ const InvoiceDetail = () => {
               <br></br>
             </div>
           </div>
-          <script src="script.js"></script>  
+          <script src="script.js"></script>
         </div>
-        
       </main>
     </body>
   );

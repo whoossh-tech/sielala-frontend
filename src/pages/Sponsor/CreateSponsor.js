@@ -10,12 +10,11 @@ import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import { toast, Toaster } from "react-hot-toast";
-import Sidebar from '../dashboard/Sidebar'
+import Sidebar from "../dashboard/Sidebar";
 
 Modal.setAppElement("#root");
 
 const CreateSponsor = () => {
-
   const [picName, setPicName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
@@ -24,12 +23,12 @@ const CreateSponsor = () => {
 
   const [errors, setErrors] = useState({});
   const { idEvent } = useParams();
-  const [eventName, setEventName] = useState('');
+  const [eventName, setEventName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const role = localStorage.getItem('role');
-  const [activePage] = useState('contact');
+  const role = localStorage.getItem("role");
+  const [activePage] = useState("contact");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -42,11 +41,11 @@ const CreateSponsor = () => {
   useEffect(() => {
     const fetchEventInfo = async () => {
       try {
-        const response = await axios.get(`https://sielala-backend-production.up.railway.app/api/sponsor/${idEvent}`);
+        const response = await axios.get(`http://localhost:8080/api/sponsor/${idEvent}`);
         const eventData = response.data.eventData;
         setEventName(eventData.eventName);
       } catch (error) {
-        console.error('Error fetching event information:', error);
+        console.error("Error fetching event information:", error);
       }
     };
 
@@ -58,7 +57,7 @@ const CreateSponsor = () => {
 
     if (validateForm()) {
       openModal();
-      localStorage.setItem('idSelectedEvent', idEvent);
+      localStorage.setItem("idSelectedEvent", idEvent);
     } else {
       console.log("Form validation failed");
     }
@@ -68,10 +67,10 @@ const CreateSponsor = () => {
     closeModal();
     // Perform API call to Add Sponsor
     try {
-      const token = localStorage.getItem('token');
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const response = await axios.post(`https://sielala-backend-production.up.railway.app/api/sponsor/create/${idEvent}`, {
+      const response = await axios.post(`http://localhost:8080/api/sponsor/create/${idEvent}`, {
         picName,
         name: companyName,
         address: companyAddress,
@@ -113,10 +112,10 @@ const CreateSponsor = () => {
     if (!companyTelephone.trim()) {
       newErrors.company_telephone = "Company Telephone Number cannot be empty";
     } else if (!/^\d+$/.test(companyTelephone)) {
-      newErrors.company_telephone = 'Telephone Number must contain only numbers';
-  } else if (companyTelephone.charAt(0) === '0') {
-      newErrors.company_telephone = 'Telephone Number cannot start with 0';
-  }
+      newErrors.company_telephone = "Telephone Number must contain only numbers";
+    } else if (companyTelephone.charAt(0) === "0") {
+      newErrors.company_telephone = "Telephone Number cannot start with 0";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -127,12 +126,12 @@ const CreateSponsor = () => {
       {/* Sidebar Navigation */}
       <Sidebar activePage={activePage} />
       <main style={{ marginLeft: "60px" }}>
-
         {/* Header Start */}
-        <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
+        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "150px" }}>
           <div className="mx-8">
-            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
-              Add Sponsor</h1>
+            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: "left", fontSize: 50 }}>
+              Add Sponsor
+            </h1>
           </div>
         </div>
         {/* Header Ends */}
@@ -141,7 +140,6 @@ const CreateSponsor = () => {
 
         <form className="flex flex-col items-center px-4 pt-8 pb-6 mt-3 w-full text-neutral-100 bg-white rounded-2xl shadow-lg" onSubmit={(e) => onCreateSponsor(e)}>
           <div className="flex flex-col items-stretch space-y-4 mt-3 w-full">
-
             {/* event */}
             <div className="input-form flex flex-col">
               <label className="input-label font-reynaldo text-left" htmlFor="event">
@@ -149,12 +147,7 @@ const CreateSponsor = () => {
               </label>
 
               <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg">
-                <input
-                  id="event"
-                  className="px-4 py-3 w-full focus:outline-none bg-gray-100"
-                  value={eventName}
-                  readOnly
-                />
+                <input id="event" className="px-4 py-3 w-full focus:outline-none bg-gray-100" value={eventName} readOnly />
               </div>
             </div>
             {/* Company name */}
@@ -216,23 +209,12 @@ const CreateSponsor = () => {
               </label>
 
               <div className={`overflow-clip flex items-stretch w-full border border-neutral-40 rounded-lg ${errors.company_telephone && "border-danger"}`}>
-                <div className="flex items-center justify-center px-3 bg-cyan-50">
-                  +62
-                </div>
-                <input
-                  id="company_telephone"
-                  type="tel"
-                  className="px-4 py-3 w-full focus:outline-none"
-                  placeholder="ex. 812xxxx..."
-                  value={companyTelephone}
-                  onChange={(e) => setCompanyTelephone(e.target.value)}
-                />
+                <div className="flex items-center justify-center px-3 bg-cyan-50">+62</div>
+                <input id="company_telephone" type="tel" className="px-4 py-3 w-full focus:outline-none" placeholder="ex. 812xxxx..." value={companyTelephone} onChange={(e) => setCompanyTelephone(e.target.value)} />
               </div>
-
 
               {errors.company_telephone && <span className="mt-0.5 text-danger text-xs">{errors.company_telephone}</span>}
             </div>
-
 
             <br></br>
 

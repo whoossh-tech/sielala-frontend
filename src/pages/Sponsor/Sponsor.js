@@ -8,13 +8,13 @@ import { reynaldoStyles } from "../../assets/fonts/fonts";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import { NavbarPartnership } from "../../components/navbar/NavbarPartnership";
 import "../../static/css/event/Event.css";
-import Sidebar from '../dashboard/Sidebar'
+import Sidebar from "../dashboard/Sidebar";
 
 const Sponsor = () => {
   const [sponsors, setSponsors] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState("");
   const [eventData, setEventData] = useState([]);
-  const [activePage] = useState('contact');
+  const [activePage] = useState("contact");
 
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -24,7 +24,7 @@ const Sponsor = () => {
   useEffect(() => {
     if (selectedEvent) {
       axios
-        .get(`https://sielala-backend-production.up.railway.app/api/sponsor/view-all/${selectedEvent}`)
+        .get(`http://localhost:8080/api/sponsor/view-all/${selectedEvent}`)
         .then((res) => {
           setSponsors(res.data.data);
           console.log(res.data.data);
@@ -35,7 +35,7 @@ const Sponsor = () => {
     }
 
     axios
-      .get("https://sielala-backend-production.up.railway.app/api/sponsor/view-event-all")
+      .get("http://localhost:8080/api/sponsor/view-event-all")
       .then((res) => {
         setEventData(res.data.data);
       })
@@ -71,7 +71,6 @@ const Sponsor = () => {
       {/* Sidebar Navigation */}
       <Sidebar activePage={activePage} />
       <main style={{ marginLeft: "60px" }}>
-
         {/* Header Start */}
 
         <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "200px" }}>

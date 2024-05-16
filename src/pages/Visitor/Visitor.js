@@ -5,81 +5,72 @@ import { NavbarBisdev } from "../../components/navbar/NavbarBisdev";
 import { NavbarAdmin } from "../../components/navbar/NavbarAdmin";
 import backgroundPhoto from "../../assets/bg-cover.png";
 import "../../static/css/Visitor.css";
-import { Link } from 'react-router-dom';
-import Sidebar from '../dashboard/Sidebar';
+import { Link } from "react-router-dom";
+import Sidebar from "../dashboard/Sidebar";
 
 const Visitor = () => {
   const [visitors, setVisitors] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState('');
+  const [selectedEvent, setSelectedEvent] = useState("");
   const [eventData, setEventData] = useState([]);
   const [search, setSearch] = useState("");
   const [countDays, setCountDays] = useState(0);
   const [attendanceData, setAttendanceData] = useState([]);
   const [day, setDay] = useState(0);
   const [checkedState, setCheckedState] = useState([]);
-  const [activePage, setActivePage] = useState('visitor');
+  const [activePage, setActivePage] = useState("visitor");
 
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
 
   // Mendapatkan tanggal saat ini
   const currentDate = new Date();
 
   // Mendapatkan tanggal mulai dan akhir dari event yang dipilih
-  const eventStartDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.startDate);
-  const eventEndDate = new Date(eventData.find(event => event.idEvent === selectedEvent)?.endDate);
-  eventEndDate.setHours(23,59,59,999);
+  const eventStartDate = new Date(eventData.find((event) => event.idEvent === selectedEvent)?.startDate);
+  const eventEndDate = new Date(eventData.find((event) => event.idEvent === selectedEvent)?.endDate);
+  eventEndDate.setHours(23, 59, 59, 999);
 
   const timeDiff = Math.abs(currentDate.getTime() - eventStartDate.getTime());
   const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
-  const formattedStartDate = new Date(eventStartDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-  const formattedEndDate = new Date(eventEndDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const formattedStartDate = new Date(eventStartDate).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const formattedEndDate = new Date(eventEndDate).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
-  const token = localStorage.getItem('token');
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  const token = localStorage.getItem("token");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   useEffect(() => {
-
-    const storedEvent = localStorage.getItem('idSelectedEvent');
+    const storedEvent = localStorage.getItem("idSelectedEvent");
     if (storedEvent) {
       setSelectedEvent(storedEvent);
-      localStorage.removeItem('idSelectedEvent');
+      localStorage.removeItem("idSelectedEvent");
     }
 
     if (selectedEvent) {
-      axios.get(`https://sielala-backend-production.up.railway.app/api/visitor/view-all/${selectedEvent}`)
-        .then(res => {
-          setVisitors(res.data.data)
-          setCountDays(res.data.dayRange)
+      axios
+        .get(`http://localhost:8080/api/visitor/view-all/${selectedEvent}`)
+        .then((res) => {
+          setVisitors(res.data.data);
+          setCountDays(res.data.dayRange);
           setDay(daysDiff);
-        }).catch(err =>
-          console.log(err)
-
-        )
+        })
+        .catch((err) => console.log(err));
     }
 
-    axios.get('https://sielala-backend-production.up.railway.app/api/visitor/view-event-all')
-      .then(res => {
-        setEventData(res.data.data)
+    axios
+      .get("http://localhost:8080/api/visitor/view-event-all")
+      .then((res) => {
+        setEventData(res.data.data);
 
         // if (!selectedEvent && res.data.data.length > 0) {
         //   setSelectedEvent(res.data.data[0].idEvent);
         // }
-      }).catch(
-        err =>
-          console.log(err)
-      )
-  }, [selectedEvent])
+      })
+      .catch((err) => console.log(err));
+  }, [selectedEvent]);
 
   const filterVisitors = () => {
     if (!search.trim()) return visitors;
-    return visitors.filter((visitor) =>
-      Object.values(visitor).some(
-        (value) =>
-          typeof value === "string" &&
-          value.toLowerCase().includes(search.toLowerCase())
-      )
-    );
+    return visitors.filter((visitor) => Object.values(visitor).some((value) => typeof value === "string" && value.toLowerCase().includes(search.toLowerCase())));
   };
 
   const highlightSearchText = (text) => {
@@ -95,7 +86,6 @@ const Visitor = () => {
     );
   };
 
-
   const handleChange = (e) => {
     const selectedValue = e.target.value;
     if (selectedValue === "Select event") {
@@ -107,13 +97,14 @@ const Visitor = () => {
 
   useEffect(() => {
     if (selectedEvent) {
-      axios.get(`https://sielala-backend-production.up.railway.app/api/visitor/attendance/${selectedEvent}`)
-        .then(res => {
+      axios
+        .get(`http://localhost:8080/api/visitor/attendance/${selectedEvent}`)
+        .then((res) => {
           setAttendanceData(res.data);
           // console.log(res.data);
-          console.log('Attendance Data:', res.data);
+          console.log("Attendance Data:", res.data);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
@@ -121,11 +112,11 @@ const Visitor = () => {
 
   function markAttendance(attendanceId, attended) {
     axios
-      .put(`https://sielala-backend-production.up.railway.app/api/visitor/attendance/update/${attendanceId}`, {
+      .put(`http://localhost:8080/api/visitor/attendance/update/${attendanceId}`, {
         attended: attended,
       })
-      .then(res => {
-        const updatedAttendanceData = attendanceData.data.map(att => {
+      .then((res) => {
+        const updatedAttendanceData = attendanceData.data.map((att) => {
           if (att.id === attendanceId) {
             return { ...att, attended: attended };
           } else {
@@ -137,16 +128,16 @@ const Visitor = () => {
 
         console.log(res.data);
       })
-      .catch(error => {
-        console.error('Error marking attendance:', error);
+      .catch((error) => {
+        console.error("Error marking attendance:", error);
       });
   }
 
   useEffect(() => {
     if (selectedEvent && attendanceData.data) {
-      const initialCheckedState = attendanceData.data.map(record => ({
+      const initialCheckedState = attendanceData.data.map((record) => ({
         id: record.id,
-        checked: record.attended
+        checked: record.attended,
       }));
       setCheckedState(initialCheckedState);
     }
@@ -155,273 +146,255 @@ const Visitor = () => {
   return (
     <body>
       {/* Sidebar Navigation */}
-      <Sidebar activePage={activePage}/>
+      <Sidebar activePage={activePage} />
 
       <main style={{ marginLeft: "60px" }}>
-
-          {/* Header Start */}
-          <div className='bg-neutral-100 relative' style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: 'cover', height: '150px' }}>
-              <div className="mx-8">
-                  <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: 'left', fontSize: 50 }}>
-                  Visitor Data Report</h1>
-                  <div>
-                    <p className="subtitle">
-                        <a href='/dashboard' style={{ textDecoration: 'none' }}>
-                            <span style={{ borderBottom: '1px solid #E685AE' }}>Dashboard</span>&nbsp;
-                        </a>                        
-                        / Visitor List
-                    </p>
-                  </div>
-              </div>
-          </div>
-          {/* Header Ends */}
-
-          <div className='content-container my-4'>
+        {/* Header Start */}
+        <div className="bg-neutral-100 relative" style={{ backgroundImage: `url(${backgroundPhoto})`, backgroundSize: "cover", height: "150px" }}>
+          <div className="mx-8">
+            <h1 id="page-title" className="font-reynaldo mb-6 text-primary-10 mx-8" style={{ paddingTop: 35, textAlign: "left", fontSize: 50 }}>
+              Visitor Data Report
+            </h1>
             <div>
-              {/* <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
-
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />
-
-      <br></br>
-
-      {(!selectedEvent) && (
-        <div className="text-center text-red-500 font-bold mb-4">
-          Event is not selected, please select event on the dropdown.
-        </div>
-      )}
-
-      <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
-        <div style={{ position: 'relative' }}>
-          <select
-            className="appearance-none px-4 py-3 w-full focus:outline-none"
-            onChange={handleChange}
-            value={selectedEvent}
-            style={{
-              backgroundColor: '#ffffff',
-              color: '#333333',
-              borderRadius: '0.375rem',
-              fontSize: '1rem',
-              lineHeight: '1.5',
-              padding: '0.5rem 1rem',
-              width: '400px',
-            }}
-          >
-            <option value="">Select event</option>
-            {eventData && eventData.length > 0 ?
-              (eventData.map((event, index) => (
-                <option key={index} value={event.idEvent}>{event.eventName}: {event.startDate}</option>
-              ))) : (
-                <option value="">No events available</option>
-              )
-            }
-          </select>
-
-          <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-chevron-down"
-            >
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <br></br>
-
-      {selectedEvent && eventData.length > 0 && (
-        <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: '400px', margin: '0 auto' }}>
-          <div style={{ position: 'relative' }}>
-            <input
-              className="search px-4 py-3 w-full focus:outline-none"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              style={{
-                backgroundColor: '#ffffff',
-                color: '#333333',
-                borderRadius: '0.375rem',
-                fontSize: '1rem',
-                lineHeight: '1.5',
-                padding: '0.5rem 1rem',
-                width: '400px',
-                paddingRight: '40px',
-              }}
-            />
-            <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="feather feather-search"
-                style={{ color: '#333333' }}
-              >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
+              <p className="subtitle">
+                <a href="/dashboard" style={{ textDecoration: "none" }}>
+                  <span style={{ borderBottom: "1px solid #E685AE" }}>Dashboard</span>&nbsp;
+                </a>
+                / Visitor List
+              </p>
             </div>
           </div>
         </div>
-      )}
+        {/* Header Ends */}
 
+        <div className="content-container my-4">
+          <div>
+            {/* <div className="relative overflow-y-auto h-screen w-screen bg-neutral-10 select-none"> */}
 
-      <br></br>
+            <Toaster position="top-center" reverseOrder={false} />
 
-      {selectedEvent && eventData.length > 0 && (
-        <div style={{ marginBottom: '10px' }}>
-          {currentDate < eventStartDate ? (
-            <React.Fragment>
-              <p>
-                <b>Current Event Day:</b>
-              </p>
-              <p style={{ color: '#7D512D' }}>
-                <b>Event has not started</b>
-              </p>
-            </React.Fragment>
-          ) : currentDate > eventEndDate ? (
-            <React.Fragment>
-              <p>
-                <b>Current Event Day:</b>
-              </p>
-              <p style={{ color: '#7D512D' }}>
-                <b>Event has already passed</b>
-              </p>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <p>
-                <b>Current Event Day:</b>
-              </p>
-              <p style={{ color: '#7D512D' }}>
-                <b>Day {daysDiff}</b>
-              </p>
-            </React.Fragment>
-          )}
-        </div>
-      )}
+            <br></br>
 
-      {(selectedEvent && eventData.length > 0) && (
+            {!selectedEvent && <div className="text-center text-red-500 font-bold mb-4">Event is not selected, please select event on the dropdown.</div>}
 
-        <div className="detail-inventory">
-          <div className="each-inventory">
-            <p className="inventory-text-title">Start Date of Event:</p>
-            <p className="inventory-text">{formattedStartDate}</p>
-          </div>
-          <div className="each-inventory">
-            <p className="inventory-text-title">End Date of Event:</p>
-            <p className="inventory-text">{formattedEndDate}</p>
-          </div>
-        </div>
-      )}
+            <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>
+              <div style={{ position: "relative" }}>
+                <select
+                  className="appearance-none px-4 py-3 w-full focus:outline-none"
+                  onChange={handleChange}
+                  value={selectedEvent}
+                  style={{
+                    backgroundColor: "#ffffff",
+                    color: "#333333",
+                    borderRadius: "0.375rem",
+                    fontSize: "1rem",
+                    lineHeight: "1.5",
+                    padding: "0.5rem 1rem",
+                    width: "400px",
+                  }}
+                >
+                  <option value="">Select event</option>
+                  {eventData && eventData.length > 0 ? (
+                    eventData.map((event, index) => (
+                      <option key={index} value={event.idEvent}>
+                        {event.eventName}: {event.startDate}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No events available</option>
+                  )}
+                </select>
 
-      {(selectedEvent && eventData.length > 0) && (
-        <div className="mb-3 mx-8" style={{ display: 'flex', justifyContent: 'center' }}>
-          <table className="visitor-table">
-            <thead>
-              {/* Row headers  */}
-              <tr>
-                <th style={{ borderRight: '1px solid #E3E2E6' }} colSpan="4"> VISITOR </th>
-                <th style={{ borderRight: '1px solid #E3E2E6' }} colSpan={countDays}> ATTENDANCE</th>
-              </tr>
-            </thead>
-            <thead>
-              {/* Column headers */}
-              <tr>
-                <th>Event Pass</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Telephone No.</th>
-                {[...Array(countDays)].map((_, index) => (
-                  <React.Fragment key={index}>
-                    <th style={{ borderRight: '1px solid #E3E2E6' }}>Day {index + 1}</th>
+                <div style={{ position: "absolute", top: "50%", right: "10px", transform: "translateY(-50%)" }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-down">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <br></br>
+
+            {selectedEvent && eventData.length > 0 && (
+              <div className="relative overflow-clip w-full border border-neutral-40 rounded-lg" style={{ width: "400px", margin: "0 auto" }}>
+                <div style={{ position: "relative" }}>
+                  <input
+                    className="search px-4 py-3 w-full focus:outline-none"
+                    placeholder="Search..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    style={{
+                      backgroundColor: "#ffffff",
+                      color: "#333333",
+                      borderRadius: "0.375rem",
+                      fontSize: "1rem",
+                      lineHeight: "1.5",
+                      padding: "0.5rem 1rem",
+                      width: "400px",
+                      paddingRight: "40px",
+                    }}
+                  />
+                  <div style={{ position: "absolute", top: "50%", right: "10px", transform: "translateY(-50%)" }}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="feather feather-search"
+                      style={{ color: "#333333" }}
+                    >
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <br></br>
+
+            {selectedEvent && eventData.length > 0 && (
+              <div style={{ marginBottom: "10px" }}>
+                {currentDate < eventStartDate ? (
+                  <React.Fragment>
+                    <p>
+                      <b>Current Event Day:</b>
+                    </p>
+                    <p style={{ color: "#7D512D" }}>
+                      <b>Event has not started</b>
+                    </p>
                   </React.Fragment>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filterVisitors().map((visitor, visitorIndex) => (
-                <tr key={visitorIndex}>
-                  <td>
-                    <Link to={`/visitor/detail/${visitor.idVisitor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
-                    {highlightSearchText(visitor.eventPass)}
-                    </Link>
-                  </td>
-                  <td>{highlightSearchText(visitor.name)}</td>
-                  <td>{highlightSearchText(visitor.email)}</td>
-                  <td>{highlightSearchText("+62 " + visitor.telephone)}</td>
-                  {[...Array(countDays)].map((_, dayIndex) => {
-                    let attendanceRecord = attendanceData.data?.find(
-                      record =>
-                        record.id_visitor === visitor.idVisitor &&
-                        record.day === dayIndex + 1
-                    );
+                ) : currentDate > eventEndDate ? (
+                  <React.Fragment>
+                    <p>
+                      <b>Current Event Day:</b>
+                    </p>
+                    <p style={{ color: "#7D512D" }}>
+                      <b>Event has already passed</b>
+                    </p>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <p>
+                      <b>Current Event Day:</b>
+                    </p>
+                    <p style={{ color: "#7D512D" }}>
+                      <b>Day {daysDiff}</b>
+                    </p>
+                  </React.Fragment>
+                )}
+              </div>
+            )}
 
-                    const checkboxId = `checkbox_${visitor.idVisitor}_${dayIndex + 1}`;
+            {selectedEvent && eventData.length > 0 && (
+              <div className="detail-inventory">
+                <div className="each-inventory">
+                  <p className="inventory-text-title">Start Date of Event:</p>
+                  <p className="inventory-text">{formattedStartDate}</p>
+                </div>
+                <div className="each-inventory">
+                  <p className="inventory-text-title">End Date of Event:</p>
+                  <p className="inventory-text">{formattedEndDate}</p>
+                </div>
+              </div>
+            )}
 
-                    const isChecked = attendanceRecord ? attendanceRecord.attended : false;
+            {selectedEvent && eventData.length > 0 && (
+              <div className="mb-3 mx-8" style={{ display: "flex", justifyContent: "center" }}>
+                <table className="visitor-table">
+                  <thead>
+                    {/* Row headers  */}
+                    <tr>
+                      <th style={{ borderRight: "1px solid #E3E2E6" }} colSpan="4">
+                        {" "}
+                        VISITOR{" "}
+                      </th>
+                      <th style={{ borderRight: "1px solid #E3E2E6" }} colSpan={countDays}>
+                        {" "}
+                        ATTENDANCE
+                      </th>
+                    </tr>
+                  </thead>
+                  <thead>
+                    {/* Column headers */}
+                    <tr>
+                      <th>Event Pass</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Telephone No.</th>
+                      {[...Array(countDays)].map((_, index) => (
+                        <React.Fragment key={index}>
+                          <th style={{ borderRight: "1px solid #E3E2E6" }}>Day {index + 1}</th>
+                        </React.Fragment>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filterVisitors().map((visitor, visitorIndex) => (
+                      <tr key={visitorIndex}>
+                        <td>
+                          <Link to={`/visitor/detail/${visitor.idVisitor}`} style={{ color: "#A9B245", fontWeight: "bold" }}>
+                            {highlightSearchText(visitor.eventPass)}
+                          </Link>
+                        </td>
+                        <td>{highlightSearchText(visitor.name)}</td>
+                        <td>{highlightSearchText(visitor.email)}</td>
+                        <td>{highlightSearchText("+62 " + visitor.telephone)}</td>
+                        {[...Array(countDays)].map((_, dayIndex) => {
+                          let attendanceRecord = attendanceData.data?.find((record) => record.id_visitor === visitor.idVisitor && record.day === dayIndex + 1);
 
-                    const disableColumns = dayIndex + 1 != day;
+                          const checkboxId = `checkbox_${visitor.idVisitor}_${dayIndex + 1}`;
 
-                    console.log('Attendance Record:', attendanceRecord);
-                    // console.log('Checked State Record:', checkedStateRecord);
-                    console.log('Is Checked:', isChecked);
+                          const isChecked = attendanceRecord ? attendanceRecord.attended : false;
 
-                    return (
-                      <td key={dayIndex} style={{ borderRight: '1px solid #E3E2E6' }}>
-                        <input
-                          type="checkbox"
-                          id={checkboxId}
-                          checked={isChecked}
-                          disabled={disableColumns}
-                          onChange={(e) => {
-                            if (attendanceRecord) {
-                              markAttendance(attendanceRecord.id, e.target.checked);
-                            } else {
-                              console.error('Attendance record not found');
-                            }
-                          }}
-                        />
-                      </td>
-                    );
-                  })}
+                          const disableColumns = dayIndex + 1 != day;
 
-                </tr>
-              ))}
+                          console.log("Attendance Record:", attendanceRecord);
+                          // console.log('Checked State Record:', checkedStateRecord);
+                          console.log("Is Checked:", isChecked);
 
-              {filterVisitors().length === 0 && (
-                <tr>
-                  <td colSpan="4">No visitors match the search criteria</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                          return (
+                            <td key={dayIndex} style={{ borderRight: "1px solid #E3E2E6" }}>
+                              <input
+                                type="checkbox"
+                                id={checkboxId}
+                                checked={isChecked}
+                                disabled={disableColumns}
+                                onChange={(e) => {
+                                  if (attendanceRecord) {
+                                    markAttendance(attendanceRecord.id, e.target.checked);
+                                  } else {
+                                    console.error("Attendance record not found");
+                                  }
+                                }}
+                              />
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+
+                    {filterVisitors().length === 0 && (
+                      <tr>
+                        <td colSpan="4">No visitors match the search criteria</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            <br></br>
+            {/* </div> */}
+          </div>
         </div>
-      )}
-      <br></br>
-    {/* </div> */}
-    </div>
-    </div>
-    </main>
-</body>
-
+      </main>
+    </body>
   );
-}
+};
 
 export default Visitor;

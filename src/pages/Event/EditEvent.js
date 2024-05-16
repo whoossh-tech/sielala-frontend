@@ -18,7 +18,7 @@ import "../../static/css/Style.css";
 
 const EditEvent = () => {
   const { idEvent } = useParams();
-  const url = "https://sielala-backend-production.up.railway.app";
+  const url = "http://localhost:8080";
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
   const [activePage, setActivePage] = useState("event");
@@ -50,7 +50,7 @@ const EditEvent = () => {
         console.log(eventData);
 
         setEventName(eventData.eventName);
-        setEventDescription(eventData.description)
+        setEventDescription(eventData.description);
         setLocation(eventData.location);
         setStartDate(new Date(eventData.startDate));
         setEndDate(new Date(eventData.endDate));
@@ -226,7 +226,7 @@ const EditEvent = () => {
                   <br></br>
 
                   <div>
-                    <button className="button-green"onClick={handleBack}>
+                    <button className="button-green" onClick={handleBack}>
                       Cancel
                     </button>
                     <button className="button-pink" type="submit">
